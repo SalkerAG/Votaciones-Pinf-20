@@ -4,16 +4,11 @@ from django.db import models
 
 
 class UsuarioUca(AbstractUser):
-    # add additional fields in here
-    dni = models.CharField(max_length=9, blank=False, null=False)
+    dni = models.CharField(max_length=9, blank=False, null=False, default="00000000A")
     egresado = models.BooleanField(default=True)
 
     def __str__(self):
         return self.username
-
-    class Meta:
-        db_table = 'auth_user'
-
 
 class PASS(models.Model):
     class Meta:

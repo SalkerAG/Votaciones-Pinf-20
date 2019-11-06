@@ -7,10 +7,10 @@ from .models import UsuarioUca
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = UsuarioUca
-        fields = ('username', 'email')
+        fields = '__all__'
 
 
 class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = UsuarioUca
-        fields = ('username', 'email')
+        fields = '__all__'

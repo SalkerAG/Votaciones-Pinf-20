@@ -7,14 +7,20 @@ from .forms import CustomUserCreationForm, CustomUserChangeForm
 from .models import UsuarioUca, Profesor, PASS, Estudiante
 
 
-class CustomUserAdmin(UserAdmin):
+class UsuarioUcaAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
-    model = UsuarioUca
-    list_display = ['email', 'username']
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'username', 'first_name', 'last_name', 'password1', 'password2', 'dni')}
+         ),)
 
 
-admin.site.register(UsuarioUca, CustomUserAdmin)
+admin.site.register(UsuarioUca, UsuarioUcaAdmin)
 admin.site.register(Profesor)
 admin.site.register(PASS)
 admin.site.register(Estudiante)
+
+
+
