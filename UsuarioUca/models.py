@@ -1,6 +1,8 @@
 # users/models.py
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator
+
 
 
 class UsuarioUca(AbstractUser):
@@ -18,8 +20,9 @@ class PASS(models.Model):
 
 
 class Estudiante(models.Model):
+
     user = models.OneToOneField(UsuarioUca, on_delete=models.PROTECT, primary_key=True)
-    curso_max = models.IntegerField(blank=False, null=False)
+    curso_max = models.IntegerField(blank=False, null=False, default=1, choices=list(zip(range(1, 5), range(1, 5))))
 
 
 class Profesor(models.Model):
