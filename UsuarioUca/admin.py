@@ -13,7 +13,7 @@ class UsuarioUcaAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'username', 'first_name', 'last_name', 'password1', 'password2', 'dni')}
+            'fields': ('email', 'username', 'first_name', 'last_name', 'password1', 'password2', 'dni', 'egresado')}
          ),)
 
 

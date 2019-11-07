@@ -6,7 +6,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class UsuarioUca(AbstractUser):
-    dni = models.CharField(max_length=9, blank=False, null=False, default="00000000A")
+    dni = models.CharField(max_length=9, blank=False, null=False)
     egresado = models.BooleanField(default=True)
 
     def __str__(self):
