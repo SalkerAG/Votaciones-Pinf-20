@@ -25,8 +25,9 @@ class UsuarioUca(AbstractUser):
     egresado = models.BooleanField(default=True)
 
     def clean_fields(self, exclude=None):
-        dni = self.clean()
-        if validodni(self.dni) == True:
+        dni = self.dni
+        if validodni(dni) == True:
+            print(dni)
             return dni
         else:
             raise forms.ValidationError("DNI INCORRECTO")
