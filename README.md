@@ -1,45 +1,47 @@
-# Python: Getting Started
+# SenUCA
+WebAPP in Python-Django. Trabajo para la asignatura de PINF (Proyectos Informáticos) 2019-2020 Grupo 1.
 
-A barebones Django app, which can easily be deployed to Heroku.
+## Deployment
 
-This application supports the [Getting Started with Python on Heroku](https://devcenter.heroku.com/articles/getting-started-with-python) article - check it out.
-
-## Running Locally
-
-Make sure you have Python 3.7 [installed locally](http://install.python-guide.org). To push to Heroku, you'll need to install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli), as well as [Postgres](https://devcenter.heroku.com/articles/heroku-postgresql#local-setup).
-
-```sh
-$ git clone https://github.com/heroku/python-getting-started.git
-$ cd python-getting-started
-
-$ python3 -m venv getting-started
-$ pip install -r requirements.txt
-
-$ createdb python_getting_started
-
-$ python manage.py migrate
-$ python manage.py collectstatic
-
-$ heroku local
+Instalar virtualenv para python3
+```bash
+sudo apt-get install python3-venv
 ```
 
-Your app should now be running on [localhost:5000](http://localhost:5000/).
-
-## Deploying to Heroku
-
-```sh
-$ heroku create
-$ git push heroku master
-
-$ heroku run python manage.py migrate
-$ heroku open
+Iniciar un entorno virtual
+```bash
+python3 -m venv env
 ```
-or
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+Clonar el repositorio
+```bash
+git clone URLGit
+```
 
-## Documentation
+Activar el entorno virtual
+```bash
+source env/bin/activate
+```
 
-For more information about using Python on Heroku, see these Dev Center articles:
+Instalar requirements.txt
+```bash
+cd SenUCA/
+pip install -r requirements.txt
+```
 
-- [Python on Heroku](https://devcenter.heroku.com/categories/python)
+Realizar migraciones
+```bash
+./manage.py makemigrations
+./manage.py migrate
+```
+
+Lanzar servidor
+```bash
+./manage.py runserver
+```
+
+## Instrucciones básicas
+
+**Nunca se trabaja en master, siempre en develop.**
+
+Para cada issue **creamos una feature dentro de develop donde trabajaremos.** Ejemplo: feature/texto_descriptivo.
