@@ -1,39 +1,79 @@
 # users/models.py
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 from django.forms import forms
 
 
-def validodni(dni):
-    tabla = "TRWAGMYFPDXBNJZSQVHLCKE"
+def validonif(nif):
+
     dig_ext = "XYZ"
     reemp_dig_ext = {'X': '0', 'Y': '1', 'Z': '2'}
     numeros = "1234567890"
-    dni = dni.upper()
-    if len(dni) == 9:
-        dig_control = dni[8]
-        dni = dni[:8]
-        if dni[0] in dig_ext:
-            dni = dni.replace(dni[0], reemp_dig_ext[dni[0]])
-        return len(dni) == len([n for n in dni if n in numeros]) \
-               and tabla[int(dni) % 23] == dig_control
+    # nif = nif.upper()
+    if len(nif) == 8:
+        dig_control = nif[7]
+        nif = nif[:7]
+        if nif[0] in dig_ext:
+            nif = nif.replace(nif[0], reemp_dig_ext[nif[0]])
+        return len(nif) == len([n for n in nif if n in numeros]) \
+
     return False
 
 
-class UsuarioUca(AbstractUser):
-    dni = models.CharField(max_length=9, blank=False, null=False)
-    egresado = models.BooleanField(default=True)
+class UserManager(BaseUserManager):
+    def create_user(self, nif, email, first_name, last_name, password, is_staff, is_superuser, is_active):
+        if not email:
+            raise ValueError("User must have an email")
+        if not password:
+            raise ValueError("User must have a password")
+        if not nif:
+            raise ValueError("User must have a nif")
 
-    def clean_fields(self, exclude=None):
-        dni = self.dni
-        if validodni(dni) == True:
-            print(dni)
-            return dni
-        else:
-            raise forms.ValidationError("DNI INCORRECTO")
+        user = self.model(
+            email=self.normalize_email(email)
+        )
+        user.nif = nif
+        user = self.model(nif=nif, email=email, first_name=first_name, last_name=last_name, is_staff=is_staff,
+                          is_superuser=is_superuser, is_active=is_active)
+        user.set_password(password)  # change password to hash
+        user.save(using=self._db)
+        return user
+
+    # def create_user(self, nif, email, first_name="", last_name="", password=None, is_staff=False, is_superuser=False, is_active=False):
+    #     is_staff = is_staff
+    #     is_superuser = is_superuser
+    #     is_active = is_active
+    #     return self._create_user(nif, email, first_name, last_name, password, is_staff, is_superuser, is_active)
+
+    def create_superuser(self, nif, email, first_name="", last_name="", password=None, is_staff=True, is_superuser=True, is_active=True):
+        is_staff=is_staff
+        is_superuser=is_superuser
+        is_active=is_active
+
+        return self.create_user(nif, email, first_name, last_name, password, is_staff, is_superuser, is_active)
+
+
+class UsuarioUca(AbstractUser):
+    username = None
+    nif = models.CharField(max_length=8, blank=False, null=False, default=32085090, unique=True)
+    egresado = models.BooleanField(default=True)
+    email = models.EmailField(max_length=64, unique=True)
+    USERNAME_FIELD = 'nif'
+    REQUIRED_FIELDS = ['email']
+
+
+    # def clean_fields(self, exclude=None):
+    #     nif = self.nif
+    #     if validonif(nif) == True:
+    #         print(nif)
+    #         return nif
+    #     else:
+    #         raise forms.ValidationError("NIF INCORRECTO")
+
+    objects = UserManager()
 
     def __str__(self):
-        return self.username
+        return self.nif
 
 
 class PASS(models.Model):
