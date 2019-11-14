@@ -34,6 +34,11 @@ Realizar migraciones
 ./python manage.py migrate --run-syncdb
 ```
 
+Crear Superusuario (cuando te pida el NIF no poner letra)
+```bash
+./manage.py createsuperuser
+```
+
 Lanzar servidor
 ```bash
 ./manage.py runserver
