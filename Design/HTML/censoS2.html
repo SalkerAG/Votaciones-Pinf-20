@@ -45,6 +45,34 @@
 	</nav>
 	<!-- Fin header  -->
     {% block content %}
+		<div id="titulo" align='center'>
+		<h1 id="titulo" > <strong> Censo Simple </h1>
+
+
+		<div id="tituloCenso" align='center'>
+		  <h3 id="tituloCenso" > tituloCenso </h3>
+
+			<div id"eleccionCensoC" align='center'>
+				<form  action="eleccionCensoS.php" method="get">
+				<input type="radio" name="FCA" value="F"> A favor
+				<input type="radio" name="FCA" value="C"> En contra
+				<input type="radio" name="FCA" value="A"> Abstención
+				<p>
+				  <input type="submit" value="Guardar eleccion">
+				</p>
+			  </form>
+
+				<div >
+				  <aside id="DescripcionCensoS" <p> La emoción no se mide en besos o palabras, se mide en latidos. Y mi corazón late desenfrenado desde que la conocí. Son dos los latidos que me gritan: “es ella”, por cada tres que me dicen: “esta vez, sí”.
+						Y así, de cinco en cinco cuando otros sólo laten una vez, me ilusiona como hacía mucho tiempo que nadie lo conseguía. Será que sus labios son mi perdición, que su mirada llena de felicidad me atrapa en el principio de esta historia que, espero, no tenga final.
+						No lo sé. No me gusta pensar demasiado en el futuro. El pasado me ha demostrado que cuanto mayor es la ilusión, mayor es el dolor. Y, sin embargo, aquí me tienes, entregando el corazón una vez más a la batalla sin miedo a la caída.
+						No se merece menos.  </p>
+				  </aside>
+				</div>
+			  </div>
+			</div>
+		  </div>
+	
     {% endblock %}
 	<!-- Footer  -->
 	<!-- Fin Footer  -->
