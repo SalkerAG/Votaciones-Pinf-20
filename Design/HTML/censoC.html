@@ -1,84 +1,87 @@
 <!doctype html>
 <html lang="es">
 
-<head>
-  <!-- Movil y teclado -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <head>
+    <!-- Movil y teclado -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="censoS.css">
+    <!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	
+    <title>Votaciones UCA</title>
+  </head>
+  
+  <body>
+	<!-- header  -->
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	  <!-- Brand -->
+	  <a class="navbar-brand" href="#">Logo</a>
 
-  <title>VotacionSimple</title>
-</head>
-
-<body>
-  <header>
-    <div>
-      <img src="media/logo.jpg" width="70" alt="logotipo"
-
-    <nav>
-      <ul>
-        <li><a href='inicio.html'><u>Inicio</u></a></li>
-        <li><a href='Votaciones.html'><u>Votaciones</u></a></li>
-        <li><a href='Resultados.html'><u>Resultados</u></a></li>
-        <li><a href='ayuda.html'><u>Ayuda</u></a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
-
-
-<div id="titulo" align='center'>
-  <h1 id="titulo" > <strong> Censo Simple </h1>
-
-
-    <div id="CensoC" align='center'>
-      <h3 id="tituloCenso" > tituloCenso </h3>
-
-        <div id="eleccionCensoC" align='center'>
-            <form action="eleccionCensoC.php" method="get">
-              <select id="listacenso" name="listacenso">
-                <option value= "uno" >Opcion1</option>
-                <option value= "dos" >Opcion2</option>
-                <option value= "tres" >Opcion3</option>
-                <option value= "cuatro" >Opcion4</option>
-        </div>
-      </div>
-            <p>
-              <input type="submit" value="Guardar eleccion">
-            </p>
-          </form>
-
-            <div >
-              <aside id="DescripcionCensoS" <p> La emoción no se mide en besos o palabras, se mide en latidos. Y mi corazón late desenfrenado desde que la conocí. Son dos los latidos que me gritan: “es ella”, por cada tres que me dicen: “esta vez, sí”.
-Y así, de cinco en cinco cuando otros sólo laten una vez, me ilusiona como hacía mucho tiempo que nadie lo conseguía. Será que sus labios son mi perdición, que su mirada llena de felicidad me atrapa en el principio de esta historia que, espero, no tenga final.
-No lo sé. No me gusta pensar demasiado en el futuro. El pasado me ha demostrado que cuanto mayor es la ilusión, mayor es el dolor. Y, sin embargo, aquí me tienes, entregando el corazón una vez más a la batalla sin miedo a la caída.
-No se merece menos.  </p>
-              </aside>
-            </div>
-          </div>
-        </div>
-      </div>
+	  <!-- Links -->
+	  <ul class="navbar-nav">
+		<li class="nav-item">
+		  <a class="nav-link" href="#">Inicio</a>
+		</li>
+		
+		<!-- Dropdown -->
+		<li class="nav-item dropdown">
+		  <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Votaciones</a>
+		  <div class="dropdown-menu">
+			<a class="dropdown-item" href="#">Lista de votaciones</a>
+			<a class="dropdown-item" href="#">Votaciones finalizadas</a>
+			<a class="dropdown-item" href="#">Crear Votación</a>
+		  </div>
+		</li>
+		
+		<li class="nav-item">
+		  <a class="nav-link" href="#">Ayuda</a>
+		</li>
+		
+		<li class="nav-item nav-item-right">
+		  <a class="nav-link float-right" href="#">Ayuda</a>
+		</li>
+	  </ul>
+	</nav>
+	<!-- Fin header  -->
+    {% block content %}
+		<div id="titulo" align='center'>
+			<h1 id="titulo" > <strong> Censo Complejo </h1>
 
 
+		<div id="CensoC" align='center'>
+		  <h3 id="tituloCenso" > tituloCenso </h3>
 
+			<div id="eleccionCensoC" align='center'>
+				<form action="eleccionCensoC.php" method="get">
+				  <select id="listacenso" name="listacenso">
+					<option value= "uno" >Opcion1</option>
+					<option value= "dos" >Opcion2</option>
+					<option value= "tres" >Opcion3</option>
+					<option value= "cuatro" >Opcion4</option>
+			</div>
+		  </div>
+				<p>
+				  <input type="submit" value="Guardar eleccion">
+				</p>
+			  </form>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</body>
+				<div >
+				  <aside id="DescripcionCensoS" <p> La emoción no se mide en besos o palabras, se mide en latidos. Y mi corazón late desenfrenado desde que la conocí. Son dos los latidos que me gritan: “es ella”, por cada tres que me dicen: “esta vez, sí”.
+						Y así, de cinco en cinco cuando otros sólo laten una vez, me ilusiona como hacía mucho tiempo que nadie lo conseguía. Será que sus labios son mi perdición, que su mirada llena de felicidad me atrapa en el principio de esta historia que, espero, no tenga final.
+						No lo sé. No me gusta pensar demasiado en el futuro. El pasado me ha demostrado que cuanto mayor es la ilusión, mayor es el dolor. Y, sin embargo, aquí me tienes, entregando el corazón una vez más a la batalla sin miedo a la caída.
+						No se merece menos.  </p>
+				  </aside>
+				</div>
+			  </div>
+    {% endblock %}
+	<!-- Footer  -->
+	<!-- Fin Footer  -->
+    <!-- Requisitos para bootstrap 4 y js  -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+  
 </html>
