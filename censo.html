@@ -48,49 +48,36 @@
 
 	<!-- Fin header  -->
     {% block content %}
-
-
     <div id="censo" align='center'>
     <h1 id="censo" > <strong> Censando una votacion </h1>
     </div>
     <div id="votacion" align='center'>
       <h2 id="votacion"><strong> $NombreVotacion </h1>
     </div>
-    <form class="censo" action="index.html" method="post">
-      <div class="elecnombres" text-align='center'>
+    <form class="Censo" action="index.html" method="post">
+      <div class=elecnombres text-align='center'>
         <select name='usuarios' size='$vector1' multiple>
+
           <option value="$user1" >Nombre Apellidos</option>
           <option value="$user2" >Nombre Apellidos</option>
           <option value="$user3" >Nombre Apellidos</option>
+      </div>
+      <div>
+        <p><br></p>
         <input type="submit" value="Guardar eleccion">
       </div>
+
     </form>
 
 
-  <aside class="titulodescripcenso">
-    <h5>Descripcion de la votacion que censar:</h5>
-    <div class="descripcenso">
-      <p><br>$descripciondelcenso</p>
-    </div>
-  </aside>
+
+
+
+
+
 
     {% endblock %}
 	<!-- Footer  -->
-  <footer class="contacto" align="center">
-    <h5>Contactenos</h5>
-    <form action="envio de datos" method="post">
-    <div>
-        <label for="name"  >Name: <br></label>
-        <input type="text" id="name" />
-        <label for="mail">E-mail:<br></label>
-        <input type="email" id="mail" />
-        <label for="msg">Message:<br></label>
-        <textarea id="contactmsg"></textarea>
-
-    <input type="submit"  value="Enviar comentario">
-  </div>
-</form>
-</footer>
 	<!-- Fin Footer  -->
     <!-- Requisitos para bootstrap 4 y js  -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

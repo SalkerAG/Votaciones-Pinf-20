@@ -44,3 +44,22 @@ Lanzar servidor
 **Nunca se trabaja en master, siempre en develop.**
 
 Para cada issue **creamos una feature dentro de develop donde trabajaremos.** Ejemplo: feature/texto_descriptivo.
+
+## Como crear ramas y desarrollar en ellas
+
+Para empezar, diferenciaremos las ramas master, develop y las features.
+
+Cuando alguien quiere crear una funcionalidad, debera crear una rama llamada feature/"nombre de la funcionalidad"
+
+Posteriormente, debera avisar al coordinador de su grupo para que revise su codificación y si es apta, el coordinador
+de cada departamento, deberá hacer un merge de esa rama en develop.
+
+Por ultimo, cuando se quiera desplegar los cambios, se hara merge en master y por ultimo, se despliega a heroku
+
+## Despligue en heroku
+
+Una vez que los cambios deseados esten en master, se debera ejecutar el comando 
+" git push heroku master ".
+
+Si no se tiene agendado el dominio heroku, se deberá usar el comando 
+" git remote add heroku https://git.heroku.com/pinfvot.git "
