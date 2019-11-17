@@ -13,7 +13,7 @@ Iniciar un entorno virtual
 python3 -m venv env
 ```
 
-Clonar el repositorio 
+Clonar el repositorio
 ```bash
 git clone URLGit
 ```
@@ -44,4 +44,4 @@ Lanzar servidor
 
 **Nunca se trabaja en master, siempre en develop.**
 
-Para cada issue **creamos una feature dentro de develop donde trabajaremos.** Ejemplo: feature/texto_descriptivo. 
+Para cada issue **creamos una feature dentro de develop donde trabajaremos.** Ejemplo: feature/texto_descriptivo.
