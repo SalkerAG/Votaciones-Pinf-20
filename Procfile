@@ -1,1 +1,1 @@
-web: gunicorn pinfvot.wsgi --log-file -
+web: gunicorn SendUCA.wsgi --log-file -
