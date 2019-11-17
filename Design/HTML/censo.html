@@ -52,13 +52,24 @@
     <h1 id="censo" > <strong> Censando una votacion </h1>
     </div>
 
-    <div class=elecnombres text-align='center'>
-      <select name='usuarios' size='$vector1' multiple>
-      <option value="$user1" >Nombre Apellidos</option>
-      <option value="$user2" >Nombre Apellidos</option>
-      <option value="$user3" >Nombre Apellidos</option>
-      <option value="$user4" >Nombre Apellidos</option>
+    <form class="Censo" action="index.html" method="post">
+      <div class=elecnombres text-align='center'>
+        <select name='usuarios' size='$vector1' multiple>
+        <option value="$user1" >Nombre Apellidos</option>
+        <option value="$user2" >Nombre Apellidos</option>
+        <option value="$user3" >Nombre Apellidos</option>
+        <option value="$user4" >Nombre Apellidos</option>
+      </div>
+    </form>
+    
+      <div>
+      <input type="submit" value="Guardar eleccion">
     </div>
+
+
+
+
+
 
 
     {% endblock %}
