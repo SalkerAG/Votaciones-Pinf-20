@@ -8,10 +8,11 @@
 
     <!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-	
+  <link rel="stylesheet" type="text/css" href="censo.css">
+
     <title>Votaciones UCA</title>
   </head>
-  
+
   <body>
 	<!-- header  -->
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
@@ -23,7 +24,7 @@
 		<li class="nav-item">
 		  <a class="nav-link" href="#">Inicio</a>
 		</li>
-		
+
 		<!-- Dropdown -->
 		<li class="nav-item dropdown">
 		  <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Votaciones</a>
@@ -33,20 +34,44 @@
 			<a class="dropdown-item" href="#">Crear Votación</a>
 		  </div>
 		</li>
-		
+
 		<li class="nav-item">
 		  <a class="nav-link" href="#">Ayuda</a>
 		</li>
-		
+
 		<li class="nav-item nav-item-right">
-			<a class="nav-link float-right" href="#">Salir</a>
+		  <a class="nav-link float-right" href="#">Ayuda</a>
 		</li>
-		
 	  </ul>
 	</nav>
-	
+
+
 	<!-- Fin header  -->
     {% block content %}
+    <div id="censo" align='center'>
+    <h1 id="censo" > <strong> Censando una votacion </h1>
+    </div>
+
+    <form class="Censo" action="index.html" method="post">
+      <div class=elecnombres text-align='center'>
+        <select name='usuarios' size='$vector1' multiple>
+        <option value="$user1" >Nombre Apellidos</option>
+        <option value="$user2" >Nombre Apellidos</option>
+        <option value="$user3" >Nombre Apellidos</option>
+        <option value="$user4" >Nombre Apellidos</option>
+      </div>
+    </form>
+    
+      <div>
+      <input type="submit" value="Guardar eleccion">
+    </div>
+
+
+
+
+
+
+
     {% endblock %}
 	<!-- Footer  -->
 	<!-- Fin Footer  -->
@@ -56,5 +81,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   </body>
-  
+
+  <!-- Footer  -->
+  <!-- Fin Footer  -->
+    <!-- Requisitos para bootstrap 4 y js  -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+
+</html>
 </html>
