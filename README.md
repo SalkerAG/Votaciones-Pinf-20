@@ -31,8 +31,7 @@ pip install -r requirements.txt
 
 Realizar migraciones
 ```bash
-./manage.py makemigrations
-./manage.py migrate
+./python manage.py migrate --run-syncdb
 ```
 
 Lanzar servidor
