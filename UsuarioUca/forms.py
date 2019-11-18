@@ -1,6 +1,6 @@
 # users/forms.py
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm
 from .models import UsuarioUca
 from django.core.validators import RegexValidator
 from django.core.validators import validate_slug, validate_email
@@ -25,3 +25,4 @@ class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = UsuarioUca
         fields = '__all__'
+
