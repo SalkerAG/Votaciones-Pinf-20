@@ -1,0 +1,203 @@
+<!doctype html>
+<html>
+
+  <head>
+    <!-- Movil y teclado -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" type="text/css" href="footer.css">
+    <!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	
+    <title>Votaciones UCA</title>
+  </head>
+  
+  <body>
+	<!-- header  -->
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	  <!-- Brand -->
+	  <a class="navbar-brand" href="#">Logo</a>
+
+	  <!-- Links -->
+	  <ul class="navbar-nav">
+		<li class="nav-item">
+		  <a class="nav-link" href="#">Inicio</a>
+		</li>
+		
+		<!-- Dropdown -->
+		<li class="nav-item dropdown">
+		  <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Votaciones</a>
+		  <div class="dropdown-menu">
+			<a class="dropdown-item" href="#">Lista de votaciones</a>
+			<a class="dropdown-item" href="#">Votaciones finalizadas</a>
+			<a class="dropdown-item" href="#">Crear Votación</a>
+		  </div>
+		</li>
+		
+		<li class="nav-item">
+		  <a class="nav-link" href="#">Ayuda</a>
+		</li>
+		
+		<li class="nav-item nav-item-right">
+			<a class="nav-link float-right" href="#">Salir</a>
+		</li>
+		
+	  </ul>
+	</nav>
+	
+	<!-- Fin header  -->
+    {% block content %}
+	
+	<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+      <div class="col-md-5 p-lg-5 mx-auto my-5">
+        <h1 class="display-4 font-weight-normal">Votaciones UCA</h1>
+        <p class="lead font-weight-normal">Página para realizar votaciones en el ambito de la UCA.</p>
+        <a class="btn btn-outline-secondary" href="#">Empieza</a>
+      </div>
+      <div class="product-device box-shadow d-none d-md-block"></div>
+      <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
+    </div>
+
+    <div class="d-flex justify-content-between  w-100 my-md-4 pl-md-4">
+      <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+        <div class="my-3 p-3">
+          <h2 class="display-5">Votaciones Recientes</h2>
+          <p>Valoracion de las votaciones Recientes.</p>
+        </div>
+      </div>
+      <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+        <div class="my-3 py-3">
+          <h2 class="display-5">Últimas noticias </h2>
+          <p>Votacion a Rectorado de la Universidad</p>
+		  <br>
+		  <p>Votacion para delegado GII 19/20</p>
+		  <br>
+        </div>
+      </div>
+	  <!--
+	  <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+        <div class="my-3 p-3">
+          <h2 class="display-5">Votaciones Recientes</h2>
+          <p>Valoracion de las votaciones Recientes.</p>
+        </div>
+      </div>
+	   -->
+    </div>
+	
+	
+    {% endblock %}
+	<!-- Footer  -->
+	
+	<footer class="footer-area footer--light">
+	  <div class="footer-big">
+		<!-- start .container -->
+		<div class="container">
+		  <div class="row">
+			<div class="col-md-3 col-sm-12">
+			  <div class="footer-widget">
+				<div class="widget-about">
+				  <img src="http://www.coglobal.es/wp-content/uploads/2017/03/sponsor-uca.png" alt="" class="img-fluid">
+				  <p>Web de votaciones para la UCA</p>
+				  <ul class="contact-details">
+					<li>
+					  <span class="icon-envelope-open"></span>
+					  <a href="mailto:#">email de contacto</a>
+					</li>
+				  </ul>
+				</div>
+			  </div>
+			  <!-- Ends: .footer-widget -->
+			</div>
+			<!-- end /.col-md-4 -->
+			<div class="col-md-3 col-sm-4">
+			  <div class="footer-widget">
+				<div class="footer-menu footer-menu--1">
+				  <h4 class="footer-widget-title">Páginas de Interes</h4>
+				  <ul>
+					<li>
+					  <a href="https://www.uca.es/">UCA</a>
+					</li>
+					<li>
+					  <a href="https://github.com/joaquinpco/Votaciones-Pinf-19">GitHub</a>
+					</li>
+					<li>
+					  <a href="https://pinfvot.herokuapp.com/">Heroku</a>
+					</li>
+				  </ul>
+				</div>
+				<!-- end /.footer-menu -->
+			  </div>
+			  <!-- Ends: .footer-widget -->
+			</div>
+			<!-- end /.col-md-3 -->
+
+			<div class="col-md-3 col-sm-4">
+			  <div class="footer-widget">
+				<div class="footer-menu">
+				  <h4 class="footer-widget-title">La compañia</h4>
+				  <ul>
+					<li>
+					  <a href="#">Sobre nosotros</a>
+					</li>
+					<li>
+					  <a href="#">Contactanos</a>
+					</li>
+				  </ul>
+				</div>
+				<!-- end /.footer-menu -->
+			  </div>
+			  <!-- Ends: .footer-widget -->
+			</div>
+			<!-- end /.col-lg-3 -->
+
+			<div class="col-md-3 col-sm-4">
+			  <div class="footer-widget">
+				<div class="footer-menu no-padding">
+				  <h4 class="footer-widget-title">Soporte</h4>
+				  <ul>
+					<li>
+					  <a href="#">Guia Rápida</a>
+					</li>
+					<li>
+					  <a href="#">Foro de Ayuda</a>
+					</li>
+					<!-- repetir estructura li para añadir mas-->
+				  </ul>
+				</div>
+				<!-- end /.footer-menu -->
+			  </div>
+			  <!-- Ends: .footer-widget -->
+			</div>
+			<!-- Ends: .col-lg-3 -->
+
+		  </div>
+		  <!-- end /.row -->
+		</div>
+		<!-- end /.container -->
+	  </div>
+	  <!-- end /.footer-big -->
+
+	  <div class="mini-footer">
+		<div class="container">
+		  <div class="row">
+			<div class="col-md-12">
+			  <div class="copyright-text">
+				<p>© 2019
+				  <a href="#">Votaciones UCA</a>. All rights reserved.
+				</p>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</footer>
+	
+	<!-- Fin Footer  -->
+    <!-- Requisitos para bootstrap 4 y js  -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+  
+</html>
