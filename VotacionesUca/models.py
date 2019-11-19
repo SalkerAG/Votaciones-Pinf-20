@@ -14,14 +14,14 @@ class tipoV(Enum):
 class ProcesoElectoral(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateField(auto_now=True)
-    esConsulta = models.BooleanField(default=True)
-   # fechaInicio = forms.DateField(input_formats=settings.DATE_INPUT_FORMATS)
-   # fechaFin = forms.DateField(input_formats=settings.DATE_INPUT_FORMATS)
-    nombreFicheroCenso = models.TextField
+    esConsulta = models.BooleanField(default=False)
+   # fechaInicio CREAR FECHA TIPO DATE_TIME
+   # fechaFin CREAR FECHA TIPO DATE_TIME
+    nombreFicheroCenso = models.TextField()
 
 class Pregunta(models.Model):
-    enunciado = models.CharField(max_length=50, blank=False, null=False, unique=True)
-    opciones = models.TextField
+    enunciado = models.CharField(max_length=50, null=False, unique=True)
+    opciones = models.TextField()
 
 class Votacione(models.Model):
     proceso = models.OneToOneField(ProcesoElectoral, on_delete=models.PROTECT, primary_key=True)
