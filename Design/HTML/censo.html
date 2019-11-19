@@ -48,48 +48,86 @@
 
 	<!-- Fin header  -->
     {% block content %}
-
-
     <div id="censo" align='center'>
     <h1 id="censo" > <strong> Censando una votacion </h1>
     </div>
-    <div id="votacion" align='center'>
-      <h2 id="votacion"><strong> $NombreVotacion </h1>
-    </div>
-    <form class="censo" action="index.html" method="post">
-      <div class="elecnombres" text-align='center'>
-        <select name='usuarios' size='$vector1' multiple>
-          <option value="$user1" >Nombre Apellidos</option>
-          <option value="$user2" >Nombre Apellidos</option>
-          <option value="$user3" >Nombre Apellidos</option>
-        <input type="submit" value="Guardar eleccion">
-      </div>
-    </form>
+
+          <div id="votacion" align='center'>
+            <h2 id="votacion"><strong> $NombreVotacion </h1>
+          </div>
 
 
-  <aside class="titulodescripcenso">
-    <h5>Descripcion de la votacion que censar:</h5>
-    <div class="descripcenso">
-      <p><br>$descripciondelcenso</p>
-    </div>
-  </aside>
+
+
+          <div class="elecnombres">
+          <form class="censo" action="index.html" method='post'>
+            <div class="selec" align='center'>
+              <select name='usuarios' style="width:300px" size='$vector1' multiple>
+                <option value="$user1" >Nombre Apellidos</option>
+                <option value="$user2" >Nombre Apellidos</option>
+                <option value="$user3" >Nombre Apellidos</option>
+            </div>
+        </form>
+        </div>
+
+        <div class="submit" align='center'>
+          <input type="submit" value="Guardar eleccion">
+        </div>
+
+        <div class="rowDes">
+        		<div class="col-md-4">
+                <div class="descripcenso" align='center' >
+                    <h6>Descripcion de la votacion que censar:</h6>
+                    <div class="descrip">
+                      <p><br>$descripciondelcenso</p>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+
+
+
 
     {% endblock %}
 	<!-- Footer  -->
-  <footer class="contacto" align="center">
-    <h5>Contactenos</h5>
-    <form action="envio de datos" method="post">
-    <div>
-        <label for="name"  >Name: <br></label>
-        <input type="text" id="name" />
-        <label for="mail">E-mail:<br></label>
-        <input type="email" id="mail" />
-        <label for="msg">Message:<br></label>
-        <textarea id="contactmsg"></textarea>
+  <footer>
+  <div class="container-fluid" text-align="center">
+	<div class="row">
+		<div class="col-contacto">
+			<form role="Formulariocontacto">
+				<div class="Contacto">
+          <h5><strong>Contacto</h5>
+          <div class="form-group">
 
-    <input type="submit"  value="Enviar comentario">
-  </div>
-</form>
+            <label for="nombreContact">
+              Nombre
+            </label>
+            <input type="nombre" class="form-control" id="exampleInputNombre" />
+          </div>
+
+					<label for="emailContacto">
+						Email address:
+					</label>
+					<input type="email" class="form-control" id="exampleInputEmail1" />
+				</div>
+        <div><br></div>
+
+        <div>
+          <textarea title="Comentario-o-pregunta">Escriba aquí...</textarea>
+			  <div class="checkbox"
+					<label>
+						<input type="checkbox" /> No eres un robot
+					</label>
+				</div>
+				<button type="submit" class="btn btn-primary">
+					Enviar
+				</button>
+			</form>
+		</div>
+	</div>
+</div>
+</div>
 </footer>
 	<!-- Fin Footer  -->
     <!-- Requisitos para bootstrap 4 y js  -->
@@ -106,7 +144,6 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  </body>
 
 </html>
 </html>

@@ -1,3 +1,29 @@
-.elecnombres{
-  text-align: center;
+body {
+    background: #dfe6e9;
+    font-family: 'Courier New', Courier, monospace;
+    line-height : 25px;
+
+}
+
+.selec{
+  position: relative;
+  bottom: -20px;
+  right: -85px;
+}
+
+.container-fluid{
+  position: relative;
+  bottom: -200px;
+  left: 10px;
+}
+
+.rowDes{
+  left: 600px;
+  position: relative;
+  bottom:-40px;
+}
+
+.submit{
+  position: relative;
+
 }
