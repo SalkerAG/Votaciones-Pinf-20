@@ -1,17 +1,17 @@
 <!doctype html>
-<html lang="es">
+<html>
 
   <head>
     <!-- Movil y teclado -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+	<link rel="stylesheet" type="text/css" href="footer.css">
     <!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
+	
     <title>Votaciones UCA</title>
   </head>
-
+  
   <body>
 	<!-- header  -->
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
@@ -23,7 +23,7 @@
 		<li class="nav-item">
 		  <a class="nav-link" href="#">Inicio</a>
 		</li>
-
+		
 		<!-- Dropdown -->
 		<li class="nav-item dropdown">
 		  <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Votaciones</a>
@@ -33,95 +33,207 @@
 			<a class="dropdown-item" href="#">Crear Votación</a>
 		  </div>
 		</li>
-
+		
 		<li class="nav-item">
 		  <a class="nav-link" href="#">Ayuda</a>
 		</li>
-
-		<li class="nav-item navbar-item-right">
-		  <a class="nav-link float-right" href="#">Ayuda</a>
+		
+		<li class="nav-item nav-item-right">
+			<a class="nav-link float-right" href="#">Salir</a>
 		</li>
+		
 	  </ul>
 	</nav>
-  <div class="container text-center py-5">
-    <h1 class="display-12">Votacion: Presupuestos </h1>
-  </div>
+	
 	<!-- Fin header  -->
-  <div class="container">
-    <div class="centered">
-      <div class="row justify-content-md-center">
-        <div class="col-4 ">
-          <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#aFavorModalCenter">A favor</a>
-            <a href="#" class="list-group-item list-group-item-action"data-toggle="modal" data-target="#enContraModalCenter">En contra</a>
-            <a href="#" class="list-group-item list-group-item-action"data-toggle="modal" data-target="#abstencionModalCenter">Abstención</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+    {% block content %}
+	
+	<div class="container text-center py-5">
+		<h1 class="display-12">Votacion: Presupuestos </h1>
+	</div>
+	
+	<div class="container">
+		<div class="centered">
+		  <div class="row justify-content-md-center">
+			<div class="col-4 ">
+			  <div class="list-group">
+				<a href="#" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#aFavorModalCenter">A favor</a>
+				<a href="#" class="list-group-item list-group-item-action"data-toggle="modal" data-target="#enContraModalCenter">En contra</a>
+				<a href="#" class="list-group-item list-group-item-action"data-toggle="modal" data-target="#abstencionModalCenter">Abstención</a>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	</div>
 
-  <div class="modal fade" id="aFavorModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">¿Confirmar Voto a favor?</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Al confirmar se enviará el voto.
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Enviar</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
-  </div>
-</div>
+	<div class="modal fade" id="aFavorModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLongTitle">¿Confirmar Voto a favor?</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			Al confirmar se enviará el voto.
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-primary">Enviar</button>
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
 
 
-<div class="modal fade" id="enContraModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLongTitle">¿Confirmar Voto en contra?</h5>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      Al confirmar se enviará el voto.
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-primary">Enviar</button>
-      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-    </div>
-  </div>
-</div>
-</div>
+	<div class="modal fade" id="enContraModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" id="exampleModalLongTitle">¿Confirmar Voto en contra?</h5>
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+		<div class="modal-body">
+		  Al confirmar se enviará el voto.
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-primary">Enviar</button>
+		  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+		</div>
+	  </div>
+	</div>
+	</div>
 
-<div class="modal fade" id="abstencionModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLongTitle">¿Confirmar Voto en contra?</h5>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      Al confirmar se enviará el voto.
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-primary">Enviar</button>
-      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-    </div>
-  </div>
-</div>
-</div>
+	<div class="modal fade" id="abstencionModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLongTitle">¿Confirmar Voto en contra?</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+			  Al confirmar se enviará el voto.
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-primary">Enviar</button>
+			  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+			</div>
+		  </div>
+		</div>
+	</div>
+	
+    {% endblock %}
 	<!-- Footer  -->
+	
+	<footer class="footer-area footer--light">
+	  <div class="footer-big">
+		<!-- start .container -->
+		<div class="container">
+		  <div class="row">
+			<div class="col-md-3 col-sm-12">
+			  <div class="footer-widget">
+				<div class="widget-about">
+				  <img src="http://www.coglobal.es/wp-content/uploads/2017/03/sponsor-uca.png" alt="" class="img-fluid">
+				  <p>Web de votaciones para la UCA</p>
+				  <ul class="contact-details">
+					<li>
+					  <span class="icon-envelope-open"></span>
+					  <a href="mailto:#">email de contacto</a>
+					</li>
+				  </ul>
+				</div>
+			  </div>
+			  <!-- Ends: .footer-widget -->
+			</div>
+			<!-- end /.col-md-4 -->
+			<div class="col-md-3 col-sm-4">
+			  <div class="footer-widget">
+				<div class="footer-menu footer-menu--1">
+				  <h4 class="footer-widget-title">Páginas de Interes</h4>
+				  <ul>
+					<li>
+					  <a href="https://www.uca.es/">UCA</a>
+					</li>
+					<li>
+					  <a href="https://github.com/joaquinpco/Votaciones-Pinf-19">GitHub</a>
+					</li>
+					<li>
+					  <a href="https://pinfvot.herokuapp.com/">Heroku</a>
+					</li>
+				  </ul>
+				</div>
+				<!-- end /.footer-menu -->
+			  </div>
+			  <!-- Ends: .footer-widget -->
+			</div>
+			<!-- end /.col-md-3 -->
+
+			<div class="col-md-3 col-sm-4">
+			  <div class="footer-widget">
+				<div class="footer-menu">
+				  <h4 class="footer-widget-title">La compañia</h4>
+				  <ul>
+					<li>
+					  <a href="#">Sobre nosotros</a>
+					</li>
+					<li>
+					  <a href="#">Contactanos</a>
+					</li>
+				  </ul>
+				</div>
+				<!-- end /.footer-menu -->
+			  </div>
+			  <!-- Ends: .footer-widget -->
+			</div>
+			<!-- end /.col-lg-3 -->
+
+			<div class="col-md-3 col-sm-4">
+			  <div class="footer-widget">
+				<div class="footer-menu no-padding">
+				  <h4 class="footer-widget-title">Soporte</h4>
+				  <ul>
+					<li>
+					  <a href="#">Guia Rápida</a>
+					</li>
+					<li>
+					  <a href="#">Foro de Ayuda</a>
+					</li>
+					<!-- repetir estructura li para añadir mas-->
+				  </ul>
+				</div>
+				<!-- end /.footer-menu -->
+			  </div>
+			  <!-- Ends: .footer-widget -->
+			</div>
+			<!-- Ends: .col-lg-3 -->
+
+		  </div>
+		  <!-- end /.row -->
+		</div>
+		<!-- end /.container -->
+	  </div>
+	  <!-- end /.footer-big -->
+
+	  <div class="mini-footer">
+		<div class="container">
+		  <div class="row">
+			<div class="col-md-12">
+			  <div class="copyright-text">
+				<p>© 2019
+				  <a href="#">Votaciones UCA</a>. All rights reserved.
+				</p>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</footer>
+	
 	<!-- Fin Footer  -->
     <!-- Requisitos para bootstrap 4 y js  -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -129,5 +241,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   </body>
-
+  
 </html>
