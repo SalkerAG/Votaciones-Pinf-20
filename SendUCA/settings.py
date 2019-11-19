@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'UsuarioUca.apps.UsuarioucaConfig'
+    'UsuarioUca.apps.UsuarioucaConfig',
+    'VotacionesUca.apps.VotacionesucaConfig',
 ]
 
 MIDDLEWARE = [
@@ -121,3 +122,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+#Definimos el formato fecha:
+DATE_INPUT_FORMATS = ('%d-%m-%Y','%Y-%m-%d',)

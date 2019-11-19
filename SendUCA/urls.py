@@ -15,7 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from VotacionesUca.views import votacionSimple
+from VotacionesUca.views import votacionSimple,votacionCompleja, elegirVotacion
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/',admin.site.urls),
+    path('elegirVotacion/votacionS/',votacionSimple),
+    path('elegirVotacion/votacionC/',votacionCompleja),
+    path('elegirVotacion/',elegirVotacion),
 ]
