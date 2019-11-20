@@ -1,0 +1,49 @@
+body {
+    background: #dfe6e9;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+
+.primera {
+  background: #ff9c33;
+  border: 2px solid black;
+}
+
+.segunda{
+  border: 2px solid black;
+
+}
+
+.feed{
+  align-items: center;
+  width: 30%;
+}
+
+
+
+.buttonup{
+
+  background-color: #FFFFFF;
+  background-image: url(img/up.svg) ;
+  background-repeat:no-repeat;
+  height:40px;
+  width:40px;
+  border-radius: 20%;
+
+}
+.buttonup:hover {
+  box-shadow: 0 6px 6px 0 rgba(0,0,0,0.24), 0 10px 12px 0 rgba(0,0,0,0.19);
+}
+
+
+.buttondown{
+  background-color: #FFFFFF;
+  background-image: url(img/down.svg) ;
+
+  height:40px;
+  width:40px;
+  border-radius: 20%;
+}
+.buttondown:hover {
+  box-shadow: 0 6px 6px 0 rgba(0,0,0,0.24), 0 10px 12px 0 rgba(0,0,0,0.19);
+}
