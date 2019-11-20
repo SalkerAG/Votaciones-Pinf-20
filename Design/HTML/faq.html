@@ -8,6 +8,15 @@
 	<link rel="stylesheet" type="text/css" href="faq.css">
     <!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script type="text/javascript">
+
+    //EVENTOS EN javascript
+    function puntuado()
+    {
+        alert("Gracias por darnos tu opinión");
+
+    }
+    </script>
 
     <title>Votaciones UCA</title>
   </head>
@@ -164,30 +173,6 @@
 <p><br></p>
 
 
-<div class="container">
-  <div class="row">
-    <div class="col-sm-4" >
-
-      <div class="p-3 mb-0 text-black primera">
-
-        <p class="text-center"><strong>¿Cómo elimino una votación?</strong></p>
-
-      </div>
-
-    </div>
-    <div class="col-sm-8">
-
-      <div class="p-3 mb-0 bg-primary text-white segunda">
-      <p class="text-center">Para eliminar una votación debe de usted ser secretario electoral. SenUca le facilita una herramienta en la pestaña de Eliminar Votación en la cual escoge una votacion para eliminar. </p>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-
-
-
 
 
 
@@ -201,15 +186,19 @@
 
 <p><br></p>
 
-<div class="container feed" align="center">
+<div class="container feed" style="width: 15%" align="center">
   <div class="row" >
-    <div class="col" >
+    <div class="col mb-2" >
       <h6> ¿Te ha sido útil esta información?</h6>
-        <input type="button" class="buttonup" value=""/>
-        <input type="button" class="buttondown" value=""/>
+
+        <input type="button"  class="buttonup" onclick="puntuado()">
+
+        <input type="button" class="buttondown" onclick="puntuado()">
+
       </div>
   </div>
 </div>
+
     {% endblock %}
 	<!-- Footer  -->
 
