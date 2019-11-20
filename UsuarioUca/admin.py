@@ -1,13 +1,14 @@
 # users/admin.py
 from django.contrib import admin
-from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
+import tablib
+from import_export.admin import ImportExportModelAdmin
 
 from .forms import CustomUserCreationForm, CustomUserChangeForm, UserLoginForm
 from .models import UsuarioUca, Profesor, PASS, Estudiante
 
 
-class UsuarioUcaAdmin(UserAdmin):
+class UsuarioUcaAdmin(ImportExportModelAdmin, UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = UsuarioUca
@@ -33,14 +34,18 @@ class UsuarioUcaAdmin(UserAdmin):
     )
     list_display = ('nif', 'first_name', 'last_name', 'email')
 
-class EstudianteAdmin(admin.ModelAdmin):
+
+class EstudianteAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_display = ('user', 'curso_max')
 
-class PASSAdmin(admin.ModelAdmin):
+
+class PASSAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_display = ('user',)
 
-class ProfesorAdmin(admin.ModelAdmin):
+
+class ProfesorAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_display = ('user', 'permanente', 'doctor')
+
 
 admin.site.register(UsuarioUca, UsuarioUcaAdmin)
 admin.site.register(Profesor, ProfesorAdmin)

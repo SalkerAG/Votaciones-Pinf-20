@@ -1,6 +1,7 @@
 django
 gunicorn
 django-heroku
+django-import-export==1.2.0
 
 # pytz==2019.3
 # sqlparse==0.3.0

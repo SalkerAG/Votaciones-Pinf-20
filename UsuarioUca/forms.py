@@ -7,11 +7,11 @@ from django.core.validators import validate_slug, validate_email
 
 
 class CustomUserCreationForm(UserCreationForm):
-    isnumericvalidator = RegexValidator(r"[1-9][0-9]*|0",
-                                        message='El NIF debe ser numérico',
-                                        code='NIF invalido')
-    nif = forms.CharField(label='NIF', max_length=8, widget=forms.TextInput(attrs={"placeholder": "Ej:32085090"}),
-                          validators=[isnumericvalidator])
+    # isnumericvalidator = RegexValidator(r"[1-9][0-9]*|0",
+    #                                     message='El NIF debe ser numérico',
+    #                                     code='NIF invalido')
+    nif = forms.CharField(label='NIF', max_length=9, widget=forms.TextInput(attrs={"placeholder": "Ej:32085090"}))
+                          # validators=[isnumericvalidator])
     email = forms.EmailField(label='Email', max_length=64, help_text="El correo debe pertener al dominio de la UCA",
                              required=True)
     first_name = forms.CharField(label="Nombre", max_length=20, required=True)
@@ -20,6 +20,13 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = UsuarioUca
         fields = '__all__'
+
+    def save(self, commit=True):
+        user = super(CustomUserCreationForm, self).save(commit=False)
+        user.nif = "u" + user.nif
+        if commit:
+            user.save()
+        return user
 
 
 class CustomUserChangeForm(UserChangeForm):
