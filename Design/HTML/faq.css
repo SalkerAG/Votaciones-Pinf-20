@@ -2,3 +2,32 @@ body {
     background: #dfe6e9;
     font-family: 'Courier New', Courier, monospace;
 }
+
+.primera {
+  background: #ff9c33;
+  border: 2px solid black;
+}
+
+.segunda{
+  border: 2px solid black;
+}
+
+.buttonup{
+  background-image: url(img/up.svg) ;
+  height:40px;
+  width:40px;
+}
+
+.buttondown{
+  background-image: url(img/down.svg) ;
+  height:40px;
+  width:40px;
+}
+
+.feed{
+  align-items: center;
+  background:  #ff9c33;
+  border: 2px solid black;
+  
+
+}
