@@ -21,6 +21,8 @@ class CustomUserCreationForm(UserCreationForm):
         model = UsuarioUca
         fields = '__all__'
 
+
+
     def save(self, commit=True):
         user = super(CustomUserCreationForm, self).save(commit=False)
         user.nif = "u" + user.nif
@@ -33,6 +35,7 @@ class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = UsuarioUca
         fields = '__all__'
+
 
 
 class UserLoginForm(AuthenticationForm):

@@ -1,16 +1,49 @@
 # users/admin.py
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-import tablib
 from import_export.admin import ImportExportModelAdmin
-
 from .forms import CustomUserCreationForm, CustomUserChangeForm, UserLoginForm
 from .models import UsuarioUca, Profesor, PASS, Estudiante
+from import_export import resources
+import re
+from django.forms import ValidationError
+import logging
+
+regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
+
+logger = logging.getLogger(__name__)
+
+
+def check(email):
+    # pass the regualar expression
+    # and the string in search() method
+    if re.search(regex, email):
+        print("Valid Email")
+        return True
+
+    else:
+        print("Invalid Email")
+        return False
+
+
+class UsuarioUcaResource(resources.ModelResource):
+    class Meta:
+        model = UsuarioUca
+
+
+    def before_import(self, dataset, using_transactions, dry_run, **kwargs):
+
+        for row in dataset:
+            email = row[13]
+            if check(email) == False:
+                raise ValidationError('Email incorrecto. '
+                                      'Error en la fila con id = %s' % row[0])
 
 
 class UsuarioUcaAdmin(ImportExportModelAdmin, UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
+    resource_class = UsuarioUcaResource
     model = UsuarioUca
     ordering = ('last_name',)
     fieldsets = (
@@ -19,6 +52,7 @@ class UsuarioUcaAdmin(ImportExportModelAdmin, UserAdmin):
         ('Permisos', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
 
     )
+
     # fieldsets = UserAdmin.fieldsets + (
     #     (None, {'fields': ()}),
     #     ('Datos de ingreso', {'fields': ('nif', 'egresado')}),
