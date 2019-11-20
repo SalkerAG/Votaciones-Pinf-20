@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'UsuarioUca.apps.UsuarioucaConfig'
+    'UsuarioUca.apps.UsuarioucaConfig',
+    'Censo'
 ]
 
 MIDDLEWARE = [
@@ -51,7 +52,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'SendUCA.urls'
+ROOT_URLCONF = 'Censo.urls'
 
 TEMPLATES = [
     {
