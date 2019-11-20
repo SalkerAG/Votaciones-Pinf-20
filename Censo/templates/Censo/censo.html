@@ -56,10 +56,13 @@
 	<br>
 	<div class="row" align="center">
 	  <div class="col-md-12">
-      <form method = "POST" action = "">
-		<select class="selectpicker" multiple title="Usuarios del censo:" data-live-search="true">
+	  <form method = "POST" action = "/censo/5">
+		{% csrf_token %}
+		<input type="text" name="pepito" value="juanito" hidden>
+		<select class="selectpicker" multiple title="Usuarios del censo:" data-live-search="true"
+		        name="usuarios">
 		      {% for usuario in usuario %}
-          <option value="$user1" >{{usuario.first_name}} {{usuario.last_name}}</option>
+          <option value="{{usuario.nif}}" >{{ usuario.nif }} {{ usuario.email }}</option>
           {% endfor %}
 		</select>
     <button class="btn-save btn btn-primary btn-sm">Guardar</button>
