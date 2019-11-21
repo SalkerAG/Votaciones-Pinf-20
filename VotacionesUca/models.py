@@ -1,8 +1,9 @@
-
 from django.db import models
 from django.utils import timezone
 from django.forms import forms
 from enum import Enum
+from datetime import datetime
+from django.forms import ModelForm
 
 def choices(em):
     return [(e.value, e.name)for e in em]
@@ -15,14 +16,14 @@ class ProcesoElectoral(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateField(auto_now=True)
     esConsulta = models.BooleanField(default=False, verbose_name='Consulta')
-   # fechaInicio CREAR FECHA TIPO DATE_TIME
-   # fechaFin CREAR FECHA TIPO DATE_TIME
+    fechaInicio = models.DateTimeField(verbose_name='Fecha Inicio del proceso electoral')
+    fechaFin = models.DateTimeField(verbose_name='Fecha Fin del proceso electoral')
     nombreFicheroCenso = models.TextField(null=True)
     class Meta:
         verbose_name='Proceso Electoral'
         verbose_name_plural='Procesos Electorales'
-    def __str__(self):
-        return self.nombreFicheroCenso[0:40]
+    def _str_(self):
+        return self.nombreFicheroCenso
 
 class Pregunta(models.Model):
     enunciado = models.CharField(max_length=50, null=False, unique=True)
@@ -31,7 +32,7 @@ class Pregunta(models.Model):
         verbose_name='Pregunta'
         verbose_name_plural='Preguntas'
     def __str__(self):
-        return self.enunciado[0:40]
+        return self.enunciado
 
 class Votacione(models.Model):
     proceso = models.OneToOneField(ProcesoElectoral, on_delete=models.PROTECT, primary_key=True)
@@ -48,6 +49,3 @@ class Votacione(models.Model):
 class Eleccion(models.Model):
     proceso = models.OneToOneField(ProcesoElectoral, on_delete=models.PROTECT, primary_key=True)
     
-
-
-
