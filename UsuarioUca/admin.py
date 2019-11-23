@@ -40,6 +40,8 @@ class UsuarioUcaResource(resources.ModelResource):
     class Meta:
         model = UsuarioUca
 
+
+    
     def before_import(self, dataset, using_transactions, dry_run, **kwargs):
 
         for row in dataset:
@@ -51,33 +53,29 @@ class UsuarioUcaResource(resources.ModelResource):
 
             if check(email) == False:
                 raise ValidationError('Email incorrecto. '
-                                      'Error en la fila con id = %s' % row[0])
+                                      'Error en la fila con nif = %s' % row[11])
             if nif == "":
                 raise ValidationError('Nif vacío. '
-                                      'Error en la fila con id = %s' % row[0])
-            if  validonifspain(nif) == False and validonifworld(nif) == False:
-
+                                      'Error en la fila con nif = %s' % row[11])
+            if validonifspain(nif) == False and validonifworld(nif) == False:
                 raise ValidationError('Nif incorrecto. '
-                                      'Error en la fila con id = %s' % row[0])
-
-
+                                      'Error en la fila con nif = %s' % row[11])
 
             if password == "":
                 raise ValidationError('Password vacío. '
-                                      'Error en la fila con id = %s' % row[0])
+                                      'Error en la fila con nif = %s' % row[11])
             if first_name == "":
                 raise ValidationError('Nombre vacío. '
-                                      'Error en la fila con id = %s' % row[0])
+                                      'Error en la fila con nif = %s' % row[11])
             if last_name == "":
                 raise ValidationError('Apellidos vacío. '
-                                      'Error en la fila con id = %s' % row[0])
+                                      'Error en la fila con nif = %s' % row[11])
             if is_number(first_name):
                 raise ValidationError('Nombre incorrecto. '
-                                      'Error en la fila con id = %s' % row[0])
+                                      'Error en la fila con nif = %s' % row[11])
             if is_number(last_name):
                 raise ValidationError('Apellidos incorrecto. '
-                                      'Error en la fila con id = %s' % row[0])
-
+                                      'Error en la fila con nif = %s' % row[11])
 
 
 class UsuarioUcaAdmin(ImportExportModelAdmin, UserAdmin):
