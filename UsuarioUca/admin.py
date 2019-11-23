@@ -55,10 +55,12 @@ class UsuarioUcaResource(resources.ModelResource):
             if nif == "":
                 raise ValidationError('Nif vacío. '
                                       'Error en la fila con id = %s' % row[0])
-            if  uvalidonifspain(nif) == False and uvalidonifworld(nif) == False:
-                print(nif)
+            if  validonifspain(nif) == False and validonifworld(nif) == False:
+
                 raise ValidationError('Nif incorrecto. '
                                       'Error en la fila con id = %s' % row[0])
+
+
 
             if password == "":
                 raise ValidationError('Password vacío. '

@@ -86,7 +86,7 @@ class UserManager(BaseUserManager):
         user = self.model(
             email=self.normalize_email(email)
         )
-        # user.nif = nif.replace(nif, "u" + nif)
+        user.nif = nif.replace(nif, "u" + nif)
         user = self.model(nif=user.nif, email=email, first_name=first_name, last_name=last_name, is_staff=is_staff,
                           is_superuser=is_superuser, is_active=is_active)
         user.set_password(password)  # change password to hash
@@ -124,7 +124,7 @@ class UsuarioUca(AbstractUser):
 
     def clean_fields(self, exclude=None):
         nif = self.nif
-        if uvalidonifspain(nif) == True or uvalidonifworld(nif) == True:
+        if validonifspain(nif) == True or validonifworld(nif) == True:
             print(nif)
             return nif
         else:
