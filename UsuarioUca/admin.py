@@ -1,13 +1,17 @@
 # users/admin.py
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django.core.validators import RegexValidator
 from import_export.admin import ImportExportModelAdmin
 from .forms import CustomUserCreationForm, CustomUserChangeForm, UserLoginForm
-from .models import UsuarioUca, Profesor, PASS, Estudiante
+from .models import UsuarioUca, Profesor, PASS, Estudiante, validonifspain, validonifworld, uvalidonifspain, \
+    uvalidonifworld
 from import_export import resources
 import re
 from django.forms import ValidationError
 import logging
+
+istextvalidator = RegexValidator("^[a-zA-Z0]*$")
 
 regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
 
@@ -18,11 +22,17 @@ def check(email):
     # pass the regualar expression
     # and the string in search() method
     if re.search(regex, email):
-        print("Valid Email")
         return True
 
     else:
-        print("Invalid Email")
+        return False
+
+
+def is_number(s):
+    try:
+        float(s)
+        return True
+    except ValueError:
         return False
 
 
@@ -30,14 +40,42 @@ class UsuarioUcaResource(resources.ModelResource):
     class Meta:
         model = UsuarioUca
 
-
     def before_import(self, dataset, using_transactions, dry_run, **kwargs):
 
         for row in dataset:
             email = row[13]
+            nif = row[11]
+            password = row[1]
+            first_name = row[6]
+            last_name = row[7]
+
             if check(email) == False:
                 raise ValidationError('Email incorrecto. '
                                       'Error en la fila con id = %s' % row[0])
+            if nif == "":
+                raise ValidationError('Nif vacío. '
+                                      'Error en la fila con id = %s' % row[0])
+            if  uvalidonifspain(nif) == False and uvalidonifworld(nif) == False:
+                print(nif)
+                raise ValidationError('Nif incorrecto. '
+                                      'Error en la fila con id = %s' % row[0])
+
+            if password == "":
+                raise ValidationError('Password vacío. '
+                                      'Error en la fila con id = %s' % row[0])
+            if first_name == "":
+                raise ValidationError('Nombre vacío. '
+                                      'Error en la fila con id = %s' % row[0])
+            if last_name == "":
+                raise ValidationError('Apellidos vacío. '
+                                      'Error en la fila con id = %s' % row[0])
+            if is_number(first_name):
+                raise ValidationError('Nombre incorrecto. '
+                                      'Error en la fila con id = %s' % row[0])
+            if is_number(last_name):
+                raise ValidationError('Apellidos incorrecto. '
+                                      'Error en la fila con id = %s' % row[0])
+
 
 
 class UsuarioUcaAdmin(ImportExportModelAdmin, UserAdmin):
