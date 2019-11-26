@@ -1,6 +1,13 @@
 from django.db import models
+from UsuarioUca.models import UsuarioUca
+from django.urls import reverse_lazy
 
 
 class Censo(models.Model):
-    id_usuario = models.CharField(max_length=8, blank=False, null=False, default=32085090, unique=True)
+    usuario = models.ManyToManyField(UsuarioUca,  blank=False, null=False)
     id_votacion = models.IntegerField()
+
+    def get_absolute_url(self):
+            return reverse_lazy('DetailCenso',  args=[str(self.id_votacion)])
+
+        

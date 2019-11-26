@@ -1,52 +1,54 @@
 from django.shortcuts import render,HttpResponse
 from django.views.decorators.csrf import csrf_protect
 from UsuarioUca.models import UsuarioUca # aqui importamos nuestra tabla a views
-import sys
-from random import seed
-from random import random
 from .models import Censo
+from django.views.generic.edit import CreateView
+from django.views.generic.detail import DetailView
+from django.urls import reverse_lazy
 
 
-@csrf_protect
-def Censo(request): # request este parametro es la peticion que ha pedido el usuario
-    #seed(1)
-    #u = UsuarioUca(
-    #    nif = '12345678',
-    #    egresado = True,
-    #    email = str(random()) + '@gmail.com'
-    #)
-    #u.save()
-    usuarios = UsuarioUca.objects.all() # metemos dichos campos en usuario
-    return render(request,"Censo/censo.html", {
-        'usuario': usuarios
-    }) # devolvemos los usuarios al template de nuestra tabla
+class CensoCreate(CreateView):
+    model = Censo
+    fields = ['usuario', 'id_votacion']
 
-def guardarCenso(request, idVotacion):
+
+class CensoDetailView(CreateView):
+    model = Censo
+    success_url = reverse_lazy('admin/')
+
+# def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['now'] = timezone.now()
+#         return context
+
+
+# @csrf_protect
+# def Censo(request): # request este parametro es la peticion que ha pedido el usuario
+   
+#     usuarios = UsuarioUca.objects.all() # metemos dichos campos en usuarios
+#     return render(request,"Censo/censo.html", {
+#         'usuario': usuarios
+#     }) # devolvemos los usuarios al template de nuestra tabla
+
+# def guardarCenso(request, idVotacion):
     
-    # Para obtener los nif de los usuarios que pueden votar en una votacion
-    # usuariosVotacionUca = Censo.objects.get(id_votacion=idVotacion)
+#     # Para obtener los nif de los usuarios que pueden votar en una votacion
+#     # usuariosVotacionUca = Censo.objects.get(id_votacion=idVotacion)
     
-    # Para obtener los atributos de los usuarios que pueden votar en una votacion
-    for uvc in usuariosVotacionUca:
-        usuarioUca = UsuarioUca.objects.get(nif = uvc.id_usuario)
+#     # Para obtener los atributos de los usuarios que pueden votar en una votacion
+#     for uvc in usuariosVotacionUca:
+#         usuarioUca = UsuarioUca.objects.get(nif = uvc.id_usuario)
 
-    if request.method=='POST':
-        if request.POST['usuariosVotacion']:
-            for nif in request.POST['usuariosVotacion']:
-                c = Censo(
-                    id_usuario = nif,
-                    id_votacion = idVotacion
-                )
-                c.save()
+#     if request.method=='POST':
+#         if request.POST['usuariosVotacion']:
+#             for nif in request.POST['usuariosVotacion']:
+#                 c = Censo(
+#                     id_usuario = nif,
+#                     id_votacion = idVotacion
+#                 )
+#                 c.save()
 
-    nombre_usuario = ''
-    #print('Value %s' % (nombre_usuario) )
-        #for key, value in request.POST.items():
-        #    print('Key: %s' % (key) )
-        #    print('Value %s' % (value) )
+#     nombre_usuario = ''
     
-    # post = Post.objects.get(id = id)
-    
-    return render(request, "Censo/censo.html", {'posts': []})
-
+#     return render(request, "Censo/censo.html", {'posts': []})
 
