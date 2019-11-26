@@ -6,7 +6,7 @@ from import_export.admin import ImportExportModelAdmin
 from .forms import CustomUserCreationForm, CustomUserChangeForm, UserLoginForm
 from .models import UsuarioUca, Profesor, PASS, Estudiante, validonifspain, validonifworld, uvalidonifspain, \
     uvalidonifworld
-from import_export import resources
+from import_export import resources, fields
 import re
 from django.forms import ValidationError
 import logging
@@ -19,8 +19,6 @@ logger = logging.getLogger(__name__)
 
 
 def check(email):
-    # pass the regualar expression
-    # and the string in search() method
     if re.search(regex, email):
         return True
 
@@ -40,42 +38,56 @@ class UsuarioUcaResource(resources.ModelResource):
     class Meta:
         model = UsuarioUca
 
+    # def before_export(self, queryset, *args, **kwargs):
+    #     data = UsuarioUcaResource().export(queryset)
+    #     data.csv
 
-    
+    def export(self, queryset=None, *args, **kwargs):
+        # for user in queryset:
+        #     user.nif = user.nif.replace("u", "")
+        users = UsuarioUca.objects.all()
+        for user in users:
+            user.nif = user.nif.replace("u", "")
+        for _ in queryset:
+            print(_)
+        return super(UsuarioUcaResource, self).export(queryset, *args, **kwargs)
+
     def before_import(self, dataset, using_transactions, dry_run, **kwargs):
 
         for row in dataset:
             email = row[13]
             nif = row[11]
+            nif = nif.replace("u", "")
             password = row[1]
             first_name = row[6]
             last_name = row[7]
 
-            if check(email) == False:
-                raise ValidationError('Email incorrecto. '
-                                      'Error en la fila con nif = %s' % row[11])
-            if nif == "":
-                raise ValidationError('Nif vacío. '
-                                      'Error en la fila con nif = %s' % row[11])
-            if validonifspain(nif) == False and validonifworld(nif) == False:
-                raise ValidationError('Nif incorrecto. '
-                                      'Error en la fila con nif = %s' % row[11])
+        if check(email) == False:
+            raise ValidationError('Email incorrecto. '
+                                  'Error en la fila con nif = %s' % row[11])
+        if nif == "":
+            raise ValidationError('Nif vacío. '
+                                  'Error en la fila con nif = %s' % row[11])
+        if validonifspain(nif) == False and validonifworld(nif) == False:
+            raise ValidationError('Nif incorrecto. '
+                                  'Error en la fila con nif = %s' % row[11])
 
-            if password == "":
-                raise ValidationError('Password vacío. '
-                                      'Error en la fila con nif = %s' % row[11])
-            if first_name == "":
-                raise ValidationError('Nombre vacío. '
-                                      'Error en la fila con nif = %s' % row[11])
-            if last_name == "":
-                raise ValidationError('Apellidos vacío. '
-                                      'Error en la fila con nif = %s' % row[11])
-            if is_number(first_name):
-                raise ValidationError('Nombre incorrecto. '
-                                      'Error en la fila con nif = %s' % row[11])
-            if is_number(last_name):
-                raise ValidationError('Apellidos incorrecto. '
-                                      'Error en la fila con nif = %s' % row[11])
+        if password == "":
+            raise ValidationError('Password vacío. '
+                                  'Error en la fila con nif = %s' % row[11])
+        if first_name == "":
+            raise ValidationError('Nombre vacío. '
+                                  'Error en la fila con nif = %s' % row[11])
+        if last_name == "":
+            raise ValidationError('Apellidos vacío. '
+                                  'Error en la fila con nif = %s' % row[11])
+
+        # if is_number(first_name):
+        #     raise ValidationError('Nombre incorrecto. '
+        #                           'Error en la fila con nif = %s' % row[11])
+        # if is_number(last_name):
+        #     raise ValidationError('Apellidos incorrecto. '
+        #                           'Error en la fila con nif = %s' % row[11])
 
 
 class UsuarioUcaAdmin(ImportExportModelAdmin, UserAdmin):
