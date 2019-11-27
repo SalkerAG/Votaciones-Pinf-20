@@ -46,18 +46,19 @@ class UsuarioUcaResource(resources.ModelResource):
         # for user in queryset:
         #     user.nif = user.nif.replace("u", "")
         users = UsuarioUca.objects.all()
-        for user in users:
+        qs = list(queryset)
+        for user in qs:
             user.nif = user.nif.replace("u", "")
-        for _ in queryset:
-            print(_)
-        return super(UsuarioUcaResource, self).export(queryset, *args, **kwargs)
 
-    def before_import(self, dataset, using_transactions, dry_run, **kwargs):
+        return super(UsuarioUcaResource, self).export(qs, *args, **kwargs)
+
+    def before_import(self, dataset, using_transactions, dry_run=True, **kwargs):
 
         for row in dataset:
             email = row[13]
             nif = row[11]
-            nif = nif.replace("u", "")
+            nif = "u" + nif
+            print (nif)
             password = row[1]
             first_name = row[6]
             last_name = row[7]
@@ -68,9 +69,9 @@ class UsuarioUcaResource(resources.ModelResource):
         if nif == "":
             raise ValidationError('Nif vacío. '
                                   'Error en la fila con nif = %s' % row[11])
-        if validonifspain(nif) == False and validonifworld(nif) == False:
-            raise ValidationError('Nif incorrecto. '
-                                  'Error en la fila con nif = %s' % row[11])
+        # if validonifspain(nif) == False and validonifworld(nif) == False:
+        #     raise ValidationError('Nif incorrecto. '
+        #                           'Error en la fila con nif = %s' % row[11])
 
         if password == "":
             raise ValidationError('Password vacío. '
@@ -88,6 +89,16 @@ class UsuarioUcaResource(resources.ModelResource):
         # if is_number(last_name):
         #     raise ValidationError('Apellidos incorrecto. '
         #                           'Error en la fila con nif = %s' % row[11])
+
+        ds = list(dataset)
+        nif = 3
+        t = UsuarioUca.objects.get(id=14)
+        # ds.clear()
+        # ds.nif = 3
+        t = 3
+        t.save()
+
+        return super(UsuarioUcaResource, self).before_import(ds, using_transactions, dry_run=True, **kwargs)
 
 
 class UsuarioUcaAdmin(ImportExportModelAdmin, UserAdmin):
