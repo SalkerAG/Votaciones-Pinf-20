@@ -34,6 +34,7 @@ def is_number(s):
         return False
 
 
+
 class UsuarioUcaResource(resources.ModelResource):
     class Meta:
         model = UsuarioUca
@@ -45,20 +46,29 @@ class UsuarioUcaResource(resources.ModelResource):
     def export(self, queryset=None, *args, **kwargs):
         # for user in queryset:
         #     user.nif = user.nif.replace("u", "")
-        users = UsuarioUca.objects.all()
+        # users = UsuarioUca.objects.all()
+
         qs = list(queryset)
+        print(qs)
         for user in qs:
             user.nif = user.nif.replace("u", "")
+
 
         return super(UsuarioUcaResource, self).export(qs, *args, **kwargs)
 
     def before_import(self, dataset, using_transactions, dry_run=True, **kwargs):
 
+        # def replace_row(row_index, row_dict):
+        #
+        #     del dataset[row_index]
+        #     dataset.insert(row_index, row_dict.values())
+
         for row in dataset:
             email = row[13]
             nif = row[11]
-            nif = "u" + nif
-            print (nif)
+            # nif = "u" + nif
+            # row[11] = nif
+            # print(nif)
             password = row[1]
             first_name = row[6]
             last_name = row[7]
@@ -90,15 +100,46 @@ class UsuarioUcaResource(resources.ModelResource):
         #     raise ValidationError('Apellidos incorrecto. '
         #                           'Error en la fila con nif = %s' % row[11])
 
-        ds = list(dataset)
-        nif = 3
-        t = UsuarioUca.objects.get(id=14)
-        # ds.clear()
-        # ds.nif = 3
-        t = 3
-        t.save()
+        # for row_index, row_values in enumerate(dataset):
+        #     row = dict(zip(dataset.headers, row_values))
+        #     if  row['nif']:
+        #
+        #         print (nif)
+        #     replace_row(row_index, row)
+        #
+        def replace_row(row_index, row_dict):
+            """'pop' for specific index number within dataset, followed by insertion of new 'row' values"""
+            del dataset[row_index]
+            dataset.insert(row_index, row_dict.values())
 
-        return super(UsuarioUcaResource, self).before_import(ds, using_transactions, dry_run=True, **kwargs)
+        for row_index, row_values in enumerate(dataset):
+            row = dict(zip(dataset.headers, row_values))
+            if not row['nif'].__contains__("u"):
+                row['nif'] = "u" + row['nif']
+                replace_row(row_index, row)
+        # ds = list(dataset)
+        # for row in ds:
+        #     row = list(row)
+        #
+        # print(type(ds[0]))
+        # print(ds[0][11])
+        # # print (ds[0])
+        #
+        # for _ in ds:
+        #     ds[0][11] = "u" + ds[0][11]
+
+
+        # # ds[11] = 4
+        # for user in ds:
+        #     user = list(user)
+        #     user[11] = '3'
+        #     user = tuple(user)
+        #     print (user[11])
+
+
+        # print(ds)
+        return super(UsuarioUcaResource, self).before_import(dataset, using_transactions, dry_run=True, **kwargs)
+
 
 
 class UsuarioUcaAdmin(ImportExportModelAdmin, UserAdmin):
