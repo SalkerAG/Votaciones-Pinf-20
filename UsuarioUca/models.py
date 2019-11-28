@@ -22,8 +22,8 @@ def uvalidonifworld(nif):
     numeros = "1234567890"
 
     if len(nif) == 10:
-        dig_control = nif[9]
-        nif = nif[:9]
+        # dig_control = nif[9]
+        nif = nif[:10]
         print (nif[0])
 
         if nif[0] in dig_ext:
@@ -39,8 +39,8 @@ def uvalidonifspain(nif):
     numeros = "1234567890"
 
     if len(nif) == 9:
-        dig_control = nif[8]
-        nif = nif[:8]
+        # dig_control = nif[8]
+        nif = nif[:9]
         if nif[0] in dig_ext:
             nif = nif.replace(nif[0], reemp_dig_ext[nif[0]])
 
@@ -54,8 +54,8 @@ def validonifworld(nif):
     numeros = "1234567890"
 
     if len(nif) == 9:
-        dig_control = nif[8]
-        nif = nif[:8]
+        # dig_control = nif[8]
+        nif = nif[:9]
         if nif[0] in dig_ext:
             nif = nif.replace(nif[0], reemp_dig_ext[nif[0]])
         return len(nif) == len([n for n in nif if n in numeros]) \
@@ -67,8 +67,8 @@ def validonifspain(nif):
     numeros = "1234567890"
 
     if len(nif) == 8:
-        dig_control = nif[7]
-        nif = nif[:7]
+        # dig_control = nif[7]
+        nif = nif[:8]
 
 
         return len(nif) == len([n for n in nif if n in numeros]) \
