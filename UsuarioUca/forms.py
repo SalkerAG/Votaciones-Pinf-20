@@ -7,7 +7,11 @@ from django.core.validators import validate_slug, validate_email
 
 istextvalidator = RegexValidator("^[a-zA-Z0]*$",
                                  message='El Nombre no debe contener números',
-                                 code='Nombre invalido')
+                                 code='Nombre/Apellido invalido')
+isemailvalidator = RegexValidator("^\w+([\.-]?\w+)*@alum.uca.es",
+                                  message='El email debe pertenecer al dominio de la UCA',
+                                  code='Email invalido')
+
 
 # isnumericvalidator = RegexValidator(r"[1-9][0-9]*|0",
 #                                     message='El NIF debe ser numérico',
@@ -17,12 +21,12 @@ istextvalidator = RegexValidator("^[a-zA-Z0]*$",
 class CustomUserCreationForm(UserCreationForm):
 
 
-    nif = forms.CharField(label='NIF', max_length=10, widget=forms.TextInput(attrs={"placeholder": "Ej:32085090"}))
+    nif = forms.CharField(label='NIF', max_length=9, widget=forms.TextInput(attrs={"placeholder": "Ej:32085090"}))
     # validators=[isnumericvalidator])
     email = forms.EmailField(label='Email', max_length=64, help_text="El correo debe pertener al dominio de la UCA",
-                             required=True)
-    first_name = forms.CharField(label="Nombre", max_length=20, required=True, validators=[istextvalidator])
-    last_name = forms.CharField(label="Apellidos", max_length=64, required=True, validators=[istextvalidator])
+                             required=True, validators=[isemailvalidator])
+    first_name = forms.CharField(label="Nombre", max_length=20,min_length= 2, required=True, validators=[istextvalidator])
+    last_name = forms.CharField(label="Apellidos", max_length=64, min_length=2, required=True, validators=[istextvalidator])
 
     class Meta:
         model = UsuarioUca
@@ -37,18 +41,29 @@ class CustomUserCreationForm(UserCreationForm):
 
 
 class CustomUserChangeForm(UserChangeForm):
+    email = forms.EmailField(label='Email', max_length=64,
+                             required=True)
+    nif = forms.CharField(label = "Nif", required= True, max_length = 10)
     first_name = forms.CharField(label="Nombre", max_length=20, required=True, validators=[istextvalidator])
-    last_name = forms.CharField(label="Apellidos", max_length=64, required=True, validators=[istextvalidator])
+    last_name = forms.CharField(label="Apellidos", max_length=64, required=True)
     class Meta:
         model = UsuarioUca
         fields = '__all__'
 
+
+
+
     def save(self, commit=True):
         user = super(CustomUserChangeForm, self).save(commit=False)
-        user.nif = "u" + user.nif
+        if user.nif[1] == 'u':
+            raise forms.ValidationError("Nif incorrecto")
+        if not user.nif.__contains__("u"):
+            user.nif = "u" + user.nif
+
         if commit:
             user.save()
         return user
+
 
 
 

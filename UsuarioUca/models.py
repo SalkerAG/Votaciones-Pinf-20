@@ -24,6 +24,8 @@ def uvalidonifworld(nif):
     if len(nif) == 10:
         dig_control = nif[9]
         nif = nif[:9]
+        print (nif[0])
+
         if nif[0] in dig_ext:
             nif = nif.replace(nif[0], reemp_dig_ext[nif[0]])
             nif = nif.replace(nif[1], reemp_dig_ext[nif[1]])
@@ -114,7 +116,7 @@ class UsuarioUca(AbstractUser):
 
     username = None
     #default=320850900
-    first_name = models.CharField(max_length=20, blank=False, validators=[istextvalidator])
+    first_name = models.CharField(max_length=20, blank=False)
     last_name = models.CharField(max_length=30, blank=False, validators=[istextvalidator])
     nif = models.CharField(max_length=10, blank=False, null=False, unique=True)
     egresado = models.BooleanField(default=True)
@@ -123,12 +125,15 @@ class UsuarioUca(AbstractUser):
     REQUIRED_FIELDS = ['email', 'first_name', 'last_name']
 
     def clean_fields(self, exclude=None):
+
         nif = self.nif
+        # if not nif[1] == 'u':
+        nif = nif.replace("u", "")
         if validonifspain(nif) == True or validonifworld(nif) == True:
-            print(nif)
+
             return nif
         else:
-            raise forms.ValidationError("NIF INCORRECTO")
+            raise forms.ValidationError("Nif incorrecto")
 
     objects = UserManager()
 
