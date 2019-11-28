@@ -45,7 +45,7 @@ class CustomUserChangeForm(UserChangeForm):
                              required=True)
     nif = forms.CharField(label = "Nif", required= True, max_length = 10)
     first_name = forms.CharField(label="Nombre", max_length=20, required=True, validators=[istextvalidator])
-    last_name = forms.CharField(label="Apellidos", max_length=64, required=True)
+    last_name = forms.CharField(label="Apellidos", max_length=64, required=True, validators=[istextvalidator])
     class Meta:
         model = UsuarioUca
         fields = '__all__'
