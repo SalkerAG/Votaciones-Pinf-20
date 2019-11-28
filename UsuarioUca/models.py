@@ -53,7 +53,7 @@ def validonifworld(nif):
     reemp_dig_ext = {'X': '0', 'Y': '1', 'Z': '2'}
     numeros = "1234567890"
 
-    if len(nif) == 9:
+    if len(nif) == 9 and nif[0] in dig_ext:
         # dig_control = nif[8]
         nif = nif[:9]
         if nif[0] in dig_ext:
