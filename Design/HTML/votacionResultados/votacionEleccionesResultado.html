@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Material Design Bootstrap</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="css/style.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  	  <!-- Brand -->
+  	  <a class="navbar-brand" href="#">Logo</a>
+
+  	  <!-- Links -->
+  	  <ul class="navbar-nav">
+  		<li class="nav-item">
+  		  <a class="nav-link" href="#">Inicio</a>
+  		</li>
+
+  		<!-- Dropdown -->
+  		<li class="nav-item dropdown">
+  		  <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Votaciones</a>
+  		  <div class="dropdown-menu">
+  			<a class="dropdown-item" href="#">Lista de votaciones</a>
+  			<a class="dropdown-item" href="#">Votaciones finalizadas</a>
+  			<a class="dropdown-item" href="#">Crear Votación</a>
+  		  </div>
+  		</li>
+
+  		<li class="nav-item">
+  		  <a class="nav-link" href="#">Ayuda</a>
+  		</li>
+
+  		<li class="nav-item navbar-item-right">
+  		  <a class="nav-link float-right" href="#">Ayuda</a>
+  		</li>
+  	  </ul>
+  	</nav>
+
+    <div>
+      <!-- TITLE -->
+      <div class="container text-center py-5">
+        <h1 class="display-12">Resultado Elecciones: 000 </h1>
+      </div>
+
+      <!-- PIE CHART -->
+      <div class="container">
+        <div class="centered">
+          <div class="row justify-content-center">
+            <div class="col-6 ">
+              <canvas id="pieChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TABLE -->
+      <div class="container">
+        <div class="centered">
+          <div class="row justify-content-center">
+            <div class="col-6">
+              <table class="table table-bordered">
+                <tbody>
+              <tr>
+                <th scope="row">Total Electores</th>
+                <td>000</td>
+              </tr>
+
+              <tr>
+                <th scope="row">Votos a candidaturas</th>
+                <td>000</td>
+              </tr>
+
+              <tr>
+                <th scope="row">Votos en blanco</th>
+                <td>000</td>
+              </tr>
+
+              <tr>
+                <th scope="row">Votos Nulos</th>
+                <td>000</td>
+              </tr>
+
+              <tr>
+                <th scope="row">Votos totales válidos</th>
+                <td>000</td>
+              </tr>
+
+              <tr>
+                <th scope="row">Participación</th>
+                <td>0%</td>
+              </tr>
+
+              <tr>
+                <th scope="row">Abstención</th>
+                <td>0%</td>
+              </tr>
+            </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Candidato</th>
+          <th scope="col">Partido1</th>
+          <th scope="col">Partido2</th>
+          <th scope="col">Partido3</th>
+          <th scope="col">Resultado Final</th>
+          <th scope="col">Resultado %</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Candidato1</th>
+          <td>000</td>
+          <td>000</td>
+          <td>000</td>
+          <td>000</td>
+          <td>0%</td>
+        </tr>
+        <tr>
+          <th scope="row">Candidato2</th>
+          <td>000</td>
+          <td>000</td>
+          <td>000</td>
+          <td>000</td>
+          <td>0%</td>
+        </tr>
+
+        <tr class="table-active">
+          <th scope="row">Total</th>
+          <td>000</td>
+          <td>000</td>
+          <td>000</td>
+          <td>000</td>
+          <td>0%</td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    <div class="container">
+      <div class="centered">
+        <div class="row justify-content-center">
+          <div class="col-6 ">
+            <canvas id="barChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="centered">
+        <div class="row justify-content-center">
+          <div class="col-6 ">
+        <canvas id="canvas"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+  </strong>
+    </div>
+
+    <!-- Start your project here-->
+
+    <!-- /Start your project here-->
+
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+
+
+    <!-- PIE CHART JS -->
+    <script type="text/javascript">
+      //pie
+      var ctxP = document.getElementById("pieChart").getContext('2d');
+      var myPieChart = new Chart(ctxP, {
+        type: 'pie',
+        data: {
+          labels: ["Candidato1", "Candidato2", "Abstención"],
+          datasets: [{
+            data: [300, 50, 100],
+            backgroundColor: ["#46BFBD", "#F7464A", "#FDB45C"],
+            hoverBackgroundColor: ["#5AD3D1", "#FF5A5E",  "#FFC870"]
+          }]
+        },
+        options: {
+          responsive: true
+        }
+      });
+    </script>
+
+    <!-- HORIZONTAL BAR CHART JS -->
+    <script type="text/javascript">
+      var ctxB = document.getElementById("barChart").getContext('2d');
+      var myBarChart = new Chart(ctxB, {
+      type: 'horizontalBar',
+      data: {
+        labels: ["Red", "Blue"],
+        datasets: [{
+          label: 'Votos',
+          data: [47, 41],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.7)',
+            'rgba(54, 162, 235, 0.7)'
+          ],
+          borderColor: [
+            'rgba(255,99,132,1)',
+            'rgba(54, 162, 235, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: 'Resultado Elecciones'
+        },
+        scales: {
+          xAxes: [{
+          ticks: {
+            min: 0,
+            beginAtZero: true,
+          }
+          }]
+        }
+      }
+      });
+    </script>
+
+    <!-- STACKED BAR CHART JS -->
+    <script type="text/javascript">
+        window.chartColors = {
+          red: 'rgb(255, 99, 132)',
+          orange: 'rgb(255, 159, 64)',
+          yellow: 'rgb(255, 205, 86)',
+          green: 'rgb(75, 192, 192)',
+          blue: 'rgb(54, 162, 235)',
+          purple: 'rgb(153, 102, 255)',
+          grey: 'rgb(201, 203, 207)'
+        };
+
+
+        <!-- Chart -->
+        var barChartData = {
+          labels: ['Partido1', 'Partido2', 'Partido3'],
+          datasets: [{
+            label: 'Candidato1',
+            backgroundColor: window.chartColors.red,
+            data: [
+              47,
+              35,
+              95
+            ]
+          }, {
+            label: 'Candidato2',
+            backgroundColor: window.chartColors.blue,
+            data: [
+              53,
+              65,
+              5
+            ]
+          }]
+
+        };
+        window.onload = function () {
+          var ctx = document.getElementById('canvas').getContext('2d');
+          window.myBar = new Chart(ctx, {
+            type: 'horizontalBar',
+            data: barChartData,
+            options: {
+              title: {
+                display: true,
+                text: 'Resultado Elecciones %'
+              },
+              tooltips: {
+                mode: 'index',
+                intersect: false
+              },
+              responsive: true,
+              scales: {
+                xAxes: [{
+                  stacked: true,
+                }],
+                yAxes: [{
+                  min: 100, //horizontalBar has inverted x and y axis
+                  max: 100,
+                  callback: function (value) {
+                    return (value / this.max * 100).toFixed(0) + '%'; // convert it to percentage
+                  },
+                  stacked: true
+
+                }]
+              }
+            }
+          });
+        };
+    </script>
+  </body>
+
+</html>
