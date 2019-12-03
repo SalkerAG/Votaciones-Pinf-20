@@ -14,6 +14,7 @@ class CensoCreate(CreateView):
 
 class CensoDetailView(CreateView):
     model = Censo
+    fields = '__all__'
     success_url = reverse_lazy('admin/')
 
 # def get_context_data(self, **kwargs):
