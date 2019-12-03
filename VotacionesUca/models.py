@@ -40,12 +40,18 @@ class Votacione(models.Model):
     esPresencial = models.BooleanField(default=False, verbose_name='Presencial')
     votoRectificable = models.BooleanField(default=False, verbose_name='Habilitar voto rectificable')
     tipoVotacion = models.IntegerField(choices=choices(tipoV), default=tipoV.SIMPLE)
+    maxElector = models.IntegerField(verbose_name='Número máximo de respuestas', default=1)
     class Meta:
         verbose_name='Votación'
         verbose_name_plural='Votaciones'
- #   def __str__(self):
-  #      return
 
 class Eleccion(models.Model):
     proceso = models.OneToOneField(ProcesoElectoral, on_delete=models.PROTECT, primary_key=True)
+    maxVacantes = models.FloatField(default=0.7, verbose_name='Número máximo de electores')
+    tipoEleccion = models.IntegerField(choices=choices(tipoV), default=tipoV.SIMPLE)
+    class Meta:
+        verbose_name='Elección'
+        verbose_name_plural='Elecciones'
+
+
     
