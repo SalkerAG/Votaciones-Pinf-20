@@ -1,3 +1,4 @@
+
 from django.db import models
 from django.utils import timezone
 from django.forms import forms
@@ -37,7 +38,7 @@ class Pregunta(models.Model):
 class Votacione(models.Model):
     proceso = models.OneToOneField(ProcesoElectoral, on_delete=models.PROTECT, primary_key=True)
     pregunta = models.OneToOneField(Pregunta, on_delete=models.PROTECT)
-    esPresencial = models.BooleanField(default=False, verbose_name='Presencial')
+    esPresencial  = models.BooleanField(default=False, verbose_name='Presencial')
     votoRectificable = models.BooleanField(default=False, verbose_name='Habilitar voto rectificable')
     tipoVotacion = models.IntegerField(choices=choices(tipoV), default=tipoV.SIMPLE)
     maxElector = models.IntegerField(verbose_name='Número máximo de respuestas', default=1)

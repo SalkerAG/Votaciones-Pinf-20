@@ -1,12 +1,19 @@
 from django.views.generic import ListView
+from django.views.generic.edit import CreateView
+
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponseRedirect
 
 
 # Create your views here.
-def home(request):
-    return render(request,'VotacionesUca/home.html')
+from .models import Votacione
 
-def crearVotacion(request):
-    return render(request,'VotacionesUca/CrearVotacion.html')
+
+class VotacioneCreateView(CreateView):
+    models = Votacione
+    fields = '__all__'
+
+    def get_queryset(self):
+        """Return the last five published questions."""
+        return Votacione.objects.all()[:5]

@@ -15,17 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.conf import  settings
+from django.conf import settings
 from django.conf.urls import url
 
 from django.conf.urls.static import static
 
-from VotacionesUca.views import home, crearVotacion, DataView, CSVFileView
+from VotacionesUca.views import VotacioneCreateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home),
-    path('crearVotacion', crearVotacion),
-    url('upload/',DataView.as_view(), name='csv_upload'),
-    url('users_data/', CSVFileView.as_view(), name='csv_download')
+    path('crearVotacion/', VotacioneCreateView.as_view(template_name="VotacionesUca/CrearVotacion.html"), name="crear_votacion")
 ]
