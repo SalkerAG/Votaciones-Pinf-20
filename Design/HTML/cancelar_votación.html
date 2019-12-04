@@ -5,7 +5,7 @@
     <!-- Movil y teclado -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="stylesheet" type="text/css" href="footer.css">
+	<link rel="stylesheet" type="text/css" href="../../static/css/footer.css">
     <!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 	
@@ -30,7 +30,7 @@
 		  <div class="dropdown-menu">
 			<a class="dropdown-item" href="#">Lista de votaciones</a>
 			<a class="dropdown-item" href="#">Votaciones finalizadas</a>
-			<a class="dropdown-item" href="#">Crear Votación</a>
+			<a class="dropdown-item" href="#">Crear Votaci�n</a>
 		  </div>
 		</li>
 		
@@ -46,46 +46,45 @@
 	</nav>
 	
 	<!-- Fin header  -->
-    {% block content %}
-	
-	<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
-      <div class="col-md-5 p-lg-5 mx-auto my-5">
-        <h1 class="display-4 font-weight-normal">Votaciones UCA</h1>
-        <p class="lead font-weight-normal">Página para realizar votaciones en el ambito de la UCA.</p>
-        <a class="btn btn-outline-secondary" href="#">Empieza</a>
-      </div>
-      <div class="product-device box-shadow d-none d-md-block"></div>
-      <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
-    </div>
+ 
 
-    <div class="d-flex justify-content-between  w-100 my-md-4 pl-md-4"><!-- start - end - center - between - around -->
-      <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
-        <div class="my-3 p-3">
-          <h2 class="display-5">Votaciones Recientes</h2>
-          <p>Valoracion de las votaciones Recientes.</p>
-        </div>
-      </div>
-      <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
-        <div class="my-3 py-3">
-          <h2 class="display-5">Últimas noticias </h2>
-          <p>Votacion a Rectorado de la Universidad</p>
-		  <br>
-		  <p>Votacion para delegado GII 19/20</p>
-		  <br>
-        </div>
-      </div>
-	  <!--
-	  <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
-        <div class="my-3 p-3">
-          <h2 class="display-5">Nombre</h2>
-          <p>Parrafo.</p>
-        </div>
-      </div>
-	   -->
+
+    <div id="censo" align='center'>
+    <h1 id="censo" > <strong> Eliminar votaci�n</h1>
+    </div>
+	<br>
+	<br>
+	<div class="row" align="center">
+	  <div class="col-md-12">
+		<select class="selectpicker" title="Votaciones:" data-live-search="true">
+		  <option value="Nombre1">Votaci�n 1</option>
+		  <option value="Nombre2">Votaci�n 2</option>
+		  <option value="Nombre3">Votaci�n 3</option>
+		  <option value="Nombre4">Votaci�n 4</option>
+		  <option value="Nombre5">Votaci�n 5</option>
+		</select>
+		<button class="btn-save btn btn-primary btn-sm">Guardar</button>
+
+	  </div>
+	</div>
+	
+	
+	 <div class="form-group container">
+	 
+    <label for="exampleFormControlTextarea1">Motivo</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    <button class="btn-save btn btn-primary btn-sm">Enviar</button>
     </div>
 	
 	
-    {% endblock %}
+	<br>
+	<br>
+	<br>
+	<br>
+    <!-- Requisitos para bootstrap 4 y js  -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  </body>
+
 	<!-- Footer  -->
 	
 	<footer class="footer-area footer--light">
@@ -112,7 +111,7 @@
 			<div class="col-md-3 col-sm-4">
 			  <div class="footer-widget">
 				<div class="footer-menu footer-menu--1">
-				  <h4 class="footer-widget-title">Páginas de Interes</h4>
+				  <h4 class="footer-widget-title">P�ginas de Interes</h4>
 				  <ul>
 					<li>
 					  <a href="https://www.uca.es/">UCA</a>
@@ -134,7 +133,7 @@
 			<div class="col-md-3 col-sm-4">
 			  <div class="footer-widget">
 				<div class="footer-menu">
-				  <h4 class="footer-widget-title">La compañia</h4>
+				  <h4 class="footer-widget-title">La compa�ia</h4>
 				  <ul>
 					<li>
 					  <a href="#">Sobre nosotros</a>
@@ -156,12 +155,12 @@
 				  <h4 class="footer-widget-title">Soporte</h4>
 				  <ul>
 					<li>
-					  <a href="#">Guia Rápida</a>
+					  <a href="#">Guia R�pida</a>
 					</li>
 					<li>
 					  <a href="#">Foro de Ayuda</a>
 					</li>
-					<!-- repetir estructura li para añadir mas-->
+					<!-- repetir estructura li para a�adir mas-->
 				  </ul>
 				</div>
 				<!-- end /.footer-menu -->
@@ -182,7 +181,7 @@
 		  <div class="row">
 			<div class="col-md-12">
 			  <div class="copyright-text">
-				<p>© 2019
+				<p>� 2019
 				  <a href="#">Votaciones UCA</a>. All rights reserved.
 				</p>
 			  </div>
