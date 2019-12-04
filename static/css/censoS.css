@@ -1,0 +1,19 @@
+body {
+    background: #dfe6e9;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+h1,h3{
+    margin-top: 75px;
+    height: auto;
+    text-align: center;
+
+}
+
+.DescripcionCensoS{
+  float:right;
+  width: 300 px
+  height:500 px
+  background-color:grey
+
+}

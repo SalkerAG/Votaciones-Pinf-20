@@ -3,6 +3,20 @@ body {
     font-family: 'Courier New', Courier, monospace;
 }
 
+/* Change the white to any color ;) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active  {
+    color: white !important;
+    -webkit-box-shadow: 0 0 0 30px #1A2226 inset !important;
+}
+
+/*Change text in autofill textbox*/
+input:-webkit-autofill {
+    -webkit-text-fill-color: white !important;
+}
+
 .login-box {
     margin-top: 75px;
     height: auto;
