@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'UsuarioUca.apps.UsuarioucaConfig',
     'import_export',
+    'UsuarioUca.templatetags'
 ]
 
 IMPORT_EXPORT_USE_TRANSACTIONS = True

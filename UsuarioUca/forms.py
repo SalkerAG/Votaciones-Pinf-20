@@ -1,6 +1,8 @@
 # users/forms.py
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm
+from django.forms import ModelForm
+
 from .models import UsuarioUca, uvalidonifworld, uvalidonifspain, validonifspain, validonifworld
 from django.core.validators import RegexValidator
 from django.core.validators import validate_slug, validate_email
@@ -19,14 +21,14 @@ isemailvalidator = RegexValidator("^\w+([\.-]?\w+)*@alum.uca.es",
 
 
 class CustomUserCreationForm(UserCreationForm):
-
-
     nif = forms.CharField(label='NIF', max_length=9, widget=forms.TextInput(attrs={"placeholder": "Ej:32085090"}))
     # validators=[isnumericvalidator])
     email = forms.EmailField(label='Email', max_length=64, help_text="El correo debe pertener al dominio de la UCA",
                              required=True, validators=[isemailvalidator])
-    first_name = forms.CharField(label="Nombre", max_length=20,min_length= 2, required=True, validators=[istextvalidator])
-    last_name = forms.CharField(label="Apellidos", max_length=64, min_length=2, required=True, validators=[istextvalidator])
+    first_name = forms.CharField(label="Nombre", max_length=20, min_length=2, required=True,
+                                 validators=[istextvalidator])
+    last_name = forms.CharField(label="Apellidos", max_length=64, min_length=2, required=True,
+                                validators=[istextvalidator])
 
     class Meta:
         model = UsuarioUca
@@ -43,15 +45,13 @@ class CustomUserCreationForm(UserCreationForm):
 class CustomUserChangeForm(UserChangeForm):
     email = forms.EmailField(label='Email', max_length=64,
                              required=True)
-    nif = forms.CharField(label = "Nif", required= True, max_length = 10)
+    nif = forms.CharField(label="Nif", required=True, max_length=10)
     first_name = forms.CharField(label="Nombre", max_length=20, required=True, validators=[istextvalidator])
     last_name = forms.CharField(label="Apellidos", max_length=64, required=True, validators=[istextvalidator])
+
     class Meta:
         model = UsuarioUca
         fields = '__all__'
-
-
-
 
     def save(self, commit=True):
         user = super(CustomUserChangeForm, self).save(commit=False)
@@ -63,10 +63,6 @@ class CustomUserChangeForm(UserChangeForm):
         if commit:
             user.save()
         return user
-
-
-
-
 
 
 class UserLoginForm(AuthenticationForm):
@@ -81,3 +77,78 @@ class UserLoginForm(AuthenticationForm):
             'id': 'password',
         }
     ))
+
+
+class createUserForm(ModelForm):
+    class Meta:
+        model = UsuarioUca
+        fields = ['nif', 'first_name', 'last_name', 'email', 'password']
+        labels = {'first_name': ('Nombre'), 'last_name': ('Apellidos'), 'nif': ('NIF'),
+                  'email': ('Correo electrónico'), 'password': ('Contraseña'), }
+        help_texts = {'first_name': ('Introduce un nombre valido.'), 'last_name': ('Introduce los apellidos válidos.'),
+                      'nif': ('Introduce un nif válido'),
+                      'email': ('Introduce un correo válido y del dominio de la UCA'),
+                      'groups': ('Grupo al que pertenece el usuario'), }
+
+        widgets = {'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+                   'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+                   'nif': forms.TextInput(attrs={'class': 'form-control'}),
+                   'email': forms.EmailInput(attrs={'class': 'form-control'}),
+                   'password': forms.PasswordInput(attrs={'class': 'form-control'}), }
+
+    def clean_fields(self, exclude=None):
+
+        first_name = self.first_name
+        # if not nif[1] == 'u':
+        # nif = nif.replace("u", "")
+        if istextvalidator(first_name):
+
+            return first_name
+        else:
+            raise forms.ValidationError("Nif incorrecto")
+
+    def save(self, commit=True, exclude=None):
+        user = super(createUserForm, self).save(commit=False)
+        # if user.nif[1] == 'u':
+        #     raise forms.ValidationError("Nif incorrecto")
+        if istextvalidator(user.first_name):
+            raise forms.ValidationError("Nombre incorrecto")
+        if not user.nif.__contains__("u"):
+            user.nif = "u" + user.nif
+
+        if commit:
+            user.set_password(user.password)
+            user.save()
+        return user
+
+
+class editUserForm(ModelForm):
+    class Meta:
+        model = UsuarioUca
+        fields = ['nif', 'first_name', 'last_name', 'email', 'password']
+        labels = {'first_name': ('Nombre'), 'last_name': ('Apellidos'), 'nif': ('NIF'),
+                  'email': ('Correo electrónico'), 'password': ('Contraseña'), }
+        # help_texts = {'first_name': ('Introduce un nombre valido.'), 'last_name': ('Introduce los apellidos válidos.'),
+        #               'nif': ('Introduce un nif válido'),
+        #               'email': ('Introduce un correo válido y del dominio de la UCA'),
+        #               'groups': ('Grupo al que pertenece el usuario'), }
+
+        widgets = {'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+                   'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+                   'nif': forms.TextInput(attrs={'class': 'form-control'}),
+                   'email': forms.EmailInput(attrs={'class': 'form-control'}),
+                   'password': forms.PasswordInput(attrs={'class': 'form-control'}), }
+
+    def save(self, commit=True, exclude=None):
+        user = super(createUserForm, self).save(commit=False)
+        # if user.nif[1] == 'u':
+        #     raise forms.ValidationError("Nif incorrecto")
+        if not istextvalidator(user.first_name):
+            raise forms.ValidationError("Nombre incorrecto")
+        if not user.nif.__contains__("u"):
+            user.nif = "u" + user.nif
+
+        if commit:
+            user.set_password(user.password)
+            user.save()
+        return user

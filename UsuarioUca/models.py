@@ -1,4 +1,6 @@
 # users/models.py
+from audioop import reverse
+
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.core.validators import RegexValidator
 from django.db import models
@@ -123,6 +125,7 @@ class UsuarioUca(AbstractUser):
     email = models.EmailField(max_length=64, unique=True)
     USERNAME_FIELD = 'nif'
     REQUIRED_FIELDS = ['email', 'first_name', 'last_name']
+
 
     def clean_fields(self, exclude=None):
 

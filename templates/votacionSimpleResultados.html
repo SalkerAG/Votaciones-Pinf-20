@@ -1,3 +1,7 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,43 +13,23 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <!-- Material Design Bootstrap -->
-    <link href="css/mdb.min.css" rel="stylesheet">
+    <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
     <!-- Your custom styles (optional) -->
-    <link href="css/style.css" rel="stylesheet">
+     <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="{% static 'js/popper.min.js' %}"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-  	  <!-- Brand -->
-  	  <a class="navbar-brand" href="#">Logo</a>
 
-  	  <!-- Links -->
-  	  <ul class="navbar-nav">
-  		<li class="nav-item">
-  		  <a class="nav-link" href="#">Inicio</a>
-  		</li>
-
-  		<!-- Dropdown -->
-  		<li class="nav-item dropdown">
-  		  <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Votaciones</a>
-  		  <div class="dropdown-menu">
-  			<a class="dropdown-item" href="#">Lista de votaciones</a>
-  			<a class="dropdown-item" href="#">Votaciones finalizadas</a>
-  			<a class="dropdown-item" href="#">Crear Votación</a>
-  		  </div>
-  		</li>
-
-  		<li class="nav-item">
-  		  <a class="nav-link" href="#">Ayuda</a>
-  		</li>
-
-  		<li class="nav-item navbar-item-right">
-  		  <a class="nav-link float-right" href="#">Ayuda</a>
-  		</li>
-  	  </ul>
-  	</nav>
 
     <div>
       <!-- TITLE -->
@@ -116,23 +100,8 @@
   </strong>
     </div>
 
-    <!-- Start your project here-->
 
-    <!-- /Start your project here-->
-
-    <!-- SCRIPTS -->
-    <!-- JQuery -->
-    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
-    <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="js/popper.min.js"></script>
-    <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="js/mdb.min.js"></script>
-
-
-
-    <script type="text/javascript">
+<script type="text/javascript">
       //pie
       var ctxP = document.getElementById("pieChart").getContext('2d');
       var myPieChart = new Chart(ctxP, {
@@ -149,7 +118,11 @@
           responsive: true
         }
       });
+
     </script>
+
+      {% endblock %}
+
   </body>
 
 </html>
