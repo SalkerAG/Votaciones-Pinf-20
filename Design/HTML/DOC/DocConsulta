@@ -1,0 +1,106 @@
+
+    <div><h1 class="display-12" align="center" >Creacion de consulta </h1></div>
+    <br/><br/>
+
+
+------------ 
+Titulo de la agina
+-------------------------
+
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6 offset-md-6" >
+------------------------------------------------------
+En esta parte del codigo realizaremos unas divisiones que contendran un contenedor, una fila justificada al centro, y una columna, de tamaño 6 son un offset de 6, con el cual centrará toda la pagina
+
+------------------------------------------------
+          <div class="custom-control custom-switch" style="transform: scale(1.2);">
+            <input type="checkbox" class="custom-control-input" id="customSwitch1">
+            <label class="custom-control-label" for="customSwitch1">Secreta</label>
+-------------------------------------------------
+	Crearemos una division para la cual generaremos una entrada de tipo switch y luego checkbox, para seleccionar si queremos el tipo de consulta secreta o no. El marcado o no de este input decidirá el tipo de consulta. 
+-------------------------------------------------------
+	   </div>
+        </div>
+      </div>
+
+------------------------------------------------------------
+      <div class="row">
+      <div class="col-md-6 offset-md-6">
+        <div class="custom-control custom-switch" style="transform: scale(1.2);">
+            <input type="checkbox" class="custom-control-input" id="customSwitch2">
+            <label class="custom-control-label" for="customSwitch2">Ponderada</label>
+
+---------------------------------
+En esta otra fila realizaremos otras dos columnas, de tamaño y offset 6. En este caso generaremos el boton input de tipo checkbox para que la consulta sea ponderada o no.
+      </div>
+      </div>
+    </div>
+
+<br/>
+------------------------------------------------------------
+
+      <div class="row justify-content-md-center">
+
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+
+          <span class="input-group-text" id="basic-addon3">Escriba su consulta aquí:</span>
+        </div>
+        <input type="text" href="textoconsulta" class="form-control" id="textoconsulta" aria-describedby="basic-addon3">
+      </div>
+  </div>
+  <br/>
+
+
+---------------------------------------------------------------
+
+En este estracto de codigo escribiremos el titulo de la consulta ayudados de una entrada de texto. Con una columna y una clase span realizaremos el adornado de este input, el cual tendrña una referencia a la base de datos para que se cree la consulta en la base de datos.
+
+---------------------------------------------------------------------
+
+
+
+
+  <div class="row justify-content-md-center">
+
+      <div class="form-group" style="width:100% !important">
+        <div class="row justify-content-center">
+            <label for="RespuestaCompleja1" class="col-sm-2 col-form-label">Respuesta 1: </label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" id="RespuestaCompleja">
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <label for="RespuestaCompleja2" class="col-sm-2 col-form-label">Respuesta 2: </label>
+            <div class="col-sm-5">
+              <input type="text" readonly class="form-control" id="RespuestaCompleja2">
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <label for="RespuestaCompleja3" class="col-sm-2 col-form-label">Respuesta 3: </label>
+            <div class="col-sm-5">
+              <input type="text" readonly class="form-control" id="RespuestaCompleja3">
+            </div>
+        </div>
+      </div>
+    </div>
+----------------------------------------------------------
+
+A continuacion realizamos una columna para cada respuesta dicha. Cada una division realizaremos un formulario, con los cuales, introduciremos las respuestas que queramos introducir en la base de datos de la consulta correspondiente. Marcaremos cada bloque de introduccion de la respuesta con una etiqueta.
+
+-----------------------------------
+
+  </div>
+<div class="row justify-content-center">
+  <button type="button" class="btn btn-primary">Enviar</button>
+  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+
+----------------------------------
+
+Acabamos la consulta con dos botones para enviar o cancelar el envio de la informacion a la base de datos.
+
+</div>
+</div>
+
+

@@ -1,0 +1,43 @@
+----------------------------------------------------------------
+
+
+  <div id="censo" align='center'>
+    <h1 id="censo" > <strong> Nombre del Censo</h1>
+    </div>
+
+---------------------------------------------------------------
+
+Creamos en esta primera instancia una division para mostrar el titulo de la pagina en cuestion.
+------------------------------------------------------------------
+
+	<br>
+	<br>
+	<div class="row" align="center">
+	  <div class="col-md-12">
+		<select class="selectpicker" multiple title="Usuarios del censo:" data-live-search="true">
+
+-------------------------------------------------------------
+
+Creamos una division para crear una fila y una columna de tamaño 12, asi como crea una seleccion de elecciones multiples con todos los usuarios. Asi como seleccionar podemos escribir el nombre del usuario.
+
+--------------------------------------------
+		  <option value="Nombre1">Apellidos Nombre 1</option>
+		  <option value="Nombre2">Apellidos Nombre 2</option>
+		  <option value="Nombre3">Apellidos Nombre 3</option>
+		  <option value="Nombre4">Apellidos Nombre 4</option>
+		  <option value="Nombre5">Apellidos Nombre 5</option>
+		</select>
+---------------------------------------------------
+Las opciones de la seleccion se generarán dependiendo del numero de usuarios existentes en el sistema. Para cada uno habrá una opcion con un value determinado
+
+------------------------------------------------------
+		<button class="btn-save btn btn-primary btn-sm">Guardar</button>
+------------------------------------------------------
+Generamos un boton guardar, el cual guardará las elecciones realizadas en la anterior seleccion multiple
+-----------------------
+	  </div>
+	</div>
+
+-----------------------
+
+Por ultimo cerramo las todas las divisiones generadas.

@@ -1,0 +1,48 @@
+
+
+  <div class="titulofaq">
+      <h1 class="display-5 text-center">Preguntas frecuentes</h1>
+-----------------------------------------------------
+
+En esta parte generamos una division para mostrar el titulo de la pagina con un display especifico para todo el proyecto.
+------------------------
+
+<div class="container">
+
+  <div class="row">
+    <div class="col">
+      <div class="d-flex-fill justify-content-center  w-100 my-md-4 pl-md-4">
+-------------------------
+
+Generamos un contenedor, el cual contendrá una unica fila y columna, dentro de este contenedos vamos a realizar otra division con una clase d-flex-fill justify-content-center w-100 my-md-4 pl-md-4. Esta clase hará que el contenedor sea de un tamaño especifico, justificado, y que, rellene todo el contenedor si el contenido no es lo suficientemente grande
+
+-------------------------------------
+
+        <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-2 px-md-5 text-center text-white overflow-hidden">
+
+-------------------------------------------
+
+Dentro de el tamaño especificado pondremos un estilo especifico con una division y una clase de esta, colocando el texto en el fondo y blando. Los demas parametros regulan la distancia a los bordes, etc.
+-----------------------------------------
+          <div class="my-3 py-3">
+            <h3 class="display-5">¿Que es SenUca?</h3>
+            <p>SenUca es un proyecto de la asignatura de Proyectos Informaticos, el cual nos permitirá a través de un entorno sencillo realizar votaciones, censos y la visualizacion de todas las votaciones necesarias para el buen funcionamiento de la Universidad de Cádiz.</p>
+          </div>
+--------------------------------------------
+
+Dentro de nuestro cuadro estilado generaremos una division con una clase con un marging y padding determinados. Asi como el titulo de la pregunra con un tamaño y display en común.
+Dentro de dicho espacio es donde crearemos un parrafo con la respuesta a la pregunta anterior.
+----------------------------------------------
+        </div>
+      </div>
+    </div>
+  </div>
+--------------------------------------
+Cerramos todas las divisiones.
+
+
+
+En este codigo repetiremos este codigo el mismo numero de preguntas querramos tener en el faq, modificando solamente el titulo y respuesta de la pregunta.
+
+
+

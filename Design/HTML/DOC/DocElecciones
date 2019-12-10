@@ -1,0 +1,71 @@
+
+  <div class="container text-center py-5">
+    <h1 class="display-12">Elecciones a : #Secretario# </h1>
+  </div>
+
+------------------------------------
+
+Division contenedor, con el texto centrado, un display determinado en Bootstrap y un titulo con el nombre de la pagina y el cargo de la persona electa.
+------------------------------------------
+ <div class="container">
+    <div class="row justify-content-md-center">
+    <div class="col-4">
+      <div class="list-group">
+------------------------------------
+
+Division de lista u columna, con un listado.
+
+-------------------------
+        <a href="#" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#multiModalCenter" value="1">Nombre1 Apellido1</a>
+        <a href="#" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#multiModalCenter" value="2">Nombre2 Apellido2</a>
+        <a href="#" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#multiModalCenter" value="3">Nombre4 Apellido3</a>
+------------------------------
+
+Direcciones de los nombres de las personas electas, con una referencia que apuntará a la base de datos. La clase de la division debera de especificar que será un objeto de una lista y la accion que deberá realizar al elegirlo.
+-----------------------------
+      </div> 
+    </div>
+  </div>
+</div>
+---------------------
+Cerrado de divisiones
+----------------------
+  <div class="modal fade" id="multiModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+-----------------------------------
+Divisiones que crearan una clase modal, la cual generara una ventana emergente al realizar la eleccion.
+------------------------------------- 
+        <h5 class="modal-title" id="exampleModalLongTitle">¿Confirmar elección?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+------------------------------
+
+Se creará esta division el titulo de la ventana emergente, el cual tendrña un botton para cerrar dicha ventana
+----------------------------------------------
+      </div>
+      <div class="modal-body">
+        Al confirmar se enviará su eleccion a #nombre#
+      </div>
+
+----------------------------------
+en el cuerpo de la ventana emergente preguntaremos si el usuario está seguro del voto que envia, y deberá quedar explicito a quien se lo envia.
+---------------------------------------
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Enviar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+-------------------------------------------------
+A pie de la ventana emergente generaremos dos botones, el cual, uno enviará la eleccion a la base de datos, y el otro cerrará la ventana emergente dejando la eleccion en standby
+--------------------------------------------------
+      
+
+</div>
+    </div>
+  </div>
+</div>
+
+
+-------------
+Cerrado de las divisiones del fichero.
