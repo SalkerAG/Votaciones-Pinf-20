@@ -5,15 +5,10 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponseRedirect
 
-
 # Create your views here.
-from .models import Votacione
+from .models import Votacione,Pregunta,ProcesoElectoral
+from .forms import VotacioneForm
 
-
-class VotacioneCreateView(CreateView):
-    models = Votacione
-    fields = '__all__'
-
-    def get_queryset(self):
-        """Return the last five published questions."""
-        return Votacione.objects.all()[:5]
+def VotacioneView(request):
+    form=VotacioneForm()
+    return render(request, 'VotacionesUca/CrearVotacion.html', {'form':form})

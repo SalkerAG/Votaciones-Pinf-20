@@ -1,13 +1,46 @@
-# users/forms.py
+#users/forms.py
 from django.forms import ModelForm
-from .models import Votacione
 
+from django.core.exceptions import ValidationError
 from django import forms
+from .views import Votacione,Pregunta,ProcesoElectoral
 
-#class VotacionesForm(forms.Form):
-   # name = forms.CharField()
-  #  message = forms.CharField(widget=forms.Textarea)
+def positivo(value):
+   if value<=0:
+      raise ValidationError('El número debe ser mayor que 0.')
 
- #   def send_email(self):
+c=[('0','Simple'),('1','Compleja')]
 
-#        pass
+class FormProcesoElectoral(forms.ModelForm):
+    create_at=forms.DateTimeField()
+    update_at=forms.DateField()
+    esConsulta=forms.BooleanField(label='Consulta',initial=False)
+    fechaInicio=forms.DateTimeField(label='Fecha Inicio del proceso electoral',required=True)
+    fechaFin=forms.DateTimeField(label='Fecha Fin del proceso electoral',required=True)
+    nombreFicheroCenso=forms.CharField(required=True)
+
+    class Meta:
+        model=ProcesoElectoral
+        fields='__all__'
+
+
+class PreguntaForm(forms.ModelForm):
+    enunciado=forms.CharField(max_length=50,required=True)
+    opciones=forms.CharField(required=True)
+
+    class Meta:
+        model=Pregunta
+        fields='__all__'
+
+class VotacioneForm(forms.ModelForm):
+    proceso=FormProcesoElectoral()
+    pregunta=PreguntaForm()
+    esPresencial=forms.BooleanField(label='Proceso Electoral presencial',initial=False)
+    votoRectificable=forms.BooleanField(label='Voto rectificable',initial=False)
+    tipoVotacion=forms.ChoiceField(label='Tipo de votacion',choices=c)
+    maxElector=forms.IntegerField(label='Numero maximo de electores',validators=[positivo],min_value=0)
+    pregunta1=forms.CharField(disabled=True)
+
+    class Meta:
+        model=Votacione
+        fields='__all__'

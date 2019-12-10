@@ -1,4 +1,3 @@
-
 from django.db import models
 from django.utils import timezone
 from django.forms import forms
@@ -26,9 +25,17 @@ class ProcesoElectoral(models.Model):
     def _str_(self):
         return self.nombreFicheroCenso
 
+class Opciones(models.Model):
+    nombre = models.CharField(max_length=50,null=False, unique=True)
+    class Meta:
+        verbose_name='Opción'
+        verbose_name_plural='Opciones'
+    def __str__(self):
+        return self.nombre
+
 class Pregunta(models.Model):
     enunciado = models.CharField(max_length=50, null=False, unique=True)
-    opciones = models.TextField(null=True)
+    opciones = models.ManyToManyField(Opciones())
     class Meta:
         verbose_name='Pregunta'
         verbose_name_plural='Preguntas'
@@ -36,8 +43,8 @@ class Pregunta(models.Model):
         return self.enunciado
 
 class Votacione(models.Model):
-    proceso = models.OneToOneField(ProcesoElectoral, on_delete=models.PROTECT, primary_key=True)
-    pregunta = models.OneToOneField(Pregunta, on_delete=models.PROTECT)
+    proceso = models.OneToOneField(ProcesoElectoral(), on_delete=models.PROTECT, primary_key=True)
+    pregunta = models.OneToOneField(Pregunta(), on_delete=models.PROTECT)
     esPresencial  = models.BooleanField(default=False, verbose_name='Presencial')
     votoRectificable = models.BooleanField(default=False, verbose_name='Habilitar voto rectificable')
     tipoVotacion = models.IntegerField(choices=choices(tipoV), default=tipoV.SIMPLE)
@@ -53,6 +60,3 @@ class Eleccion(models.Model):
     class Meta:
         verbose_name='Elección'
         verbose_name_plural='Elecciones'
-
-
-    
