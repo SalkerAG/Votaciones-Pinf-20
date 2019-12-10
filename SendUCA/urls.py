@@ -20,9 +20,9 @@ from django.conf.urls import url
 
 from django.conf.urls.static import static
 
-from VotacionesUca.views import VotacioneCreateView
+from VotacionesUca.views import VotacioneView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('crearVotacion/', VotacioneCreateView.as_view(template_name="VotacionesUca/CrearVotacion.html"), name="crear_votacion")
+    path('crearVotacion/', VotacioneView)
 ]
