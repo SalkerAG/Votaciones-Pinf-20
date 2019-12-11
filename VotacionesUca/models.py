@@ -20,6 +20,7 @@ class ProcesoElectoral(models.Model):
     fechaFin = models.DateTimeField(verbose_name='Fecha Fin del proceso electoral')
     nombreFicheroCenso = models.TextField(null=True)
     class Meta:
+        abstract=True
         verbose_name='Proceso Electoral'
         verbose_name_plural='Procesos Electorales'
     def _str_(self):
@@ -28,33 +29,32 @@ class ProcesoElectoral(models.Model):
 class Opciones(models.Model):
     nombre = models.CharField(max_length=50,null=False, unique=True)
     class Meta:
+        abstract=True
         verbose_name='Opción'
         verbose_name_plural='Opciones'
     def __str__(self):
         return self.nombre
 
-class Pregunta(models.Model):
+class Pregunta(Opciones):
     enunciado = models.CharField(max_length=50, null=False, unique=True)
-    opciones = models.ManyToManyField(Opciones())
     class Meta:
+        abstract=True
         verbose_name='Pregunta'
         verbose_name_plural='Preguntas'
     def __str__(self):
         return self.enunciado
 
-class Votacione(models.Model):
-    proceso = models.OneToOneField(ProcesoElectoral(), on_delete=models.PROTECT, primary_key=True)
-    pregunta = models.OneToOneField(Pregunta(), on_delete=models.PROTECT)
+class Votacione(ProcesoElectoral,Pregunta):
     esPresencial  = models.BooleanField(default=False, verbose_name='Presencial')
     votoRectificable = models.BooleanField(default=False, verbose_name='Habilitar voto rectificable')
     tipoVotacion = models.IntegerField(choices=choices(tipoV), default=tipoV.SIMPLE)
     maxElector = models.IntegerField(verbose_name='Número máximo de respuestas', default=1)
+    pregunta=Pregunta()
     class Meta:
         verbose_name='Votación'
         verbose_name_plural='Votaciones'
 
-class Eleccion(models.Model):
-    proceso = models.OneToOneField(ProcesoElectoral, on_delete=models.PROTECT, primary_key=True)
+class Eleccion(ProcesoElectoral):
     maxVacantes = models.FloatField(default=0.7, verbose_name='Número máximo de electores')
     tipoEleccion = models.IntegerField(choices=choices(tipoV), default=tipoV.SIMPLE)
     class Meta:

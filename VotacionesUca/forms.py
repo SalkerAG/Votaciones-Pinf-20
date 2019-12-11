@@ -3,8 +3,12 @@ from django.forms import ModelForm
 
 from django.core.exceptions import ValidationError
 from django import forms
+<<<<<<< Updated upstream
 from .views import CrearVotacionView
 from .models import ProcesoElectoral, Pregunta, Votacione, Eleccion, Opciones
+=======
+from .views import Votacione,Pregunta,ProcesoElectoral,Opciones
+>>>>>>> Stashed changes
 
 def positivo(value):
    if value<=0:
@@ -27,20 +31,19 @@ class FormProcesoElectoral(forms.ModelForm):
 
 class PreguntaForm(forms.ModelForm):
     enunciado=forms.CharField(max_length=50,required=True)
-    opciones=forms.CharField(required=True)
+    #opciones=forms.ManyToManyField(Opciones())
 
     class Meta:
         model=Pregunta
         fields='__all__'
 
 class VotacioneForm(forms.ModelForm):
-    proceso=FormProcesoElectoral()
-    pregunta=PreguntaForm()
-    esPresencial=forms.BooleanField(label='Proceso Electoral presencial',initial=False)
-    votoRectificable=forms.BooleanField(label='Voto rectificable',initial=False)
-    tipoVotacion=forms.ChoiceField(label='Tipo de votacion',choices=c)
-    maxElector=forms.IntegerField(label='Numero maximo de electores',validators=[positivo],min_value=0)
-    pregunta1=forms.CharField(disabled=True)
+    #proceso=FormProcesoElectoral()
+    #pregunta=PreguntaForm()
+    #esPresencial=forms.BooleanField(label='Proceso Electoral presencial',initial=False)
+    #votoRectificable=forms.BooleanField(label='Voto rectificable',initial=False)
+    #tipoVotacion=forms.ChoiceField(label='Tipo de votacion',choices=c)
+    #maxElector=forms.IntegerField(label='Numero maximo de electores',validators=[positivo],min_value=0)
 
     class Meta:
         model=Votacione
