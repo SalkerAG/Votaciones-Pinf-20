@@ -70,9 +70,11 @@ class FAQView(TemplateView):
     template_name = "faq2.0.html"
 
 
-class EstadisticasVotacionView(TemplateView):
+class EstadisticasVotacionSimpleView(TemplateView):
     template_name = "votacionSimpleResultados.html"
 
+class EstadisticasVotacionComplejaView(TemplateView):
+    template_name = "votacionComplejaResultados.html"
 
 class EstadisticasEleccionView(TemplateView):
     template_name = "votacionEleccionesResultado.html"

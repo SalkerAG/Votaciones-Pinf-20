@@ -55,8 +55,8 @@ class CustomUserChangeForm(UserChangeForm):
 
     def save(self, commit=True):
         user = super(CustomUserChangeForm, self).save(commit=False)
-        if user.nif[1] == 'u':
-            raise forms.ValidationError("Nif incorrecto")
+        # if user.nif[1] == 'u':
+        #     raise forms.ValidationError("Nif incorrecto")
         if not user.nif.__contains__("u"):
             user.nif = "u" + user.nif
 
@@ -96,23 +96,14 @@ class createUserForm(ModelForm):
                    'email': forms.EmailInput(attrs={'class': 'form-control'}),
                    'password': forms.PasswordInput(attrs={'class': 'form-control'}), }
 
-    def clean_fields(self, exclude=None):
 
-        first_name = self.first_name
-        # if not nif[1] == 'u':
-        # nif = nif.replace("u", "")
-        if istextvalidator(first_name):
-
-            return first_name
-        else:
-            raise forms.ValidationError("Nif incorrecto")
 
     def save(self, commit=True, exclude=None):
         user = super(createUserForm, self).save(commit=False)
         # if user.nif[1] == 'u':
         #     raise forms.ValidationError("Nif incorrecto")
-        if istextvalidator(user.first_name):
-            raise forms.ValidationError("Nombre incorrecto")
+        # if istextvalidator(user.first_name):
+        #     raise forms.ValidationError("Nombre incorrecto")
         if not user.nif.__contains__("u"):
             user.nif = "u" + user.nif
 
