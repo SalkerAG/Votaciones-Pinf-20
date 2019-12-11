@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
-from .views import HomeView, ListaVotacionesView, CrearVotacionView, FAQView, EstadisticasVotacionSimpleView, EstadisticasVotacionComplejaView,EstadisticasEleccionView, UsuarioUcaListView, UsuarioUcaUpdate, UsuarioUcaCreate
+from .views import HomeView, ListaVotacionesView, CrearVotacionView, FAQView, EstadisticasVotacionSimpleView, EstadisticasEleccionView, UsuarioUcaListView, UsuarioUcaUpdate, UsuarioUcaCreate
 
 urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
@@ -13,6 +13,5 @@ urlpatterns = [
     path('crearVotacion/', CrearVotacionView.as_view(), name="crearvotacion"),
     path('faq/', FAQView.as_view(), name="faq"),
     path('estadisticasVotacionSimple/', EstadisticasVotacionSimpleView.as_view(), name="estadisticasvotacionsimple"),
-    path('estadisticasVotacionCompleja/', EstadisticasVotacionComplejaView.as_view(), name="estadisticasvotacioncompleja"),
     path('estadisticasEleccion/', EstadisticasEleccionView.as_view(), name="estadisticaseleccion")
 ]

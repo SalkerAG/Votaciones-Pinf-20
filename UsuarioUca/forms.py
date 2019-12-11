@@ -116,9 +116,13 @@ class createUserForm(ModelForm):
 class editUserForm(ModelForm):
     class Meta:
         model = UsuarioUca
-        fields = ['nif', 'first_name', 'last_name', 'email', 'password']
+        fields = ['nif', 'first_name', 'last_name', 'email',
+                  # 'password'
+                  ]
         labels = {'first_name': ('Nombre'), 'last_name': ('Apellidos'), 'nif': ('NIF'),
-                  'email': ('Correo electrónico'), 'password': ('Contraseña'), }
+                  'email': ('Correo electrónico'),
+                  # 'password': ('Contraseña'),
+                  }
         # help_texts = {'first_name': ('Introduce un nombre valido.'), 'last_name': ('Introduce los apellidos válidos.'),
         #               'nif': ('Introduce un nif válido'),
         #               'email': ('Introduce un correo válido y del dominio de la UCA'),
@@ -128,7 +132,8 @@ class editUserForm(ModelForm):
                    'last_name': forms.TextInput(attrs={'class': 'form-control'}),
                    'nif': forms.TextInput(attrs={'class': 'form-control'}),
                    'email': forms.EmailInput(attrs={'class': 'form-control'}),
-                   'password': forms.PasswordInput(attrs={'class': 'form-control'}), }
+                   # 'password': forms.PasswordInput(attrs={'class': 'form-control'}),
+                   }
 
     def save(self, commit=True, exclude=None):
         user = super(createUserForm, self).save(commit=False)

@@ -131,7 +131,9 @@ class UsuarioUca(AbstractUser):
 
         nif = self.nif
         first_name = self.first_name
+        last_name = self.last_name
         istextvalidator(first_name)
+        istextvalidator(last_name)
 
         if  nif[1] == 'u':
             raise forms.ValidationError("Nif incorrecto")
