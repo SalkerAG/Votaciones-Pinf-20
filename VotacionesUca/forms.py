@@ -3,7 +3,8 @@ from django.forms import ModelForm
 
 from django.core.exceptions import ValidationError
 from django import forms
-from .views import Votacione,Pregunta,ProcesoElectoral
+from .views import CrearVotacionView
+from .models import ProcesoElectoral, Pregunta, Votacione, Eleccion, Opciones
 
 def positivo(value):
    if value<=0:
