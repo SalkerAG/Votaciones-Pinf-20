@@ -54,6 +54,13 @@
 </head>
 
 <body>
+<style>
+    .buttons {
+        width: 100%;
+        text-align: end;
+        margin-bottom: 10px;
+    }
+</style>
 <!-- header  -->
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <!-- Brand -->
@@ -104,6 +111,10 @@
     <div class="row justify-content-center">
         <div class="page-header">
             <h1>Usuarios</h1>
+        </div>
+        <div class="buttons">
+            <button ><a href="{% url 'usuariouca_import' %}">Importar Usuarios</a></button>
+            <button ><a href="{% url 'usuariouca_export' %}">Exportar Usuarios</a></button>
         </div>
     </div>
 </div>

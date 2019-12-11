@@ -1,12 +1,20 @@
-from django.urls import reverse
+from datetime import datetime
+from importlib import resources
+
+from django.http import HttpResponse
+from django.urls import reverse, reverse_lazy
 from django.contrib.auth import authenticate, login
 from django.views.generic.base import TemplateView
 from django.utils import timezone
 from django.views.generic.list import ListView
 from django.views.generic.edit import UpdateView, CreateView
+from import_export.formats import base_formats
 
+from UsuarioUca.admin import UsuarioUcaResource
 from UsuarioUca.forms import createUserForm, editUserForm
+from UsuarioUca.import_export_views import ImportView
 from UsuarioUca.models import UsuarioUca
+from import_export import resources, fields
 
 
 def my_view(request):
@@ -23,7 +31,6 @@ def my_view(request):
 
 
 class UsuarioUcaListView(ListView):
-
     model = UsuarioUca
     paginate_by = 100  # if pagination is desired
 
@@ -31,7 +38,6 @@ class UsuarioUcaListView(ListView):
         context = super().get_context_data(**kwargs)
         context['now'] = timezone.now()
         return context
-
 
 
 class UsuarioUcaUpdate(UpdateView):
@@ -49,9 +55,39 @@ class UsuarioUcaCreate(CreateView):
     # fields = '__all__'
     form_class = createUserForm
 
-
     def get_success_url(self):
         return reverse('usuariouca_edit', kwargs={'pk': self.object.pk})
+
+
+class UsuarioUcaExportView(ImportView, resources.ModelResource):
+    class Meta:
+        model = UsuarioUca
+
+    def get(self, queryset, *args, **kwargs):
+        queryset = UsuarioUca.objects.all()
+        dataset = UsuarioUcaResource().export(queryset)
+        response = HttpResponse(dataset.csv, content_type="csv")
+        response['Content-Disposition'] = 'attachment; filename=UsuariosUCA' + datetime.now().__str__() + '.csv'
+        return response
+
+
+class MyModelImportView(ImportView):
+    model = UsuarioUca
+    template_name = 'usuariouca_upload.html'
+    formats = (base_formats.CSV,)
+    resource_class = UsuarioUcaResource
+
+    def get_success_url(self):
+        return reverse('usuariouca_list')
+
+    def create_dataset(self, *args, **kwargs):
+        """ Insert an extra 'source_user' field into the data.
+        """
+        dataset = super().create_dataset(*args, **kwargs)
+        length = len(dataset._data)
+        dataset.append_col([self.request.user.id] * length,
+                           header="source_user")
+        return dataset
 
 
 class HomeView(TemplateView):
