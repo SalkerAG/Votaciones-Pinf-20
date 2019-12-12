@@ -45,6 +45,7 @@ class Pregunta(Opciones):
         return self.enunciado
 
 class Votacione(ProcesoElectoral,Pregunta):
+    nombreVotacion = models.CharField(unique=True, max_length=50, null=False)
     esPresencial  = models.BooleanField(default=False, verbose_name='Presencial')
     votoRectificable = models.BooleanField(default=False, verbose_name='Habilitar voto rectificable')
     tipoVotacion = models.IntegerField(choices=choices(tipoV), default=tipoV.SIMPLE)

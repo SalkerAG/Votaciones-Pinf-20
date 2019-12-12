@@ -18,7 +18,7 @@ class DateTimeInput(forms.DateTimeInput):
 class ProcesoElectoralForm(forms.ModelForm):
     create_at=forms.DateTimeField()
     update_at=forms.DateTimeField()
-    esConsulta=forms.BooleanField(label='Consulta',initial=False)
+    esConsulta=forms.BooleanField(widget=forms.CheckboxInput(attrs={'class': 'custom-control-input', 'id' : 'customCheck1'}))
     fechaInicio=forms.DateTimeField(label='Fecha Fin del proceso electoralsdsds',required=True, widget=DateTimeInput)
     fechaFin=forms.DateTimeField(label='Fecha Fin del proceso electoral',required=True, widget=DateTimeInput)
     nombreFicheroCenso=forms.CharField(required=True)
@@ -46,6 +46,7 @@ class PreguntaForm(OpcionesForm):
 class VotacioneForm(ProcesoElectoralForm, PreguntaForm):
     proceso=ProcesoElectoralForm()
     pregunta=PreguntaForm()
+    nombreVotacion=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder' : 'Título de la votación'}))
     esPresencial=forms.BooleanField(label='Proceso Electoral presencial',initial=False)
     votoRectificable=forms.BooleanField(label='Voto rectificable',initial=False)
     tipoVotacion=forms.ChoiceField(label='Tipo de votacion',choices=c)

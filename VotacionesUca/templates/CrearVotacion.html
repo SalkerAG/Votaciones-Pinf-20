@@ -58,23 +58,25 @@
     </div>
 
     <!-- Formulario -->
-<form>
+  <form id="CrearVotacion" method="post" action="{% url 'crearvotacion' %}">
+    {% csrf_token %}
     <!-- Título -->
     <div class="form-group">
       <label for="form-tittle" class="col-lg-3 col-form-label">Título</label>
       <div class="col-lg-12">
-        <input type="text" class="form-control" id="form-tittle" placeholder="Título de la votación" required="true">
+        {{form.nombreVotacion}}
       </div>
+    </div>
+    <!--Fin Título-->
+
+    <!--Booleanos-->
+    <div class="custom-control custom-checkbox">
+      {{form.esConsulta}}
+      <label class="custom-control-label" for="customCheck1">Consulta</label>
     </div>
 
  <!-- Bloque votación restringida -->
-  <div class="form-group row px-5">
-    <div class="col-lg-2">
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="VotResPub" id="CheckVotRestringida" value="restringida" onchange="javascript:showContent()">
-        <label class="form-check-label" for="VotRestringida">Restringida</label>
-      </div>
-    </div>
+ 
 
   <div class="col-lg-10">
       <div class="form-check" id="CheckboxVotAnticipada" style="display: none;">
