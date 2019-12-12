@@ -1,9 +1,9 @@
 #users/forms.py
 from django.forms import ModelForm
-
 from django.core.exceptions import ValidationError
 from django import forms
-from .views import CrearVotacionView
+from django.utils import timezone
+from datetime import datetime
 from .models import ProcesoElectoral, Pregunta, Votacione, Eleccion, Opciones
 
 def positivo(value):
@@ -12,12 +12,15 @@ def positivo(value):
 
 c=[('0','Simple'),('1','Compleja')]
 
-class FormProcesoElectoral(forms.ModelForm):
+class DateTimeInput(forms.DateTimeInput):
+    input_type = 'date'
+
+class ProcesoElectoralForm(forms.ModelForm):
     create_at=forms.DateTimeField()
-    update_at=forms.DateField()
+    update_at=forms.DateTimeField()
     esConsulta=forms.BooleanField(label='Consulta',initial=False)
-    fechaInicio=forms.DateTimeField(label='Fecha Inicio del proceso electoral',required=True)
-    fechaFin=forms.DateTimeField(label='Fecha Fin del proceso electoral',required=True)
+    fechaInicio=forms.DateTimeField(label='Fecha Fin del proceso electoralsdsds',required=True, widget=DateTimeInput)
+    fechaFin=forms.DateTimeField(label='Fecha Fin del proceso electoral',required=True, widget=DateTimeInput)
     nombreFicheroCenso=forms.CharField(required=True)
 
     class Meta:
@@ -25,16 +28,23 @@ class FormProcesoElectoral(forms.ModelForm):
         fields='__all__'
 
 
-class PreguntaForm(forms.ModelForm):
+class OpcionesForm(forms.ModelForm):
+    enunciado=forms.CharField()
+
+    class Meta:
+        model=Opciones
+        fields='__all__'
+
+class PreguntaForm(OpcionesForm):
     enunciado=forms.CharField(max_length=50,required=True)
-    opciones=forms.ManyToManyField(Opciones())
+    opciones=OpcionesForm
 
     class Meta:
         model=Pregunta
         fields='__all__'
 
-class VotacioneForm(forms.ModelForm):
-    proceso=FormProcesoElectoral()
+class VotacioneForm(ProcesoElectoralForm, PreguntaForm):
+    proceso=ProcesoElectoralForm()
     pregunta=PreguntaForm()
     esPresencial=forms.BooleanField(label='Proceso Electoral presencial',initial=False)
     votoRectificable=forms.BooleanField(label='Voto rectificable',initial=False)

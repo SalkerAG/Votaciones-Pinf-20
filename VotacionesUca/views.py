@@ -1,17 +1,16 @@
-from django.views.generic.base import TemplateView
+from django.views.generic.edit import FormView
 from .models import ProcesoElectoral, Pregunta, Votacione, Eleccion, Opciones
+from .forms import VotacioneForm
 
 
-class CrearVotacionView(TemplateView):
-    template_name = "CrearVotacion.html"
+class CrearVotacionView(FormView):
+	template_name ='CrearVotacion.html'
+	success_url='/crearVotacion/'
+	form_class=VotacioneForm
 
+	def form_valid(self,form):
+		return super().form_valid(form)
 
-
-def votacion(request,op):
-	if(op==0):#votacion simple carga vista simple
-		template_name = "votacionSimple.html"
-	else:
-		template_name = "votacionCompleta.html"
 
 	
 

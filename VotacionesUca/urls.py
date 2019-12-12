@@ -4,5 +4,4 @@ from .views import CrearVotacionView
 
 urlpatterns = [
     path('crearVotacion/', CrearVotacionView.as_view(), name="crearvotacion"),
-    path('votacion/',votacion.as_view(),name="votacion"),
 ]
