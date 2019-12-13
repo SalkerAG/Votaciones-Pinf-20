@@ -24,6 +24,6 @@ urlpatterns = [
     path('estadisticasEleccion/', EstadisticasEleccionView.as_view(), name="estadisticaseleccion"),
     # path('logout/', LogoutView.as_view(), name="logout"),
     path('logout/', views.logout_request, name="logout"),
-    # path('accounts/login/', views.login_request, name="login"),
+
 
 ]

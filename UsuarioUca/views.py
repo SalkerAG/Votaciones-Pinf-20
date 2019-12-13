@@ -124,9 +124,6 @@ def logout_request(request):
     # messages.info(request, "Se ha cerrado la sesión correctamente")
     return redirect('home')
 
-# def login_request(request):
-#     login(request, user)
-#     # messages.info(request, "Se ha cerrado la sesión correctamente")
-#     return redirect('home')
+
 
 

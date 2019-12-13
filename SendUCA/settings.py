@@ -56,6 +56,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'SendUCA.urls'
 
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -84,7 +85,7 @@ DATABASES = {
     }
 }
 
-LOGIN_REDIRECT_URL = '/admin'
+LOGIN_REDIRECT_URL = '/'
 
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
