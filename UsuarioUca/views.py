@@ -2,19 +2,24 @@ from datetime import datetime
 from importlib import resources
 
 from django.http import HttpResponse
+from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.views.generic.base import TemplateView
 from django.utils import timezone
 from django.views.generic.list import ListView
 from django.views.generic.edit import UpdateView, CreateView
 from import_export.formats import base_formats
+from sqlalchemy.sql.functions import user
 
 from UsuarioUca.admin import UsuarioUcaResource
 from UsuarioUca.forms import createUserForm, editUserForm
 from UsuarioUca.import_export_views import ImportView
 from UsuarioUca.models import UsuarioUca
 from import_export import resources, fields
+from django.contrib import messages
+
+
 
 
 def my_view(request):
@@ -112,3 +117,16 @@ class EstadisticasVotacionSimpleView(TemplateView):
 
 class EstadisticasEleccionView(TemplateView):
     template_name = "votacionEleccionesResultado.html"
+
+
+def logout_request(request):
+    logout(request)
+    # messages.info(request, "Se ha cerrado la sesión correctamente")
+    return redirect('home')
+
+# def login_request(request):
+#     login(request, user)
+#     # messages.info(request, "Se ha cerrado la sesión correctamente")
+#     return redirect('home')
+
+

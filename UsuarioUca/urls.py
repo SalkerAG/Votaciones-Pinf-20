@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
+
+from . import views
 from .views import HomeView, ListaVotacionesView, CrearVotacionView, FAQView, EstadisticasVotacionSimpleView, \
     EstadisticasEleccionView, UsuarioUcaListView, UsuarioUcaUpdate, UsuarioUcaCreate, MyModelImportView, \
     UsuarioUcaExportView
@@ -19,5 +21,9 @@ urlpatterns = [
         name='usuariouca_import_confirm'),
     path('faq/', FAQView.as_view(), name="faq"),
     path('estadisticasVotacionSimple/', EstadisticasVotacionSimpleView.as_view(), name="estadisticasvotacionsimple"),
-    path('estadisticasEleccion/', EstadisticasEleccionView.as_view(), name="estadisticaseleccion")
+    path('estadisticasEleccion/', EstadisticasEleccionView.as_view(), name="estadisticaseleccion"),
+    # path('logout/', LogoutView.as_view(), name="logout"),
+    path('logout/', views.logout_request, name="logout"),
+    # path('accounts/login/', views.login_request, name="login"),
+
 ]
