@@ -1,0 +1,393 @@
+%%\documentclass[a4paper,12pt,oneside]{llncs}
+\documentclass[12pt,letterpaper]{report}
+\usepackage[right=2cm,left=3cm,top=2cm,bottom=2cm,headsep=0cm]{geometry}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Juego de caracteres usado en el archivo fuente: UTF-8
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Juego de caracteres usado en la salida dvi
+%% Otra posibilidad: \usepackage{t1enc}
+\usepackage[T1]{fontenc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Ajusta maergenes para a4
+%\usepackage{a4wide}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Uso fuente postscript times, para que los ps y pdf queden y pequeños...
+\usepackage{times}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Posibilidad de hipertexto (especialmente en pdf)
+%\usepackage{hyperref}
+\usepackage[bookmarks = true, colorlinks=true, linkcolor = black, citecolor = black, menucolor = black, urlcolor = black]{hyperref}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Graficos 
+\usepackage{graphics,graphicx}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Ciertos caracteres "raros"...
+\usepackage{latexsym}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Matematicas aun más fuertes (american math dociety)
+\usepackage{amsmath}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{multirow} % para las tablas
+\usepackage[spanish,es-tabla]{babel}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fuentes matematicas lo mas compatibles posibles con postscript (times)
+%% (Esto no funciona para todos los simbolos pero reduce mucho el tamaño del
+%% pdf si hay muchas matamaticas....
+\usepackage{mathptm}
+
+%%% VARIOS:
+\usepackage{slashbox}
+\usepackage{verbatim}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{multirow}
+
+%% MARCA DE AGUA
+%% Este package de "draft copy" NO funciona con pdflatex
+%%\usepackage{draftcopy}
+%% Este package de "draft copy" SI funciona con pdflatex
+%%%\usepackage{pdfdraftcopy}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Indenteacion en español...
+\usepackage[spanish]{babel}
+\usepackage{listings}
+% Para escribir código en C
+% \begin{lstlisting}[language=C]
+% #include <stdio.h>
+% int main(int argc, char* argv[]) {
+% puts("Hola mundo!");
+% }
+% \end{lstlisting}
+
+
+\title{SendUCA}
+\author{Grupo 1 PINF}
+
+\begin{document}
+	\maketitle
+	\thispagestyle{empty}
+	\newpage
+	\tableofcontents
+	%%\listoftables
+	%%\newpage
+	
+	%%\listoffigures
+	%%\newpage
+	
+	%%%% REAL WORK BEGINS HERE:
+	
+	%%Configuracion del paquete listings
+	\lstset{language=bash, numbers=left, numberstyle=\tiny, numbersep=10pt, firstnumber=1, stepnumber=1}
+	
+\chapter{Prolegómeno}		
+\section{Introducción}
+	\subsection{Motivación}
+	\subsection{Descripción del sistema actual}
+	\subsection{Objetivos y alcance del proyecto}
+	\subsection{Organización del documento}
+
+\section{Planificación}
+	\subsection{Metodología de desarrollo}
+	\subsection{Planificación}
+
+\chapter{Desarrollo}
+\section{Análisis de requisitos}
+
+	\subsection{Objetivos del sistema}
+		\noindent Controlar el acceso al sistema\\
+		Descripción: El sistema deberá gestionar el acceso a la aplicación, restringiendo el mismo a personas registradas en el sistema y autentificando las credenciales del usuario.
+		\\~\\
+		Realizar votaciones\\
+		Descripción: El sistema deberá permitir la creación y la participación de los usuarios del sistema en votaciones, en base al cumplimiento de unas pre condiciones específicas.
+		\\~\\
+		Realizar Elecciones \\
+		Descripción: 
+		El sistema deberá permitir la creación y la participación de los usuarios del sistema en elecciones, en base al cumplimiento de unas pre condiciones específicas.
+		\\~\\ 
+		Realizar Consultas\\
+		Descripción: El sistema deberá permitir configurar la creación de una votación / elección como una consulta.
+		\\~\\  
+		Mostrar Estadísticas\\
+		Descripción: El sistema deberá ser capaz de mostrar estadísticas referentes a cada votación / elección / consulta que se realice.\\   
+		
+	\subsection{Catálogo de actores}
+		\noindent Administrador\\
+		Descripción: Se encarga de la asignación de permisos al resto de usuarios, velar por la integridad del sistema, etc. Este rol lo pueden desempeñar una persona o varias, con distintas claves de acceso.
+		\\~\\
+		Elector\\
+		Descripción: Cada uno de los usuarios incluidos en el censo de una elección/votación y que tiene derecho al voto en la misma.
+		\\~\\
+		Secretario\\
+		Descripción: Son los encargados de dar de alta los procesos electorales, fijando las características de los mismos como censo, calendarios, etc.
+		\\~\\
+		Secretario general\\
+		Descripción: En algunos procesos electorales los secretarios[ACT-003] pueden delegar parte de sus funciones en los secretarios delegados. También el administrador[ACT-001] puede crear esta figura, en el caso de ausencia de los secretarios.
+		\\~\\
+		
+	\subsection{Requisitos funcionales}
+	
+		\begin{table}[htp]
+			\resizebox{.8\textwidth}{!}{
+			\begin{tabular}{|c|c|}
+				\hline
+				UC-0001          & Iniciar Sesión                                                                                                                                                                                                                                                                                                                                                                                                                \\ \hline
+				Descripción      & \begin{tabular}[l]{@{}l@{}}El sistema deberá comportarse tal como se describe \\ en el siguiente caso de uso cuando algún usuario \\ desee iniciar sesión para acceder al sistema.\end{tabular}                                                                                                                                                                                                                               \\ \hline
+				Precondición     & Usuario sin iniciar sesión.                                                                                                                                                                                                                                                                                                                                                                                                   \\ \hline
+				Secuencia normal & \begin{tabular}[l]{@{}l@{}}1.El sistema muestra la pantalla para iniciar sesión.\\ 2.El usuario introduce sus datos en la pantalla.\\ 3.El sistema verifica que los datos son correctos y muestra \\ la pantalla principal asociada al rol del usuario.\end{tabular}                                                                                                                                                          \\ \hline
+				Postcondición    & Usuario con sesión iniciada.                                                                                                                                                                                                                                                                                                                                                                                                  \\ \hline
+				Excepciones      & \begin{tabular}[l]{@{}l@{}}1.Si el usuario ya no desea loguearse, el usuario cancela\\  el inicio de sesión, a continuación este caso de uso queda sin efecto.\\ 2.Si el usuario no existe, el sistema mostrará un mensaje\\  de error, a continuación este caso de uso queda sin efecto.\\ 3.Si los datos son incorrectos, el sistema mostrará un\\ mensaje de error, a continuación este caso de uso continúa.\end{tabular} \\ \hline
+				Comentarios      & Ninguno                                                                                                                                                                                                                                                                                                                                                                                                                       \\ \hline
+			\end{tabular}}
+		\end{table}
+		\hspace{2em}
+		\begin{table}[htp]
+			\resizebox{.8\textwidth}{!}{
+			\begin{tabular}{|c|c|}
+				\hline
+				UC-0002          & Crear Votación                                                                                                                                                                                                                                                                                            \\ \hline
+				Descripción      & \begin{tabular}[l]{@{}l@{}}El sistema deberá comportarse tal como se describe \\ en el siguiente caso de uso cuando algún usuario con los permisos \\ oportunos desee crear una votación.\end{tabular}                                                                                                    \\ \hline
+				Precondición     & Usuario previamente logueado.                                                                                                                                                                                                                                                                             \\ \hline
+				Secuencia normal & \begin{tabular}[l]{@{}l@{}}1.El sistema muestra la pantalla para crear una votación.\\ 2.El usuario establece los datos de creación\\  asociados a la votación.\\ 3.El sistema verifica que los datos son correctos y muestra un mensaje de\\  éxito indicando que la votación se ha creado.\end{tabular} \\ \hline
+				Postcondición    & Votación generada exitosamente.                                                                                                                                                                                                                                                                           \\ \hline
+				Excepciones      & \begin{tabular}[l]{@{}l@{}}1.Si el usuario ya no desea crear la votación, el usuario cancela \\ la creación, a continuación este caso de uso queda sin efecto.\\ 2.Si los datos son incorrectos, el sistema mostrará un mensaje de \\ error, a continuación este caso de uso continúa.\end{tabular}       \\ \hline
+				Comentarios      & Ninguno                                                                                                                                                                                                                                                                                                   \\ \hline
+			\end{tabular}}
+		\end{table}
+		\hspace{2em}
+		\begin{table}[htp]
+			\resizebox{.8\textwidth}{!}{
+			\begin{tabular}{|c|c|}
+				\hline
+				UC-0003          & Crear Elección                                                                                                                                                                                                                                                                                         \\ \hline
+				Descripción      & \begin{tabular}[l]{@{}l@{}}El sistema deberá comportarse tal como se describe \\ en el siguiente caso de uso cuando algún usuario con los\\  permisos oportunos desee crear una elección.\end{tabular}                                                                                                 \\ \hline
+				Precondición     & Usuario previamente logueado.                                                                                                                                                                                                                                                                          \\ \hline
+				Secuencia normal & \begin{tabular}[l]{@{}l@{}}1.El sistema muestra la pantalla para crear una elección.\\ 2.El usuario establece los datos de creación asociados a la elección.\\ 3.El sistema verifica que los datos son correctos y muestra un\\  mensaje de éxito indicando que la elección se ha creado.\end{tabular} \\ \hline
+				Postcondición    & Elección generada exitosamente.                                                                                                                                                                                                                                                                        \\ \hline
+				Excepciones      & \begin{tabular}[l]{@{}l@{}}1.Si el usuario ya no desea crear la elección, el usuario cancela \\ la creación, a continuación este caso de uso queda sin efecto.\\ 2.Si los datos son incorrectos, el sistema mostrará un mensaje de \\ error, a continuación este caso de uso continúa.\end{tabular}    \\ \hline
+				Comentarios      & Ninguno                                                                                                                                                                                                                                                                                                \\ \hline
+			\end{tabular}}
+		\end{table}
+		\hspace{2em}
+		\begin{table}[htp]
+			\resizebox{.8\textwidth}{!}{
+			\begin{tabular}{|c|c|}
+				\hline
+				UC-0004          & Crear Consulta                                                                                                                                                                                             \\ \hline
+				Descripción      & \begin{tabular}[l]{@{}l@{}}El sistema deberá comportarse tal como se describe en \\ el siguiente caso de uso cuando algún usuario con los permisos \\ oportunos desee crear una consulta.\end{tabular}     \\ \hline
+				Precondición     & \begin{tabular}[l]{@{}l@{}}Usuario previamente logueado y realizando la creación \\ de una votación / elección.\end{tabular}                                                                               \\ \hline
+				Secuencia normal & \begin{tabular}[l]{@{}l@{}}1.El sistema muestra la opción para la generación\\  de una consulta.\\ 2.El usuario selecciona la opción de generar una\\  votación / elección como una consulta.\end{tabular} \\ \hline
+				Postcondición    & Votación / Elección generada exitósamente como una Consulta.                                                                                                                                               \\ \hline
+				Excepciones      & \begin{tabular}[l]{@{}l@{}}Si el usuario ya no desea crear la votación / elección como\\  una consulta, el usuario desmarca la opción,  a continuación \\ \\ este caso de uso continúa.\end{tabular}       \\ \hline
+				Comentarios      & \begin{tabular}[l]{@{}l@{}}En caso de cumplirse la excepción, se creará una votación\\  o una elección, definidos sus casos de uso\\  respectivamente en UC-0003 y UC-0004\\ .\end{tabular}                \\ \hline
+			\end{tabular}}
+		\end{table}
+		\hspace{2em}
+		\begin{table}[htp]
+			\resizebox{.8\textwidth}{!}{
+			\begin{tabular}{|c|c|}
+				\hline
+				UC-0005          & Participar en Votación Simple                                                                                                                                                                                                                                                                                                   \\ \hline
+				Descripción      & \begin{tabular}[l]{@{}l@{}}El sistema deberá comportarse tal como se describe en el \\ siguiente caso de uso cuando algún usuario desee participar\\  en una votación de tipo simple.\end{tabular}                                                                                                                              \\ \hline
+				Precondición     & \begin{tabular}[l]{@{}l@{}}Usuario logueado y con permisos para participar en una\\  votación de tipo simple.\end{tabular}                                                                                                                                                                                                      \\ \hline
+				Secuencia normal & \begin{tabular}[l]{@{}l@{}}1.El sistema muestra la pantalla para participar en la votación.\\ 2.El sistema muestra la pregunta, y las opciones de la votación\\  (a favor, en contra, abstención).\\ 3.El usuario lee la pregunta, y selecciona la opción deseada.\\ 4.El sistema recoge los datos de la votación.\end{tabular} \\ \hline
+				Postcondición    & Usuario participa exitosamente en la votación simple.                                                                                                                                                                                                                                                                           \\ \hline
+				Excepciones      & \begin{tabular}[l]{@{}l@{}}1.Si el usuario ya no desea votar, el usuario cancela su \\ votación, a continuación este caso de uso queda sin efecto.\\ 2.Si el usuario no selecciona una opción, el sistema mostrará un\\  mensaje de error, a continuación este caso de uso continúa.\end{tabular}                               \\ \hline
+				Comentarios      & Ninguno.                                                                                                                                                                                                                                                                                                                        \\ \hline
+			\end{tabular}}
+		\end{table}
+		\hspace{2em}
+		\begin{table}[htp]
+			\resizebox{.8\textwidth}{!}{
+			\begin{tabular}{|c|c|}
+				\hline
+				UC-0006          & Participar en Votación Compleja                                                                                                                                                                                                                                                                                     \\ \hline
+				Descripción      & \begin{tabular}[l]{@{}l@{}}El sistema deberá comportarse tal como se describe en el \\ siguiente caso de uso cuando algún usuario desee participar\\  en una votación de tipo compleja.\end{tabular}                                                                                                                \\ \hline
+				Precondición     & \begin{tabular}[l]{@{}l@{}}Usuario logueado y con permisos para participar en\\ una votación de tipo compleja.\end{tabular}                                                                                                                                                                                         \\ \hline
+				Secuencia normal & \begin{tabular}[l]{@{}l@{}}1.El sistema muestra la pantalla para participar en la votación.\\ 2.El sistema muestra la pregunta, y las opciones de la votación (\\ múltiples opciones).\\ 3.El usuario lee la pregunta, y selecciona la opción deseada.\\ 4.El sistema recoge los datos de la votación.\end{tabular} \\ \hline
+				Postcondición    & Usuario participa exitosamente en la votación compleja.                                                                                                                                                                                                                                                             \\ \hline
+				Excepciones      & \begin{tabular}[l]{@{}l@{}}1.Si el usuario ya no desea votar, el usuario cancela su \\ votación, a continuación este caso de uso queda sin efecto.\\ 2.Si el usuario no selecciona una opción, el sistema mostrará un\\  mensaje de error, a continuación este caso de uso continúa.\end{tabular}                   \\ \hline
+				Comentarios      & Ninguno.                                                                                                                                                                                                                                                                                                            \\ \hline
+			\end{tabular}}
+		\end{table}
+		\hspace{2em}
+		\begin{table}[htp]
+			\resizebox{.8\textwidth}{!}{
+			\begin{tabular}{|c|c|}
+				\hline
+				UC-0007          & Participar en Elecciones Unipersonales                                                                                                                                                                                                                                                            \\ \hline
+				Descripción      & \begin{tabular}[l]{@{}l@{}}El sistema deberá comportarse tal como se describe en el\\  siguiente caso de uso cuando algún usuario desee\\  participar en una elección a cargos unipersonales.\end{tabular}                                                                                        \\ \hline
+				Precondición     & \begin{tabular}[l]{@{}l@{}}Usuario logueado y con permisos para participar en una \\ \\ elección a cargos unipersonale.\end{tabular}                                                                                                                                                              \\ \hline
+				Secuencia normal & \begin{tabular}[l]{@{}l@{}}1.El sistema muestra la pantalla para participar en la elección.\\ 2.El sistema muestra los candidatos elegibles.\\ 3.El usuario lee la información de los candidatos, y selecciona\\  la opción deseada.\\ 4.El sistema recoge los datos de la elección.\end{tabular} \\ \hline
+				Postcondición    & Usuario participa exitosamente en la elección a cargos unipersonales.                                                                                                                                                                                                                             \\ \hline
+				Excepciones      & \begin{tabular}[l]{@{}l@{}}1.Si el usuario ya no desea votar, el usuario cancela su \\ elección, a continuación este caso de uso queda sin efecto.\\ 2.Si el usuario no selecciona una opción, el sistema mostrará un \\ mensaje de error, a continuación este caso de uso continúa.\end{tabular} \\ \hline
+				Comentarios      & Ninguno.                                                                                                                                                                                                                                                                                          \\ \hline
+			\end{tabular}}
+		\end{table}
+		\hspace{2em}
+		\begin{table}[htp]
+			\resizebox{.8\textwidth}{!}{
+			\begin{tabular}{|c|c|}
+				\hline
+				UC-0008          & Participar en Elecciones por Grupos                                                                                                                                                                                                                                                                  \\ \hline
+				Descripción      & \begin{tabular}[l]{@{}l@{}}El sistema deberá comportarse tal como se describe en el\\  siguiente caso de uso cuando algún usuario desee\\  participar en una elección por grupos.\end{tabular}                                                                                                       \\ \hline
+				Precondición     & \begin{tabular}[l]{@{}l@{}}Usuario logueado y con permisos para participar \\ en una elección por grupos.\end{tabular}                                                                                                                                                                               \\ \hline
+				Secuencia normal & \begin{tabular}[l]{@{}l@{}}1.El sistema muestra la pantalla para participar en la \\ elección.\\ 2.El sistema muestra los candidatos elegibles.\\ 3.El usuario lee la información de los candidatos, y selecciona\\  la opción deseada.\\ 4.El sistema recoge los datos de la elección.\end{tabular} \\ \hline
+				Postcondición    & Usuario participa exitosamente en la elección por grupos.                                                                                                                                                                                                                                            \\ \hline
+				Excepciones      & \begin{tabular}[l]{@{}l@{}}1.Si el usuario ya no desea votar, el usuario cancela su elección, \\ a continuación este caso de uso queda sin efecto.\\ 2.Si el usuario no selecciona una opción, el sistema\\  mostrará un mensaje de error, a \\ continuación este caso de uso continúa.\end{tabular} \\ \hline
+				Comentarios      & Ninguno.                                                                                                                                                                                                                                                                                             \\ \hline
+			\end{tabular}}
+		\end{table}
+		\hspace{2em}
+		\begin{table}[htp]
+			\resizebox{.8\textwidth}{!}{
+			\begin{tabular}{|c|c|}
+				\hline
+				UC-0009          & Mostrar Estadísticas                                                                                                                                                                                                         \\ \hline
+				Descripción      & \begin{tabular}[l]{@{}l@{}}El sistema deberá comportarse tal como se describe en el siguiente \\ caso de uso cuando algún usuario desee ver las estadísticas asociadas\\  a una votación / elección / consulta.\end{tabular} \\ \hline
+				Precondición     & Usuario logueado y votación / elección / consulta previamente concluída.                                                                                                                                                     \\ \hline
+				Secuencia normal & \begin{tabular}[l]{@{}l@{}}1.El usuario selecciona la opción de mostrar estadísticas.\\ 2.El sistema muestra los datos estadísticos asociados a la\\  votación / elección / consulta.\end{tabular}                           \\ \hline
+				Postcondición    & Estadísticas visualizadas exitosamente                                                                                                                                                                                       \\ \hline
+				Excepciones      & \begin{tabular}[l]{@{}l@{}}Si no se ha realizado ninguna votación / elección / consulta, el\\  sistema mostrará un mensaje de error, a continuación este caso \\ de uso queda sin efecto.\end{tabular}                       \\ \hline
+				Comentarios      & Ninguno.                                                                                                                                                                                                                     \\ \hline
+			\end{tabular}}
+		\end{table}
+	
+	\subsection{Modelos estáticos del sistema}
+
+		\subsubsection{Modelo Estático de los Procesos Electorales.}
+			\begin{figure}[htp]
+				\centering
+				\includegraphics[width=0.9\linewidth]{img/MEProcesosElectorales}
+				\caption{}
+				\label{fig:meprocesoselectorales}
+			\end{figure}
+		\newpage
+		
+		\subsubsection{Modelo Estático de la jerarquía de usuarios del Sistema}
+			\begin{figure}[htp]
+				\centering
+				\includegraphics[width=0.9\linewidth]{img/MEJerarquiaUsuarios}
+				\caption{}
+				\label{fig:meprocesoselectorales}
+			\end{figure}
+		\newpage	
+	\subsection{Requisitos de información}
+		
+	\newpage
+	\subsection{Requisitos no funcionales}
+		\begin{table}[htp]
+			\resizebox{.8\textwidth}{!}{
+			\begin{tabular}{|c|c|c|}
+				\hline
+				ID   & Requerimiento                  & Descripción                                                                                                                                                                                                                                                                   \\ \hline
+				RNF1 & Seguridad                      & \begin{tabular}[c]{@{}c@{}}Mecanismos que permiten la protección\\  de los datos y la estabilidad del sistema\\ frente a cualquier tipo de ataque. \\ Garantizando además el secreto de \\ voto, preservando siempre el anonimato de la\\  elección del elector.\end{tabular} \\ \hline
+				RNF2 & Accesibilidad                  & \begin{tabular}[c]{@{}c@{}}Se adapta a las posibles diversidades funcionales \\ de cualquier individuo.\end{tabular}                                                                                                                                                          \\ \hline
+				RNF3 & Mantenibilidad / Escalabilidad & \begin{tabular}[c]{@{}c@{}}Propiedad que indica la capacidad de reaccionar\\ y adaptarse a la carga en el sistema sin perder calidad.\end{tabular}                                                                                                                            \\ \hline
+				RNF4 & Portabilidad                   & \begin{tabular}[c]{@{}c@{}}Capacidad de acceder al servicio desde cualquier \\ dispositivo con acceso a un navegador web\end{tabular}                                                                                                                                         \\ \hline
+				RNF5 & Usabilidad                     & Claridad en los procesos y uso de la aplicación.                                                                                                                                                                                                                              \\ \hline
+			\end{tabular}}
+		\end{table}
+		
+	\newpage
+	\subsection{Reglas de negocio}
+	
+		\begin{table}[htp]
+			\resizebox{.8\textwidth}{!}{
+			\begin{tabular}{|c|l|}
+				\hline
+				RN-002              & Pertenencia a grupos                                \\ \hline
+				Descripción         & Cada usuario puede pertenecer a uno o varios grupos \\ \hline
+				Reglas relacionadas &                                                     \\ \hline
+				Última modificación & 12/12/2019                                          \\ \hline
+			\end{tabular}}
+		\end{table}
+	
+		\begin{table}[htp]
+			\resizebox{.8\textwidth}{!}{
+			\begin{tabular}{|c|l|}
+				\hline
+				RN-002              & Miembro de mesa electoral                                                                                                      \\ \hline
+				Descripción         & \begin{tabular}[c]{@{}l@{}}A efectos de realización digital del recuento \\ debe ser introducida obligatoriamente\end{tabular} \\ \hline
+				Reglas relacionadas & RN-003                                                                                                                         \\ \hline
+				Última modificación & 12/12/2019                                                                                                                     \\ \hline
+			\end{tabular}}
+		\end{table}
+	
+		\begin{table}[htp]
+			\resizebox{.8\textwidth}{!}{
+			\begin{tabular}{|c|c|}
+				\hline
+				RN-003              & Rol de elector                                                                                                                            \\ \hline
+				Descripción         & \begin{tabular}[c]{@{}c@{}}El rol de elector de un usuario viene dado \\por la aparición del mismo en un determinado censo.\end{tabular} \\ \hline
+				Reglas relacionadas &                                                                                                                                           \\ \hline
+				Última modificación & 12/12/2019                                                                                                                                \\ \hline
+			\end{tabular}}
+		\end{table}
+	
+		\begin{table}[htp]
+			\resizebox{.8\textwidth}{!}{
+			\begin{tabular}{|c|l|}
+				\hline
+				RN-004              & Información del censo                                                                                                                   \\ \hline
+				Descripción         & \begin{tabular}[c]{@{}l@{}}Un fichero de censo debe contener el nombre de cada elector, \\ DNI e identificador de usuario.\end{tabular} \\ \hline
+				Reglas relacionadas & RN-003                                                                                                                                  \\ \hline
+				Última modificación & 12/12/2019                                                                                                                              \\ \hline
+			\end{tabular}}
+		\end{table}
+		
+	\newpage	
+	\subsection{Estudio de alternativas tecnológicas}
+		Ninguna por el momento.
+\section{Diseño de Sistema}
+	\subsection{Arquitectura}
+	\subsection{Tipos y por qué}
+	\subsection{Diseño}
+\section{Implementación del sistema}
+	\subsection{Entorno tecnológico}
+	\subsection{Código fuente}
+	\subsection{Calidad del código}
+\section{Pruebas del sistema}
+	\subsection{Pruebas unitarias}
+	\subsection{Pruebas de integración}
+	\subsection{Pruebas de sistema}
+		\subsubsection{Pruebas funcionales}
+		\subsubsection{Pruebas no funcionales}
+	\subsection{Pruebas de aceptación}
+\chapter{Epílogo}
+\section{Manual de Usuario}
+	\subsection{Introducción}
+	\subsection{Características}
+	\subsection{Requisitos previos}
+	\subsection{Utilización}
+
+\section{Manual de instalación y explotación}
+	\subsection{Introducción}
+	\subsection{Requisitos previos}
+	\subsection{Inventario de componentes}
+
+\section{Conclusiones}
+	\subsection{Objetivos}
+	\subsection{Lecciones aprendidas}
+	\subsection{Trabajo futuro}
+
+\section{bibliografías}
+
+\section{Licencias}
+
+\section{Índice de figuras}
+
+\section{Índice de tablas}
+
+\end{document}

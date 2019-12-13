@@ -1,0 +1,55 @@
+\babel@toc {spanish}{}
+\contentsline {chapter}{\numberline {1}Proleg\IeC {\'o}meno}{3}{chapter.1}
+\contentsline {section}{\numberline {1.1}Introducci\IeC {\'o}n}{3}{section.1.1}
+\contentsline {subsection}{\numberline {1.1.1}Motivaci\IeC {\'o}n}{3}{subsection.1.1.1}
+\contentsline {subsection}{\numberline {1.1.2}Descripci\IeC {\'o}n del sistema actual}{3}{subsection.1.1.2}
+\contentsline {subsection}{\numberline {1.1.3}Objetivos y alcance del proyecto}{3}{subsection.1.1.3}
+\contentsline {subsection}{\numberline {1.1.4}Organizaci\IeC {\'o}n del documento}{3}{subsection.1.1.4}
+\contentsline {section}{\numberline {1.2}Planificaci\IeC {\'o}n}{3}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}Metodolog\IeC {\'\i }a de desarrollo}{3}{subsection.1.2.1}
+\contentsline {subsection}{\numberline {1.2.2}Planificaci\IeC {\'o}n}{3}{subsection.1.2.2}
+\contentsline {chapter}{\numberline {2}Desarrollo}{4}{chapter.2}
+\contentsline {section}{\numberline {2.1}An\IeC {\'a}lisis de requisitos}{4}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Objetivos del sistema}{4}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}Cat\IeC {\'a}logo de actores}{4}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}Requisitos funcionales}{5}{subsection.2.1.3}
+\contentsline {subsection}{\numberline {2.1.4}Modelos est\IeC {\'a}ticos del sistema}{9}{subsection.2.1.4}
+\contentsline {subsubsection}{Modelo Est\IeC {\'a}tico de los Procesos Electorales.}{9}{section*.2}
+\contentsline {subsubsection}{Modelo Est\IeC {\'a}tico de la jerarqu\IeC {\'\i }a de usuarios del Sistema}{10}{section*.3}
+\contentsline {subsection}{\numberline {2.1.5}Requisitos de informaci\IeC {\'o}n}{11}{subsection.2.1.5}
+\contentsline {subsection}{\numberline {2.1.6}Requisitos no funcionales}{12}{subsection.2.1.6}
+\contentsline {subsection}{\numberline {2.1.7}Reglas de negocio}{13}{subsection.2.1.7}
+\contentsline {subsection}{\numberline {2.1.8}Estudio de alternativas tecnol\IeC {\'o}gicas}{14}{subsection.2.1.8}
+\contentsline {section}{\numberline {2.2}Dise\IeC {\~n}o de Sistema}{14}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Arquitectura}{14}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}Tipos y por qu\IeC {\'e}}{14}{subsection.2.2.2}
+\contentsline {subsection}{\numberline {2.2.3}Dise\IeC {\~n}o}{14}{subsection.2.2.3}
+\contentsline {section}{\numberline {2.3}Implementaci\IeC {\'o}n del sistema}{14}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Entorno tecnol\IeC {\'o}gico}{14}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}C\IeC {\'o}digo fuente}{14}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {2.3.3}Calidad del c\IeC {\'o}digo}{14}{subsection.2.3.3}
+\contentsline {section}{\numberline {2.4}Pruebas del sistema}{14}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}Pruebas unitarias}{14}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {2.4.2}Pruebas de integraci\IeC {\'o}n}{14}{subsection.2.4.2}
+\contentsline {subsection}{\numberline {2.4.3}Pruebas de sistema}{14}{subsection.2.4.3}
+\contentsline {subsubsection}{Pruebas funcionales}{14}{section*.4}
+\contentsline {subsubsection}{Pruebas no funcionales}{14}{section*.5}
+\contentsline {subsection}{\numberline {2.4.4}Pruebas de aceptaci\IeC {\'o}n}{14}{subsection.2.4.4}
+\contentsline {chapter}{\numberline {3}Ep\IeC {\'\i }logo}{15}{chapter.3}
+\contentsline {section}{\numberline {3.1}Manual de Usuario}{16}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}Introducci\IeC {\'o}n}{16}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}Caracter\IeC {\'\i }sticas}{16}{subsection.3.1.2}
+\contentsline {subsection}{\numberline {3.1.3}Requisitos previos}{16}{subsection.3.1.3}
+\contentsline {subsection}{\numberline {3.1.4}Utilizaci\IeC {\'o}n}{16}{subsection.3.1.4}
+\contentsline {section}{\numberline {3.2}Manual de instalaci\IeC {\'o}n y explotaci\IeC {\'o}n}{16}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Introducci\IeC {\'o}n}{16}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}Requisitos previos}{16}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}Inventario de componentes}{16}{subsection.3.2.3}
+\contentsline {section}{\numberline {3.3}Conclusiones}{16}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Objetivos}{16}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}Lecciones aprendidas}{16}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}Trabajo futuro}{16}{subsection.3.3.3}
+\contentsline {section}{\numberline {3.4}bibliograf\IeC {\'\i }as}{16}{section.3.4}
+\contentsline {section}{\numberline {3.5}Licencias}{16}{section.3.5}
+\contentsline {section}{\numberline {3.6}\IeC {\'I}ndice de figuras}{16}{section.3.6}
+\contentsline {section}{\numberline {3.7}\IeC {\'I}ndice de tablas}{16}{section.3.7}
