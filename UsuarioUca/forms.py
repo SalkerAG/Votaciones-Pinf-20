@@ -83,7 +83,7 @@ class createUserForm(ModelForm):
     class Meta:
         model = UsuarioUca
         fields = ['nif', 'first_name', 'last_name', 'email', 'password']
-        labels = {'first_name': ('Nombre'), 'last_name': ('Apellidos'), 'nif': ('NIF'),
+        labels = {'first_name': ('Nombre'), 'last_name': ('Apellido'), 'nif': ('NIF'),
                   'email': ('Correo electrónico'), 'password': ('Contraseña'), }
         help_texts = {'first_name': ('Introduce un nombre valido.'), 'last_name': ('Introduce los apellidos válidos.'),
                       'nif': ('Introduce un nif válido'),
@@ -119,7 +119,7 @@ class editUserForm(ModelForm):
         fields = ['nif', 'first_name', 'last_name', 'email',
                   # 'password'
                   ]
-        labels = {'first_name': ('Nombre'), 'last_name': ('Apellidos'), 'nif': ('NIF'),
+        labels = {'first_name': ('Nombre'), 'last_name': ('Apellido'), 'nif': ('NIF'),
                   'email': ('Correo electrónico'),
                   # 'password': ('Contraseña'),
                   }

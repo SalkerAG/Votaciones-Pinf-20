@@ -132,11 +132,12 @@ class UsuarioUca(AbstractUser):
         nif = self.nif
         first_name = self.first_name
         last_name = self.last_name
+        password = self.password
         istextvalidator(first_name)
         istextvalidator(last_name)
 
-        # if (password.length < 3):
-        #     raise forms.ValidationError("La contraseña debe se de 3 caracteres mínimo")
+        if (len(password.__str__())<6):
+            raise forms.ValidationError("La contraseña debe ser de 6 caracteres mínimo")
         if  nif[1] == 'u':
             raise forms.ValidationError("Nif incorrecto")
 
