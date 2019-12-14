@@ -7,3 +7,4 @@ class VotacioneAdmin(admin.TabularInline):
 class ProcesoElectoralAdmin(admin.ModelAdmin):
     inlines = [VotacioneAdmin,]
 
+admin.site.register(Votacione)
