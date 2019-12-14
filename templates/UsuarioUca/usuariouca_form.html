@@ -1,225 +1,129 @@
 {% extends 'base.html' %}
 {% block content %}
-<!doctype html>
+    <!doctype html>
 
-<html lang="es">
-
-
-<body>
+    <html lang="es">
 
 
-<div class="container">
-    <!-- Cabecera -->
-    <br/>
-    <div class="row justify-content-center">
-        <div class="page-header">
-            <h1>Crear Usuario</h1>
+    <body>
+
+    {% if not user.is_superuser %}
+        <div class="container">
+            <!-- Cabecera -->
+            <br/>
+            <div class="row justify-content-center">
+                <div class="page-header">
+                    <h1>No dispones de los permisos requeridos para ver este contenido.</h1>
+                </div>
+            </div>
         </div>
-    </div>
-    <div id="page-wrapper">
-        <!--
-        <div class="alert alert-danger">
-            Introducir aqui error
-        </div>
-        -->
-        <!-- /.row -->
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <form method="post" style="margin-bottom: 20px">{% csrf_token %}
-                                    {{ form.as_p }}
-                                    <div style="text-align: center">
-                                        <button type="submit" class="btn btn-primary">Añadir</button>
-                                        <button type="reset" class="btn btn-secondary">Reset</button>
+    {% else %}
+        <div class="container">
+            <!-- Cabecera -->
+            <br/>
+            <div class="row justify-content-center">
+                <div class="page-header">
+                    <h1>Crear Usuario</h1>
+                </div>
+            </div>
+            <div id="page-wrapper">
+                <!--
+                <div class="alert alert-danger">
+                    Introducir aqui error
+                </div>
+                -->
+                <!-- /.row -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <form method="post" style="margin-bottom: 20px">{% csrf_token %}
+                                            {{ form.as_p }}
+                                            <div style="text-align: center">
+                                                <button type="submit" class="btn btn-primary">Añadir</button>
+                                                {#                                        <button type="reset" class="btn btn-secondary">Reset</button>#}
+                                            </div>
+                                            {#                                </form>#}
+                                            {#                                                                        <form role="form" action="" method="post">#}
+                                            {#                                                                            <div class="form-group">#}
+                                            {#                                                                                <label>Nombre Usuario</label>#}
+                                            {#                                                                                <input class="form-control" type="text" value=""#}
+                                            {#                                                                                        name="nombre" placeholder="Cualquier nombre">#}
+                                            {#                                                                                <small class="form-text text-muted">#}
+                                            {#                                                                                    Nombre del Usuario#}
+                                            {#                                                                                </small>#}
+                                            {#                                                                            </div>#}
+                                            {#                                                                            <div class="form-group">#}
+                                            {#                                                                                <label>Apellidos Usuario</label>#}
+                                            {#                                                                                <input class="form-control" type="text" value=""#}
+                                            {#                                                                                        name="apellidos" placeholder="Cualquier apellido">#}
+                                            {#                                                                                <small id="emailHelp" class="form-text text-muted">#}
+                                            {#                                                                                    Apellidos del Usuario#}
+                                            {#                                                                                </small>#}
+                                            {#                                                                            </div>#}
+                                            {#                                                                            <div class="form-group">#}
+                                            {#                                                                                <label>NIF Usuario</label>#}
+                                            {#                                                                                <input class="form-control" type="text" value=""#}
+                                            {#                                                                                        name="nif" placeholder="Cualquier dni">#}
+                                            {#                                                                                <small id="emailHelp" class="form-text text-muted">#}
+                                            {#                                                                                    NIF del Usuario#}
+                                            {#                                                                                </small>#}
+                                            {#                                                                            </div>#}
+                                            {#                                                                            <div class="form-group">#}
+                                            {#                                                                                <label>Email Usuario</label>#}
+                                            {#                                                                                <input class="form-control" type="email" value=""#}
+                                            {#                                                                                        name="email" placeholder="Cualquier email">#}
+                                            {#                                                                                <small id="emailHelp" class="form-text text-muted">#}
+                                            {#                                                                                    Email del Usuario#}
+                                            {#                                                                                </small>#}
+                                            {#                                                                            </div>#}
+                                            {#                                                                            <div class="form-group">#}
+                                            {#                                                                                <label>Rol</label>#}
+                                            {#                                                                                <select class="form-control" name="rol">#}
+                                            {#                                                                                    <option value="0">#}
+                                            {#                                                                                        Super User#}
+                                            {#                                                                                    </option>#}
+                                            {#                                                                                    <option value="1">#}
+                                            {#                                                                                        Secretario#}
+                                            {#                                                                                    </option>#}
+                                            {#                                                                                    <option value="2">#}
+                                            {#                                                                                        Alumno#}
+                                            {#                                                                                    </option>#}
+                                            {#                                                                                </select>#}
+                                            {#                                                                                <small id="emailHelp" class="form-text text-muted">#}
+                                            {#                                                                                    Rol del Usuario#}
+                                            {#                                                                                </small>#}
+                                            {#                                                                            </div>#}
+                                            {#                                                                            <div class="form-group">#}
+                                            {#                                                                                <label>Password Usuario</label>#}
+                                            {#                                                                                <input class="form-control" type="password" required minlength="6"#}
+                                            {#                                                                                        name="password" placeholder="Cualquier password">#}
+                                            {#                                                                                <small id="emailHelp" class="form-text text-muted">#}
+                                            {#                                                                                    Password del Usuario#}
+                                            {#                                                                                </small>#}
+                                            {#                                                                            </div>#}
+                                            {#                                                                            <button type="submit" class="btn btn-success">Añadir</button>#}
+                                            {#                                                                            <button type="reset" class="btn btn-default">Reset</button>#}
+                                            {#                                                                        </form>#}
                                     </div>
-{#                                </form>#}
-                                {#                                                                        <form role="form" action="" method="post">#}
-                                {#                                                                            <div class="form-group">#}
-                                {#                                                                                <label>Nombre Usuario</label>#}
-                                {#                                                                                <input class="form-control" type="text" value=""#}
-                                {#                                                                                        name="nombre" placeholder="Cualquier nombre">#}
-                                {#                                                                                <small class="form-text text-muted">#}
-                                {#                                                                                    Nombre del Usuario#}
-                                {#                                                                                </small>#}
-                                {#                                                                            </div>#}
-                                {#                                                                            <div class="form-group">#}
-                                {#                                                                                <label>Apellidos Usuario</label>#}
-                                {#                                                                                <input class="form-control" type="text" value=""#}
-                                {#                                                                                        name="apellidos" placeholder="Cualquier apellido">#}
-                                {#                                                                                <small id="emailHelp" class="form-text text-muted">#}
-                                {#                                                                                    Apellidos del Usuario#}
-                                {#                                                                                </small>#}
-                                {#                                                                            </div>#}
-                                {#                                                                            <div class="form-group">#}
-                                {#                                                                                <label>NIF Usuario</label>#}
-                                {#                                                                                <input class="form-control" type="text" value=""#}
-                                {#                                                                                        name="nif" placeholder="Cualquier dni">#}
-                                {#                                                                                <small id="emailHelp" class="form-text text-muted">#}
-                                {#                                                                                    NIF del Usuario#}
-                                {#                                                                                </small>#}
-                                {#                                                                            </div>#}
-                                {#                                                                            <div class="form-group">#}
-                                {#                                                                                <label>Email Usuario</label>#}
-                                {#                                                                                <input class="form-control" type="email" value=""#}
-                                {#                                                                                        name="email" placeholder="Cualquier email">#}
-                                {#                                                                                <small id="emailHelp" class="form-text text-muted">#}
-                                {#                                                                                    Email del Usuario#}
-                                {#                                                                                </small>#}
-                                {#                                                                            </div>#}
-                                {#                                                                            <div class="form-group">#}
-                                {#                                                                                <label>Rol</label>#}
-                                {#                                                                                <select class="form-control" name="rol">#}
-                                {#                                                                                    <option value="0">#}
-                                {#                                                                                        Super User#}
-                                {#                                                                                    </option>#}
-                                {#                                                                                    <option value="1">#}
-                                {#                                                                                        Secretario#}
-                                {#                                                                                    </option>#}
-                                {#                                                                                    <option value="2">#}
-                                {#                                                                                        Alumno#}
-                                {#                                                                                    </option>#}
-                                {#                                                                                </select>#}
-                                {#                                                                                <small id="emailHelp" class="form-text text-muted">#}
-                                {#                                                                                    Rol del Usuario#}
-                                {#                                                                                </small>#}
-                                {#                                                                            </div>#}
-                                {#                                                                            <div class="form-group">#}
-                                {#                                                                                <label>Password Usuario</label>#}
-                                {#                                                                                <input class="form-control" type="password" required minlength="6"#}
-                                {#                                                                                        name="password" placeholder="Cualquier password">#}
-                                {#                                                                                <small id="emailHelp" class="form-text text-muted">#}
-                                {#                                                                                    Password del Usuario#}
-                                {#                                                                                </small>#}
-                                {#                                                                            </div>#}
-                                {#                                                                            <button type="submit" class="btn btn-success">Añadir</button>#}
-                                {#                                                                            <button type="reset" class="btn btn-default">Reset</button>#}
-                                {#                                                                        </form>#}
+                                </div>
+                                <!-- /.row (nested) -->
                             </div>
+                            <!-- /.panel-body -->
                         </div>
-                        <!-- /.row (nested) -->
+                        <!-- /.panel -->
                     </div>
-                    <!-- /.panel-body -->
+                    <!-- /.col-lg-12 -->
                 </div>
-                <!-- /.panel -->
+                <!-- /.row -->
             </div>
-            <!-- /.col-lg-12 -->
+            <!-- /#page-wrapper -->
         </div>
-        <!-- /.row -->
-    </div>
-    <!-- /#page-wrapper -->
-</div>
+    {% endif %}
 
-<!-- Footer  -->
-<footer class="footer-area footer--light">
-    <div class="footer-big">
-        <!-- start .container -->
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 col-sm-12">
-                    <div class="footer-widget">
-                        <div class="widget-about">
-                            <img src="http://www.coglobal.es/wp-content/uploads/2017/03/sponsor-uca.png" alt=""
-                                 class="img-fluid">
-                            <p>
-                                Web de votaciones para la UCA
-                            </p>
-                            <ul class="contact-details">
-                                <li>
-                                    <span class="icon-envelope-open"></span>
-                                    <a href="mailto:#">email de contacto</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- Ends: .footer-widget -->
-                </div>
-                <!-- end /.col-md-4 -->
-                <div class="col-md-3 col-sm-4">
-                    <div class="footer-widget">
-                        <div class="footer-menu footer-menu--1">
-                            <h4 class="footer-widget-title">Páginas de Interes</h4>
-                            <ul>
-                                <li>
-                                    <a href="https://www.uca.es/">UCA</a>
-                                </li>
-                                <li>
-                                    <a href="https://github.com/joaquinpco/Votaciones-Pinf-19">GitHub</a>
-                                </li>
-                                <li>
-                                    <a href="https://pinfvot.herokuapp.com/">Heroku</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- end /.footer-menu -->
-                    </div>
-                    <!-- Ends: .footer-widget -->
-                </div>
-                <!-- end /.col-md-3 -->
-
-                <div class="col-md-3 col-sm-4">
-                    <div class="footer-widget">
-                        <div class="footer-menu">
-                            <h4 class="footer-widget-title">La compañia</h4>
-                            <ul>
-                                <li>
-                                    <a href="#">Sobre nosotros</a>
-                                </li>
-                                <li>
-                                    <a href="#">Contactanos</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- end /.footer-menu -->
-                    </div>
-                    <!-- Ends: .footer-widget -->
-                </div>
-                <!-- end /.col-lg-3 -->
-
-                <div class="col-md-3 col-sm-4">
-                    <div class="footer-widget">
-                        <div class="footer-menu no-padding">
-                            <h4 class="footer-widget-title">Soporte</h4>
-                            <ul>
-                                <li>
-                                    <a href="#">Guia Rápida</a>
-                                </li>
-                                <li>
-                                    <a href="#">Foro de Ayuda</a>
-                                </li>
-                                <!-- repetir estructura li para añadir mas-->
-                            </ul>
-                        </div>
-                        <!-- end /.footer-menu -->
-                    </div>
-                    <!-- Ends: .footer-widget -->
-                </div>
-                <!-- Ends: .col-lg-3 -->
-            </div>
-            <!-- end /.row -->
-        </div>
-        <!-- end /.container -->
-    </div>
-    <!-- end /.footer-big -->
-
-    <div class="mini-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="copyright-text">
-                        <p>© 2019
-                            <a href="#">Send UCA</a>. All rights reserved.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
-<!-- Fin Footer  -->
-   {% endblock %}
+{% endblock %}
 </body>
 </html>
 

@@ -26,40 +26,48 @@
             <tr>
                 <th class="col-sm-6">Votaciones</th>
                 <th class="col-sm-2">Estado</th>
-                <th class="col-sm-2">Modificar</th>
-                <th class="col-sm-2">Eliminar</th>
+                {% if user.is_superuser %}
+                    <th class="col-sm-2">Modificar</th>
+                    <th class="col-sm-2">Eliminar</th>
+                {% endif %}
             </tr>
             </thead>
             <tbody>
             <tr>
                 <td><a class="nav-link" href="{% url 'estadisticasvotacionsimple' %}">Votacion 1</a></td>
                 <td>Abierta</td>
-                <td><a href="" class="btn btn-warning">
-                    <i class="fas fa-edit"></i></a>
-                </td>
-                <td><a href="" class="btn btn-danger">
-                    <i class="fas fa-trash"></i></a>
-                </td>
+                {% if user.is_superuser %}
+                    <td><a href="" class="btn btn-warning">
+                        <i class="fas fa-edit"></i></a>
+                    </td>
+                    <td><a href="" class="btn btn-danger">
+                        <i class="fas fa-trash"></i></a>
+                    </td>
+                {% endif %}
             </tr>
             <tr>
                 <td><a class="nav-link" href="{% url 'estadisticasvotacionsimple' %}">Votacion 2</a></td>
                 <td>Cerrada</td>
-                <td><a href="" class="btn btn-warning">
-                    <i class="fas fa-edit"></i></a>
-                </td>
-                <td><a href="" class="btn btn-danger">
-                    <i class="fas fa-trash"></i></a>
-                </td>
+                {% if user.is_superuser %}
+                    <td><a href="" class="btn btn-warning">
+                        <i class="fas fa-edit"></i></a>
+                    </td>
+                    <td><a href="" class="btn btn-danger">
+                        <i class="fas fa-trash"></i></a>
+                    </td>
+                {% endif %}
             </tr>
             <tr>
                 <td><a class="nav-link" href="{% url 'estadisticasvotacionsimple' %}">Votacion 3</a></td>
                 <td>Finalizada</td>
-                <td><a href="" class="btn btn-warning">
-                    <i class="fas fa-edit"></i></a>
-                </td>
-                <td><a href="" class="btn btn-danger">
-                    <i class="fas fa-trash"></i></a>
-                </td>
+                {% if user.is_superuser %}
+                    <td><a href="" class="btn btn-warning">
+                        <i class="fas fa-edit"></i></a>
+                    </td>
+                    <td><a href="" class="btn btn-danger">
+                        <i class="fas fa-trash"></i></a>
+                    </td>
+                {% endif %}
             </tr>
             </tbody>
         </table>

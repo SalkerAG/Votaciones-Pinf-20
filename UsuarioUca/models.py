@@ -135,6 +135,8 @@ class UsuarioUca(AbstractUser):
         istextvalidator(first_name)
         istextvalidator(last_name)
 
+        # if (password.length < 3):
+        #     raise forms.ValidationError("La contraseña debe se de 3 caracteres mínimo")
         if  nif[1] == 'u':
             raise forms.ValidationError("Nif incorrecto")
 

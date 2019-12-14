@@ -1,209 +1,122 @@
 {% extends 'base.html' %}
 {% block content %}
-{% load user_nif_filter %}
-{#{% block content %}#}
-<!doctype html>
-
-<html lang="es">
+    {% load user_nif_filter %}
 
 
-<body>
-<style>
-    .buttons {
-        width: 100%;
-        text-align: end;
-        margin-bottom: 10px;
-    }
-</style>
+    <!doctype html>
 
+    <html lang="es">
 
-<div class="container">
-    <!-- Cabecera -->
-    <br/>
-    <div class="row justify-content-center">
-        <div class="page-header">
-            <h1>Usuarios</h1>
+    {# {% if user.is_authenticated %}#}
+    {#    <h1>Debes tener permisos de administrador para ver este contenido.</h1>#}
+    <body>
+    <style>
+        .buttons {
+            width: 100%;
+            text-align: end;
+            margin-bottom: 10px;
+        }
+    </style>
+
+     {% if not user.is_superuser %}
+    <div class="container">
+        <!-- Cabecera -->
+        <br/>
+        <div class="row justify-content-center">
+            <div class="page-header">
+                <h1>No dispones de los permisos requeridos para ver este contenido.</h1>
+            </div>
         </div>
     </div>
-</div>
- <div class="buttons">
-            <button type="button" class="btn btn-primary"><a style="color: white; text-decoration: none !important;" href="{% url 'usuariouca_import' %}">Importar Usuarios</a></button>
-            <button type="button" class="btn btn-secondary"><a style="color: white; text-decoration: none !important;" href="{% url 'usuariouca_export' %}">Exportar Usuarios</a></button>
- </div>
-{#<ul>#}
-{#    {% for user in object_list %}#}
-{#        <li>{{ user.first_name }} - {{ user.last_name }}</li>#}
-{#    {% empty %}#}
-{#        <li>No hay usuario en el sistema.</li>#}
-{#    {% endfor %}#}
-{#</ul>#}
 
-<table id="dtUsuarios" class="table table-striped table-bordered table-sm text-center" cellspacing="0" width="100%">
-    <thead>
-    <tr>
-        <th class="th-sm">Nombre y Apellidos</th>
-        <th class="th-sm">Nif</th>
-        <th class="th-sm">Email</th>
-        <th class="th-sm">Rol</th>
-        <th class="th-sm">Modificar</th>
-        <th class="th-sm">Eliminar</th>
-    </tr>
-    </thead>
-    <tbody>
+    {% else %}
+    <div class="container">
+        <!-- Cabecera -->
+        <br/>
+        <div class="row justify-content-center">
+            <div class="page-header">
+                <h1>Usuarios</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="buttons">
+        <button type="button" class="btn btn-primary"><a style="color: white; text-decoration: none !important;"
+                                                         href="{% url 'usuariouca_import' %}">Importar Usuarios</a>
+        </button>
+        <button type="button" class="btn btn-secondary"><a style="color: white; text-decoration: none !important;"
+                                                           href="{% url 'usuariouca_export' %}">Exportar Usuarios</a>
+        </button>
+    </div>
+    {#<ul>#}
     {#    {% for user in object_list %}#}
     {#        <li>{{ user.first_name }} - {{ user.last_name }}</li>#}
     {#    {% empty %}#}
     {#        <li>No hay usuario en el sistema.</li>#}
     {#    {% endfor %}#}
-    {% for user in object_list %}
+    {#</ul>#}
 
+    <table id="dtUsuarios" class="table table-striped table-bordered table-sm text-center" cellspacing="0" width="100%">
+        <thead>
         <tr>
-            <td>{{ user.first_name }} {{ user.last_name }}</td>
-            <td>{{ user.nif|user_nif_filter }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.is_superuser }}</td>
-            <td>
-                <a href='/editarusuario/{{ user.id }}' class="btn btn-warning">
-                    <i class="fas fa-edit"></i>
-                </a>
-            </td>
-            <td>
-                <a href='/editarusuario/{{ user.id }}' class="btn btn-danger">
-                    <i class="fas fa-trash"></i>
-                </a>
-            </td>
-            {#        {% empty %}#}
-            {#            <li>No hay usuario en el sistema.</li>#}
+            <th class="th-sm">Nombre y Apellidos</th>
+            <th class="th-sm">Nif</th>
+            <th class="th-sm">Email</th>
+            <th class="th-sm">Rol</th>
+            <th class="th-sm">Modificar</th>
+            <th class="th-sm">Eliminar</th>
         </tr>
-    {% endfor %}
+        </thead>
+        <tbody>
+        {#    {% for user in object_list %}#}
+        {#        <li>{{ user.first_name }} - {{ user.last_name }}</li>#}
+        {#    {% empty %}#}
+        {#        <li>No hay usuario en el sistema.</li>#}
+        {#    {% endfor %}#}
+        {% for user in object_list %}
 
-    </tbody>
-    <tfoot>
-    <tr>
-        <th>Nombre y Apellidos</th>
-        <th>Nif</th>
-        <th>Email</th>
-        <th>Rol</th>
-        <th class="th-sm">Modificar</th>
-        <th class="th-sm">Eliminar</th>
-    </tr>
-    </tfoot>
-</table>
+            <tr>
+                <td>{{ user.first_name }} {{ user.last_name }}</td>
+                <td>{{ user.nif|user_nif_filter }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.is_superuser }}</td>
+                <td>
+                    <a href='/editarusuario/{{ user.id }}' class="btn btn-warning">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href='/eliminarusuario/{{ user.id }}' class="btn btn-danger">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </td>
+                {#        {% empty %}#}
+                {#            <li>No hay usuario en el sistema.</li>#}
+            </tr>
+        {% endfor %}
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#dtUsuarios').DataTable();
-        $('.dataTables_length').addClass('bs-select');
-    });
-</script>
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Nombre y Apellidos</th>
+            <th>Nif</th>
+            <th>Email</th>
+            <th>Rol</th>
+            <th class="th-sm">Modificar</th>
+            <th class="th-sm">Eliminar</th>
+        </tr>
+        </tfoot>
+    </table>
 
-<!-- Footer  -->
-<footer class="footer-area footer--light">
-    <div class="footer-big">
-        <!-- start .container -->
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 col-sm-12">
-                    <div class="footer-widget">
-                        <div class="widget-about">
-                            <img src="http://www.coglobal.es/wp-content/uploads/2017/03/sponsor-uca.png" alt=""
-                                 class="img-fluid">
-                            <p>
-                                Web de votaciones para la UCA
-                            </p>
-                            <ul class="contact-details">
-                                <li>
-                                    <span class="icon-envelope-open"></span>
-                                    <a href="mailto:#">email de contacto</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- Ends: .footer-widget -->
-                </div>
-                <!-- end /.col-md-4 -->
-                <div class="col-md-3 col-sm-4">
-                    <div class="footer-widget">
-                        <div class="footer-menu footer-menu--1">
-                            <h4 class="footer-widget-title">Páginas de Interes</h4>
-                            <ul>
-                                <li>
-                                    <a href="https://www.uca.es/">UCA</a>
-                                </li>
-                                <li>
-                                    <a href="https://github.com/joaquinpco/Votaciones-Pinf-19">GitHub</a>
-                                </li>
-                                <li>
-                                    <a href="https://pinfvot.herokuapp.com/">Heroku</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- end /.footer-menu -->
-                    </div>
-                    <!-- Ends: .footer-widget -->
-                </div>
-                <!-- end /.col-md-3 -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#dtUsuarios').DataTable();
+            $('.dataTables_length').addClass('bs-select');
+        });
+    </script>
 
-                <div class="col-md-3 col-sm-4">
-                    <div class="footer-widget">
-                        <div class="footer-menu">
-                            <h4 class="footer-widget-title">La compañia</h4>
-                            <ul>
-                                <li>
-                                    <a href="#">Sobre nosotros</a>
-                                </li>
-                                <li>
-                                    <a href="#">Contactanos</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- end /.footer-menu -->
-                    </div>
-                    <!-- Ends: .footer-widget -->
-                </div>
-                <!-- end /.col-lg-3 -->
+        {% endif %}
 
-                <div class="col-md-3 col-sm-4">
-                    <div class="footer-widget">
-                        <div class="footer-menu no-padding">
-                            <h4 class="footer-widget-title">Soporte</h4>
-                            <ul>
-                                <li>
-                                    <a href="#">Guia Rápida</a>
-                                </li>
-                                <li>
-                                    <a href="#">Foro de Ayuda</a>
-                                </li>
-                                <!-- repetir estructura li para añadir mas-->
-                            </ul>
-                        </div>
-                        <!-- end /.footer-menu -->
-                    </div>
-                    <!-- Ends: .footer-widget -->
-                </div>
-                <!-- Ends: .col-lg-3 -->
-            </div>
-            <!-- end /.row -->
-        </div>
-        <!-- end /.container -->
-    </div>
-    <!-- end /.footer-big -->
-
-    <div class="mini-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="copyright-text">
-                        <p>© 2019
-                            <a href="#">Send UCA</a>. All rights reserved.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
-<!-- Fin Footer  -->
 {% endblock %}
 </body>
 </html>

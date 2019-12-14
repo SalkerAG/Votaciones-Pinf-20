@@ -1,74 +1,74 @@
-<!doctype html>
-<html lang="es">
-{% load static %}
-{% load staticfiles %}
-<head>
-    <!-- Movil y teclado -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href='{% static "css/login.css" %}'>
-
-    <title>Login</title>
-</head>
-
-<body>
-<!--login-->
-<div class="container">
-    <div class="row">
-        <div class="col-lg-3 col-md-2"></div>
-        <div class="col-lg-6 col-md-8 login-box">
-            <div class="col-lg-12 login-key">
-                <i class="fa fa-key" aria-hidden="true"></i>
-            </div>
-            <div class="col-lg-12 login-title">
-                Acceso Votaciones
-            </div>
-            {% if next %}
-                {% if user.is_authenticated %}
-                    <p style="color:red">Su cuenta no tiene permiso para acceder. Contacte con el administrador si es necesario. </p>
-                {% else %}
-                    <p style="color:red">Por favor, inicie sesión para ver esta página.</p>
-                {% endif %}
-            {% endif %}
-            <div class="col-lg-12 login-form">
-                <div class="col-lg-12 login-form">
-                    <h1>TE HAS IDO</h1>
-                    <a href="{% url '' %}"></a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-2"></div>
-        </div>
-    </div>
-    <!-- Fin login-->
-</div>
-<!-- Requisitos para bootstrap 4 y js  -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-<script>
-
-    $(document).ready(function () {
-        $('#id_username').val('u');
-    });
-    $('#id_username').on('input', function () {
-        if ($('#id_username').val() === "") {
-            $('#id_username').val("u");
-        }
-    })
-</script>
-</body>
-</html>
-
+{#<!doctype html>#}
+{#<html lang="es">#}
+{#{% load static %}#}
+{#{% load staticfiles %}#}
+{#<head>#}
+{#    <!-- Movil y teclado -->#}
+{#    <meta charset="utf-8">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">#}
+{##}
+{#    <!-- Bootstrap CSS -->#}
+{#    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"#}
+{#          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">#}
+{#    <link rel="stylesheet" type="text/css" href='{% static "css/login.css" %}'>#}
+{##}
+{#    <title>Login</title>#}
+{#</head>#}
+{##}
+{#<body>#}
+{#<!--login-->#}
+{#<div class="container">#}
+{#    <div class="row">#}
+{#        <div class="col-lg-3 col-md-2"></div>#}
+{#        <div class="col-lg-6 col-md-8 login-box">#}
+{#            <div class="col-lg-12 login-key">#}
+{#                <i class="fa fa-key" aria-hidden="true"></i>#}
+{#            </div>#}
+{#            <div class="col-lg-12 login-title">#}
+{#                Acceso Votaciones#}
+{#            </div>#}
+{#            {% if next %}#}
+{#                {% if user.is_authenticated %}#}
+{#                    <p style="color:red">Su cuenta no tiene permiso para acceder. Contacte con el administrador si es necesario. </p>#}
+{#                {% else %}#}
+{#                    <p style="color:red">Por favor, inicie sesión para ver esta página.</p>#}
+{#                {% endif %}#}
+{#            {% endif %}#}
+{#            <div class="col-lg-12 login-form">#}
+{#                <div class="col-lg-12 login-form">#}
+{#                    <h1>TE HAS IDO</h1>#}
+{#                    <a href="{% url 'login' %}"></a>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="col-lg-3 col-md-2"></div>#}
+{#        </div>#}
+{#    </div>#}
+{#    <!-- Fin login-->#}
+{#</div>#}
+{#<!-- Requisitos para bootstrap 4 y js  -->#}
+{#<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"#}
+{#        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"#}
+{#        crossorigin="anonymous"></script>#}
+{#<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"#}
+{#        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"#}
+{#        crossorigin="anonymous"></script>#}
+{#<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"#}
+{#        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"#}
+{#        crossorigin="anonymous"></script>#}
+{#<script>#}
+{##}
+{#    $(document).ready(function () {#}
+{#        $('#id_username').val('u');#}
+{#    });#}
+{#    $('#id_username').on('input', function () {#}
+{#        if ($('#id_username').val() === "") {#}
+{#            $('#id_username').val("u");#}
+{#        }#}
+{#    })#}
+{#</script>#}
+{#</body>#}
+{#</html>#}
+{##}
 {#{% extends "base.html" %}#}
 {##}
 {#{% block content %}#}

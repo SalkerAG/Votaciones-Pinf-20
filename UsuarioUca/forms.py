@@ -99,7 +99,7 @@ class createUserForm(ModelForm):
 
 
     def save(self, commit=True, exclude=None):
-        user = super(createUserForm, self).save(commit=False)
+        user = super(createUserForm, self).save()
         # if user.nif[1] == 'u':
         #     raise forms.ValidationError("Nif incorrecto")
         # if istextvalidator(user.first_name):
@@ -136,15 +136,15 @@ class editUserForm(ModelForm):
                    }
 
     def save(self, commit=True, exclude=None):
-        user = super(createUserForm, self).save(commit=False)
+        user = super(editUserForm, self).save()
         # if user.nif[1] == 'u':
         #     raise forms.ValidationError("Nif incorrecto")
-        if not istextvalidator(user.first_name):
-            raise forms.ValidationError("Nombre incorrecto")
+        # if not istextvalidator(user.first_name):
+        #     raise forms.ValidationError("Nombre incorrecto")
         if not user.nif.__contains__("u"):
             user.nif = "u" + user.nif
 
         if commit:
-            user.set_password(user.password)
+            # user.set_password(user.password)
             user.save()
         return user
