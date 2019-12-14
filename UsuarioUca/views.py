@@ -121,13 +121,10 @@ class EstadisticasEleccionView(TemplateView):
 
 def logout_request(request):
     logout(request)
-    # messages.info(request, "Se ha cerrado la sesión correctamente")
+    messages.info(request, "Se ha cerrado la sesión correctamente")
     return redirect('home')
 
-# def erase_request(request):
-#     # logout(request)
-#     # messages.info(request, "Se ha cerrado la sesión correctamente")
-#     return redirect('usuariouca_list')
+
 
 
 def erase_request(request, pk):

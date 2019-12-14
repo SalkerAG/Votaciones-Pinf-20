@@ -122,13 +122,20 @@
 
 
     </ul>
- {% if user.is_authenticated %}
-    <div class="usernif">
-        <a style="...">Usuario: {{ user.nif }}</a>
-    </div>
-{% endif %}
+    {% if user.is_authenticated %}
+        <div class="usernif">
+            <a style="...">Usuario: {{ user.nif }}</a>
+        </div>
+    {% endif %}
 </nav>
 
+{% if messages %}
+    {% for message in messages %}
+        <div>
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
 
 <!-- Fin header  -->
 {% block content %}
