@@ -73,7 +73,7 @@
 
       <!--Booleanos-->
       <div class="col-lg-10">
-        <label for="customCheck1">Consulta</label>
+        <label required="true" for="fechaInicio">Consulta</label>
         {{form.esConsulta}}
       </div>
 
@@ -86,38 +86,219 @@
         <label for="customCheck1">Voto Rectificable</label>
         {{form.votoRectificable}}
       </div>
+      <br>
 
-      <div class="col-lg-10">
-        <label>Fecha inicio</label>
-        {{form.fechaInicio}}
+      <div class="form-group row px-5">
+        <div class="col-lg-6" id="fechaInicio">
+            <label for="fechaInicio" class="control-label">Fecha inicio:</label>
+            <div class="input-group date">
+              {{form.fechaInicio}}
+            </div>
+        </div>
+        <div class="col-lg-0" id="FechaFin">
+            <label for="FechaFin" class="control-label">Fecha fin:</label>
+            <div class="input-group date">
+              {{form.fechaFin}}
+            </div>
+        </div>
       </div>
-
-      <div class="col-lg-10">
-        <label>Fecha Fin</label>
-        {{form.fechaFin}}
-      </div>
+      <br>
 
       <div class="col-lg-10">
         <label>Censo</label>
         {{form.nombreFicheroCenso}}
       </div>
+      <br>
 
       <div class="col-lg-10">
         <label>Tipo de Votacion</label>
         {{form.tipoVotacion}}
       </div>
+      <br>
 
       <div class="col-lg-10">
         <label>Nº máximo de respuestas</label>
         {{form.maxElector}}
       </div>
+      <br>
 
       <div class="col-lg-10">
-        <label>Enunciado Pregunta</label>
+        <label>Pregunta de la votación</label>
         {{form.enunciado}}
       </div>
+      <br>
 
       <div class="col-lg-10">
         <label>Opciones</label>
         {{form.opciones}}
       </div>
+      <br>
+         <!-- Botón -->
+         <div class="form-group">
+          <div class="text-center">
+              <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#ModalCrearVotacion">
+                  Crear votación
+              </button>
+          </div>
+      </div>
+      <!-- Fin botón -->
+  </form>
+</div>
+<!-- Fin formulario -->
+
+
+<!-- Ventana emergente -->
+<div class="modal fade" id="ModalCrearVotacion" tabindex="-1" role="dialog"
+   aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="ModalCrearVotacionTitle">¿Está seguro de crear la votación?</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              Al confirmar se creará la votación con los datos introducidos.
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-primary">Enviar</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          </div>
+      </div>
+  </div>
+</div>
+<br>
+<br>
+
+<!-- Footer  -->
+<footer class="footer-area footer--light">
+  <div class="footer-big">
+  <!-- start .container -->
+  <div class="container">
+    <div class="row">
+    <div class="col-md-3 col-sm-12">
+      <div class="footer-widget">
+      <div class="widget-about">
+        <img src="http://www.coglobal.es/wp-content/uploads/2017/03/sponsor-uca.png" alt="" class="img-fluid">
+        <p>Web de votaciones para la UCA</p>
+        <ul class="contact-details">
+        <li>
+          <span class="icon-envelope-open"></span>
+          <a href="mailto:#">email de contacto</a>
+        </li>
+        </ul>
+      </div>
+      </div>
+      <!-- Ends: .footer-widget -->
+    </div>
+    <!-- end /.col-md-4 -->
+    <div class="col-md-3 col-sm-4">
+      <div class="footer-widget">
+      <div class="footer-menu footer-menu--1">
+        <h4 class="footer-widget-title">Páginas de Interes</h4>
+        <ul>
+        <li>
+          <a href="https://www.uca.es/">UCA</a>
+        </li>
+        <li>
+          <a href="https://github.com/joaquinpco/Votaciones-Pinf-19">GitHub</a>
+        </li>
+        <li>
+          <a href="https://pinfvot.herokuapp.com/">Heroku</a>
+        </li>
+        </ul>
+      </div>
+      <!-- end /.footer-menu -->
+      </div>
+      <!-- Ends: .footer-widget -->
+    </div>
+    <!-- end /.col-md-3 -->
+
+    <div class="col-md-3 col-sm-4">
+      <div class="footer-widget">
+      <div class="footer-menu">
+        <h4 class="footer-widget-title">La compañia</h4>
+        <ul>
+        <li>
+          <a href="#">Sobre nosotros</a>
+        </li>
+        <li>
+          <a href="#">Contactanos</a>
+        </li>
+        </ul>
+      </div>
+      <!-- end /.footer-menu -->
+      </div>
+      <!-- Ends: .footer-widget -->
+    </div>
+    <!-- end /.col-lg-3 -->
+
+    <div class="col-md-3 col-sm-4">
+      <div class="footer-widget">
+      <div class="footer-menu no-padding">
+        <h4 class="footer-widget-title">Soporte</h4>
+        <ul>
+        <li>
+          <a href="#">Guia Rápida</a>
+        </li>
+        <li>
+          <a href="#">Foro de Ayuda</a>
+        </li>
+        <!-- repetir estructura li para añadir mas-->
+        </ul>
+      </div>
+      <!-- end /.footer-menu -->
+      </div>
+      <!-- Ends: .footer-widget -->
+    </div>
+    <!-- Ends: .col-lg-3 -->
+
+    </div>
+    <!-- end /.row -->
+  </div>
+  <!-- end /.container -->
+  </div>
+  <!-- end /.footer-big -->
+
+  <div class="mini-footer">
+  <div class="container">
+    <div class="row">
+    <div class="col-md-12">
+      <div class="copyright-text">
+      <p>© 2019
+        <a href="#">Votaciones UCA</a>. All rights reserved.
+      </p>
+      </div>
+    </div>
+    </div>
+  </div>
+  </div>
+</footer>
+
+
+<!-- Fin Footer  -->
+<!-- Requisitos para bootstrap 4 y js  -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+  crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+  crossorigin="anonymous"></script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+</script>
+</body>
+
+</html>
+
+
+    
+
+  
+      
