@@ -4,6 +4,7 @@ from django.forms import forms
 from enum import Enum
 from datetime import datetime
 from django.forms import ModelForm
+from .myfields import EuDateField
 
 def choices(em):
     return [(e.value, e.name)for e in em]
@@ -14,10 +15,10 @@ class tipoV(Enum):
 
 class ProcesoElectoral(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)
-    update_at = models.DateField(auto_now=True)
-    esConsulta = models.BooleanField(default=False, verbose_name='Consulta')
-    fechaInicio = models.DateTimeField(verbose_name='Fecha Inicio del proceso electoral')
-    fechaFin = models.DateTimeField(verbose_name='Fecha Fin del proceso electoral')
+    update_at = models.DateTimeField(auto_now=True)
+    esConsulta = models.BooleanField(verbose_name='Consulta')
+    fechaInicio=EuDateField('Fecha Inicio:', null=True, blank=True, help_text="")
+    fechaFin=EuDateField('Fecha Fin:', null=True, blank=True, help_text="")
     nombreFicheroCenso = models.TextField(null=True)
     class Meta:
         abstract=True
@@ -46,8 +47,8 @@ class Pregunta(Opciones):
 
 class Votacione(ProcesoElectoral,Pregunta):
     nombreVotacion = models.CharField(unique=True, max_length=50, null=False)
-    esPresencial  = models.BooleanField(default=False, verbose_name='Presencial')
-    votoRectificable = models.BooleanField(default=False, verbose_name='Habilitar voto rectificable')
+    esPresencial  = models.BooleanField(verbose_name='Presencial')
+    votoRectificable = models.BooleanField(verbose_name='Habilitar voto rectificable')
     tipoVotacion = models.IntegerField(choices=choices(tipoV), default=tipoV.SIMPLE)
     maxElector = models.IntegerField(verbose_name='Número máximo de respuestas', default=1)
     pregunta=Pregunta()

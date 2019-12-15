@@ -3,5 +3,5 @@ from django.urls import path, include
 from .views import CrearVotacionView
 
 urlpatterns = [
-    path('crearVotacion/', CrearVotacionView.as_view(), name="crearvotacion"),
+    path('crearVotacion/',CrearVotacionView.as_view(), name="crearvotacion"),
 ]
