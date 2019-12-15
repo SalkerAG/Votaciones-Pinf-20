@@ -1,4 +1,4 @@
-%%\documentclass[a4paper,12pt,oneside]{llncs}
+%\documentclass[a4paper,12pt,oneside]{llncs}
 \documentclass[12pt,letterpaper]{report}
 \usepackage[right=2cm,left=3cm,top=2cm,bottom=2cm,headsep=0cm]{geometry}
 
@@ -49,7 +49,6 @@
 
 %%% VARIOS:
 \usepackage{slashbox}
-\usepackage{verbatim}
 \usepackage{array}
 \usepackage{listings}
 \usepackage{multirow}
@@ -94,17 +93,97 @@
 \chapter{Prolegómeno}		
 \section{Introducción}
 	\subsection{Motivación}
+		\noindent 1º Motivación\\
+		La motivación para la creación de este proyecto es crear el software necesario
+		para realizar con exito la asignatura de la que deriva. Esta asignatura es Proyectos Informáticos.
+		\\~\\
+		\noindent 2º Motivación\\
+		Por otra parte, la otra motivación, es poder ganar la competición y conseguir
+		una oferta de trabajo.
 	\subsection{Descripción del sistema actual}
+		El Sistema actual, permite realizar una votación programada, añadiendole un censo, un horario
+		y una rectificación de voto.
+		\\~\\
+		También, dicho sistema, permite modificar todas las propiedades de los usuarios y exportar/importar
+		dichos usuarios a un formato de carga masiva (csv).
+		\\~\\
+		Por otra parte, se permite actualmente el acceso de forma remota (sin entorno local) y con verificación
+		con certificado SSL.
+		\\~\\
+		Para más información de esto mismo, consultesé la dirección \href{https://pinfvot.herokuapp.com/}{PinfVot}.
 	\subsection{Objetivos y alcance del proyecto}
+		\noindent Objetivos\\
+		\\~\\
+		Los objetivos del proyecto son los siguientes:
+		\begin{enumerate}
+			\item Crear un software con autenticación segura para acceder a las votaciones.
+			\item Crear votaciones, añadirles participantes y obtener un resumen de la misma una vez acabe.
+			\item Crear una buena cohesión del equipo para garantizar el mejor resultado posible.
+			\item Garantizar, incluso al más bajo nivel, que todos los datos de los usuarios de la aplicación estén seguros y estables.
+			\item Crear una documentación lo suficientemente exhaustiva para que el mismo equipo u otro más adelante, prosiga con la labor sin problemas.
+		\end{enumerate}
+		\noindent Alcance\\
+		\\~\\
+		El alcance esperado de este proyecto es cumplir todos los objetivos y presentar un proyecto digno de un equipo de ingeniería informática.
 	\subsection{Organización del documento}
-
+		Este documento se divide en 3 capítulos, que se detallan a continuación:
+		\begin{enumerate}
+			\item Capítulo 1: En este capítulo se desarrolla la introducción del proyecto entero, así como
+			      objetivos planteados, el alcance de los mismos y la propia organización del proyecto.
+			\item Capítulo 2: En este capítulo se desarrolla el centro del proyecto. Aquí es donde se especifica 
+				  es lo que se ha hecho en el producto software y como se ha hecho.
+			\item Capítulo 3: En este capítulo se desarrolla el epílogo del proyecto, donde se puede ver claramente
+				  un manual de usuario, instalación del producto software y unas conclusiones del equipo sobre el
+				  desarrollo del proyecto.
+		\end{enumerate}
 \section{Planificación}
 	\subsection{Metodología de desarrollo}
+		\noindent Scrum\\
+		\\~\\
+		Como se puede apreciar con el título de este párrafo, hemos seguido la metodología de desarrollo Scrum.
+		En concreto, la variante de Prototipos.
+		\\~\\
 	\subsection{Planificación}
-
+		\noindent Sprints\\
+		\\~\\
+		Como buen derivado de Scrum, la metodología de Prototipos tiene asociado a cada prototipo un Sprint.
+		En concreto, en este proyecto, se han planificado 5 Sprints:
+		\\~\\
+		\begin{enumerate}
+			\item Sprint 1: Del ​11/11/2019​ al ​17/11/2019.
+			\begin{itemize}
+				\item Dedicado a empezar a andar en el proyecto, aunque sea en local.
+				\item Crear mockups de diseño y su posterior implementación en html y css.
+				\item Análisis principal del proyecto ('que hace').
+			\end{itemize}
+			\item Sprint 2: Del ​18/11/2019​ al ​24/11/2019.
+			\begin{itemize}
+				\item Dedicado a crear lógica principal del core del sistema.
+				\item Creación de la mayoría de las vistas de la aplicación.
+				\item Análisis de la lógica principal de la aplicación y descripción exhaustiva de lo mismo.
+			\end{itemize}
+			\item Sprint 3: Del ​25/11/2019​ al ​8/12/2019.
+			\begin{itemize}
+				\item Dedicado a crear la mayoría de la lógica de la aplicación.
+				\item Adaptación de las vistas al entorno de programación real.
+				\item Análisis de la mayoría de la lógica de la aplicación y descripción exhaustiva de lo mismo..
+			\end{itemize}
+			\item Sprint 4: Del ​8/12/2019​ al ​20/12/2019.
+			\begin{itemize}
+				\item Dedicado a retocar pequeños bugs de lógica de la aplicación.
+				\item Creación de vistas “responsives” de la aplicación.
+			\end{itemize}
+			\item Sprint 5: Del ​8/1/2020​ al ​20/1/2019​.
+			\begin{itemize}
+				\item Testing de la aplicación a nivel de test unitarios.
+				\item Testing de la aplicación a nivel de test de integración.
+			\end{itemize}
+			\item Diagrama de Gantt
+				\\~\\
+				\includegraphics[width=\textwidth]{diagrama_base}
+		\end{enumerate}
 \chapter{Desarrollo}
 \section{Análisis de requisitos}
-
 	\subsection{Objetivos del sistema}
 		\noindent Controlar el acceso al sistema\\
 		Descripción: El sistema deberá gestionar el acceso a la aplicación, restringiendo el mismo a personas registradas en el sistema y autentificando las credenciales del usuario.
@@ -379,9 +458,47 @@
 
 \section{Conclusiones}
 	\subsection{Objetivos}
+		\noindent Cumplidos\\
+		Los objetivos cumplidos hasta la fecha son los 3 primeros enumerados en el capítulo 1.
+		\\~\\
+		\noindent Incumplidos\\
+		Los objetivos no cumplidos son solo los 2 últimos, dedicados sobre todo a terminar de generar la
+		documentación de producción y test de la aplicación para garantizar el derecho de voto con todas
+		sus propiedades intrinsecas, es decir, voto único y secreto.
 	\subsection{Lecciones aprendidas}
+		Las lecciones aprendidas son, respecto a cada area, las siguientes:
+		\begin{itemize}
+			\item Programación
+			\begin{itemize}
+				\item Aprendizaje de Python y el framework Django.
+				\item Aprendizaje de manejo de Base de Datos.
+				\item Aprendizaje de Despligue de Software en entorno Producción.
+				\item Aprendizaje de manejo de sistema virtualizados como virtualenv de Python y Docker.
+				\item Adaptación de lenguaje de programación a diseño HTML mediante Twig.
+			\end{itemize}
+			\item Diseño
+			\begin{itemize}
+				\item Aprendizaje de lenguaje de marcado HTML en la versión 5.0.
+				\item Aprendizaje de un framework CSS como BootStrap.
+				\item Aprendizaje de una biblioteca de programación JavaScript como es JQuery.
+			\end{itemize}
+			\item Análisis
+			\begin{itemize}
+				\item Aprendizaje de creación de diagrama de Gants con el software CAN Project.
+				\item Aprendizaje de elaboración de diseños conceptuales sobre funcionamiento y flujo global de proyectos.
+			\end{itemize}
+			\item Pruebas
+			\begin{itemize}
+				\item Aprendizaje de creación pruebas unitarias con unittest para Python.
+				\item Aprendizaje de creación de pruebas de integración y de comportamiento con Behave.
+			\end{itemize}
+		\end{itemize}
+		A parte, se han obtenido conocimientos transversales como es estimación de
+		tiempos, planificación y presentación de proyecto.
 	\subsection{Trabajo futuro}
-
+		Para un posible trabajo futuro, quedaría actualizar el proyecto para hacer una adaptación móvil,
+		con aplicación nativa, y futuras funcionalidades para convertirlo en una aplicación a la altura
+		de una gran institución como es la Universidad de Cádiz.
 \section{bibliografías}
 
 \section{Licencias}
