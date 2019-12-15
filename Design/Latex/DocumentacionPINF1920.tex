@@ -363,7 +363,187 @@
 			\end{figure}
 		\newpage	
 	\subsection{Requisitos de información}
+		\subsubsection{Requsitos de Información de Usuarios}
+		\begin{table}[htp]
+			\resizebox{.8\textwidth}{!}{
+			\begin{tabular}{|c|c|}
+				\hline
+				IRQ - 0001                        & UsuarioUca                                                                                                                                                                                                                                                                                                                           \\ \hline
+				Versión                           & 1.0                                                                                                                                                                                                                                                                                                                                  \\ \hline
+				Autores                           & \begin{tabular}[c]{@{}c@{}}José Joaquín Pérez-Calderón Ortiz\\ José Javier Gómez Rosado\\ Pablo Pastor Muñoz\\ Pablo Rodríguez Gómez\\ Francisco Javier Jiménez Vázquez\end{tabular}                                                                                                                                                 \\ \hline
+				Datos Específicos                 & \begin{tabular}[c]{@{}c@{}}Identificador\\ Contraseña\\ Nombre\\ Email\\ Apellidos\\ DNI\\ Órgano Colegiado al que pertenece\\ Egresado(Sí/No)\\ Campo de expiración de clave\\ Identificador de acceso\end{tabular}                                                                                                                 \\ \hline
+				Descripción                       & \begin{tabular}[c]{@{}c@{}}El sistema deberá almacenar la información\\  relacionada a cada usuario de la UCA\end{tabular}                                                                                                                                                                                                           \\ \hline
+				Importancia                       & Vital                                                                                                                                                                                                                                                                                                                                \\ \hline
+				Estado                            & Hecho                                                                                                                                                                                                                                                                                                                                \\ \hline
+				\multicolumn{1}{|l|}{Comentarios} & \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}Al no contar con el servicio web de verificación LDAP, hemos\\  modelado los usuarios del sistema de forma temporal. \\ En un futuro se puede desplegar utilizando cualquier framework \\ de autenticación. El subconjunto administrador está incluido en \\ esta tabla\end{tabular}} \\ \hline
+			\end{tabular}}
+		\end{table}
 		
+		\begin{table}[htp]
+			\resizebox{.8\textwidth}{!}{
+			\begin{tabular}{|c|c|}
+				\hline
+				IRQ - 0002                        & Rol                                                                                                                                                                                            \\ \hline
+				Versión                           & 1.0                                                                                                                                                                                            \\ \hline
+				Autores                           & \begin{tabular}[c]{@{}c@{}}José Joaquín Pérez-Calderón Ortiz\\ José Javier Gómez Rosado\\ Pablo Pastor Muñoz\\ Pablo Rodríguez Gómez\\ Francisco Javier Jiménez Vázquez\end{tabular}           \\ \hline
+				Datos Específicos                 & \begin{tabular}[c]{@{}c@{}}Identificador\\ Identificador del nombre del rol\\ Identificador de usuario de la UCA\end{tabular}                                                                  \\ \hline
+				Descripción                       & El sistema deberá almacenar los identificadores de los roles.                                                                                                                                  \\ \hline
+				Importancia                       & Vital                                                                                                                                                                                          \\ \hline
+				Estado                            & Hecho                                                                                                                                                                                          \\ \hline
+				\multicolumn{1}{|l|}{Comentarios} & \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}Se crea una nueva entidad para evitar la incorrecta introducción\\  de valores así como la generación de inconsistencias de datos\end{tabular}} \\ \hline
+			\end{tabular}}
+		\end{table}
+
+		\begin{table}[htp]
+			\resizebox{.8\textwidth}{!}{
+			\begin{tabular}{|c|c|}
+				\hline
+				IRQ - 0003                        & NombreRol                                                                                                                                                                            \\ \hline
+				Versión                           & 1.0                                                                                                                                                                                  \\ \hline
+				Autores                           & \begin{tabular}[c]{@{}c@{}}José Joaquín Pérez-Calderón Ortiz\\ José Javier Gómez Rosado\\ Pablo Pastor Muñoz\\ Pablo Rodríguez Gómez\\ Francisco Javier Jiménez Vázquez\end{tabular} \\ \hline
+				Datos Específicos                 & \begin{tabular}[c]{@{}c@{}}Identificador\\ Nombre del Rol.\end{tabular}                                                                                                              \\ \hline
+				Descripción                       & El sistema deberá almacenar previamente los nombres de los roles.                                                                                                                    \\ \hline
+				Importancia                       & Vital                                                                                                                                                                                \\ \hline
+				Estado                            & Hecho                                                                                                                                                                                \\ \hline
+				\multicolumn{1}{|l|}{Comentarios} & \multicolumn{1}{l|}{}                                                                                                                                                                \\ \hline
+			\end{tabular}}
+		\end{table}	
+		
+		\begin{table}[htp]
+			\resizebox{.8\textwidth}{!}{
+			\begin{tabular}{|c|c|}
+				\hline
+				IRQ - 0004                        & Órgano Colegiado                                                                                                                                                                              \\ \hline
+				Versión                           & 1.0                                                                                                                                                                                           \\ \hline
+				Autores                           & \begin{tabular}[c]{@{}c@{}}José Joaquín Pérez-Calderón Ortiz\\ José Javier Gómez Rosado\\ Pablo Pastor Muñoz\\ Pablo Rodríguez Gómez\\ Francisco Javier Jiménez Vázquez\end{tabular}          \\ \hline
+				Datos Específicos                 & \begin{tabular}[c]{@{}c@{}}Identificador\\ Nombre del Órgano colegiado\end{tabular}                                                                                                           \\ \hline
+				Descripción                       & \begin{tabular}[c]{@{}c@{}}El sistema deberá almacenar previamente los nombres \\ de los órganos colegiados para saber si un usuario pertenece\\  a un órgano y a cual de ellos.\end{tabular} \\ \hline
+				Importancia                       & Vital                                                                                                                                                                                         \\ \hline
+				Estado                            & Hecho                                                                                                                                                                                         \\ \hline
+				\multicolumn{1}{|l|}{Comentarios} & \multicolumn{1}{l|}{}                                                                                                                                                                         \\ \hline
+			\end{tabular}}
+		\end{table}
+		
+		\begin{table}[htp]
+			\resizebox{.8\textwidth}{!}{
+			\begin{tabular}{|c|c|}
+				\hline
+				IRQ - 0005                        & Estudiante                                                                                                                                                                           \\ \hline
+				Versión                           & 1.0                                                                                                                                                                                  \\ \hline
+				Autores                           & \begin{tabular}[c]{@{}c@{}}José Joaquín Pérez-Calderón Ortiz\\ José Javier Gómez Rosado\\ Pablo Pastor Muñoz\\ Pablo Rodríguez Gómez\\ Francisco Javier Jiménez Vázquez\end{tabular} \\ \hline
+				Datos Específicos                 & \begin{tabular}[c]{@{}c@{}}Curso más alto del estudiante matriculado en la UCA.\\ Titulación\end{tabular}                                                                            \\ \hline
+				Descripción                       & El sistema deberá almacenar los datos de los estudiantes                                                                                                                             \\ \hline
+				Importancia                       & Vital                                                                                                                                                                                \\ \hline
+				Estado                            & Hecho                                                                                                                                                                                \\ \hline
+				\multicolumn{1}{|l|}{Comentarios} & \multicolumn{1}{l|}{}                                                                                                                                                                \\ \hline
+			\end{tabular}}
+		\end{table}
+		
+		\begin{table}[htp]
+			\resizebox{.8\textwidth}{!}{
+			\begin{tabular}{|c|c|}
+				\hline
+				IRQ - 0006                        & Profesor                                                                                                                                                                                      \\ \hline
+				Versión                           & 1.0                                                                                                                                                                                           \\ \hline
+				Autores                           & \begin{tabular}[c]{@{}c@{}}José Joaquín Pérez-Calderón Ortiz\\ José Javier Gómez Rosado\\ Pablo Pastor Muñoz\\ Pablo Rodríguez Gómez\\ Francisco Javier Jiménez Vázquez\end{tabular}          \\ \hline
+				Datos Específicos                 & \begin{tabular}[c]{@{}c@{}}Permanente(Sí/No)\\ Doctor(Sí/No)\end{tabular}                                                                                                                     \\ \hline
+				Descripción                       & \begin{tabular}[c]{@{}c@{}}El sistema deberá almacenar previamente\\  los nombres de los órganos colegiados para saber si un \\ usuario pertenece a un órgano y a cual de ellos.\end{tabular} \\ \hline
+				Importancia                       & Vital                                                                                                                                                                                         \\ \hline
+				Estado                            & Hecho                                                                                                                                                                                         \\ \hline
+				\multicolumn{1}{|l|}{Comentarios} & \multicolumn{1}{l|}{}                                                                                                                                                                         \\ \hline
+			\end{tabular}}
+		\end{table}
+		\newpage
+		\subsubsection{Requisitos de Información de los procesos electorales}
+		\begin{table}[htp]
+			\resizebox{.8\textwidth}{!}{
+			\begin{tabular}{|c|c|}
+				\hline
+				IRQ - 0007                        & Proceso Electoral                                                                                                                                                                    \\ \hline
+				Versión                           & 1.0                                                                                                                                                                                  \\ \hline
+				Autores                           & \begin{tabular}[c]{@{}c@{}}José Joaquín Pérez-Calderón Ortiz\\ José Javier Gómez Rosado\\ Pablo Pastor Muñoz\\ Pablo Rodríguez Gómez\\ Francisco Javier Jiménez Vázquez\end{tabular} \\ \hline
+				Datos Específicos                 & \begin{tabular}[c]{@{}c@{}}Identificador\\ Fecha inicio\\ Fecha fin\\ Nombre del fichero de censo\\ Fecha de creacion\\ Fecha de fin\\ Consulta(Si/No)\end{tabular}                  \\ \hline
+				Descripción                       & \begin{tabular}[c]{@{}c@{}}El sistema deberá almacenar información\\  referida al proceso electoral\end{tabular}                                                                     \\ \hline
+				Importancia                       & Vital                                                                                                                                                                                \\ \hline
+				Estado                            & Hecho                                                                                                                                                                                \\ \hline
+				\multicolumn{1}{|l|}{Comentarios} & \multicolumn{1}{l|}{}                                                                                                                                                                \\ \hline
+			\end{tabular}}
+		\end{table}
+		
+		\begin{table}[htp]
+			\resizebox{.8\textwidth}{!}{
+			\begin{tabular}{|c|c|}
+				\hline
+				IRQ - 0008                        & Votación                                                                                                                                                                                                \\ \hline
+				Versión                           & 1.0                                                                                                                                                                                                     \\ \hline
+				Autores                           & \begin{tabular}[c]{@{}c@{}}José Joaquín Pérez-Calderón Ortiz\\ José Javier Gómez Rosado\\ Pablo Pastor Muñoz\\ Pablo Rodríguez Gómez\\ Francisco Javier Jiménez Vázquez\end{tabular}                    \\ \hline
+				Datos Específicos                 & \begin{tabular}[c]{@{}c@{}}Presencial(Si/No)\\ Voto rectificable(Si/No)\\ Tipo de votación(Simple/Compleja)\\ Nº máximo de opciones que puede elegir el\\  elector, pudiendo elegir menos.\end{tabular} \\ \hline
+				Descripción                       & \begin{tabular}[c]{@{}c@{}}El sistema deberá almacenar los datos\\  relacionados con la votación existente.\end{tabular}                                                                                \\ \hline
+				Importancia                       & Vital                                                                                                                                                                                                   \\ \hline
+				Estado                            & Hecho                                                                                                                                                                                                   \\ \hline
+				\multicolumn{1}{|l|}{Comentarios} & \multicolumn{1}{l|}{}                                                                                                                                                                                   \\ \hline
+			\end{tabular}}
+		\end{table}
+
+		\begin{table}[htp]
+			\resizebox{.8\textwidth}{!}{
+			\begin{tabular}{|c|c|}
+				\hline
+				IRQ - 0009                        & Elección                                                                                                                                                                                               \\ \hline
+				Versión                           & 1.0                                                                                                                                                                                                    \\ \hline
+				Autores                           & \begin{tabular}[c]{@{}c@{}}José Joaquín Pérez-Calderón Ortiz\\ José Javier Gómez Rosado\\ Pablo Pastor Muñoz\\ Pablo Rodríguez Gómez\\ Francisco Javier Jiménez Vázquez\end{tabular}                   \\ \hline
+				Datos Específicos                 & \begin{tabular}[c]{@{}c@{}}Nie\\ Máximo de vacantes( obtenida del censo maxVacantes, \\ por defecto 0.7, sólo se aplica a elecciones por grupo)\\ Tipo de elección(Grupos, Unipersonales)\end{tabular} \\ \hline
+				Descripción                       & El sistema deberá almacenar información                                                                                                                                                                \\ \hline
+				Importancia                       & Vital                                                                                                                                                                                                  \\ \hline
+				Estado                            & Hecho                                                                                                                                                                                                  \\ \hline
+				\multicolumn{1}{|l|}{Comentarios} & \multicolumn{1}{l|}{}                                                                                                                                                                                  \\ \hline
+			\end{tabular}}
+		\end{table}
+		
+		\begin{table}[htp]
+			\resizebox{.8\textwidth}{!}{
+			\begin{tabular}{|c|c|}
+				\hline
+				IRQ - 00010                       & Censo                                                                                                                                                                                                                            \\ \hline
+				Versión                           & 1.0                                                                                                                                                                                                                              \\ \hline
+				Autores                           & \begin{tabular}[c]{@{}c@{}}José Joaquín Pérez-Calderón Ortiz\\ José Javier Gómez Rosado\\ Pablo Pastor Muñoz\\ Pablo Rodríguez Gómez\\ Francisco Javier Jiménez Vázquez\end{tabular}                                             \\ \hline
+				Datos Específicos                 & Identificador                                                                                                                                                                                                                    \\ \hline
+				Descripción                       & El sistema deberá almacenar información censo                                                                                                                                                                                    \\ \hline
+				Importancia                       & Vital                                                                                                                                                                                                                            \\ \hline
+				Estado                            & Hecho                                                                                                                                                                                                                            \\ \hline
+				\multicolumn{1}{|l|}{Comentarios} & \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}Estos datos serán almacenados en un fichero de extensión\\  csv que tendrá el formato actual que aparece \\ en los documentos oficiales de la Universidad de Cádiz.\end{tabular}} \\ \hline
+			\end{tabular}}
+		\end{table}
+		
+		\begin{table}[htp]
+			\resizebox{.8\textwidth}{!}{
+			\begin{tabular}{|c|c|}
+				\hline
+				IRQ - 00011                       & Pregunta                                                                                                                                                                             \\ \hline
+				Versión                           & 1.0                                                                                                                                                                                  \\ \hline
+				Autores                           & \begin{tabular}[c]{@{}c@{}}José Joaquín Pérez-Calderón Ortiz\\ José Javier Gómez Rosado\\ Pablo Pastor Muñoz\\ Pablo Rodríguez Gómez\\ Francisco Javier Jiménez Vázquez\end{tabular} \\ \hline
+				Datos Específicos                 & \begin{tabular}[c]{@{}c@{}}Identificador\\ Enunciado\end{tabular}                                                                                                                    \\ \hline
+				Descripción                       & \begin{tabular}[c]{@{}c@{}}El sistema deberá almacenar información \\ de la pregunta de la votación respecto\end{tabular}                                                            \\ \hline
+				Importancia                       & Vital                                                                                                                                                                                \\ \hline
+				Estado                            & Hecho                                                                                                                                                                                \\ \hline
+				\multicolumn{1}{|l|}{Comentarios} & \multicolumn{1}{l|}{}                                                                                                                                                                \\ \hline
+			\end{tabular}}
+		\end{table}
+		
+		\begin{table}[htp]
+			\resizebox{.8\textwidth}{!}{
+			\begin{tabular}{|c|c|}
+				\hline
+				IRQ - 00012                       & Opción                                                                                                                                                                               \\ \hline
+				Versión                           & 1.0                                                                                                                                                                                  \\ \hline
+				Autores                           & \begin{tabular}[c]{@{}c@{}}José Joaquín Pérez-Calderón Ortiz\\ José Javier Gómez Rosado\\ Pablo Pastor Muñoz\\ Pablo Rodríguez Gómez\\ Francisco Javier Jiménez Vázquez\end{tabular} \\ \hline
+				Datos Específicos                 & \begin{tabular}[c]{@{}c@{}}id\\ nombre\end{tabular}                                                                                                                                  \\ \hline
+				Descripción                       & \begin{tabular}[c]{@{}c@{}}El sistema deberá almacenar información sobre\\  las opciones relacionadas a las preguntas a almacenar.\end{tabular}                                      \\ \hline
+				Importancia                       & Vital                                                                                                                                                                                \\ \hline
+				Estado                            & Hecho                                                                                                                                                                                \\ \hline
+				\multicolumn{1}{|l|}{Comentarios} & \multicolumn{1}{l|}{}                                                                                                                                                                \\ \hline
+			\end{tabular}}
+		\end{table}
 	\newpage
 	\subsection{Requisitos no funcionales}
 		\begin{table}[htp]
