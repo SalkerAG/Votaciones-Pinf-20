@@ -13,11 +13,10 @@ c=[('0','Simple'),('1','Compleja')]
 
 class DateTimeInput(forms.DateTimeInput):
     input_type = 'datetime-local'
-    attrs={}
 
 class ProcesoElectoralForm(forms.ModelForm):
     esConsulta=forms.BooleanField()
-    fechaInicio=EuDateFormField(required=True)
+    fechaInicio=forms.DateTimeField(required=True))
     fechaFin=EuDateFormField(required=True)
     nombreFicheroCenso=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder' : 'Nombre del Censo'}),required=True)
     
@@ -63,3 +62,12 @@ class VotacioneForm(ProcesoElectoralForm, PreguntaForm):
 
         return self.cleaned_data        
     
+
+class favor(forms.favor):
+    vF= forms.CharField(label='aFavor', max_length=1)
+
+class contr(forms.contr):
+    vC= forms.CharField(label='enContra', max_length=1)
+
+class abst(forms.abst):
+    vA= forms.CharField(label='abstencion', max_length=1)
