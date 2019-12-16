@@ -2,6 +2,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm
 from django.forms import ModelForm
+from localflavor.exceptions import ValidationError
 
 from .models import UsuarioUca, uvalidonifworld, uvalidonifspain, validonifspain, validonifworld
 from django.core.validators import RegexValidator
@@ -34,12 +35,24 @@ class CustomUserCreationForm(UserCreationForm):
         model = UsuarioUca
         fields = '__all__'
 
-    def save(self, commit=True):
-        user = super(CustomUserCreationForm, self).save(commit=False)
-        user.nif = "u" + user.nif
-        if commit:
-            user.save()
-        return user
+    # def save(self, commit=True):
+    #
+    #
+    #     user = super(CustomUserCreationForm, self).save(commit=True)
+    #
+    #
+    #     user.nif = "u" + user.nif
+    #     # if commit:
+    #         # user.save()
+    #
+    #     return user
+
+    def clean_nif(self):
+        nif = self.cleaned_data['nif']
+        nif = "u" + nif
+        if UsuarioUca.objects.filter(nif=nif).exists():
+            raise forms.ValidationError("Ya existe un usuario con este NIF")
+        return nif
 
 
 class CustomUserChangeForm(UserChangeForm):
@@ -53,16 +66,16 @@ class CustomUserChangeForm(UserChangeForm):
         model = UsuarioUca
         fields = '__all__'
 
-    def save(self, commit=True):
-        user = super(CustomUserChangeForm, self).save(commit=False)
-        # if user.nif[1] == 'u':
-        #     raise forms.ValidationError("Nif incorrecto")
-        if not user.nif.__contains__("u"):
-            user.nif = "u" + user.nif
-
-        if commit:
-            user.save()
-        return user
+    # def save(self, commit=True):
+    #     user = super(CustomUserChangeForm, self).save(commit=False)
+    #     # if user.nif[1] == 'u':
+    #     #     raise forms.ValidationError("Nif incorrecto")
+    #     if not user.nif.__contains__("u"):
+    #         user.nif = "u" + user.nif
+    #
+    #     if commit:
+    #         user.save()
+    #     return user
 
 
 class UserLoginForm(AuthenticationForm):
@@ -96,20 +109,28 @@ class createUserForm(ModelForm):
                    'email': forms.EmailInput(attrs={'class': 'form-control'}),
                    'password': forms.PasswordInput(attrs={'class': 'form-control'}), }
 
+    def clean_nif(self):
+        nif = self.cleaned_data['nif']
+        nif = "u" + nif
+        if UsuarioUca.objects.filter(nif=nif).exists():
+            raise forms.ValidationError("Ya existe un usuario con este NIF")
+        return nif
 
-
-    def save(self, commit=True, exclude=None):
+    def save(self, commit=True):
         user = super(createUserForm, self).save()
         # if user.nif[1] == 'u':
         #     raise forms.ValidationError("Nif incorrecto")
         # if istextvalidator(user.first_name):
         #     raise forms.ValidationError("Nombre incorrecto")
-        if not user.nif.__contains__("u"):
-            user.nif = "u" + user.nif
+        # if not user.nif.__contains__("u"):
+        #     user.nif = "u" + user.nif
 
-        if commit:
-            user.set_password(user.password)
-            user.save()
+        # if commit:
+        user.set_password(user.password)
+
+            # user.nif = "u" + user.nif
+            # user.save()
+
         return user
 
 
@@ -135,16 +156,16 @@ class editUserForm(ModelForm):
                    # 'password': forms.PasswordInput(attrs={'class': 'form-control'}),
                    }
 
-    def save(self, commit=True, exclude=None):
-        user = super(editUserForm, self).save()
-        # if user.nif[1] == 'u':
-        #     raise forms.ValidationError("Nif incorrecto")
-        # if not istextvalidator(user.first_name):
-        #     raise forms.ValidationError("Nombre incorrecto")
-        if not user.nif.__contains__("u"):
-            user.nif = "u" + user.nif
-
-        if commit:
-            # user.set_password(user.password)
-            user.save()
-        return user
+    # def save(self, commit=True, exclude=None):
+    #     user = super(editUserForm, self).save()
+    #     if user.nif[1] == 'u':
+    #         raise forms.ValidationError("Nif incorrecto")
+    #     if not istextvalidator(user.first_name):
+    #         raise forms.ValidationError("Nombre incorrecto")
+    #     if not user.nif.__contains__("u"):
+    #         user.nif = "u" + user.nif
+    #
+    #     if commit:
+    #         # user.set_password(user.password)
+    #         user.save()
+    #     return user

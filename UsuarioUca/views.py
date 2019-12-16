@@ -1,5 +1,5 @@
 from datetime import datetime
-from importlib import resources
+# from importlib import resources
 
 from django.http import HttpResponse
 from django.shortcuts import redirect
@@ -10,7 +10,7 @@ from django.utils import timezone
 from django.views.generic.list import ListView
 from django.views.generic.edit import UpdateView, CreateView
 from import_export.formats import base_formats
-from sqlalchemy.sql.functions import user
+# from sqlalchemy.sql.functions import userdd/
 
 from UsuarioUca.admin import UsuarioUcaResource
 from UsuarioUca.forms import createUserForm, editUserForm

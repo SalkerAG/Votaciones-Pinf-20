@@ -6,6 +6,7 @@ from django.core.validators import RegexValidator
 from django.db import models
 from django.forms import forms
 
+
 import csv
 
 from django.conf import settings
@@ -136,10 +137,16 @@ class UsuarioUca(AbstractUser):
         istextvalidator(first_name)
         istextvalidator(last_name)
 
-        if (len(password.__str__())<6):
-            raise forms.ValidationError("La contraseña debe ser de 6 caracteres mínimo")
-        if  nif[1] == 'u':
-            raise forms.ValidationError("Nif incorrecto")
+
+
+
+
+        # if (len(password.__str__())<6):
+        #     raise forms.ValidationError("La contraseña debe ser de 6 caracteres mínimo")
+        # if  nif[1] == 'u':
+        #     raise forms.ValidationError("Nif incorrecto")
+
+
 
         nif = nif.replace("u", "")
         if validonifspain(nif) == True or validonifworld(nif) == True:
@@ -147,6 +154,8 @@ class UsuarioUca(AbstractUser):
             return nif
         else:
             raise forms.ValidationError("Nif incorrecto")
+
+
 
 
     objects = UserManager()
