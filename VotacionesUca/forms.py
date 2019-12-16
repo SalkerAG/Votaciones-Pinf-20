@@ -16,7 +16,7 @@ class DateTimeInput(forms.DateTimeInput):
 
 class ProcesoElectoralForm(forms.ModelForm):
     esConsulta=forms.BooleanField()
-    fechaInicio=forms.DateTimeField(required=True))
+    fechaInicio=EuDateFormField(required=True)
     fechaFin=EuDateFormField(required=True)
     nombreFicheroCenso=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder' : 'Nombre del Censo'}),required=True)
     
@@ -60,14 +60,4 @@ class VotacioneForm(ProcesoElectoralForm, PreguntaForm):
         if inicio.strftime('%Y-%m-%d %H:%M:%S')>=fin.strftime('%Y-%m-%d %H:%M:%S'):
             raise ValidationError('La fecha de Fin debe ser mayor a la de Inicio.')    
 
-        return self.cleaned_data        
-    
-
-class favor(forms.favor):
-    vF= forms.CharField(label='aFavor', max_length=1)
-
-class contr(forms.contr):
-    vC= forms.CharField(label='enContra', max_length=1)
-
-class abst(forms.abst):
-    vA= forms.CharField(label='abstencion', max_length=1)
+        return self.cleaned_data
