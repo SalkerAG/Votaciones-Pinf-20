@@ -68,7 +68,11 @@
         Al confirmar se enviará el voto.
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Enviar</button>
+        <form name="favor" action="" method="post">
+          <input id="aFavor" type="hidden" name="aFavor" value="1">
+          <input type="submit"  value="Enviar" class="btn btn-primary" />
+        </form>
+
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
@@ -89,7 +93,11 @@
       Al confirmar se enviará el voto.
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-primary">Enviar</button>
+      <div class="modal-footer">
+        <form name="contr" action="" method="post">
+          <input id="enContra" type="hidden" name="enContra" value="2">
+          <input type="submit"  value="Enviar" class="btn btn-primary" />
+        </form>
       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
     </div>
   </div>
@@ -109,7 +117,10 @@
       Al confirmar se enviará el voto.
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-primary">Enviar</button>
+      <form name="abst" class="abst" action="" method="post">
+        <input id="abstencion" type="hidden" name="abstencion" value="3">
+        <input type="submit"  value="Enviar" class="btn btn-primary" />
+      </form>
       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
     </div>
   </div>
