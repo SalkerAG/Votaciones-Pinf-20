@@ -2,7 +2,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm
 from django.forms import ModelForm
-from localflavor.exceptions import ValidationError
+# from localflavor.exceptions import ValidationError
 
 from .models import UsuarioUca, uvalidonifworld, uvalidonifspain, validonifspain, validonifworld
 from django.core.validators import RegexValidator
