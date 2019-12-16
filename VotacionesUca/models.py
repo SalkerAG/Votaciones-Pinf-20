@@ -28,13 +28,13 @@ class ProcesoElectoral(models.Model):
         return self.nombreFicheroCenso
 
 class Opciones(models.Model):
-    nombre = models.CharField(max_length=50,null=False, unique=True)
+    opciones = models.CharField(max_length=50,null=False, unique=True)
     class Meta:
         abstract=True
         verbose_name='Opción'
         verbose_name_plural='Opciones'
     def __str__(self):
-        return self.nombre
+         return self.nombre
 
 class Pregunta(Opciones):
     enunciado = models.CharField(max_length=50, null=False, unique=True)

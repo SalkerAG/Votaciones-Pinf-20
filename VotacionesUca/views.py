@@ -1,5 +1,5 @@
 from django.views.generic import TemplateView
-from .models import ProcesoElectoral, Pregunta, Votacione, Eleccion, Opciones
+from .models import ProcesoElectoral,Opciones,Pregunta,Votacione,Eleccion
 from .forms import VotacioneForm
 from django.shortcuts import render,redirect
 import datetime
