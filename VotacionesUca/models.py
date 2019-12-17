@@ -1,5 +1,8 @@
 from django.db import models
 
+from Censo.models import Censo
+
+
 class ProcesoElectoral(models.Model):
     fecha_inicio = models.DateTimeField()
     fecha_fin = models.DateTimeField()
@@ -13,20 +16,20 @@ class Opciones(models.Model):
 
 class Pregunta(models.Model):
     enunciado = models.CharField(max_length=50)
-    opciones = models.ForeignKey(Opciones, on_delete=models.CASCADE)
+    opciones = models.ManyToManyField(Opciones)
 
 class Votacion(ProcesoElectoral):
     es_presencial = models.BooleanField(default=False)
     voto_rectificable = models.BooleanField(default=False)
     tipo_votacion = models.BooleanField(default=False)
     max_elector = models.IntegerField()
-    pregunta = models.ForeignKey(Pregunta, on_delete=models.CASCADE)
+    pregunta = models.ManyToManyField(Pregunta)
 
 class Eleccion(ProcesoElectoral):
     nie = models.IntegerField()
     max_vacantes = models.IntegerField()
     tipo_eleccion = models.BooleanField(default=False)
-    # censo = models.OneToOneField(Censo)
+    censo = models.OneToOneField(Censo, on_delete=models.CASCADE)
 
 
 

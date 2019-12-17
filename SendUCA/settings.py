@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'VotacionesUca.apps.VotacionesucaConfig',
     'UsuarioUca.apps.UsuarioucaConfig',
-    'Censo'
+    'Censo',
     'import_export',
     'UsuarioUca.templatetags'
 ]
@@ -56,7 +56,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'Censo.urls'
+ROOT_URLCONF = ''
 
 
 TEMPLATES = [
