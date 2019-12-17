@@ -1,25 +1,68 @@
 from django.views.generic import TemplateView
-from .models import ProcesoElectoral,Opciones,Pregunta,Votacione,Eleccion
+from .models import ProcesoElectoral, Opciones, Pregunta, Votacione, Eleccion
 from .forms import VotacioneForm
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
 import datetime
 
+
 class CrearVotacionView(TemplateView):
-    template_name='CrearVotacion.html'
+    template_name = 'CrearVotacion.html'
 
-    def get(self,request):
-        form=VotacioneForm()
-        post=Votacione.objects.all()
-        return render(request,self.template_name,{'form':form})
+    def get(self, request):
+        form = VotacioneForm()
+        post = Votacione.objects.all()
+        return render(request, self.template_name, {'form': form})
 
-    def post(self,request):
-        form=VotacioneForm(request.POST)
+    def post(self, request):
+        form = VotacioneForm(request.POST)
         if form.is_valid():
-            post=form.save(commit=False)
+            post = form.save(commit=False)
             post.save()
 
-            form=VotacioneForm()
+            form = VotacioneForm()
             return redirect('/crearVotacion/')
 
-        args={'form':form}
-        return render(request,self.template_name,args)
+        args = {'form': form}
+        return render(request, self.template_name, args)
+
+
+class VotacionSimpleView(TemplateView):
+    template_name = 'VotacionSimple.html'
+
+    def get(self, request):
+        form = VotacioneForm()
+        post = Votacione.objects.all()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = VotacioneForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.save()
+
+            form = VotacioneForm()
+            return redirect('//')
+
+        args = {'form': form}
+        return render(request, self.template_name, args)
+
+
+class VotacionComplejaView(TemplateView):
+    template_name = 'VotacionCompleja.html'
+
+    def get(self, request):
+        form = VotacioneForm()
+        post = Votacione.objects.all()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = VotacioneForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.save()
+
+            form = VotacioneForm()
+            return redirect('//')
+
+        args = {'form': form}
+        return render(request, self.template_name, args)
