@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django import forms
 from django.utils import timezone
 from datetime import datetime
-from .models import ProcesoElectoral,Opciones,Pregunta, Votacione, Eleccion
+from .models import ProcesoElectoral,Opciones,Pregunta, Votacion, Eleccion
 from datetime import datetime
 from .myfields import EuDateFormField
 from datetime import datetime
@@ -17,13 +17,10 @@ class DateTimeInput(forms.DateTimeInput):
     input_type = 'datetime-local'
 
 class ProcesoElectoralForm(forms.ModelForm):
-<<<<<<< Updated upstream
-    esConsulta=forms.BooleanField()
-    fechaInicio=forms.DateTimeField(required=True))
-=======
+
     esConsulta=forms.ChoiceField(widget=forms.Select(), choices=b)
     fechaInicio=EuDateFormField(required=True)
->>>>>>> Stashed changes
+
     fechaFin=EuDateFormField(required=True)
     nombreFicheroCenso=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder' : 'Nombre del Censo'}),required=True)
     
@@ -53,9 +50,8 @@ class VotacioneForm(ProcesoElectoralForm, PreguntaForm):
     maxElector=forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder' : 'Escribe el número máximo de respuestas'}),min_value=0)
 
     class Meta:
-        model=Votacione
-        fields=['esConsulta','fechaInicio','fechaFin','nombreFicheroCenso','nombreVotacion',
-                'esPresencial','votoRectificable','tipoVotacion','maxElector','enunciado','opciones']
+        model=Votacion
+        fields= '__all__'
 
     def clean(self):
         inicio=self.cleaned_data['fechaInicio']
@@ -67,32 +63,5 @@ class VotacioneForm(ProcesoElectoralForm, PreguntaForm):
         if inicio.strftime('%Y-%m-%d %H:%M:%S')>=fin.strftime('%Y-%m-%d %H:%M:%S'):
             raise ValidationError('La fecha de Fin debe ser mayor a la de Inicio.')    
 
-        return self.cleaned_data        
-    
+        return self.cleaned_data
 
-class favor(forms.ModelForm):
-     vF= forms.CharField(label='aFavor', max_length=1)
-	class Meta:
-	  model=vF;
-	  fields=['aFavor']
-			def clean(self):
-			  self.cleaned_data['aFavor']
-		
-		
-
-class contr(forms.ModelForm):
-    vC= forms.CharField(label='enContra', max_length=1)
-		class Meta:
-		   model=vC
-		   fields=['enContra']
-			def clean(self):
-			  self.cleaned_data['enContra']
-		
-
-class abst(forms.ModelForm):
-    vA= forms.CharField(label='abstencion', max_length=1)
-		class Meta:
-		 model=vA;
-		 fields=['abstencion']
-			def clean(self):
-			  self.cleaned_data['abstencion']
