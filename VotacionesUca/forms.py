@@ -10,13 +10,20 @@ from .myfields import EuDateFormField
 from datetime import datetime
   
 c=[('0','Simple'),('1','Compleja')]
+b=[('0','No'),('1','Sí')]
+
 
 class DateTimeInput(forms.DateTimeInput):
     input_type = 'datetime-local'
 
 class ProcesoElectoralForm(forms.ModelForm):
+<<<<<<< Updated upstream
     esConsulta=forms.BooleanField()
     fechaInicio=forms.DateTimeField(required=True))
+=======
+    esConsulta=forms.ChoiceField(widget=forms.Select(), choices=b)
+    fechaInicio=EuDateFormField(required=True)
+>>>>>>> Stashed changes
     fechaFin=EuDateFormField(required=True)
     nombreFicheroCenso=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder' : 'Nombre del Censo'}),required=True)
     
@@ -40,8 +47,8 @@ class PreguntaForm(forms.ModelForm):
 
 class VotacioneForm(ProcesoElectoralForm, PreguntaForm):
     nombreVotacion=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder' : 'Título de la votación'}))
-    esPresencial=forms.BooleanField()
-    votoRectificable=forms.BooleanField()
+    esPresencial=forms.ChoiceField(widget=forms.Select(), choices=b)
+    votoRectificable=forms.ChoiceField(widget=forms.Select(), choices=b)
     tipoVotacion=forms.ChoiceField(label='Tipo de votacion',choices=c)
     maxElector=forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder' : 'Escribe el número máximo de respuestas'}),min_value=0)
 

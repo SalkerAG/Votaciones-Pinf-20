@@ -65,20 +65,23 @@
                 {{ form.nombreVotacion }}
             </div>
         </div>
-
+        <br>
         <!--Booleanos-->
-        <div class="col-lg-10">
-            <label required="true" for="fechaInicio">Consulta</label>
+        <div class="col-lg-10" id="esConsulta">
+            <label for="esConsulta">¿Es una Consulta?</label>
+            <br>
             {{ form.esConsulta }}
         </div>
-
+        <br>
         <div class="col-lg-10">
-            <label for="customCheck1">Presencial</label>
+            <label for="checkbox">¿Es Presencial?</label>
+            <br>
             {{ form.esPresencial }}
         </div>
-
+        <br>
         <div class="col-lg-10">
-            <label for="customCheck1">Voto Rectificable</label>
+            <label for="checkbox">Permitir Voto Rectificable</label>
+            <br>
             {{ form.votoRectificable }}
         </div>
         <br>
@@ -136,6 +139,10 @@
             </div>
         </div>
     </form>
+    <div class="form-row field-fechaFin">
+            
+            
+        <div>
 
     <!-- Ventana emergente -->
     <div class="modal fade" id="ModalCrearVotacion" tabindex="-1" role="dialog"
