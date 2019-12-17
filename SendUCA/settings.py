@@ -36,11 +36,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'VotacionesUca.apps.VotacionesucaConfig',
-    'UsuarioUca.apps.UsuarioucaConfig',
-    'Censo',
     'import_export',
-    'UsuarioUca.templatetags'
+    'VotacionesUca.apps.VotacionesucaConfig',
+    'Censo.apps.CensoConfig',
+    'UsuarioUca.templatetags',
+    'UsuarioUca.apps.UsuarioucaConfig',
 ]
 
 IMPORT_EXPORT_USE_TRANSACTIONS = True
@@ -56,7 +56,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = ''
+ROOT_URLCONF = 'SendUCA.urls'
 
 
 TEMPLATES = [
@@ -87,6 +87,7 @@ DATABASES = {
     }
 }
 
+LOGIN_REDIRECT_URL = '/'
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -125,6 +126,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static/'),
 )
