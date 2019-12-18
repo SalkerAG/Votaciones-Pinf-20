@@ -23,7 +23,7 @@ passwordtemplate = "pbkdf2_sha256"
 
 
 
-def check(self):
+def checkemail(self):
     if re.search(regex, self):
         return True
 
@@ -77,7 +77,7 @@ class UsuarioUcaResource(resources.ModelResource):
             print (identify_hasher(passwordtemplate))
 
 
-            if check(email) == False:
+            if checkemail(email) == False:
                 raise ValidationError('Email incorrecto. '
                                       'Error en la fila con nif = %s' % row[11])
             if nif == "":
