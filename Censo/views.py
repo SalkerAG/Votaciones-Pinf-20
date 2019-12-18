@@ -9,7 +9,7 @@ from django.urls import reverse_lazy
 
 class CensoCreate(CreateView):
     model = Censo
-    fields = ['usuario', 'id_votacion']
+    fields = ['usuario']
 
 
 class CensoDetailView(CreateView):
