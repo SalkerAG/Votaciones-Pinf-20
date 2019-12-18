@@ -14,7 +14,6 @@ urlpatterns = [
     path('editarusuario/<int:pk>', UsuarioUcaUpdate.as_view(), name='usuariouca_edit'),
     path('crearusuario/', UsuarioUcaCreate.as_view(), name='usuariouca_create'),
     path('listavotaciones/', ListaVotacionesView.as_view(), name="listavotaciones"),
-    path('crearVotacion/', CrearVotacionView.as_view(), name="crearvotacion"),
     path('usuariouca/import/', MyModelImportView.as_view(), name='usuariouca_import'),
     path('usuariouca/export/', UsuarioUcaExportView.as_view(), name='usuariouca_export'),
     path('usuariouca/import/confirm/', MyModelImportView.as_view(confirm=True),

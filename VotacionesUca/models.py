@@ -1,10 +1,13 @@
 from django.db import models
 from Censo.models import Censo
+from django.utils import timezone
 
 
 class ProcesoElectoral(models.Model):
-    fecha_inicio = models.DateTimeField()
-    fecha_fin = models.DateTimeField()
+    fecha_inicio = models.DateField()
+    fecha_fin = models.DateField()
+    hora_inicio = models.TimeField(auto_now=True)
+    hora_fin = models.TimeField(auto_now=True)
     nombre_fichero_censo = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

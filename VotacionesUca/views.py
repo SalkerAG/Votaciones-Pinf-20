@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView, FormView
+from django.views.generic import TemplateView, FormView, CreateView
 from .models import ProcesoElectoral, Opciones, Pregunta, Votacion, Eleccion
 from .forms import VotacioneForm
 from django.shortcuts import render, redirect
@@ -20,7 +20,7 @@ class CrearVotacionView(TemplateView):
             post.save()
 
             form = VotacioneForm()
-            return redirect('/crearVotacion/')
+            return redirect('')
 
         args = {'form': form}
         return render(request, self.template_name, args)
