@@ -13,105 +13,109 @@
             </div>
         </div>
     {% else %}
-    <head>
+        <head>
 
         <!-- Movil y teclado -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" type="text/css" href="footer.css">
-    
+
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
         <link rel="stylesheet"
               href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
-    
+
         <title>Crear Votación UCA</title>
-    
-   
-    <div class="container">
+
+
+        <div class="container">
         <!-- Cabecera -->
         <br>
         <div class="row justify-content-center">
             <div class="page-header"><h1>Crear Votación</h1></div>
         </div>
-    
+
         <!--Formulario-->
         <!--['esConsulta','fechaInicio','fechaFin','nombreFicheroCenso','nombreVotacion',
                     'esPresencial','votoRectificable','tipoVotacion','maxElector','enunciado','opciones']-->
+        {#        <form method="post">{% csrf_token %}#}
+        {#            <div class="form-group">#}
+        {#                <label for="form-tittle" class="col-lg-3 col-form-label">Título</label>#}
+        {#                <div class="col-lg-12">#}
+        {#                    {{ form.nombreVotacion }}#}
+        {#                </div>#}
+        {#            </div>#}
+        {#            <br>#}
+        {#            <!--Booleanos-->#}
+        {#            <div class="col-lg-10" id="esConsulta">#}
+        {#                <label for="esConsulta">¿Es una Consulta?</label>#}
+        {#                <br>#}
+        {#                {{ form.esConsulta }}#}
+        {#            </div>#}
+        {#            <br>#}
+        {#            <div class="col-lg-10">#}
+        {#                <label for="checkbox">¿Es Presencial?</label>#}
+        {#                <br>#}
+        {#                {{ form.esPresencial }}#}
+        {#            </div>#}
+        {#            <br>#}
+        {#            <div class="col-lg-10">#}
+        {#                <label for="checkbox">Permitir Voto Rectificable</label>#}
+        {#                <br>#}
+        {#                {{ form.votoRectificable }}#}
+        {#            </div>#}
+        {#            <br>#}
+        {#    #}
+        {#            <div class="form-group row px-5">#}
+        {#                <div class="col-lg-6" id="fecha_inicio">#}
+        {#                    <label for="fecha_inicio" class="control-label">Fecha inicio:</label>#}
+        {#                    <div class="input-group date">#}
+        {#                        {{ form.fecha_inicio }}#}
+        {#                    </div>#}
+        {#                </div>#}
+        {#                <div class="col-lg-0" id="fecha_fin">#}
+        {#                    <label for="fecha_fin" class="control-label">Fecha fin:</label>#}
+        {#                    <div class="input-group date">#}
+        {#                        {{ form.fecha_fin }}#}
+        {#                    </div>#}
+        {#                </div>#}
+        {#            </div>#}
+        {#            <br>#}
+        {#    #}
+        {#            <div class="col-lg-10">#}
+        {#                <label>Censo</label>#}
+        {#                {{ form.nombreFicheroCenso }}#}
+        {#              </div>#}
+        {#              <br>#}
+        {#        #}
+        {#              <div class="col-lg-10">#}
+        {#                <label>Tipo de Votacion</label>#}
+        {#                {{ form.tipoVotacion }}#}
+        {#              </div>#}
+        {#            <br>#}
+        {#    #}
+        {#            <div class="col-lg-10">#}
+        {#                <label>Nº máximo de respuestas</label>#}
+        {#                {{ form.maxElector }}#}
+        {#            </div>#}
+        {#            <br>#}
+        {#    #}
+        {#            <div id="tipovotacionForm"></div>#}
+        {#            <div class="form-group">#}
+        {#                <div class="text-center">#}
+        {#                    <input type="submit" class="btn btn-primary" value="Guardar">#}
+        {#                </div>#}
+        {#            </div>#}
+        {#        </form>#}
         <form method="post">{% csrf_token %}
-            <div class="form-group">
-                <label for="form-tittle" class="col-lg-3 col-form-label">Título</label>
-                <div class="col-lg-12">
-                    {{ form.nombreVotacion }}
-                </div>
-            </div>
-            <br>
-            <!--Booleanos-->
-            <div class="col-lg-10" id="esConsulta">
-                <label for="esConsulta">¿Es una Consulta?</label>
-                <br>
-                {{ form.esConsulta }}
-            </div>
-            <br>
-            <div class="col-lg-10">
-                <label for="checkbox">¿Es Presencial?</label>
-                <br>
-                {{ form.esPresencial }}
-            </div>
-            <br>
-            <div class="col-lg-10">
-                <label for="checkbox">Permitir Voto Rectificable</label>
-                <br>
-                {{ form.votoRectificable }}
-            </div>
-            <br>
-    
-            <div class="form-group row px-5">
-                <div class="col-lg-6" id="fecha_inicio">
-                    <label for="fecha_inicio" class="control-label">Fecha inicio:</label>
-                    <div class="input-group date">
-                        {{ form.fecha_inicio }}
-                    </div>
-                </div>
-                <div class="col-lg-0" id="fecha_fin">
-                    <label for="fecha_fin" class="control-label">Fecha fin:</label>
-                    <div class="input-group date">
-                        {{ form.fecha_fin }}
-                    </div>
-                </div>
-            </div>
-            <br>
-    
-            <div class="col-lg-10">
-                <label>Censo</label>
-                {{ form.nombreFicheroCenso }}
-              </div>
-              <br>
-        
-              <div class="col-lg-10">
-                <label>Tipo de Votacion</label>
-                {{ form.tipoVotacion }}
-              </div>
-            <br>
-    
-            <div class="col-lg-10">
-                <label>Nº máximo de respuestas</label>
-                {{ form.maxElector }}
-            </div>
-            <br>
-    
-            <div id="tipovotacionForm"></div>
-            <div class="form-group">
-                <div class="text-center">
-                    <input type="submit" class="btn btn-primary" value="Guardar">
-                </div>
-            </div>
+            {{ form.as_p }}
+            <input type="submit" value="Save">
         </form>
         <div class="form-row field-fechaFin">
-                
-                
-            <div>
-    
+
+
+        <div>
+
         <!-- Ventana emergente -->
         <div class="modal fade" id="ModalCrearVotacion" tabindex="-1" role="dialog"
              aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -133,10 +137,10 @@
                 </div>
             </div>
         </div>
-    
-    
+
+
         <!-- Footer  -->
-    
+
         <footer class="footer-area footer--light">
             <div class="footer-big">
                 <!-- start .container -->
@@ -180,7 +184,7 @@
                             <!-- Ends: .footer-widget -->
                         </div>
                         <!-- end /.col-md-3 -->
-    
+
                         <div class="col-md-3 col-sm-4">
                             <div class="footer-widget">
                                 <div class="footer-menu">
@@ -199,7 +203,7 @@
                             <!-- Ends: .footer-widget -->
                         </div>
                         <!-- end /.col-lg-3 -->
-    
+
                         <div class="col-md-3 col-sm-4">
                             <div class="footer-widget">
                                 <div class="footer-menu no-padding">
@@ -219,14 +223,14 @@
                             <!-- Ends: .footer-widget -->
                         </div>
                         <!-- Ends: .col-lg-3 -->
-    
+
                     </div>
                     <!-- end /.row -->
                 </div>
                 <!-- end /.container -->
             </div>
             <!-- end /.footer-big -->
-    
+
             <div class="mini-footer">
                 <div class="container">
                     <div class="row">
@@ -241,7 +245,7 @@
                 </div>
             </div>
         </footer>
-    
+
         <!-- Fin Footer  -->
         <!-- Requisitos para bootstrap 4 y js  -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -256,9 +260,9 @@
                 crossorigin="anonymous"></script>
         <script type="text/javascript"
                 src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-    
+
         <!-- Código javascript -->
-    
+
         <script type="text/javascript">
             $(document).ready(function () {
                 tipovotacionForm.innerHTML = "<h1>SIMPLE</h1>"
@@ -303,12 +307,12 @@
                 } else {
                     element3.style.display = 'none';
                 }
-    
-            }    
-        </script>
-</body>
 
-</html>
+            }
+        </script>
+        </body>
+
+        </html>
 
     {% endif %}
 {% endblock %}

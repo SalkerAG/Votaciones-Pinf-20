@@ -122,7 +122,8 @@ class createUserForm(ModelForm):
         #     raise forms.ValidationError("Nif incorrecto")
         # if istextvalidator(user.first_name):
         #     raise forms.ValidationError("Nombre incorrecto")
-        # if not user.nif.__contains__("u"):
+        # if not user.nif.__c
+        # ontains__("u"):
         #     user.nif = "u" + user.nif
 
         # if commit:

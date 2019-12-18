@@ -54,91 +54,95 @@
     <div class="row justify-content-center">
         <div class="page-header"><h1>Crear Votación</h1></div>
     </div>
+<form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Save">
+</form>
 
     <!--Formulario-->
     <!--['esConsulta','fechaInicio','fechaFin','nombreFicheroCenso','nombreVotacion',
                 'esPresencial','votoRectificable','tipoVotacion','maxElector','enunciado','opciones']-->
-    <form method="post">{% csrf_token %}
-        <div class="form-group">
-            <label for="form-tittle" class="col-lg-3 col-form-label">Título</label>
-            <div class="col-lg-12">
-                {{ form.nombreVotacion }}
-            </div>
-        </div>
-        <br>
-        <!--Booleanos-->
-        <div class="col-lg-10" id="esConsulta">
-            <label for="esConsulta">¿Es una Consulta?</label>
-            <br>
-            {{ form.esConsulta }}
-        </div>
-        <br>
-        <div class="col-lg-10">
-            <label for="checkbox">¿Es Presencial?</label>
-            <br>
-            {{ form.esPresencial }}
-        </div>
-        <br>
-        <div class="col-lg-10">
-            <label for="checkbox">Permitir Voto Rectificable</label>
-            <br>
-            {{ form.votoRectificable }}
-        </div>
-        <br>
-
-        <div class="form-group row px-5">
-            <div class="col-lg-6" id="fechaInicio">
-                <label for="fechaInicio" class="control-label">Fecha inicio:</label>
-                <div class="input-group date">
-                    {{ form.fechaInicio }}
-                </div>
-            </div>
-            <div class="col-lg-0" id="FechaFin">
-                <label for="FechaFin" class="control-label">Fecha fin:</label>
-                <div class="input-group date">
-                    {{ form.fechaFin }}
-                </div>
-            </div>
-        </div>
-        <br>
-
-        <div class="col-lg-10">
-            <label>Censo</label>
-            {{ form.nombreFicheroCenso }}
-          </div>
-          <br>
-    
-          <div class="col-lg-10">
-            <label>Tipo de Votacion</label>
-            {{ form.tipoVotacion }}
-          </div>
-        <br>
-
-        <div class="col-lg-10">
-            <label>Nº máximo de respuestas</label>
-            {{ form.maxElector }}
-        </div>
-        <br>
-    
-        <div class="col-lg-10">
-            <label>Pregunta de la votación</label>
-            {{ form.enunciado }}
-         </div>
-        <br>
-    
-        <div class="col-lg-10">
-            <label>Opciones</label>
-            {{ form.opciones }}
-        </div>
-        <br>
-
-        <div id="tipovotacionForm"></div>
-        <div class="form-group">
-            <div class="text-center">
-                <input type="submit" class="btn btn-primary" value="Guardar">
-            </div>
-        </div>
-    </form>
+{#    <form method="post">{% csrf_token %}#}
+{#        <div class="form-group">#}
+{#            <label for="form-tittle" class="col-lg-3 col-form-label">Título</label>#}
+{#            <div class="col-lg-12">#}
+{#                {{ form.nombreVotacion }}#}
+{#            </div>#}
+{#        </div>#}
+{#        <br>#}
+{#        <!--Booleanos-->#}
+{#        <div class="col-lg-10" id="esConsulta">#}
+{#            <label for="esConsulta">¿Es una Consulta?</label>#}
+{#            <br>#}
+{#            {{ form.esConsulta }}#}
+{#        </div>#}
+{#        <br>#}
+{#        <div class="col-lg-10">#}
+{#            <label for="checkbox">¿Es Presencial?</label>#}
+{#            <br>#}
+{#            {{ form.esPresencial }}#}
+{#        </div>#}
+{#        <br>#}
+{#        <div class="col-lg-10">#}
+{#            <label for="checkbox">Permitir Voto Rectificable</label>#}
+{#            <br>#}
+{#            {{ form.votoRectificable }}#}
+{#        </div>#}
+{#        <br>#}
+{##}
+{#        <div class="form-group row px-5">#}
+{#            <div class="col-lg-6" id="fechaInicio">#}
+{#                <label for="fechaInicio" class="control-label">Fecha inicio:</label>#}
+{#                <div class="input-group date">#}
+{#                    {{ form.fechaInicio }}#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="col-lg-0" id="FechaFin">#}
+{#                <label for="FechaFin" class="control-label">Fecha fin:</label>#}
+{#                <div class="input-group date">#}
+{#                    {{ form.fechaFin }}#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#        <br>#}
+{##}
+{#        <div class="col-lg-10">#}
+{#            <label>Censo</label>#}
+{#            {{ form.nombreFicheroCenso }}#}
+{#          </div>#}
+{#          <br>#}
+{#    #}
+{#          <div class="col-lg-10">#}
+{#            <label>Tipo de Votacion</label>#}
+{#            {{ form.tipoVotacion }}#}
+{#          </div>#}
+{#        <br>#}
+{##}
+{#        <div class="col-lg-10">#}
+{#            <label>Nº máximo de respuestas</label>#}
+{#            {{ form.maxElector }}#}
+{#        </div>#}
+{#        <br>#}
+{#    #}
+{#        <div class="col-lg-10">#}
+{#            <label>Pregunta de la votación</label>#}
+{#            {{ form.enunciado }}#}
+{#         </div>#}
+{#        <br>#}
+{#    #}
+{#        <div class="col-lg-10">#}
+{#            <label>Opciones</label>#}
+{#            {{ form.opciones }}#}
+{#        </div>#}
+{#        <br>#}
+{##}
+{#        <div id="tipovotacionForm"></div>#}
+{#        <div class="form-group">#}
+{#            <div class="text-center">#}
+{#                <input type="submit" class="btn btn-primary" value="Guardar">#}
+{#            </div>#}
+{#        </div>#}
+{#    </form>#}
     <div class="form-row field-fechaFin">
             
             
