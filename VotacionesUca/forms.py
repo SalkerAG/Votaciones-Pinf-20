@@ -11,12 +11,17 @@ c=[('0','Simple'),('1','Compleja')]
 b=[('0','No'),('1','Sí')]
 
 class ProcesoElectoralForm(forms.ModelForm):
-    esConsulta=forms.ChoiceField(widget=forms.Select(), choices=b)
-    fecha_inicio = forms.DateField(widget = forms.SelectDateWidget)
-    fecha_fin = forms.DateField(widget = forms.SelectDateWidget)
-    hora_inicio = forms.TimeField()
-    hora_fin = forms.TimeField()
-    nombreFicheroCenso=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder' : 'Nombre del Censo'}),required=True)
+    fecha_inicio=forms.DateField()
+    fecha_fin=forms.DateField()
+    hora_inicio=forms.TimeField()
+    hora_fin=forms.TimeField()
+    es_consulta=forms.BooleanField(required=False)
+    #esConsulta=forms.ChoiceField(widget=forms.Select(), choices=b)
+    #fecha_inicio = forms.DateField()
+    #fecha_fin = forms.DateField()
+    #hora_inicio = forms.TimeField()
+    #hora_fin = forms.TimeField()
+    #nombreFicheroCenso=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder' : 'Nombre del Censo'}),required=True)
     
     class Meta:
         model=ProcesoElectoral
@@ -29,12 +34,17 @@ class PreguntaForm(forms.ModelForm):
         model=Pregunta
         fields='__all__'
 
-class VotacioneForm(ProcesoElectoralForm):
-    nombreVotacion=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder' : 'Título de la votación'}))
-    esPresencial=forms.ChoiceField(widget=forms.Select(), choices=b)
-    votoRectificable=forms.ChoiceField(widget=forms.Select(), choices=b)
-    tipoVotacion=forms.ChoiceField(label='Tipo de votacion',choices=c)
-    maxElector=forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder' : 'Escribe el número máximo de respuestas'}),min_value=0)
+class VotacionForm(ProcesoElectoralForm):
+    nombre_votacion=forms.CharField()
+    es_presencial=forms.BooleanField(required=False)
+    voto_rectificable=forms.BooleanField(required=False)
+    tipo_votacion=forms.ChoiceField(choices=c)
+    max_respuestas=forms.IntegerField()
+    #nombreVotacion=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder' : 'Título de la votación'}))
+    #esPresencial=forms.ChoiceField(widget=forms.Select(), choices=b)
+    #votoRectificable=forms.ChoiceField(widget=forms.Select(), choices=b)
+    #tipoVotacion=forms.ChoiceField(label='Tipo de votacion',choices=c)
+    #maxElector=forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder' : 'Escribe el número máximo de respuestas'}),min_value=0)
 
     class Meta:
         model=Votacion

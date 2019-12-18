@@ -34,110 +34,83 @@
         <div class="row justify-content-center">
             <div class="page-header"><h1>Crear Votación</h1></div>
         </div>
-
-        <!--Formulario-->
-        <!--['esConsulta','fechaInicio','fechaFin','nombreFicheroCenso','nombreVotacion',
-                    'esPresencial','votoRectificable','tipoVotacion','maxElector','enunciado','opciones']-->
-        {#        <form method="post">{% csrf_token %}#}
-        {#            <div class="form-group">#}
-        {#                <label for="form-tittle" class="col-lg-3 col-form-label">Título</label>#}
-        {#                <div class="col-lg-12">#}
-        {#                    {{ form.nombreVotacion }}#}
-        {#                </div>#}
-        {#            </div>#}
-        {#            <br>#}
-        {#            <!--Booleanos-->#}
-        {#            <div class="col-lg-10" id="esConsulta">#}
-        {#                <label for="esConsulta">¿Es una Consulta?</label>#}
-        {#                <br>#}
-        {#                {{ form.esConsulta }}#}
-        {#            </div>#}
-        {#            <br>#}
-        {#            <div class="col-lg-10">#}
-        {#                <label for="checkbox">¿Es Presencial?</label>#}
-        {#                <br>#}
-        {#                {{ form.esPresencial }}#}
-        {#            </div>#}
-        {#            <br>#}
-        {#            <div class="col-lg-10">#}
-        {#                <label for="checkbox">Permitir Voto Rectificable</label>#}
-        {#                <br>#}
-        {#                {{ form.votoRectificable }}#}
-        {#            </div>#}
-        {#            <br>#}
-        {#    #}
-        {#            <div class="form-group row px-5">#}
-        {#                <div class="col-lg-6" id="fecha_inicio">#}
-        {#                    <label for="fecha_inicio" class="control-label">Fecha inicio:</label>#}
-        {#                    <div class="input-group date">#}
-        {#                        {{ form.fecha_inicio }}#}
-        {#                    </div>#}
-        {#                </div>#}
-        {#                <div class="col-lg-0" id="fecha_fin">#}
-        {#                    <label for="fecha_fin" class="control-label">Fecha fin:</label>#}
-        {#                    <div class="input-group date">#}
-        {#                        {{ form.fecha_fin }}#}
-        {#                    </div>#}
-        {#                </div>#}
-        {#            </div>#}
-        {#            <br>#}
-        {#    #}
-        {#            <div class="col-lg-10">#}
-        {#                <label>Censo</label>#}
-        {#                {{ form.nombreFicheroCenso }}#}
-        {#              </div>#}
-        {#              <br>#}
-        {#        #}
-        {#              <div class="col-lg-10">#}
-        {#                <label>Tipo de Votacion</label>#}
-        {#                {{ form.tipoVotacion }}#}
-        {#              </div>#}
-        {#            <br>#}
-        {#    #}
-        {#            <div class="col-lg-10">#}
-        {#                <label>Nº máximo de respuestas</label>#}
-        {#                {{ form.maxElector }}#}
-        {#            </div>#}
-        {#            <br>#}
-        {#    #}
-        {#            <div id="tipovotacionForm"></div>#}
-        {#            <div class="form-group">#}
-        {#                <div class="text-center">#}
-        {#                    <input type="submit" class="btn btn-primary" value="Guardar">#}
-        {#                </div>#}
-        {#            </div>#}
-        {#        </form>#}
-        <form method="post">{% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Save">
-        </form>
-        <div class="form-row field-fechaFin">
-
-
-        <div>
-
-        <!-- Ventana emergente -->
-        <div class="modal fade" id="ModalCrearVotacion" tabindex="-1" role="dialog"
-             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="ModalCrearVotacionTitle">¿Está seguro de crear la votación?</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        Al confirmar se creará la votación con los datos introducidos.
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" href="">Enviar</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <!--Formulario-->
+            <form method="post">{% csrf_token %}
+                <div class="form-group">
+                    <label for="form-tittle" class="col-lg-3 col-form-label">Título</label>
+                    <div class="col-lg-12">
+                        {{ form.nombre_votacion }}
                     </div>
                 </div>
-            </div>
-        </div>
-
+                <br>
+                <!--Booleanos-->
+                <div class="col-lg-10" id="esConsulta">
+                    <label for="esConsulta">¿Es una Consulta?</label>
+                    <br>
+                    {{ form.es_consulta }}
+                </div>
+                <br>
+                <div class="col-lg-10">
+                    <label for="checkbox">¿Es Presencial?</label>
+                    <br>
+                    {{ form.es_presencial }}
+                </div>
+                <br>
+                <div class="col-lg-10">
+                    <label for="checkbox">Permitir Voto Rectificable</label>
+                    <br>
+                    {{ form.voto_rectificable }}
+                </div>
+                <br>
+        
+                <div class="form-group row px-5">
+                    <div class="col-lg-6" id="fecha_inicio">
+                        <label for="fecha_inicio" class="control-label">Fecha inicio:</label>
+                        <div class="input-group date">
+                            {{ form.fecha_inicio }}
+                        </div>
+                    </div>
+                    <div class="col-lg-0" id="fecha_fin">
+                        <label for="fecha_fin" class="control-label">Fecha fin:</label>
+                        <div class="input-group date">
+                            {{ form.fecha_fin }}
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="form-group row px-5">
+                    <div class="col-lg-6" id="hora_inicio">
+                        <label for="hora_inicio" class="control-label">Hora inicio:</label>
+                        <div class="input-group time">
+                            {{ form.hora_inicio }}
+                        </div>
+                    </div>
+                    <div class="col-lg-0" id="hora_fin">
+                        <label for="hora_fin" class="control-label">Hora fin:</label>
+                        <div class="input-group time">
+                            {{ form.hora_fin }}
+                        </div>
+                    </div>
+                </div>
+                <br>
+            
+                <div class="col-lg-10">
+                    <label>Tipo de Votacion</label>
+                    {{ form.tipo_votacion }}
+                  </div>
+                <br>
+        
+                <div class="col-lg-10">
+                    <label>Nº máximo de respuestas</label>
+                    {{ form.max_respuestas }}
+                </div>
+                <br>
+        
+                <div class="submit-row">
+                    <input type="submit" value="Grabar" class="default" name="_save">
+                </div>
+        </form>
+    </div>
 
         <!-- Footer  -->
 
@@ -263,53 +236,6 @@
 
         <!-- Código javascript -->
 
-        <script type="text/javascript">
-            $(document).ready(function () {
-                tipovotacionForm.innerHTML = "<h1>SIMPLE</h1>"
-            });
-            $("#id_tipoVotacion").on('change', function () {
-                if (this.selectedIndex == 0) {
-                    tipovotacionForm.innerHTML = "<h1>SIMPLE</h1>"
-                } else {
-                    tipovotacionForm.innerHTML = "<h1>COMPLEJA</h1>"
-                }
-            })
-        </script>
-        <script type="text/javascript">
-            function showContent() {
-                element1 = document.getElementById("CheckboxVotAnticipada");
-                bloqueVAnticipada = document.getElementById("BloqueVotAnticipada");
-                element2 = document.getElementById("VotSimple");
-                element3 = document.getElementById("VotCompleja");
-                check = document.getElementById("CheckVotRestringida");
-                check2 = document.getElementById("VotAnticipada");
-                check3 = document.getElementById("CheckVotSimple");
-                check4 = document.getElementById("CheckVotCompleja");
-                if (check.checked) {
-                    element1.style.display = 'block';
-                    if (check2.checked) {
-                        bloqueVAnticipada.style.display = 'block';
-                    } else {
-                        bloqueVAnticipada.style.display = 'none';
-                    }
-                } else {
-                    element1.style.display = 'none';
-                    check2.checked = 0;
-                    bloqueVAnticipada.style.display = 'none';
-                }
-                if (check3.checked) {
-                    element2.style.display = 'block';
-                } else {
-                    element2.style.display = 'none';
-                }
-                if (check4.checked) {
-                    element3.style.display = 'block';
-                } else {
-                    element3.style.display = 'none';
-                }
-
-            }
-        </script>
         </body>
 
         </html>
