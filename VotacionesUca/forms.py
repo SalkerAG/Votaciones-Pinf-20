@@ -5,22 +5,21 @@ from django import forms
 from django.utils import timezone
 from datetime import datetime
 from .models import ProcesoElectoral,Opciones,Pregunta, Votacion, Eleccion
-from django.contrib.admin.widgets import AdminDateWidget
   
 c=[('0','Simple'),('1','Compleja')]
 b=[('0','No'),('1','Sí')]
 
 class ProcesoElectoralForm(forms.ModelForm):
-    fecha_inicio=forms.DateField()
-    fecha_fin=forms.DateField()
-    hora_inicio=forms.TimeField()
-    hora_fin=forms.TimeField()
+    fecha_inicio=forms.DateField(widget=forms.DateInput(attrs={'type':'date', 'class':'form-control inputstl', 'placeholder':'Select Date'},format='%Y/%m/%d'))
+    fecha_fin=forms.DateField(widget=forms.DateInput(attrs={'type':'date', 'class':'form-control inputstl', 'placeholder':'Select Date'},format='%Y/%m/%d'))
+    #hora_inicio = forms.TimeField()
+    #hora_fin = forms.TimeField()
     es_consulta=forms.BooleanField(required=False)
+    hora_inicio=forms.TimeField(widget=forms.TimeInput(attrs={'type':'time', 'class':'form-control inputstl'})  )
+    hora_fin=forms.TimeField(widget=forms.TimeInput(attrs={'type':'time', 'class':'form-control inputstl'}) )
     #esConsulta=forms.ChoiceField(widget=forms.Select(), choices=b)
     #fecha_inicio = forms.DateField()
     #fecha_fin = forms.DateField()
-    #hora_inicio = forms.TimeField()
-    #hora_fin = forms.TimeField()
     #nombreFicheroCenso=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder' : 'Nombre del Censo'}),required=True)
     
     class Meta:
@@ -35,7 +34,7 @@ class PreguntaForm(forms.ModelForm):
         fields='__all__'
 
 class VotacionForm(ProcesoElectoralForm):
-    nombre_votacion=forms.CharField()
+    nombre_votacion=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder' : 'Título de la votacion'}), required=True)
     es_presencial=forms.BooleanField(required=False)
     voto_rectificable=forms.BooleanField(required=False)
     tipo_votacion=forms.ChoiceField(choices=c)
