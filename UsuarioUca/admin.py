@@ -152,7 +152,7 @@ class UsuarioUcaAdmin(ImportExportModelAdmin, UserAdmin):
             None,
             {
                 "classes": ("wide",),
-                "fields": ("nif", "email", "password1", "password2", "first_name", "last_name"),
+                "fields": ("nif", "email", "password1", "password2", "first_name", "last_name", "rol"),
             },
         ),
     )

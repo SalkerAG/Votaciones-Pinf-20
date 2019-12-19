@@ -116,6 +116,11 @@ class UserManager(BaseUserManager):
 
 
 class UsuarioUca(AbstractUser):
+    ROL_CHOICES = (
+        ("Profesor", "Profesor"),
+        ("Estudiante", "Estudiante"),
+        ("PASS", "PASSS"),
+    )
 
     username = None
     #default=320850900
@@ -126,6 +131,7 @@ class UsuarioUca(AbstractUser):
     email = models.EmailField(max_length=64, unique=True)
     USERNAME_FIELD = 'nif'
     REQUIRED_FIELDS = ['email', 'first_name', 'last_name']
+    rol = models.CharField(max_length=10, choices=ROL_CHOICES, default="Estudiante")
 
 
     def clean_fields(self, exclude=None):

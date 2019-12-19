@@ -4,7 +4,8 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm, Authenti
 from django.forms import ModelForm
 # from localflavor.exceptions import ValidationError
 
-from .models import UsuarioUca, uvalidonifworld, uvalidonifspain, validonifspain, validonifworld
+from .models import UsuarioUca, uvalidonifworld, uvalidonifspain, validonifspain, validonifworld, Estudiante, PASS, \
+    Profesor
 from django.core.validators import RegexValidator
 from django.core.validators import validate_slug, validate_email
 
@@ -91,13 +92,18 @@ class UserLoginForm(AuthenticationForm):
         }
     ))
 
+class createEstudianteForm(ModelForm):
+    class Meta:
+        model = Estudiante
+        fields = '__all__'
+
 
 class createUserForm(ModelForm):
     class Meta:
         model = UsuarioUca
-        fields = ['nif', 'first_name', 'last_name', 'email', 'password']
+        fields = ['nif', 'first_name', 'last_name', 'email', 'password', 'rol']
         labels = {'first_name': ('Nombre'), 'last_name': ('Apellido'), 'nif': ('NIF'),
-                  'email': ('Correo electrónico'), 'password': ('Contraseña'), }
+                  'email': ('Correo electrónico'), 'password': ('Contraseña'), 'rol': ('Rol'), }
         help_texts = {'first_name': ('Introduce un nombre valido.'), 'last_name': ('Introduce los apellidos válidos.'),
                       'nif': ('Introduce un nif válido'),
                       'email': ('Introduce un correo válido y del dominio de la UCA'),
@@ -108,6 +114,8 @@ class createUserForm(ModelForm):
                    'nif': forms.TextInput(attrs={'class': 'form-control'}),
                    'email': forms.EmailInput(attrs={'class': 'form-control'}),
                    'password': forms.PasswordInput(attrs={'class': 'form-control'}), }
+
+
 
     def clean_nif(self):
         nif = self.cleaned_data['nif']
@@ -130,7 +138,24 @@ class createUserForm(ModelForm):
         user.set_password(user.password)
 
             # user.nif = "u" + user.nif
-            # user.save()
+        user.save()
+        if user.rol == "Estudiante":
+            e = Estudiante()
+            e.user = user
+            e.curso_max = 4
+            e.save(self)
+
+        if user.rol == "PASS":
+            pa = PASS()
+            pa.user = user
+            pa.save(self)
+
+        if user.rol == "Profesor":
+            pr = Profesor()
+            pr.user = user
+            pr.permanente = True
+            pr.doctor = True
+            pr.save(self)
 
         return user
 

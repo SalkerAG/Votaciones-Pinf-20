@@ -1,7 +1,7 @@
 from datetime import datetime
 # from importlib import resources
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth import authenticate, login, logout
@@ -13,9 +13,9 @@ from import_export.formats import base_formats
 # from sqlalchemy.sql.functions import userdd/
 
 from UsuarioUca.admin import UsuarioUcaResource
-from UsuarioUca.forms import createUserForm, editUserForm
+from UsuarioUca.forms import createUserForm, editUserForm, createEstudianteForm
 from UsuarioUca.import_export_views import ImportView
-from UsuarioUca.models import UsuarioUca
+from UsuarioUca.models import UsuarioUca, Estudiante, Profesor, PASS
 from import_export import resources, fields
 from django.contrib import messages
 
@@ -59,6 +59,40 @@ class UsuarioUcaCreate(CreateView):
     model = UsuarioUca
     # fields = '__all__'
     form_class = createUserForm
+
+    def get_success_url(self):
+        if self.object.rol == "Estudiante":
+            return reverse('profesor_create', kwargs={'user': self.object.nif})
+        if self.object.rol == "Profesor":
+            return reverse('profesor_create', kwargs={'user': self.object})
+        if self.object.rol == "PASS":
+            return reverse('pass_create', kwargs={'user': self.object})
+
+
+
+class EstudianteCreate(CreateView):
+
+    model = Estudiante
+    fields = '__all__'
+    slug = None
+
+    def get_object(self, queryset=None):
+        return queryset.get(slug= self.slug)
+    form_class = createEstudianteForm(initial={'user': get_object()})
+
+    def get_success_url(self):
+        return reverse('usuariouca_edit', kwargs={'pk': self.object.pk})
+
+class ProfesorCreate(CreateView):
+    model = Profesor
+    fields = '__all__'
+
+    def get_success_url(self):
+        return reverse('usuariouca_edit', kwargs={'pk': self.object.pk})
+
+class PASSCreate(CreateView):
+    model = PASS
+    fields = '__all__'
 
     def get_success_url(self):
         return reverse('usuariouca_edit', kwargs={'pk': self.object.pk})
