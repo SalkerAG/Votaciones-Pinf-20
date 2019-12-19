@@ -119,7 +119,7 @@ class UsuarioUca(AbstractUser):
     ROL_CHOICES = (
         ("Profesor", "Profesor"),
         ("Estudiante", "Estudiante"),
-        ("PASS", "PASSS"),
+        ("PASS", "PASS"),
     )
 
     username = None

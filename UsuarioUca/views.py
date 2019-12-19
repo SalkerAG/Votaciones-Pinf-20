@@ -13,13 +13,11 @@ from import_export.formats import base_formats
 # from sqlalchemy.sql.functions import userdd/
 
 from UsuarioUca.admin import UsuarioUcaResource
-from UsuarioUca.forms import createUserForm, editUserForm, createEstudianteForm
+from UsuarioUca.forms import createUserForm, editUserForm
 from UsuarioUca.import_export_views import ImportView
 from UsuarioUca.models import UsuarioUca, Estudiante, Profesor, PASS
 from import_export import resources, fields
 from django.contrib import messages
-
-
 
 
 def my_view(request):
@@ -62,26 +60,20 @@ class UsuarioUcaCreate(CreateView):
 
     def get_success_url(self):
         if self.object.rol == "Estudiante":
-            return reverse('profesor_create', kwargs={'user': self.object.nif})
+            return reverse('estudiante_create')
         if self.object.rol == "Profesor":
-            return reverse('profesor_create', kwargs={'user': self.object})
+            return reverse('profesor_create')
         if self.object.rol == "PASS":
-            return reverse('pass_create', kwargs={'user': self.object})
-
+            return reverse('pass_create')
 
 
 class EstudianteCreate(CreateView):
-
     model = Estudiante
     fields = '__all__'
-    slug = None
-
-    def get_object(self, queryset=None):
-        return queryset.get(slug= self.slug)
-    form_class = createEstudianteForm(initial={'user': get_object()})
 
     def get_success_url(self):
         return reverse('usuariouca_edit', kwargs={'pk': self.object.pk})
+
 
 class ProfesorCreate(CreateView):
     model = Profesor
@@ -89,6 +81,7 @@ class ProfesorCreate(CreateView):
 
     def get_success_url(self):
         return reverse('usuariouca_edit', kwargs={'pk': self.object.pk})
+
 
 class PASSCreate(CreateView):
     model = PASS
@@ -157,8 +150,6 @@ def logout_request(request):
     logout(request)
     messages.info(request, "Se ha cerrado la sesión correctamente")
     return redirect('home')
-
-
 
 
 def erase_request(request, pk):

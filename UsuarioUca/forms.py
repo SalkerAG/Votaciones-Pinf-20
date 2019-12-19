@@ -92,12 +92,6 @@ class UserLoginForm(AuthenticationForm):
         }
     ))
 
-class createEstudianteForm(ModelForm):
-    class Meta:
-        model = Estudiante
-        fields = '__all__'
-
-
 class createUserForm(ModelForm):
     class Meta:
         model = UsuarioUca
@@ -139,23 +133,6 @@ class createUserForm(ModelForm):
 
             # user.nif = "u" + user.nif
         user.save()
-        if user.rol == "Estudiante":
-            e = Estudiante()
-            e.user = user
-            e.curso_max = 4
-            e.save(self)
-
-        if user.rol == "PASS":
-            pa = PASS()
-            pa.user = user
-            pa.save(self)
-
-        if user.rol == "Profesor":
-            pr = Profesor()
-            pr.user = user
-            pr.permanente = True
-            pr.doctor = True
-            pr.save(self)
 
         return user
 

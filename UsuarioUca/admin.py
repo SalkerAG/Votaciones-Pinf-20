@@ -133,7 +133,6 @@ class UsuarioUcaResource(resources.ModelResource):
                     replace_row(row_index, row)
             return super(UsuarioUcaResource, self).before_import(dataset, using_transactions, dry_run=True, **kwargs)
 
-
 class UsuarioUcaAdmin(ImportExportModelAdmin, UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
