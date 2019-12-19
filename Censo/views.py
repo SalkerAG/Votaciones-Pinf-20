@@ -5,12 +5,15 @@ from .models import Censo
 from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
 from django.urls import reverse_lazy
+from django.urls import reverse
 
 
 class CensoCreate(CreateView):
     model = Censo
     fields = ['usuario']
 
+    def get_success_url(self):
+        return reverse('crearvotacion')
 
 class CensoDetailView(CreateView):
     model = Censo
