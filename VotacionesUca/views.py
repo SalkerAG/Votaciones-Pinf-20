@@ -1,5 +1,5 @@
 from django.urls import reverse
-from django.views.generic import TemplateView, FormView, CreateView
+from django.views.generic import TemplateView, FormView, CreateView, DetailView
 from django.views.generic.list import ListView
 from .models import ProcesoElectoral, Opciones, Pregunta, Votacion, Eleccion
 from .forms import VotacionForm
@@ -20,13 +20,15 @@ class CrearVotacionView(CreateView):
         return reverse('listavotaciones')
 
 
-class VotacionSimpleView(FormView):
-    template_name = 'VotacionSimple.html'
-    success_url = '/votacionSimple/'
-    form_class = VotacionForm
+class VotacionView(DetailView):
+    model = Votacion
 
-    def form_valid(self, form):
-        return super().form_valid(form)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pregunta = Pregunta.objects.get(votacion=self.object.id)
+        context['now'] = datetime.datetime.now()
+        context['opciones'] = Opciones.objects.filter(pregunta=pregunta.pk)
+        return context
 
 
 class VotacionComplejaView(FormView):
