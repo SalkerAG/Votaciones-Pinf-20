@@ -34,6 +34,7 @@ class PreguntaForm(forms.ModelForm):
         fields='__all__'
 
 class VotacionForm(ProcesoElectoralForm):
+    voto_restringido = forms.BooleanField(required=False)
     nombre_votacion=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder' : 'Título de la votacion'}), required=True)
     es_presencial=forms.BooleanField(required=False)
     voto_rectificable=forms.BooleanField(required=False)
@@ -48,5 +49,17 @@ class VotacionForm(ProcesoElectoralForm):
     class Meta:
         model=Votacion
         fields= '__all__'
+
+    def clean(self):
+        inicio=self.cleaned_data['fecha_inicio']
+        fin=self.cleaned_data['fecha_fin']
+
+        if inicio.strftime('%Y-%m-%d')<=datetime.now().strftime('%Y-%m-%d'):
+            raise ValidationError('La fecha ser mayor que la actual.')
+
+        if inicio.strftime('%Y-%m-%d')>=fin.strftime('%Y-%m-%d'):
+            raise ValidationError('La fecha de Fin debe ser mayor a la de Inicio.')    
+
+        return self.cleaned_data
 
 

@@ -4,6 +4,7 @@ from django.utils import timezone
 
 
 class ProcesoElectoral(models.Model):
+    voto_restringido = models.BooleanField(default=False)
     fecha_inicio = models.DateField()
     fecha_fin = models.DateField()
     hora_inicio = models.TimeField()
