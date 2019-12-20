@@ -28,10 +28,10 @@ class ProcesoElectoralForm(forms.ModelForm):
 
 class PreguntaForm(forms.ModelForm):
     enunciado=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder' : 'Pregunta para la votacion'}))
-
+    opciones=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder' : 'Pregunta para la votacion'}))
     class Meta:
         model=Pregunta
-        fields='__all__'
+        fields = '__all__'
 
 class VotacionForm(ProcesoElectoralForm):
     voto_restringido = forms.BooleanField(required=False)
@@ -40,11 +40,6 @@ class VotacionForm(ProcesoElectoralForm):
     voto_rectificable=forms.BooleanField(required=False)
     tipo_votacion=forms.ChoiceField(choices=c)
     max_respuestas=forms.IntegerField()
-    #nombreVotacion=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder' : 'Título de la votación'}))
-    #esPresencial=forms.ChoiceField(widget=forms.Select(), choices=b)
-    #votoRectificable=forms.ChoiceField(widget=forms.Select(), choices=b)
-    #tipoVotacion=forms.ChoiceField(label='Tipo de votacion',choices=c)
-    #maxElector=forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder' : 'Escribe el número máximo de respuestas'}),min_value=0)
 
     class Meta:
         model=Votacion

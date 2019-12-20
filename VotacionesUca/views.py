@@ -2,7 +2,7 @@ from django.urls import reverse
 from django.views.generic import TemplateView, FormView, CreateView, DetailView
 from django.views.generic.list import ListView
 from .models import ProcesoElectoral, Opciones, Pregunta, Votacion, Eleccion
-from .forms import VotacionForm
+from .forms import VotacionForm, PreguntaForm
 from django.shortcuts import render, redirect
 import datetime
 
@@ -12,12 +12,23 @@ class CrearVotacionView(CreateView):
     form_class = VotacionForm
     template_name = 'CrearVotacion.html'
 
-    def form_valid(self, form):
-        self.object = form.save()
-        return super().form_valid(form)
-
     def get_success_url(self):
-        return reverse('listavotaciones')
+        if self.object.tipo_votacion == 0:
+            return reverse('crearpreguntasimple')
+        if self.object.tipo_votacion == 1:
+            return reverse('crearpreguntacompleja')
+
+class CrearPreguntaComplejaView(CreateView):
+    model = Pregunta
+    form_class = PreguntaForm
+    def get_succes_url(self):
+        return reverse('/')
+
+class CrearPreguntaSimpleView(CreateView):
+    model = Pregunta
+    fields = '__all__'
+    def get_succes_url(self):
+        return reverse('/')
 
 
 class VotacionView(DetailView):
