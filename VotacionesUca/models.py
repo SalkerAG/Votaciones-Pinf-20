@@ -1,4 +1,6 @@
 from django.db import models
+from django.urls import reverse
+
 from Censo.models import Censo
 from django.utils import timezone
 
@@ -16,9 +18,24 @@ class ProcesoElectoral(models.Model):
 class Opciones(models.Model):
     nombre = models.CharField(max_length=50)
 
-class Pregunta(models.Model):
+class OpcionesSimple(models.Model):
+
+    PREGUNTA_CHOICES = (
+        ("SI", "SI"),
+        ("NO", "NO"),
+        ("ABSTENCIÓN", "ABSTENCIÓN"),
+    )
+    seleccion = models.CharField(max_length=10, choices=PREGUNTA_CHOICES, default="SI")
+
+    def get_absolute_url(self):
+        return reverse('home')
+
+class Pregunta(OpcionesSimple):
     enunciado = models.CharField(max_length=50)
-    opciones = models.ManyToManyField(Opciones)
+    # opciones = models.ManyToManyField(OpcionesSimple)
+
+# class PreguntaSimple(OpcionesSimple):
+
 
 class Votacion(ProcesoElectoral):
     nombre_votacion = models.CharField(max_length=50, null=True)

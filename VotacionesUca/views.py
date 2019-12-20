@@ -15,6 +15,7 @@ class CrearVotacionView(CreateView):
     def get_success_url(self):
         if self.object.tipo_votacion == 0:
             return reverse('crearpreguntasimple')
+
         if self.object.tipo_votacion == 1:
             return reverse('crearpreguntacompleja')
 
@@ -27,6 +28,7 @@ class CrearPreguntaComplejaView(CreateView):
 class CrearPreguntaSimpleView(CreateView):
     model = Pregunta
     fields = '__all__'
+    template_name = 'CrearVotacionSimple.html'
     def get_succes_url(self):
         return reverse('/')
 
