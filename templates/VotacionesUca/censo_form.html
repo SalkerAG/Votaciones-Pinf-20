@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html>
 
@@ -13,6 +14,7 @@
 </head>
 
 <body>
+
 <!-- header  -->
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <!-- Brand -->
@@ -47,7 +49,13 @@
 
 <!-- Fin header  -->
 {% block content %}
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
 
+            </div>
+        </div>
+    </div>
 
     <div id="censo" align='center'>
         <h1 id="censo" style="margin-top: 20px"><strong> Nombre del Censo</h1>
@@ -59,7 +67,9 @@
             {{ form.as_p }}
             <input type="submit" class="btn btn-primary" value="Guardar">
         </form>
+        <button id="pregunta-modal" class="create-book btn btn-primary" type="button" name="button">Crear Pregunta</button>
     </div>
+
 {% endblock %}
 <br>
 <br>
@@ -182,6 +192,8 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="http://malsup.github.com/jquery.form.js"></script>
+
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
@@ -190,8 +202,18 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
 
 <!-- (Optional) Latest compiled and minified JavaScript translation files -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/i18n/defaults-*.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="{% static 'js/bootstrap.js' %}"></script>>
+<script src="{% static 'js/jquery.bootstrap.modal.forms.min.js' %}"></script>
 </body>
+<script type="text/javascript">
+    $(document).ready(function () {
 
+        $("#pregunta-modal").modalForm({
+            formURL: "{% url 'create_pregunta' %}"
+        });
+
+    });
+</script>
 </html>
-</html>
+

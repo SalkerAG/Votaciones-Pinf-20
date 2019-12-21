@@ -5,6 +5,7 @@ from django import forms
 from django.utils import timezone
 from datetime import datetime
 from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, OpcionesCompleja, Censo
+from bootstrap_modal_forms.forms import BSModalForm
 
 
 # c=[('0','Simple'),('1','Compleja')]
@@ -31,15 +32,6 @@ class ProcesoElectoralForm(forms.ModelForm):
     class Meta:
         model = ProcesoElectoral
         fields = '__all__'
-
-
-class PreguntaForm(forms.ModelForm):
-    # enunciado=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder' : 'Pregunta para la votacion'}))
-
-    class Meta:
-        model = Pregunta
-        fields = '__all__'
-
 
 class OpcionesSimpleForm(forms.ModelForm):
     pass
@@ -101,3 +93,10 @@ class createCensoForm(ModelForm):
         widgets = {'usuario': forms.SelectMultiple(attrs={'class': 'form-control'}),
                    'pregunta': forms.Select(attrs={'class': 'form-control'}),
                    }
+
+
+
+class PreguntaForm(BSModalForm):
+    class Meta:
+        model = Pregunta
+        fields = '__all__'

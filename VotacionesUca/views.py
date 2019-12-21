@@ -15,7 +15,14 @@ from .forms import VotacionForm, PreguntaForm, OpcionesComplejaForm, createCenso
 from django.shortcuts import render, redirect
 import datetime
 import csv
+from bootstrap_modal_forms.generic import BSModalCreateView
+from django.urls import reverse_lazy
 
+class CrearPreguntaView(BSModalCreateView):
+    form_class = PreguntaForm
+    template_name = "CrearPregunta.html"
+    success_message = 'Exito: Pregunta creada.'
+    success_url = reverse_lazy('censo_create')
 
 
 class CrearCensoView(CreateView):

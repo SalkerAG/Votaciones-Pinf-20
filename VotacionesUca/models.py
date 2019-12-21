@@ -1,6 +1,7 @@
 from django.db import models, transaction
 from django.urls import reverse
 
+
 from django.utils import timezone
 
 from UsuarioUca.models import UsuarioUca
