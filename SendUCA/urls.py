@@ -21,5 +21,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('UsuarioUca.urls')),
     path('', include('VotacionesUca.urls')),
-    path('', include('Censo.urls'))
 ]

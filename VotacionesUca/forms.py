@@ -71,7 +71,6 @@ class VotacionForm(ProcesoElectoralForm):
         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Título de la votacion'}), required=True)
     es_presencial = forms.BooleanField(required=False)
     voto_rectificable = forms.BooleanField(required=False)
-    max_respuestas = forms.IntegerField()
 
     class Meta:
         model = Votacion

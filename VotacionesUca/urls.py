@@ -3,7 +3,7 @@ from django.urls import path, include
 
 from UsuarioUca.views import HomeView
 from .views import CrearVotacionView, VotacionView, VotacionComplejaView, CrearPreguntaComplejaView, \
-    CrearPreguntaSimpleView, CrearPregunta
+    CrearPreguntaSimpleView, CrearPregunta, CrearCensoView, CensoDetailView, CensoExportView
 
 urlpatterns = [
     path('crearVotacion/', CrearVotacionView.as_view(), name="crearvotacion"),
@@ -11,10 +11,12 @@ urlpatterns = [
     path('crearpreguntacompleja/', CrearPreguntaComplejaView.as_view(), name="crearpreguntacompleja"),
     path('crearpreguntasimple/', CrearPreguntaSimpleView.as_view(), name="crearpreguntasimple"),
     path('crearpregunta/', CrearPregunta.as_view(), name="crearpregunta"),
+    path('crearcenso/', CrearCensoView.as_view(), name="censo_create"),
+    path('censo/<int:pk>/', CensoDetailView.as_view(), name='censo-detail'),
+    path('censo/<int:pk>/export/', CensoExportView.as_view(), name='censo_export'),
     path('', HomeView.as_view(), name="home"),
     # path('votacionCompleja/', VotacionComplejaView.as_view(), name="votacioncompleja")
 ]
-
 
 # def index(request):
 #     if request.method == 'POST':

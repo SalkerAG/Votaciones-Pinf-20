@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'import_export',
     'VotacionesUca.apps.VotacionesucaConfig',
-    'Censo.apps.CensoConfig',
     'UsuarioUca.templatetags',
     'UsuarioUca.apps.UsuarioucaConfig',
 ]

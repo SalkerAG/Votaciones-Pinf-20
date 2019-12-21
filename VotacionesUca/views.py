@@ -1,16 +1,55 @@
+from time import timezone
+
+from django.http import HttpResponse
 from django.urls import reverse
 from django.views.generic import TemplateView, FormView, CreateView, DetailView
 from django.views.generic.list import ListView
-from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, OpcionesSimple, OpcionesCompleja
+from import_export import resources
+
+from UsuarioUca.import_export_views import ImportView
+from UsuarioUca.models import UsuarioUca
+from VotacionesUca.admin import CensoResource
+from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, OpcionesSimple, OpcionesCompleja, Censo
 from .forms import VotacionForm, PreguntaForm, OpcionesComplejaForm
 from django.shortcuts import render, redirect
 import datetime
 
 
+class CrearCensoView(CreateView):
+    model = Censo
+    fields = '__all__'
+
+    def get_success_url(self):
+        return reverse('censo-detail', kwargs={"pk": self.object.pk})
+
+
+class CensoDetailView(DetailView):
+    model = Censo
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['now'] = datetime.datetime.now()
+        context['users'] = self.object.usuario.all
+        return context
+
+
+class CensoExportView(ImportView, resources.ModelResource):
+    class Meta:
+        model = Censo
+
+    def get(self, queryset, *args, **kwargs):
+        censo_id = kwargs.pop("pk")
+        censo = Censo.objects.get(pk=censo_id)
+        queryset = censo.usuario.all
+        dataset = CensoResource().export(queryset)
+        response = HttpResponse(dataset.csv, content_type="csv")
+        response['Content-Disposition'] = 'attachment; filename=Censo' + str(censo_id) + '.csv'
+        return response
+
+
 class CrearVotacionView(CreateView):
     model = Votacion
     form_class = VotacionForm
-    template_name = 'CrearVotacion.html'
 
     # def get_success_url(self):
     #     if self.object.tipo_votacion == 0:
@@ -46,11 +85,8 @@ class CrearPreguntaComplejaView(CreateView):
         self.method = None
 
     def index(self):
-
-
-
-            form = OpcionesComplejaForm()
-            return render(self, 'home.html', {'form': form, })
+        form = OpcionesComplejaForm()
+        return render(self, 'home.html', {'form': form, })
 
 
 class CrearPreguntaSimpleView(CreateView):

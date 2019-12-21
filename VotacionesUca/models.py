@@ -1,8 +1,34 @@
 from django.db import models, transaction
 from django.urls import reverse
 
-from Censo.models import Censo
 from django.utils import timezone
+
+from UsuarioUca.models import UsuarioUca
+
+
+class Pregunta(models.Model):
+    TIPO_CHOICES = (
+        ("0", "Simple"),
+        ("1", "Compleja"),
+
+    )
+
+    # Votacion = models.OneToOneField(Votacion, on_delete=models.PROTECT)
+    tipo_votacion = models.CharField(max_length=10, choices=TIPO_CHOICES, default="Simple")
+    enunciado = models.CharField(max_length=50)
+
+    # opciones = models.ManyToManyField(OpcionesSimple)
+    # curso_max = models.IntegerField(blank=False, null=False, default=1, choices=list(zip(range(1, 5), range(1, 5))))
+
+    # class PreguntaSimple(OpcionesSimple):
+    #
+    # def get_absolute_url(self):
+    #     return reverse('crearpreguntasimple')
+
+
+class Censo(models.Model):
+    usuario = models.ManyToManyField(UsuarioUca, blank=False)
+    pregunta = models.OneToOneField(Pregunta, on_delete=models.PROTECT)
 
 
 class ProcesoElectoral(models.Model):
@@ -21,29 +47,8 @@ class Votacion(ProcesoElectoral):
     es_presencial = models.BooleanField(default=False)
     voto_rectificable = models.BooleanField(default=False)
     # tipo_votacion = models.BooleanField(default=False)
-    max_respuestas = models.IntegerField()
-    # pregunta = models.OneToOneField(Pregunta, on_delete=models.CASCADE, null=True, blank=True)
-    censo = models.OneToOneField(Censo, on_delete=models.CASCADE, null=True, blank=True)
-
-
-class Pregunta(models.Model):
-    TIPO_CHOICES = (
-        ("0", "Simple"),
-        ("1", "Compleja"),
-
-    )
-
-    Votacion = models.OneToOneField(Votacion, on_delete=models.PROTECT)
-    tipo_votacion = models.CharField(max_length=10, choices=TIPO_CHOICES, default="Simple")
-    enunciado = models.CharField(max_length=50)
-
-    # opciones = models.ManyToManyField(OpcionesSimple)
-    # curso_max = models.IntegerField(blank=False, null=False, default=1, choices=list(zip(range(1, 5), range(1, 5))))
-
-    # class PreguntaSimple(OpcionesSimple):
-    #
-    # def get_absolute_url(self):
-    #     return reverse('crearpreguntasimple')
+    # max_respuestas = models.IntegerField()
+    pregunta = models.OneToOneField(Pregunta, on_delete=models.CASCADE, null=True, blank=True)
 
 
 class OpcionesSimple(models.Model):
@@ -72,10 +77,8 @@ class OpcionesCompleja(models.Model):
         return '%s: %d votes' % (self.book_name)
 
 
-
-
 class Eleccion(ProcesoElectoral):
     nie = models.IntegerField()
     max_vacantes = models.IntegerField()
     tipo_eleccion = models.BooleanField(default=False)
-    censo = models.OneToOneField(Censo, on_delete=models.CASCADE, null=True)
+    censo = models.OneToOneField(Censo, on_delete=models.CASCADE)
