@@ -6,6 +6,7 @@ from django.views.generic import TemplateView, FormView, CreateView, DetailView
 from django.views.generic.list import ListView
 from import_export import resources
 
+from UsuarioUca.admin import UsuarioUcaResource
 from UsuarioUca.import_export_views import ImportView
 from UsuarioUca.models import UsuarioUca
 from VotacionesUca.admin import CensoResource
@@ -35,13 +36,14 @@ class CensoDetailView(DetailView):
 
 class CensoExportView(ImportView, resources.ModelResource):
     class Meta:
-        model = Censo
+        model = UsuarioUca
 
     def get(self, queryset, *args, **kwargs):
         censo_id = kwargs.pop("pk")
         censo = Censo.objects.get(pk=censo_id)
-        queryset = censo.usuario.all
-        dataset = CensoResource().export(queryset)
+        users = censo.usuario.all()
+        queryset = UsuarioUca.objects.values_list("nif", flat=True).filter(id=1)
+        dataset = CensoResource.export(queryset)
         response = HttpResponse(dataset.csv, content_type="csv")
         response['Content-Disposition'] = 'attachment; filename=Censo' + str(censo_id) + '.csv'
         return response
