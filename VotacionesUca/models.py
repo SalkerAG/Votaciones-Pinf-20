@@ -17,6 +17,9 @@ class Pregunta(models.Model):
     tipo_votacion = models.CharField(max_length=10, choices=TIPO_CHOICES, default="Simple")
     enunciado = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.enunciado
+
     # opciones = models.ManyToManyField(OpcionesSimple)
     # curso_max = models.IntegerField(blank=False, null=False, default=1, choices=list(zip(range(1, 5), range(1, 5))))
 

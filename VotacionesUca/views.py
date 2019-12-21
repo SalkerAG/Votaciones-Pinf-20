@@ -11,7 +11,7 @@ from UsuarioUca.import_export_views import ImportView
 from UsuarioUca.models import UsuarioUca
 from VotacionesUca.admin import CensoResource
 from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, OpcionesSimple, OpcionesCompleja, Censo
-from .forms import VotacionForm, PreguntaForm, OpcionesComplejaForm
+from .forms import VotacionForm, PreguntaForm, OpcionesComplejaForm, createCensoForm
 from django.shortcuts import render, redirect
 import datetime
 import csv
@@ -20,7 +20,7 @@ import csv
 
 class CrearCensoView(CreateView):
     model = Censo
-    fields = '__all__'
+    form_class = createCensoForm
 
     def get_success_url(self):
         return reverse('censo-detail', kwargs={"pk": self.object.pk})

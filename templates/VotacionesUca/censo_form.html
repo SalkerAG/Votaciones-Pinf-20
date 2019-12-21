@@ -50,14 +50,16 @@
 
 
     <div id="censo" align='center'>
-        <h1 id="censo"><strong> Nombre del Censo</h1>
+        <h1 id="censo" style="margin-top: 20px"><strong> Nombre del Censo</h1>
     </div>
     <br>
     <br>
-    <form method="post">{% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Save">
-    </form>
+    <div style="width: 80%; padding-left: 10%">
+        <form method="post">{% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" class="btn btn-primary" value="Guardar">
+        </form>
+    </div>
 {% endblock %}
 <br>
 <br>

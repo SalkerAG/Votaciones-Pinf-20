@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django import forms
 from django.utils import timezone
 from datetime import datetime
-from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, OpcionesCompleja
+from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, OpcionesCompleja, Censo
 
 
 # c=[('0','Simple'),('1','Compleja')]
@@ -87,3 +87,17 @@ class VotacionForm(ProcesoElectoralForm):
             raise ValidationError('La fecha de Fin debe ser mayor a la de Inicio.')
 
         return self.cleaned_data
+
+class createCensoForm(ModelForm):
+    class Meta:
+        model = Censo
+        fields = '__all__'
+        labels = {'usuario': ('Usuarios pertenecientes al censo'), 'pregunta': ('Pregunta'), }
+        help_texts = {'usuario': (
+            'Elige los usuarios que pertenecen al censo. Recuerda que serán los usuarios que tendrán acceso a la votación'),
+            'pregunta': ('Elige la pregunta a la que hace referencia el censo'),
+        }
+
+        widgets = {'usuario': forms.SelectMultiple(attrs={'class': 'form-control'}),
+                   'pregunta': forms.Select(attrs={'class': 'form-control'}),
+                   }
