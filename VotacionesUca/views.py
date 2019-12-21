@@ -11,7 +11,7 @@ from UsuarioUca.import_export_views import ImportView
 from UsuarioUca.models import UsuarioUca
 from VotacionesUca.admin import CensoResource
 from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, OpcionesSimple, OpcionesCompleja, Censo
-from .forms import VotacionForm, PreguntaForm, OpcionesComplejaForm, createCensoForm
+from .forms import VotacionForm, PreguntaForm, OpcionesComplejaForm, createCensoForm, PreguntaFormVotacion
 from django.shortcuts import render, redirect
 import datetime
 import csv
@@ -82,7 +82,7 @@ class CrearVotacionView(CreateView):
     #     if self.object.tipo_votacion == 1:
     #         return reverse('crearpreguntacompleja')
     def get_success_url(self):
-        return reverse('crearpregunta')
+        return reverse('crearpreguntavotacion')
 
 
 class CrearPregunta(CreateView):
@@ -91,10 +91,23 @@ class CrearPregunta(CreateView):
     template_name = 'CrearPregunta.html'
 
     def get_success_url(self):
-        if self.object.tipo_votacion == "0":
-            return reverse('crearpreguntasimple')
-        else:
-            return reverse('crearpreguntacompleja')
+        return reverse('home')
+    #     if self.object.tipo_votacion == "0":
+    #         return reverse('crearpreguntasimple')
+    #     else:
+    #         return reverse('crearpreguntacompleja')
+
+class CrearPreguntaVotacion(CreateView):
+    model = Pregunta
+    form_class = PreguntaFormVotacion
+    template_name = 'CrearPreguntaVotacion.html'
+
+    def get_success_url(self):
+        return reverse('home')
+    #     if self.object.tipo_votacion == "0":
+    #         return reverse('crearpreguntasimple')
+    #     else:
+    #         return reverse('crearpreguntacompleja')
 
 
 class CrearPreguntaComplejaView(CreateView):

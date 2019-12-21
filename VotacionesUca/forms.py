@@ -100,3 +100,8 @@ class PreguntaForm(BSModalForm):
     class Meta:
         model = Pregunta
         fields = '__all__'
+
+class PreguntaFormVotacion(ModelForm):
+    class Meta:
+        model = Pregunta
+        fields = '__all__'

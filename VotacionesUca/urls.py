@@ -3,13 +3,15 @@ from django.urls import path, include
 
 from UsuarioUca.views import HomeView
 from .views import CrearVotacionView, VotacionView, VotacionComplejaView, CrearPreguntaComplejaView, \
-    CrearPreguntaSimpleView, CrearPregunta, CrearCensoView, CensoDetailView, CensoExportView, CrearPreguntaView
+    CrearPreguntaSimpleView, CrearPregunta, CrearCensoView, CensoDetailView, CensoExportView, CrearPreguntaView, \
+    CrearPreguntaVotacion
 
 urlpatterns = [
     path('crearVotacion/', CrearVotacionView.as_view(), name="crearvotacion"),
     path('votacion/<slug:pk>', VotacionView.as_view(), name="votacion"),
     path('crearpreguntacompleja/', CrearPreguntaComplejaView.as_view(), name="crearpreguntacompleja"),
     path('crearpreguntasimple/', CrearPreguntaSimpleView.as_view(), name="crearpreguntasimple"),
+    path('crearpreguntavotacion/', CrearPreguntaVotacion.as_view(), name="crearpreguntavotacion"),
     path('crearpregunta/', CrearPregunta.as_view(), name="crearpregunta"),
     path('crearcenso/', CrearCensoView.as_view(), name="censo_create"),
     path('censo/<int:pk>/', CensoDetailView.as_view(), name='censo-detail'),
