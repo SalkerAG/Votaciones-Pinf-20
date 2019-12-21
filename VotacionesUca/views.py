@@ -14,6 +14,8 @@ from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, OpcionesSimp
 from .forms import VotacionForm, PreguntaForm, OpcionesComplejaForm
 from django.shortcuts import render, redirect
 import datetime
+import csv
+
 
 
 class CrearCensoView(CreateView):
@@ -40,13 +42,26 @@ class CensoExportView(ImportView, resources.ModelResource):
 
     def get(self, queryset, *args, **kwargs):
         censo_id = kwargs.pop("pk")
-        censo = Censo.objects.get(pk=censo_id)
-        users = censo.usuario.all()
-        queryset = UsuarioUca.objects.values_list("nif", flat=True).filter(id=1)
-        dataset = CensoResource.export(queryset)
-        response = HttpResponse(dataset.csv, content_type="csv")
+        censo = Censo.objects.get(id=censo_id)
+        users_censo = censo.usuario.all()
+        for user in users_censo:
+            user.nif = user.nif.replace("u", "")
+            user.nif = user.nif[:2] + "***" + user.nif[5:]
+        output = []
+        response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename=Censo' + str(censo_id) + '.csv'
+        writer = csv.writer(response)
+        query_set = users_censo
+        writer.writerow(['Nif'])
+        for user in query_set:
+            output.append([user])
+        # CSV Data
+        writer.writerows(output)
         return response
+        # dataset = CensoResource().export(queryset)
+        # response = HttpResponse(dataset.csv, content_type="csv")
+        # response['Content-Disposition'] = 'attachment; filename=Censo' + str(censo_id) + '.csv'
+        # return response
 
 
 class CrearVotacionView(CreateView):

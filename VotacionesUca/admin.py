@@ -6,10 +6,10 @@ from .models import Votacion, ProcesoElectoral, Eleccion, Pregunta, Censo
 
 class CensoResource(resources.ModelResource):
     class Meta:
-        model = UsuarioUca
+        model = Censo
 
     def export(self, queryset=None, *args, **kwargs):
-
+        queryset = self
         qs = list(queryset)
         print(qs)
 
