@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django import forms
 from django.utils import timezone
 from datetime import datetime
-from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion,  Censo, UsuarioVotacion
+from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion,  Censo, UsuarioVotacion, Opcion
 from bootstrap_modal_forms.forms import BSModalForm
 
 
@@ -80,6 +80,14 @@ class VotacionForm(ProcesoElectoralForm):
 
         return self.cleaned_data
 
+class OpcionForm(BSModalForm):
+    class Meta:
+        model= Opcion
+        fields = '__all__'
+        labels = {'respuesta': ('Respuesta')}
+        help_texts = {'respuesta': (
+            'Escribe una respuesta perteneciente a la pregunta'),
+        }
 
 class createCensoForm(ModelForm):
     class Meta:
@@ -94,6 +102,8 @@ class createCensoForm(ModelForm):
         widgets = {'usuario': forms.SelectMultiple(attrs={'class': 'form-control'}),
                    'pregunta': forms.Select(attrs={'class': 'form-control'}),
                    }
+
+
 
 
 class realizarVotacionForm(ModelForm):
@@ -117,13 +127,12 @@ class realizarVotacionForm(ModelForm):
             self.fields['Pregunta'].queryset = self.instance.Votacion.Pregunta_set.order_by('enunciado')
 
 
-
-
-
 class PreguntaForm(BSModalForm):
     class Meta:
         model = Pregunta
         fields = '__all__'
+        widgets = {'opciones': forms.SelectMultiple(attrs={'class': 'form-control'}),
+                   }
 
 
 class PreguntaFormVotacion(ModelForm):

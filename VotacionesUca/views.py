@@ -11,9 +11,9 @@ from UsuarioUca.import_export_views import ImportView
 from UsuarioUca.models import UsuarioUca
 from VotacionesUca.admin import CensoResource
 from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion,  Censo, \
-    UsuarioVotacion
+    UsuarioVotacion, Opcion
 from .forms import VotacionForm, PreguntaForm,  createCensoForm, PreguntaFormVotacion, \
-    realizarVotacionForm
+    realizarVotacionForm, OpcionForm
 from django.shortcuts import render, redirect
 import datetime
 import csv
@@ -121,6 +121,14 @@ class CrearPregunta(CreateView):
     model = Pregunta
     form_class = PreguntaForm
     template_name = 'CrearPregunta.html'
+
+    def get_success_url(self):
+        return reverse('home')
+
+class CrearOpcionView(CreateView):
+    model = Opcion
+    form_class = OpcionForm
+    template_name = 'CrearOpcion.html'
 
     def get_success_url(self):
         return reverse('home')

@@ -5,7 +5,7 @@ from UsuarioUca.views import HomeView
 from .views import CrearVotacionView, VotacionView, VotacionComplejaView,  \
      CrearPregunta, CrearCensoView, CensoDetailView, CensoExportView, \
     CrearPreguntaVotacion, RealizarVotacion, CrearPreguntaViewCenso, CrearPreguntaViewVotacion, \
-    CrearPreguntaViewRealizarVotacion, load_preguntas
+    CrearPreguntaViewRealizarVotacion, load_preguntas, CrearOpcionView
 
 urlpatterns = [
     path('crearVotacion/', CrearVotacionView.as_view(), name="crearvotacion"),
@@ -14,6 +14,7 @@ urlpatterns = [
     # path('crearpreguntasimple/', CrearPreguntaSimpleView.as_view(), name="crearpreguntasimple"),
     path('crearpreguntavotacion/', CrearPreguntaVotacion.as_view(), name="crearpreguntavotacion"),
     path('crearpregunta/', CrearPregunta.as_view(), name="crearpregunta"),
+    path('crearopcion/', CrearOpcionView.as_view(), name="crearopcion"),
     path('crearcenso/', CrearCensoView.as_view(), name="censo_create"),
     path('censo/<int:pk>/', CensoDetailView.as_view(), name='censo-detail'),
     path('censo/<int:pk>/export/', CensoExportView.as_view(), name='censo_export'),

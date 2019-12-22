@@ -24,9 +24,13 @@ class Votacion(ProcesoElectoral):
     # max_respuestas = models.IntegerField()
     # pregunta = models.OneToOneField(Pregunta, on_delete=models.CASCADE, null=True, blank=True)
 
-
     def __str__(self):
         return self.nombre_votacion
+
+class Opcion(models.Model):
+    respuesta = models.CharField(max_length=50)
+    def __str__(self):
+        return self.respuesta
 
 class Pregunta(models.Model):
     TIPO_CHOICES = (
@@ -38,11 +42,12 @@ class Pregunta(models.Model):
     Votacion = models.ForeignKey(Votacion, on_delete=models.PROTECT)
     tipo_votacion = models.CharField(max_length=10, choices=TIPO_CHOICES, default="Simple")
     enunciado = models.CharField(max_length=50)
+    opciones = models.ManyToManyField(Opcion, blank=False)
 
     def __str__(self):
         return self.enunciado
 
-    # opciones = models.ManyToManyField(OpcionesSimple)
+    
     # curso_max = models.IntegerField(blank=False, null=False, default=1, choices=list(zip(range(1, 5), range(1, 5))))
 
     # class PreguntaSimple(OpcionesSimple):
