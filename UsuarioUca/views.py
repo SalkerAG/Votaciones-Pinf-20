@@ -5,6 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth import authenticate, login, logout
+from django.views.generic import DetailView
 from django.views.generic.base import TemplateView
 from django.utils import timezone
 from django.views.generic.list import ListView
@@ -18,6 +19,8 @@ from UsuarioUca.import_export_views import ImportView
 from UsuarioUca.models import UsuarioUca, Estudiante, Profesor, PASS
 from import_export import resources, fields
 from django.contrib import messages
+
+from VotacionesUca.models import Votacion
 
 
 def my_view(request):
@@ -121,6 +124,15 @@ class MyModelImportView(ImportView):
                            header="source_user")
         return dataset
 
+class VotacionView(DetailView):
+    model = Votacion
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pregunta = Pregunta.objects.get(votacion=self.object.id)
+        context['now'] = datetime.datetime.now()
+        context['opciones'] = Opciones.objects.filter(pregunta=pregunta.pk)
+        return context
 
 class HomeView(TemplateView):
     template_name = "home.html"

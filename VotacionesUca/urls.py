@@ -2,10 +2,10 @@ from django.contrib import admin
 from django.urls import path, include
 
 from UsuarioUca.views import HomeView
-from .views import CrearVotacionView, VotacionView, VotacionComplejaView,  \
+from .views import CrearVotacionView, VotacionView,   \
      CrearPregunta, CrearCensoView, CensoDetailView, CensoExportView, \
     CrearPreguntaVotacion, RealizarVotacion, CrearPreguntaViewCenso, CrearPreguntaViewVotacion, \
-    CrearPreguntaViewRealizarVotacion, load_preguntas, CrearOpcionView
+    CrearPreguntaViewRealizarVotacion, load_preguntas
 
 urlpatterns = [
     path('crearVotacion/', CrearVotacionView.as_view(), name="crearvotacion"),
@@ -14,17 +14,14 @@ urlpatterns = [
     # path('crearpreguntasimple/', CrearPreguntaSimpleView.as_view(), name="crearpreguntasimple"),
     path('crearpreguntavotacion/', CrearPreguntaVotacion.as_view(), name="crearpreguntavotacion"),
     path('crearpregunta/', CrearPregunta.as_view(), name="crearpregunta"),
-    path('crearopcion/', CrearOpcionView.as_view(), name="crearopcion"),
     path('crearcenso/', CrearCensoView.as_view(), name="censo_create"),
     path('censo/<int:pk>/', CensoDetailView.as_view(), name='censo-detail'),
     path('censo/<int:pk>/export/', CensoExportView.as_view(), name='censo_export'),
     path('preguntacrearcenso/', CrearPreguntaViewCenso.as_view(), name='create_pregunta'),
     path('preguntacrearvotacion/', CrearPreguntaViewVotacion.as_view(), name='create_pregunta'),
     # path('preguntacrearrealizarvotacion/', CrearPreguntaViewRealizarVotacion.as_view(), name='create_pregunta'),
-    path('realizarvotacion/', RealizarVotacion.as_view(), name='realizarvotacion'),
+    path('realizarvotacion/<int:pk>', RealizarVotacion.as_view(), name='realizarvotacion'),
     path('', HomeView.as_view(), name="home"),
     path('ajax/load-preguntas/', load_preguntas, name='ajax_load_preguntas'),
-    path('votacionCompleja/', VotacionComplejaView.as_view(), name="votacioncompleja")
+    # path('votacionCompleja/', VotacionComplejaView.as_view(), name="votacioncompleja")
 ]
-
-

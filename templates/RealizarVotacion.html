@@ -63,6 +63,8 @@
     <br>
     <br>
     <div style="width: 80%; padding-left: 10%">
+        <h1 style="text-align: center">Votación: {{ form.initial.Votacion.nombre_votacion }}</h1>
+        <h1 style="text-align: center">{{ form.initial.Pregunta.enunciado }}</h1>
         <form method="post" id="realizarVotacionForm" data-preguntas-url={% url 'ajax_load_preguntas' %}>{% csrf_token %}
             {{ form.as_p }}
             <input type="submit" class="btn btn-primary" value="Guardar">
@@ -254,4 +256,3 @@
 {#    });#}
 {#</script>#}
 </html>
-

@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django import forms
 from django.utils import timezone
 from datetime import datetime
-from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion,  Censo, UsuarioVotacion, Opcion
+from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, Censo, UsuarioVotacion
 from bootstrap_modal_forms.forms import BSModalForm
 
 
@@ -31,7 +31,7 @@ class ProcesoElectoralForm(forms.ModelForm):
 
     class Meta:
         model = ProcesoElectoral
-        fields = '__all__'
+        fields = ('__all__')
 
 
 # class OpcionesSimpleForm(forms.ModelForm):
@@ -46,15 +46,15 @@ class ProcesoElectoralForm(forms.ModelForm):
 #                                                       }
 #                                                   ))
 #
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
+#     def _init_(self, *args, **kwargs):
+#         super()._init_(*args, **kwargs)
 #         unique_respuestas = OpcionesCompleja.objects.order_by('respuesta').values_list('respuesta',
 #                                                                                        flat=True).distinct()
 #         self.fields['Respuesta_elegida'].choices = [(respuesta, respuesta) for respuesta in unique_respuestas]
 #
 #     class Meta:
 #         model = OpcionesCompleja
-#         fields = '__all__'
+#         fields = '_all_'
 
 
 class VotacionForm(ProcesoElectoralForm):
@@ -66,7 +66,7 @@ class VotacionForm(ProcesoElectoralForm):
 
     class Meta:
         model = Votacion
-        fields = '__all__'
+        fields = ('__all__')
 
     def clean(self):
         inicio = self.cleaned_data['fecha_inicio']
@@ -80,19 +80,11 @@ class VotacionForm(ProcesoElectoralForm):
 
         return self.cleaned_data
 
-class OpcionForm(BSModalForm):
-    class Meta:
-        model= Opcion
-        fields = '__all__'
-        labels = {'respuesta': ('Respuesta')}
-        help_texts = {'respuesta': (
-            'Escribe una respuesta perteneciente a la pregunta'),
-        }
 
 class createCensoForm(ModelForm):
     class Meta:
         model = Censo
-        fields = '__all__'
+        fields = ('__all__')
         labels = {'usuario': ('Usuarios pertenecientes al censo'), 'pregunta': ('Pregunta'), }
         help_texts = {'usuario': (
             'Elige los usuarios que pertenecen al censo. Recuerda que serán los usuarios que tendrán acceso a la votación'),
@@ -104,38 +96,41 @@ class createCensoForm(ModelForm):
                    }
 
 
-
-
 class realizarVotacionForm(ModelForm):
-
     # usuario = models.ForeignKey("auth.User", blank=True)
     class Meta:
         model = UsuarioVotacion
-        fields = 'Votacion', 'Pregunta', 'seleccion'
+        fields = 'user', 'Votacion', 'Pregunta', 'seleccion'
+        labels = {'user': (''), 'Votacion': (''),'Pregunta': (''), 'seleccion': ('Respuesta'),}
+        widgets = {'user': forms.Select(
+            attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
+                   'Votacion': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
+                   'Pregunta': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
+                   'seleccion': forms.Select(attrs={'class': 'form-control'}),
+                   }
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['Pregunta'].queryset = Pregunta.objects.none()
-
-        if 'Votacion' in self.data:
-            try:
-                Votacion_id = int(self.data.get('Votacion'))
-                self.fields['Pregunta'].queryset = Pregunta.objects.filter(Votacion_id=Votacion_id).order_by('enunciado')
-            except (ValueError, TypeError):
-                pass
-        elif self.instance.pk:
-            self.fields['Pregunta'].queryset = self.instance.Votacion.Pregunta_set.order_by('enunciado')
+    # def _init_(self, *args, **kwargs):
+    #     super()._init_(*args, **kwargs)
+    #     self.fields['Pregunta'].queryset = Pregunta.objects.none()
+    #
+    #     if 'Votacion' in self.data:
+    #         try:
+    #             Votacion_id = int(self.data.get('Votacion'))
+    #             self.fields['Pregunta'].queryset = Pregunta.objects.filter(Votacion_id=Votacion_id).order_by('enunciado')
+    #         except (ValueError, TypeError):
+    #             pass
+    #     elif self.instance.pk:
+    #         self.fields['Pregunta'].queryset = self.instance.Votacion.Pregunta_set.order_by('enunciado')
 
 
 class PreguntaForm(BSModalForm):
     class Meta:
         model = Pregunta
-        fields = '__all__'
-        widgets = {'opciones': forms.SelectMultiple(attrs={'class': 'form-control'}),
-                   }
+        fields = ('__all__')
+
 
 
 class PreguntaFormVotacion(ModelForm):
     class Meta:
         model = Pregunta
-        fields = '__all__'
+        fields = ('enunciado', 'Votacion', )
