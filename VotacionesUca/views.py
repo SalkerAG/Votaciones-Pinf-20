@@ -10,19 +10,36 @@ from UsuarioUca.admin import UsuarioUcaResource
 from UsuarioUca.import_export_views import ImportView
 from UsuarioUca.models import UsuarioUca
 from VotacionesUca.admin import CensoResource
-from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, OpcionesSimple, OpcionesCompleja, Censo
-from .forms import VotacionForm, PreguntaForm, OpcionesComplejaForm, createCensoForm, PreguntaFormVotacion
+from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion,  Censo, \
+    UsuarioVotacion
+from .forms import VotacionForm, PreguntaForm,  createCensoForm, PreguntaFormVotacion, \
+    realizarVotacionForm
 from django.shortcuts import render, redirect
 import datetime
 import csv
 from bootstrap_modal_forms.generic import BSModalCreateView
 from django.urls import reverse_lazy
 
-class CrearPreguntaView(BSModalCreateView):
+
+class CrearPreguntaViewCenso(BSModalCreateView):
     form_class = PreguntaForm
     template_name = "CrearPregunta.html"
     success_message = 'Exito: Pregunta creada.'
     success_url = reverse_lazy('censo_create')
+
+
+class CrearPreguntaViewRealizarVotacion(BSModalCreateView):
+    form_class = PreguntaForm
+    template_name = "CrearPregunta.html"
+    success_message = 'Exito: Pregunta creada.'
+    success_url = reverse_lazy('realizarvotacion')
+
+
+class CrearPreguntaViewVotacion(BSModalCreateView):
+    form_class = PreguntaForm
+    template_name = "CrearPregunta.html"
+    success_message = 'Exito: Pregunta creada.'
+    success_url = reverse_lazy('crearvotacion')
 
 
 class CrearCensoView(CreateView):
@@ -31,6 +48,15 @@ class CrearCensoView(CreateView):
 
     def get_success_url(self):
         return reverse('censo-detail', kwargs={"pk": self.object.pk})
+
+
+class RealizarVotacion(CreateView):
+    model = UsuarioVotacion
+    form_class = realizarVotacionForm
+    template_name = "RealizarVotacion.html"
+
+    def get_success_url(self):
+        return reverse('home')
 
 
 class CensoDetailView(DetailView):
@@ -82,7 +108,13 @@ class CrearVotacionView(CreateView):
     #     if self.object.tipo_votacion == 1:
     #         return reverse('crearpreguntacompleja')
     def get_success_url(self):
-        return reverse('crearpreguntavotacion')
+        return reverse('home')
+
+
+def load_preguntas(request):
+    Votacion_id = request.GET.get('Votacion')
+    preguntas = Pregunta.objects.filter(Votacion_id=Votacion_id).order_by('enunciado')
+    return render(request, 'preguntas_list_options.html', {'preguntas': preguntas})
 
 
 class CrearPregunta(CreateView):
@@ -97,6 +129,7 @@ class CrearPregunta(CreateView):
     #     else:
     #         return reverse('crearpreguntacompleja')
 
+
 class CrearPreguntaVotacion(CreateView):
     model = Pregunta
     form_class = PreguntaFormVotacion
@@ -110,29 +143,29 @@ class CrearPreguntaVotacion(CreateView):
     #         return reverse('crearpreguntacompleja')
 
 
-class CrearPreguntaComplejaView(CreateView):
-    model = OpcionesCompleja
-    form_class = OpcionesComplejaForm
-    template_name = 'CrearVotacionCompleja.html'
-    success_url = '/crearpreguntacompleja'
+# class CrearPreguntaComplejaView(CreateView):
+#     model = OpcionesCompleja
+#     form_class = OpcionesComplejaForm
+#     template_name = 'CrearVotacionCompleja.html'
+#     success_url = '/crearpreguntacompleja'
+#
+#     def __init__(self, **kwargs):
+#         super().__init__(**kwargs)
+#         self.POST = None
+#         self.method = None
+#
+#     def index(self):
+#         form = OpcionesComplejaForm()
+#         return render(self, 'home.html', {'form': form, })
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.POST = None
-        self.method = None
 
-    def index(self):
-        form = OpcionesComplejaForm()
-        return render(self, 'home.html', {'form': form, })
-
-
-class CrearPreguntaSimpleView(CreateView):
-    model = OpcionesSimple
-    fields = '__all__'
-    template_name = 'CrearVotacionSimple.html'
-
-    def get_succes_url(self):
-        return reverse('/')
+# class CrearPreguntaSimpleView(CreateView):
+#     model = OpcionesSimple
+#     fields = '__all__'
+#     template_name = 'CrearVotacionSimple.html'
+#
+#     def get_succes_url(self):
+#         return reverse('/')
 
 
 class VotacionView(DetailView):

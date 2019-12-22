@@ -1,0 +1,5 @@
+<option value="">---------</option>
+
+{% for pregunta in preguntas %}
+<option value="{{ pregunta.pk }}">{{ pregunta.name }}</option>
+{% endfor %}

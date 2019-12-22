@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django import forms
 from django.utils import timezone
 from datetime import datetime
-from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, OpcionesCompleja, Censo
+from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion,  Censo, UsuarioVotacion
 from bootstrap_modal_forms.forms import BSModalForm
 
 
@@ -33,28 +33,28 @@ class ProcesoElectoralForm(forms.ModelForm):
         model = ProcesoElectoral
         fields = '__all__'
 
-class OpcionesSimpleForm(forms.ModelForm):
-    pass
+
+# class OpcionesSimpleForm(forms.ModelForm):
+#     pass
 
 
-class OpcionesComplejaForm(forms.ModelForm):
-    Respuesta_elegida = forms.MultipleChoiceField(choices=[], label='Respuestas', required=False,
-                                                  widget=forms.SelectMultiple(
-                                                      attrs={
-                                                          'class': 'form-control'
-                                                      }
-                                                  ))
-
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        unique_respuestas = OpcionesCompleja.objects.order_by('respuesta').values_list('respuesta',
-                                                                                        flat=True).distinct()
-        self.fields['Respuesta_elegida'].choices = [(respuesta, respuesta) for respuesta in unique_respuestas]
-
-    class Meta:
-        model = OpcionesCompleja
-        fields = '__all__'
+# class OpcionesComplejaForm(forms.ModelForm):
+#     Respuesta_elegida = forms.MultipleChoiceField(choices=[], label='Respuestas', required=False,
+#                                                   widget=forms.SelectMultiple(
+#                                                       attrs={
+#                                                           'class': 'form-control'
+#                                                       }
+#                                                   ))
+#
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         unique_respuestas = OpcionesCompleja.objects.order_by('respuesta').values_list('respuesta',
+#                                                                                        flat=True).distinct()
+#         self.fields['Respuesta_elegida'].choices = [(respuesta, respuesta) for respuesta in unique_respuestas]
+#
+#     class Meta:
+#         model = OpcionesCompleja
+#         fields = '__all__'
 
 
 class VotacionForm(ProcesoElectoralForm):
@@ -80,6 +80,7 @@ class VotacionForm(ProcesoElectoralForm):
 
         return self.cleaned_data
 
+
 class createCensoForm(ModelForm):
     class Meta:
         model = Censo
@@ -95,11 +96,35 @@ class createCensoForm(ModelForm):
                    }
 
 
+class realizarVotacionForm(ModelForm):
+
+    # usuario = models.ForeignKey("auth.User", blank=True)
+    class Meta:
+        model = UsuarioVotacion
+        fields = 'Votacion', 'Pregunta', 'seleccion'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['Pregunta'].queryset = Pregunta.objects.none()
+
+        if 'Votacion' in self.data:
+            try:
+                Votacion_id = int(self.data.get('Votacion'))
+                self.fields['Pregunta'].queryset = Pregunta.objects.filter(Votacion_id=Votacion_id).order_by('enunciado')
+            except (ValueError, TypeError):
+                pass
+        elif self.instance.pk:
+            self.fields['Pregunta'].queryset = self.instance.Votacion.Pregunta_set.order_by('enunciado')
+
+
+
+
 
 class PreguntaForm(BSModalForm):
     class Meta:
         model = Pregunta
         fields = '__all__'
+
 
 class PreguntaFormVotacion(ModelForm):
     class Meta:

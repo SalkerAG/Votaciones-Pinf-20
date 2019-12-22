@@ -58,16 +58,17 @@
     </div>
 
     <div id="censo" align='center'>
-        <h1 id="censo" style="margin-top: 20px"><strong> Crear Votación </h1>
+        <h1 id="censo" style="margin-top: 20px"><strong> Realizar Votación (Simple)</h1>
     </div>
     <br>
     <br>
     <div style="width: 80%; padding-left: 10%">
-        <form method="post">{% csrf_token %}
+        <form method="post" id="realizarVotacionForm" data-preguntas-url={% url 'ajax_load_preguntas' %}>{% csrf_token %}
             {{ form.as_p }}
             <input type="submit" class="btn btn-primary" value="Guardar">
         </form>
-        <button id="pregunta-modal" class="create-book btn btn-primary" type="button" name="button">Crear Pregunta</button>
+       <button id="pregunta-modal" class="create-book btn btn-primary" type="button" name="button">Crear Pregunta</button>
+{#    <button id="votacion-modal" class="create-book btn btn-primary" type="button" name="button">Crear Pregunta</button>#}
     </div>
 
 {% endblock %}
@@ -215,5 +216,42 @@
 
     });
 </script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+    $("#id_Votacion").change(function () {
+      var url = $("#realizarVotacionForm").attr("data-preguntas-url");  // get the url of the `load_cities` view
+      var VotacionId = $(this).val();  // get the selected country ID from the HTML input
+
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+        data: {
+          'Votacion': VotacionId       // add the country id to the GET parameters
+        },
+        success: function (data) {   // `data` is the return of the `load_cities` view function
+          $("#id_Pregunta").html(data);  // replace the contents of the city input with the data that came from the server
+        }
+      });
+
+    });
+  </script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#pregunta-modal").modalForm({
+            formURL: "{% url 'create_pregunta' %}"
+        });
+
+    });
+</script>
+{#<script type="text/javascript">#}
+{#    $(document).ready(function () {#}
+{##}
+{#        $("#votacion-modal").modalForm({#}
+{#            formURL: "{% url 'create_pregunta' %}"#}
+{#        });#}
+{##}
+{#    });#}
+{#</script>#}
 </html>
 
