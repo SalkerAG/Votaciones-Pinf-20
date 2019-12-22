@@ -188,9 +188,10 @@ class VotacionView(DetailView):
 
 
 class VotacionComplejaView(FormView):
+    form_class = PreguntaForm
     template_name = 'VotacionCompleja.html'
+    success_message = 'Exito: Votación Realizada.'
     success_url = '/votacionCompleja/'
-    form_class = VotacionForm
 
     def form_valid(self, form):
         return super().form_valid(form)

@@ -24,7 +24,7 @@ urlpatterns = [
     path('realizarvotacion/', RealizarVotacion.as_view(), name='realizarvotacion'),
     path('', HomeView.as_view(), name="home"),
     path('ajax/load-preguntas/', load_preguntas, name='ajax_load_preguntas'),
-    # path('votacionCompleja/', VotacionComplejaView.as_view(), name="votacioncompleja")
+    path('votacionCompleja/', VotacionComplejaView.as_view(), name="votacioncompleja")
 ]
 
 
