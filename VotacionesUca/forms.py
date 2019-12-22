@@ -71,12 +71,22 @@ class VotacionForm(ProcesoElectoralForm):
     def clean(self):
         inicio = self.cleaned_data['fecha_inicio']
         fin = self.cleaned_data['fecha_fin']
+        horainic = self.cleaned_data['hora_inicio']
+        horafin = self.cleaned_data['hora_fin']
 
-        if inicio.strftime('%Y-%m-%d') <= datetime.now().strftime('%Y-%m-%d'):
+        if inicio.strftime('%Y-%m-%d') < datetime.now().strftime('%Y-%m-%d'):
             raise ValidationError('La fecha ser mayor que la actual.')
 
-        if inicio.strftime('%Y-%m-%d') >= fin.strftime('%Y-%m-%d'):
+        if (inicio.strftime('%Y-%m-%d') == datetime.now().strftime('%Y-%m-%d')) and (
+                horainic.strftime('%H:%M') < datetime.now().strftime('%H:%M')):
+            raise ValidationError('Hora inválida 1.')
+
+        if inicio.strftime('%Y-%m-%d') > fin.strftime('%Y-%m-%d'):
             raise ValidationError('La fecha de Fin debe ser mayor a la de Inicio.')
+
+        if (inicio.strftime('%Y-%m-%d') == fin.strftime('%Y-%m-%d')) and (
+                horainic.strftime('%H:%M') > horafin.strftime('%H:%M')):
+            raise ValidationError('Hora inválida 2.')
 
         return self.cleaned_data
 
