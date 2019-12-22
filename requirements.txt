@@ -1,16 +1,5 @@
-<<<<<<< HEAD
 django==2
-||||||| merged common ancestors
-<<<<<<<<< Temporary merge branch 1
-django==2.2
-||||||||| merged common ancestors
-django
-=========
-django==2
->>>>>>>>> Temporary merge branch 2
-=======
-django==2.2
->>>>>>> 4626eec8a6a9b55c7a2f6c302421dbe049e88681
+
 gunicorn
 django-heroku
 django-import-export==1.2.0
