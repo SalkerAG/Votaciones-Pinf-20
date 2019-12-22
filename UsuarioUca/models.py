@@ -1,8 +1,11 @@
 # users/models.py
+from audioop import reverse
+
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.core.validators import RegexValidator
 from django.db import models
 from django.forms import forms
+
 
 import csv
 
@@ -12,8 +15,8 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
 istextvalidator = RegexValidator("^[a-zA-Z0]*$",
-                                     message='El Nombre no debe contener números',
-                                     code='Nombre invalido')
+                                     message='El Nombre/Apellidos no debe contener números',
+                                     code='Campo invalido')
 
 
 def uvalidonifworld(nif):
@@ -113,27 +116,53 @@ class UserManager(BaseUserManager):
 
 
 class UsuarioUca(AbstractUser):
+    ROL_CHOICES = (
+        ("Profesor", "Profesor"),
+        ("Estudiante", "Estudiante"),
+        ("PASS", "PASS"),
+    )
 
     username = None
     #default=320850900
     first_name = models.CharField(max_length=20, blank=False)
-    last_name = models.CharField(max_length=30, blank=False, validators=[istextvalidator])
+    last_name = models.CharField(max_length=30, blank=False)
     nif = models.CharField(max_length=10, blank=False, null=False, unique=True)
     egresado = models.BooleanField(default=True)
     email = models.EmailField(max_length=64, unique=True)
     USERNAME_FIELD = 'nif'
     REQUIRED_FIELDS = ['email', 'first_name', 'last_name']
+    rol = models.CharField(max_length=10, choices=ROL_CHOICES, default="Estudiante")
+
 
     def clean_fields(self, exclude=None):
 
         nif = self.nif
-        # if not nif[1] == 'u':
+        first_name = self.first_name
+        last_name = self.last_name
+        password = self.password
+        istextvalidator(first_name)
+        istextvalidator(last_name)
+
+
+
+
+
+        # if (len(password.__str__())<6):
+        #     raise forms.ValidationError("La contraseña debe ser de 6 caracteres mínimo")
+        # if  nif[1] == 'u':
+        #     raise forms.ValidationError("Nif incorrecto")
+
+
+
         nif = nif.replace("u", "")
         if validonifspain(nif) == True or validonifworld(nif) == True:
 
             return nif
         else:
             raise forms.ValidationError("Nif incorrecto")
+
+
+
 
     objects = UserManager()
 

@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% if not user.is_superuser %}
+        <div class="container">
+            <!-- Cabecera -->
+            <br/>
+            <div class="row justify-content-center">
+                <div class="page-header">
+                    <h1>No dispones de los permisos requeridos para ver este contenido.</h1>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <head>
+            <!-- Movil y teclado -->
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+            <link rel="stylesheet" type="text/css" href="footer.css">
+
+            <!-- Bootstrap CSS -->
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+            <link rel="stylesheet"
+                  href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+
+            <title>Crear Votación UCA</title>
+        </head>
+
+        <div class="container">
+            <!-- Cabecera -->
+            <br>
+            <div class="row justify-content-center">
+                <div class="page-header"><h1>Crear Votación Simple</h1></div>
+            </div>
+            <!--Formulario-->
+            <form method="post">{% csrf_token %}
+                <div class="form-group">
+{#                    <label for="form-tittle" class="col-lg-3 col-form-label">Enunciado</label>#}
+                    <div class="col-lg-12">
+                                  {{ form.as_p }}
+
+                    </div>
+                </div>
+                <br>
+                <div class="form-group">
+{#                    <label for="form-tittle" class="col-lg-3 col-form-label">Selección</label>#}
+                    <div class="col-lg-12">
+{#                        {{ form.OpcionesSimple }}#}
+                    </div>
+                </div>
+                <br>
+                {#                <!--Booleanos-->#}
+                {#                <div class="col-lg-10">#}
+                {#                    <div class="form-check" id="CheckboxRectVotos">#}
+                {#                        <!--<div class="px-5">-->#}
+                {#                        <label class="form-check-label">#}
+                {#                            {{form.voto_rectificable}} Permitir rectificación de votos#}
+                {#                        </label>#}
+                {#                    </div>#}
+                {#                </div>#}
+                {#                <br>#}
+                {#                <div class="col-lg-10">#}
+                {#                    <div class="form-check" id="CheckboxRectVotos">#}
+                {#                        <!--<div class="px-5">-->#}
+                {#                        <label class="form-check-label">#}
+                {#                            {{form.voto_restringido}} Votacion restringida#}
+                {#                        </label>#}
+                {#                    </div>#}
+                {#                </div>#}
+                {#                <br/><br>#}
+                {#                <!-- Adjuntar Censo -->#}
+                {#                <div class="form-group row px-5">#}
+                {#                    <label for="AdjuntarCenso">Censo de electores</label>#}
+                {#                    <div class="px-3">#}
+                {#                    <input type="file" id="AdjuntarCenso" required="true">#}
+                {#                    <a href="{% url 'censo_create' %}">Crear censo</a>#}
+                {#                </div>#}
+                {#                <!-- Miembro de la mesa electoral -->#}
+                {#                <!--div class="form-group">#}
+                {#                    <label for="MiembroMesa" class="col-lg-3 col-form-label" >Miembro de la mesa electoral</label>#}
+                {#                    <div class="col-lg-12">#}
+                {#                        <input type="text" class="form-control" id="MiembroMesa" placeholder="Miembro de la mesa" required="true">#}
+                {#                    </div>#}
+                {#                </div-->#}
+                {#                <br>#}
+                {#                <br><br>#}
+                {#                <!-- Elección fecha y hora para votación pública -->#}
+                {#                <div class="form-group" id="BloqueVotAnticipada">#}
+                {#                    <div class="form-group row px-5">#}
+                {#                        <div class="col-lg-6" id="FechaInicio">#}
+                {#                            <label for="FechaInicio" class="control-label">Fecha inicio:</label>#}
+                {#                                <div class="input-group date">#}
+                {#                                    {{form.fecha_inicio}} <!--input type="date" class="form-control inputstl" placeholder="Select Date"-->#}
+                {#                                </div>#}
+                {#                        </div>#}
+                {#                        <div class="col-lg-6" id="FechaFin">#}
+                {#                            <label for="FechaFin" class="control-label">Fecha fin:</label>#}
+                {#                                <div class="input-group date">#}
+                {#                                    {{form.fecha_fin}} <!--input type="date" class="form-control inputstl" placeholder="Select Date"-->#}
+                {#                                </div>#}
+                {#                        </div>#}
+                {#                    </div>#}
+                {##}
+                {#                    <div class="form-group row px-5">#}
+                {#                        <div class="col-lg-6" id="HoraInicio">#}
+                {#                            <label for="HoraInicio" class="control-label">Hora inicio:</label>#}
+                {#                                <div class="input-group time">#}
+                {#                                    {{form.hora_inicio}} <!--input type="time" class="form-control inputstl"-->#}
+                {#                                </div>#}
+                {#                        </div>#}
+                {#                        <div class="col-lg-6" id="HoraFin">#}
+                {#                            <label for="HoraFin" class="control-label">Hora fin:</label>#}
+                {#                            <div class="input-group time">#}
+                {#                                {{form.hora_fin}} <!--input type="time" class="form-control inputstl"-->#}
+                {#                            </div>#}
+                {#                        </div>#}
+                {#                    </div>#}
+                {#                </div>#}
+                {#                  <!-- Fin fecha y hora votación pública -->#}
+                {##}
+                {#                <div class="col-lg-10" id="esConsulta">#}
+                {#                    <label for="esConsulta"></label>#}
+                {#                    {{ form.es_consulta }} ¿Es una Consulta?#}
+                {#                </div>#}
+                {#                <br>#}
+                {#                <div class="col-lg-10">#}
+                {#                    <label for="checkbox"></label>#}
+                {#                    {{ form.es_presencial }} Permitir votacion presencial#}
+                {#                </div>#}
+                {#                <br><br>#}
+                {##}
+                {#                <div class="col-lg-10">#}
+                {#                    <label>Tipo de Votacion</label>#}
+                {#                    {{ form.tipo_votacion }}#}
+                {#                  </div>#}
+                {#                <br><br><br>#}
+                {##}
+                {#                <div class="col-lg-10">#}
+                {#                    <label>Nº máximo de respuestas</label>#}
+                {#                    {{ form.max_respuestas }}#}
+                {#                </div>#}
+                {#                <br>#}
+
+                <br>
+                <div class="submit-row">
+                    <input type="submit" value="Guardar" class="default" name="_save">
+                </div>
+            </form>
+        </div>
+
+        <!-- Requisitos para bootstrap 4 y js  -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+                integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+                crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"></script>
+        <script type="text/javascript"
+                src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+        <!-- Código javascript -->
+        <script>
+            $(document).ready(function () {
+                $("#from-datepicker").datepicker({
+                    format: 'yyyy-mm-dd'
+                });
+                $("#from-datepicker").on("change", function () {
+                    var fromdate = $(this).val();
+                    alert(fromdate);
+                });
+            });
+        </script>
+
+        </body>
+
+        </html>
+
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,281 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+ <head>
+
+    <script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+
+    <script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
+  </head>
+
+  <body>
+
+    <div>
+      <!-- TITLE -->
+      <div class="container text-center py-5">
+        <h1 class="display-12">Resultado Elecciones: 000 </h1>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row center px-5">
+
+      <!-- PIE CHART -->
+
+
+            <div class="col-xl-6">
+              <canvas id="pieChart"></canvas>
+            </div>
+
+
+      <!-- TABLE -->
+            <div class="col-xl-6">
+              <table class="table table-bordered">
+                <tbody>
+              <tr>
+                <th scope="row">Total Electores</th>
+                <td>000</td>
+              </tr>
+
+              <tr>
+                <th scope="row">Votos a candidaturas</th>
+                <td>000</td>
+              </tr>
+
+              <tr>
+                <th scope="row">Votos en blanco</th>
+                <td>000</td>
+              </tr>
+
+              <tr>
+                <th scope="row">Votos Nulos</th>
+                <td>000</td>
+              </tr>
+
+              <tr>
+                <th scope="row">Votos totales válidos</th>
+                <td>000</td>
+              </tr>
+
+              <tr>
+                <th scope="row">Participación</th>
+                <td>0%</td>
+              </tr>
+
+              <tr>
+                <th scope="row">Abstención</th>
+                <td>0%</td>
+              </tr>
+            </tbody>
+              </table>
+            </div>
+</div>
+<div class="row center px-5">
+      <!-- TABLE RESULTADO -->
+            <div class="col-xl-12">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">Candidato</th>
+                    <th scope="col">Partido1</th>
+                    <th scope="col">Partido2</th>
+                    <th scope="col">Partido3</th>
+                    <th scope="col">Resultado Final</th>
+                    <th scope="col">Resultado %</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Candidato1</th>
+                    <td>000</td>
+                    <td>000</td>
+                    <td>000</td>
+                    <td>000</td>
+                    <td>0%</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Candidato2</th>
+                    <td>000</td>
+                    <td>000</td>
+                    <td>000</td>
+                    <td>000</td>
+                    <td>0%</td>
+                  </tr>
+
+                  <tr class="table-active">
+                    <th scope="row">Total</th>
+                    <td>000</td>
+                    <td>000</td>
+                    <td>000</td>
+                    <td>000</td>
+                    <td>0%</td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+</div>
+      <!-- CHART RESULTADO -->
+<div class="row justify-content-center">
+
+            <div class="col-xl-6 ">
+              <canvas id="barChart"></canvas>
+            </div>
+
+
+      <!-- CHART RESULTADO % -->
+            <div class="col-xl-6 ">
+                <canvas id="canvas"></canvas>
+            </div>
+</div>
+
+</div>
+  </strong>
+    </div>
+
+    <!-- Start your project here-->
+
+    <!-- /Start your project here-->
+
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+
+
+    <!-- PIE CHART JS -->
+    <script type="text/javascript">
+      //pie
+      var ctxP = document.getElementById("pieChart").getContext('2d');
+      var myPieChart = new Chart(ctxP, {
+        type: 'pie',
+        data: {
+          labels: ["Candidato1", "Candidato2", "Abstención"],
+          datasets: [{
+            data: [300, 50, 100],
+            backgroundColor: ["rgba(255,99,132,0.7)", "rgba(54, 162, 235, 0.7)", "#FDB45C"],
+            hoverBackgroundColor: ["rgba(255,99,132,1)", "rgba(54, 162, 235, 1)",  "#FFC870"]
+          }]
+        },
+        options: {
+          responsive: true
+        }
+      });
+    </script>
+
+    <!-- HORIZONTAL BAR CHART JS -->
+
+    <script type="text/javascript">
+      var ctxB = document.getElementById("barChart").getContext('2d');
+      var myBarChart = new Chart(ctxB, {
+      type: 'horizontalBar',
+      data: {
+        labels: ["Candidato1", "Candidato2"],
+        datasets: [{
+          label: 'Votos',
+          data: [47, 41],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.7)',
+            'rgba(54, 162, 235, 0.7)'
+          ],
+          borderColor: [
+            'rgba(255,99,132,1)',
+            'rgba(54, 162, 235, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: 'Resultado Elecciones'
+        },
+        scales: {
+          xAxes: [{
+          ticks: {
+            min: 0,
+            beginAtZero: true,
+          }
+          }]
+        }
+      }
+      });
+    </script>
+
+    <!-- STACKED BAR CHART JS -->
+    <script type="text/javascript">
+        window.chartColors = {
+          red: 'rgb(255, 99, 132)',
+          orange: 'rgb(255, 159, 64)',
+          yellow: 'rgb(255, 205, 86)',
+          green: 'rgb(75, 192, 192)',
+          blue: 'rgb(54, 162, 235)',
+          purple: 'rgb(153, 102, 255)',
+          grey: 'rgb(201, 203, 207)'
+        };
+        <!-- Chart -->
+        var barChartData = {
+          labels: ['Partido1', 'Partido2', 'Partido3'],
+          datasets: [{
+            label: 'Candidato1',
+            backgroundColor: window.chartColors.red,
+            data: [
+              47,
+              35,
+              95
+            ]
+          }, {
+            label: 'Candidato2',
+            backgroundColor: window.chartColors.blue,
+            data: [
+              53,
+              65,
+              5
+            ]
+          }]
+        };
+        window.onload = function () {
+          var ctx = document.getElementById('canvas').getContext('2d');
+          window.myBar = new Chart(ctx, {
+            type: 'horizontalBar',
+            data: barChartData,
+            options: {
+              title: {
+                display: true,
+                text: 'Resultado Elecciones %'
+              },
+              tooltips: {
+                mode: 'index',
+                intersect: false
+              },
+              responsive: true,
+              scales: {
+                xAxes: [{
+                  stacked: true,
+                }],
+                yAxes: [{
+                  min: 100, //horizontalBar has inverted x and y axis
+                  max: 100,
+                  callback: function (value) {
+                    return (value / this.max * 100).toFixed(0) + '%'; // convert it to percentage
+                  },
+                  stacked: true
+                }]
+              }
+            }
+          });
+        };
+    </script>
+   {% endblock %}
+  </body>
+
+</html>

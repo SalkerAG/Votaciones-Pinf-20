@@ -23,7 +23,7 @@ passwordtemplate = "pbkdf2_sha256"
 
 
 
-def check(self):
+def checkemail(self):
     if re.search(regex, self):
         return True
 
@@ -77,7 +77,7 @@ class UsuarioUcaResource(resources.ModelResource):
             print (identify_hasher(passwordtemplate))
 
 
-            if check(email) == False:
+            if checkemail(email) == False:
                 raise ValidationError('Email incorrecto. '
                                       'Error en la fila con nif = %s' % row[11])
             if nif == "":
@@ -133,7 +133,6 @@ class UsuarioUcaResource(resources.ModelResource):
                     replace_row(row_index, row)
             return super(UsuarioUcaResource, self).before_import(dataset, using_transactions, dry_run=True, **kwargs)
 
-
 class UsuarioUcaAdmin(ImportExportModelAdmin, UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
@@ -152,7 +151,7 @@ class UsuarioUcaAdmin(ImportExportModelAdmin, UserAdmin):
             None,
             {
                 "classes": ("wide",),
-                "fields": ("nif", "email", "password1", "password2", "first_name", "last_name"),
+                "fields": ("nif", "email", "password1", "password2", "first_name", "last_name", "rol"),
             },
         ),
     )

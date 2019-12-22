@@ -1,0 +1,264 @@
+
+
+<head>
+
+    <!-- Movil y teclado -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="footer.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+
+    <title>Crear Votación UCA</title>
+
+</head>
+
+<body>
+<!-- header  -->
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" href="#">Logo</a>
+
+    <!-- Links -->4574378
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="./">Inicio</a>
+        </li>
+
+        <!-- Dropdown -->
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Votaciones</a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Lista de votaciones</a>
+                <a class="dropdown-item" href="#">Votaciones finalizadas</a>
+                <a class="dropdown-item" href="#">Crear Votación</a>
+            </div>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="#">Ayuda</a>
+        </li>
+
+        <li class="nav-item navbar-item-right">
+            <a class="nav-link float-right" href="#">Ayuda</a>
+        </li>
+    </ul>
+</nav>
+<!-- Fin header  -->
+
+<div class="container">
+    <!-- Cabecera -->
+    <br>
+    <div class="row justify-content-center">
+        <div class="page-header"><h1>Crear Votación</h1></div>
+    </div>
+
+    <!-- Formulario -->
+    <form method="Votacione">{% csrf_token %}
+        {{ form.as_p }}
+        <div id="tipovotacionForm">
+
+        </div>
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+
+    <!-- Ventana emergente -->
+    <div class="modal fade" id="ModalCrearVotacion" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalCrearVotacionTitle">¿Está seguro de crear la votación?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Al confirmar se creará la votación con los datos introducidos.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" href="">Enviar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Footer  -->
+
+    <footer class="footer-area footer--light">
+        <div class="footer-big">
+            <!-- start .container -->
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 col-sm-12">
+                        <div class="footer-widget">
+                            <div class="widget-about">
+                                <img src="http://www.coglobal.es/wp-content/uploads/2017/03/sponsor-uca.png" alt=""
+                                     class="img-fluid">
+                                <p>Web de votaciones para la UCA</p>
+                                <ul class="contact-details">
+                                    <li>
+                                        <span class="icon-envelope-open"></span>
+                                        <a href="mailto:#">email de contacto</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Ends: .footer-widget -->
+                    </div>
+                    <!-- end /.col-md-4 -->
+                    <div class="col-md-3 col-sm-4">
+                        <div class="footer-widget">
+                            <div class="footer-menu footer-menu--1">
+                                <h4 class="footer-widget-title">Páginas de Interes</h4>
+                                <ul>
+                                    <li>
+                                        <a href="https://www.uca.es/">UCA</a>
+                                    </li>
+                                    <li>
+                                        <a href="https://github.com/joaquinpco/Votaciones-Pinf-19">GitHub</a>
+                                    </li>
+                                    <li>
+                                        <a href="https://pinfvot.herokuapp.com/">Heroku</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- end /.footer-menu -->
+                        </div>
+                        <!-- Ends: .footer-widget -->
+                    </div>
+                    <!-- end /.col-md-3 -->
+
+                    <div class="col-md-3 col-sm-4">
+                        <div class="footer-widget">
+                            <div class="footer-menu">
+                                <h4 class="footer-widget-title">La compañia</h4>
+                                <ul>
+                                    <li>
+                                        <a href="#">Sobre nosotros</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Contactanos</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- end /.footer-menu -->
+                        </div>
+                        <!-- Ends: .footer-widget -->
+                    </div>
+                    <!-- end /.col-lg-3 -->
+
+                    <div class="col-md-3 col-sm-4">
+                        <div class="footer-widget">
+                            <div class="footer-menu no-padding">
+                                <h4 class="footer-widget-title">Soporte</h4>
+                                <ul>
+                                    <li>
+                                        <a href="#">Guia Rápida</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Foro de Ayuda</a>
+                                    </li>
+                                    <!-- repetir estructura li para añadir mas-->
+                                </ul>
+                            </div>
+                            <!-- end /.footer-menu -->
+                        </div>
+                        <!-- Ends: .footer-widget -->
+                    </div>
+                    <!-- Ends: .col-lg-3 -->
+
+                </div>
+                <!-- end /.row -->
+            </div>
+            <!-- end /.container -->
+        </div>
+        <!-- end /.footer-big -->
+
+        <div class="mini-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="copyright-text">
+                            <p>© 2019
+                                <a href="#">Votaciones UCA</a>. All rights reserved.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Fin Footer  -->
+    <!-- Requisitos para bootstrap 4 y js  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+    <!-- Código javascript -->
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            tipovotacionForm.innerHTML = "<h1>SIMPLE</h1>"
+        });
+        $("#id_tipoVotacion").on('change', function () {
+            if (this.selectedIndex == 0) {
+                tipovotacionForm.innerHTML = "<h1>SIMPLE</h1>"
+            } else {
+                tipovotacionForm.innerHTML = "<h1>COMPLEJA</h1>"
+            }
+        })
+    </script>
+    <script type="text/javascript">
+        function showContent() {
+            element1 = document.getElementById("CheckboxVotAnticipada");
+            bloqueVAnticipada = document.getElementById("BloqueVotAnticipada");
+            element2 = document.getElementById("VotSimple");
+            element3 = document.getElementById("VotCompleja");
+            check = document.getElementById("CheckVotRestringida");
+            check2 = document.getElementById("VotAnticipada");
+            check3 = document.getElementById("CheckVotSimple");
+            check4 = document.getElementById("CheckVotCompleja");
+            if (check.checked) {
+                element1.style.display = 'block';
+                if (check2.checked) {
+                    bloqueVAnticipada.style.display = 'block';
+                } else {
+                    bloqueVAnticipada.style.display = 'none';
+                }
+            } else {
+                element1.style.display = 'none';
+                check2.checked = 0;
+                bloqueVAnticipada.style.display = 'none';
+            }
+            if (check3.checked) {
+                element2.style.display = 'block';
+            } else {
+                element2.style.display = 'none';
+            }
+            if (check4.checked) {
+                element3.style.display = 'block';
+            } else {
+                element3.style.display = 'none';
+            }
+
+        }
+    </script>
+</body>
+
+</html>

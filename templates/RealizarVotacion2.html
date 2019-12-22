@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <h2>Person Form</h2>
+
+  <form method="post" id="realizarVotacionForm" data-preguntas-url="{% url 'ajax_load_preguntas' %}" novalidate>
+    {% csrf_token %}
+    <table>
+      {{ form.as_table }}
+    </table>
+    <button type="submit">Save</button>
+{#    <a href="{% url 'person_changelist' %}">Nevermind</a>#}
+  </form>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+    $("#id_Votacion").change(function () {
+      var url = $("#realizarVotacionForm").attr("data-preguntas-url");  // get the url of the `load_cities` view
+      var VotacionId = $(this).val();  // get the selected country ID from the HTML input
+
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+        data: {
+          'Votacion': VotacionId       // add the country id to the GET parameters
+        },
+        success: function (data) {   // `data` is the return of the `load_cities` view function
+          $("#id_Pregunta").html(data);  // replace the contents of the city input with the data that came from the server
+        }
+      });
+
+    });
+  </script>
+
+{% endblock %}

@@ -1,327 +1,171 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="container">
-        <!-- Cabecera -->
-        <br>
-        <div class="row justify-content-center">
-            <div class="page-header"><h1>Crear Votación</h1></div>
-        </div>
 
-        <!-- Formulario -->
-        <form>
-            <!-- Título -->
-            <div class="form-group">
-                <label for="form-tittle" class="col-lg-3 col-form-label">Título</label>
-                <div class="col-lg-12">
-                    <input type="text" class="form-control" id="form-tittle" placeholder="Título de la votación"
-                           required="true">
-                </div>
-            </div>
-
-            <!-- Bloque votación restringida -->
-            <div class="form-group row px-5">
-                <div class="col-lg-2">
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="VotResPub" id="CheckVotRestringida"
-                               value="restringida" onchange="javascript:showContent()">
-                        <label class="form-check-label" for="VotRestringida">Restringida</label>
-                    </div>
-                </div>
-
-                <div class="col-lg-10">
-                    <div class="form-check" id="CheckboxVotAnticipada" style="display: none;">
-                        <!--<div class="px-5">-->
-                        <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" id="VotAnticipada"
-                                   onchange="javascript:showContent()"> Permitir votación anticipada
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Fecha y hora votación anticipada -->
-            <div class="form-group" id="BloqueVotAnticipada" style="display: none;">
-                <div class="form-group row px-5">
-                    <div class="col-lg-6" id="FechaInicio">
-                        <label for="FechaInicio" class="control-label">Fecha inicio:</label>
-                        <div class="input-group date">
-                            <input type="date" class="form-control inputstl" placeholder="Select Date">
-                        </div>
-                    </div>
-                    <div class="col-lg-6" id="FechaFin">
-                        <label for="FechaFin" class="control-label">Fecha fin:</label>
-                        <div class="input-group date">
-                            <input type="date" class="form-control inputstl" placeholder="Select Date">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group row px-5">
-                    <div class="col-lg-6" id="HoraInicio">
-                        <label for="HoraInicio" class="control-label">Hora inicio:</label>
-                        <div class="input-group time">
-                            <input type="time" class="form-control inputstl">
-                        </div>
-                    </div>
-                    <div class="col-lg-6" id="HoraFin">
-                        <label for="HoraFin" class="control-label">Hora fin:</label>
-                        <div class="input-group time">
-                            <input type="time" class="form-control inputstl">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Fin fecha y hora votación anticipada -->
-            <!-- Fin bloque votación restringida -->
-            <!--  </div>-->
+    {% if not user.is_superuser %}
+        <div class="container">
+            <!-- Cabecera -->
             <br/>
+            <div class="row justify-content-center">
+                <div class="page-header">
+                    <h1>No dispones de los permisos requeridos para ver este contenido.</h1>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <head>
+            <!-- Movil y teclado -->
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+            <link rel="stylesheet" type="text/css" href="footer.css">
 
-            <!-- Bloque votación pública -->
-            <div class="form-group row px-5">
-                <div class="col-lg-2">
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="VotResPub" id="CheckVotPublica"
-                               value="publica" onchange="javascript:showContent()" checked>
-                        <label class="form-check-label" for="VotPublica">Pública</label>
+            <!-- Bootstrap CSS -->
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+
+            <title>Crear Votación UCA</title>
+        </head>
+
+        <div class="container">
+            <!-- Cabecera -->
+            <br>
+            <div class="row justify-content-center">
+                <div class="page-header"><h1>Crear Votación</h1></div>
+            </div>
+            <!--Formulario-->
+            <form method="post">{% csrf_token %}
+                <div class="form-group">
+                    <label for="form-tittle" class="col-lg-3 col-form-label">Título</label>
+                    <div class="col-lg-12">
+                        {{ form.nombre_votacion }}
                     </div>
                 </div>
+                <br>
+                <!--Booleanos-->
                 <div class="col-lg-10">
                     <div class="form-check" id="CheckboxRectVotos">
                         <!--<div class="px-5">-->
                         <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox"> Permitir rectificación de votos
+                            {{form.voto_rectificable}} Permitir rectificación de votos
                         </label>
                     </div>
                 </div>
-                <br/>
-            </div>
-            <!-- Adjuntar Censo -->
-            <div class="form-group row px-5">
-                <label for="AdjuntarCenso">Censo de electores</label>
-                <div class="px-3">
+                <br>
+                <div class="col-lg-10">
+                    <div class="form-check" id="CheckboxRectVotos">
+                        <!--<div class="px-5">-->
+                        <label class="form-check-label">
+                            {{form.voto_restringido}} Votacion restringida
+                        </label>
+                    </div>
+                </div>
+                <br/><br>
+                <!-- Adjuntar Censo -->
+                <div class="form-group row px-5">
+                    <label for="AdjuntarCenso">Censo de electores</label>
+                    <div class="px-3">
                     <input type="file" id="AdjuntarCenso" required="true">
+                    <a href="{% url 'censo_create' %}">Crear censo</a>
                 </div>
-            </div>
-            <br/>
-            <!-- Miembro de la mesa electoral -->
-            <div class="form-group">
-                <label for="MiembroMesa" class="col-lg-3 col-form-label">Miembro de la mesa electoral</label>
-                <div class="col-lg-12">
-                    <input type="text" class="form-control" id="MiembroMesa" placeholder="Miembro de la mesa"
-                           required="true">
-                </div>
-            </div>
+                <!-- Miembro de la mesa electoral -->
+                <!--div class="form-group">
+                    <label for="MiembroMesa" class="col-lg-3 col-form-label" >Miembro de la mesa electoral</label>
+                    <div class="col-lg-12">
+                        <input type="text" class="form-control" id="MiembroMesa" placeholder="Miembro de la mesa" required="true">
+                    </div>
+                </div-->
+                <br>
+                <br><br>
+                <!-- Elección fecha y hora para votación pública -->
+                <div class="form-group" id="BloqueVotAnticipada">
+                    <div class="form-group row px-5">
+                        <div class="col-lg-6" id="FechaInicio">
+                            <label for="FechaInicio" class="control-label">Fecha inicio:</label>
+                                <div class="input-group date">
+                                    {{form.fecha_inicio}} <!--input type="date" class="form-control inputstl" placeholder="Select Date"-->
+                                </div>
+                        </div>
+                        <div class="col-lg-6" id="FechaFin">
+                            <label for="FechaFin" class="control-label">Fecha fin:</label>
+                                <div class="input-group date">
+                                    {{form.fecha_fin}} <!--input type="date" class="form-control inputstl" placeholder="Select Date"-->
+                                </div>
+                        </div>
+                    </div>
 
-            <!-- Elección fecha y hora para votación pública -->
-            <div class="form-group" id="BloqueVotAnticipada">
-                <div class="form-group row px-5">
-                    <div class="col-lg-6" id="FechaInicio">
-                        <label for="FechaInicio" class="control-label">Fecha inicio:</label>
-                        <div class="input-group date">
-                            <input type="date" class="form-control inputstl" placeholder="Select Date">
+                    <div class="form-group row px-5">
+                        <div class="col-lg-6" id="HoraInicio">
+                            <label for="HoraInicio" class="control-label">Hora inicio:</label>
+                                <div class="input-group time">
+                                    {{form.hora_inicio}} <!--input type="time" class="form-control inputstl"-->
+                                </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6" id="FechaFin">
-                        <label for="FechaFin" class="control-label">Fecha fin:</label>
-                        <div class="input-group date">
-                            <input type="date" class="form-control inputstl" placeholder="Select Date">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group row px-5">
-                    <div class="col-lg-6" id="HoraInicio">
-                        <label for="HoraInicio" class="control-label">Hora inicio:</label>
-                        <div class="input-group time">
-                            <input type="time" class="form-control inputstl">
-                        </div>
-                    </div>
-                    <div class="col-lg-6" id="HoraFin">
-                        <label for="HoraFin" class="control-label">Hora fin:</label>
-                        <div class="input-group time">
-                            <input type="time" class="form-control inputstl">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Fin fecha y hora votación pública -->
-
-            <!-- Elección Votación simple o Votación compleja -->
-            <div class="form-group row px-5">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="VotSimCom" id="CheckVotSimple" value="simple"
-                           onchange="javascript:showContent()" checked>
-                    <label class="form-check-label" for="VotSimple">Votación simple</label>
-                </div>
-                <div class="form-check">
-                    <div class="px-5">
-                        <input class="form-check-input" type="radio" name="VotSimCom" id="CheckVotCompleja"
-                               value="compleja" onchange="javascript:showContent()">
-                        <label class="form-check-label" for="VotCompleja">Votación compleja</label>
-                    </div>
-                </div>
-            </div>
-            <!-- Fin Elección Votación simple o votación compleja -->
-
-            <!-- Crear Votación simple-->
-            <div class="form-group row px-5" id="VotSimple">
-                <label for="DescripcionVotSimple">Descripción de la votación simple:</label>
-                <textarea class="form-control" id="DescripcionVotSimple" rows="3"></textarea><br/>
-                <label for="FormPreguntaSimple">Pregunta para la votación simple:</label>
-                <textarea class="form-control" id="PreguntaSimple" rows="3"></textarea>
-                <br/>
-
-                <div class="form-group" style="width:100% !important">
-                    <div class="row px-5">
-                        <label for="RespuestaSimple1" class="col-sm-2 col-form-label">Respuesta 1: </label>
-                        <div class="col-sm-10">
-                            <input type="text" readonly class="form-control-plaintext" id="RespuestaSimple1"
-                                   value="A favor">
-                        </div>
-                    </div>
-                    <div class="row px-5">
-                        <label for="RespuestaSimple2" class="col-sm-2 col-form-label">Respuesta 2: </label>
-                        <div class="col-sm-10">
-                            <input type="text" readonly class="form-control-plaintext" id="RespuestaSimple2"
-                                   value="En contra">
-                        </div>
-                    </div>
-                    <div class="row px-5">
-                        <label for="RespuestaSimple3" class="col-sm-2 col-form-label">Respuesta 3: </label>
-                        <div class="col-sm-10">
-                            <input type="text" readonly class="form-control-plaintext" id="RespuestaSimple3"
-                                   value="Abstención">
+                        <div class="col-lg-6" id="HoraFin">
+                            <label for="HoraFin" class="control-label">Hora fin:</label>
+                            <div class="input-group time">
+                                {{form.hora_fin}} <!--input type="time" class="form-control inputstl"-->
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- Fin crear votación simple-->
+                  <!-- Fin fecha y hora votación pública -->
 
-            <!-- Crear votación compleja-->
-            <div class="form-group row px-5" id="VotCompleja" style="display: none;">
-                <label for="DescripcionVotCompleja">Descripción de la votación compleja:</label>
-                <textarea class="form-control" id="DescripcionVotCompleja" rows="3"></textarea><br/>
-                <label for="FormPreguntaCompleja">Pregunta para la votación compleja:</label>
-                <textarea class="form-control" id="PreguntaCompleja" rows="3"></textarea>
-                <br/>
-
-                <div class="form-group" style="width:100% !important">
-                    <div class="row px-5">
-                        <label for="RespuestaCompleja1" class="col-sm-2 col-form-label">Respuesta 1: </label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="RespuestaCompleja">
-                        </div>
-                    </div>
-                    <div class="row px-5">
-                        <label for="RespuestaCompleja2" class="col-sm-2 col-form-label">Respuesta 2: </label>
-                        <div class="col-sm-10">
-                            <input type="text" readonly class="form-control" id="RespuestaCompleja2">
-                        </div>
-                    </div>
-                    <div class="row px-5">
-                        <label for="RespuestaCompleja3" class="col-sm-2 col-form-label">Respuesta 3: </label>
-                        <div class="col-sm-10">
-                            <input type="text" readonly class="form-control" id="RespuestaCompleja3">
-                        </div>
-                    </div>
+                <div class="col-lg-10" id="esConsulta">
+                    <label for="esConsulta"></label>
+                    {{ form.es_consulta }} ¿Es una Consulta?
                 </div>
-            </div>
-
-            <!-- Fin Crear votación compleja -->
-
-
-            <!-- Botón -->
-            <div class="form-group">
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#ModalCrearVotacion">
-                        Crear votación
-                    </button>
+                <br>
+                <div class="col-lg-10">
+                    <label for="checkbox"></label>
+                    {{ form.es_presencial }} Permitir votacion presencial
                 </div>
-            </div>
-            <!-- Fin botón -->
+                <br><br>
+            
 
+        
+                <div class="col-lg-10">
+                    <label>Nº máximo de respuestas</label>
+                    {{ form.max_respuestas }}
+                </div>
+                <br>
+                
+                <br>
+                <div class="submit-row">
+
+                </div>   <input type="submit" value="Guardar" class="default" name="_save">
         </form>
     </div>
-    <!-- Fin formulario -->
 
+        <!-- Requisitos para bootstrap 4 y js  -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+                integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+                crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"></script>
+        <script type="text/javascript"
+                src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
-    <!-- Ventana emergente -->
-    <div class="modal fade" id="ModalCrearVotacion" tabindex="-1" role="dialog"
-         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="ModalCrearVotacionTitle">¿Está seguro de crear la votación?</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Al confirmar se creará la votación con los datos introducidos.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Enviar</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
+        <!-- Código javascript -->
+        <script>
+            $( document ).ready(function() {
+            $("#from-datepicker").datepicker({ 
+            format: 'yyyy-mm-dd'
+            });
+            $("#from-datepicker").on("change", function () {
+            var fromdate = $(this).val();
+            alert(fromdate);
+            });
+            }); 
+        </script>
 
+        </body>
 
+        </html>
+
+    {% endif %}
 {% endblock %}
-
-<!-- Fin Footer  -->
-<!-- Requisitos para bootstrap 4 y js  -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-<script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-
-<!-- Código javascript -->
-<script type="text/javascript">
-    function showContent() {
-        element1 = document.getElementById("CheckboxVotAnticipada");
-        bloqueVAnticipada = document.getElementById("BloqueVotAnticipada");
-        element2 = document.getElementById("VotSimple");
-        element3 = document.getElementById("VotCompleja");
-        check = document.getElementById("CheckVotRestringida");
-        check2 = document.getElementById("VotAnticipada");
-        check3 = document.getElementById("CheckVotSimple");
-        check4 = document.getElementById("CheckVotCompleja");
-        if (check.checked) {
-            element1.style.display = 'block';
-            if (check2.checked) {
-                bloqueVAnticipada.style.display = 'block';
-            } else {
-                bloqueVAnticipada.style.display = 'none';
-            }
-        } else {
-            element1.style.display = 'none';
-            check2.checked = 0;
-            bloqueVAnticipada.style.display = 'none';
-        }
-        if (check3.checked) {
-            element2.style.display = 'block';
-        } else {
-            element2.style.display = 'none';
-        }
-        if (check4.checked) {
-            element3.style.display = 'block';
-        } else {
-            element3.style.display = 'none';
-        }
-
-    }
-</script>
-</body>
-
-</html>
