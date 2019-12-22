@@ -39,10 +39,10 @@ class Pregunta(models.Model):
 
     )
 
-    Votacion = models.ForeignKey(Votacion, on_delete=models.PROTECT)
+    Votacion = models.OneToOneField(Votacion, on_delete=models.PROTECT)
     tipo_votacion = models.CharField(max_length=10, choices=TIPO_CHOICES, default="Simple")
     enunciado = models.CharField(max_length=50)
-    opciones = models.ManyToManyField(Opcion, blank=False)
+    # opciones = models.ManyToManyField(Opcion, blank=False)
 
     def __str__(self):
         return self.enunciado
@@ -64,9 +64,6 @@ class Censo(models.Model):
 
 
 
-
-
-
 # class OpcionesSimple(models.Model):
 #     PREGUNTA_CHOICES = (
 #         ("SI", "SI"),
@@ -83,10 +80,10 @@ class Censo(models.Model):
 #         return reverse('home')
 
 
-# class OpcionesCompleja(models.Model):
-#     Pregunta = models.OneToOneField(Pregunta, on_delete=models.PROTECT, primary_key=True)
-#     # enunciado = models.CharField(max_length=50)
-#     respuesta = models.CharField(max_length=50)
+class OpcionesCompleja(models.Model):
+    Pregunta = models.ForeignKey(Pregunta, on_delete=models.PROTECT)
+    # enunciado = models.CharField(max_length=50)
+    respuesta = models.CharField(max_length=50)
 
 
 
@@ -97,7 +94,7 @@ class UsuarioVotacion(models.Model):
         ("ABSTENCIÓN", "ABSTENCIÓN"),
     )
 
-    user = models.OneToOneField(UsuarioUca, on_delete=models.PROTECT, null=True)
+    user = models.ForeignKey(UsuarioUca, on_delete=models.PROTECT, null=True)
 
     Votacion = models.OneToOneField(Votacion, on_delete=models.PROTECT)
 

@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django import forms
 from django.utils import timezone
 from datetime import datetime
-from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, Censo, UsuarioVotacion
+from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, Censo, UsuarioVotacion, OpcionesCompleja
 from bootstrap_modal_forms.forms import BSModalForm
 
 
@@ -34,28 +34,33 @@ class ProcesoElectoralForm(forms.ModelForm):
         fields = ('__all__')
 
 
-# class OpcionesSimpleForm(forms.ModelForm):
-#     pass
+class OpcionesSimpleForm(forms.ModelForm):
+    pass
 
 
-# class OpcionesComplejaForm(forms.ModelForm):
-#     Respuesta_elegida = forms.MultipleChoiceField(choices=[], label='Respuestas', required=False,
-#                                                   widget=forms.SelectMultiple(
-#                                                       attrs={
-#                                                           'class': 'form-control'
-#                                                       }
-#                                                   ))
-#
-#     def _init_(self, *args, **kwargs):
-#         super()._init_(*args, **kwargs)
-#         unique_respuestas = OpcionesCompleja.objects.order_by('respuesta').values_list('respuesta',
-#                                                                                        flat=True).distinct()
-#         self.fields['Respuesta_elegida'].choices = [(respuesta, respuesta) for respuesta in unique_respuestas]
-#
-#     class Meta:
-#         model = OpcionesCompleja
-#         fields = '_all_'
+class OpcionesComplejaForm(forms.ModelForm):
+    class Meta:
+        model = OpcionesCompleja
+        fields = ('__all__')
+        labels = {'pregunta': ('Pregunta'), 'respuesta': ('respuesta') }
 
+
+        widgets = {'respuesta': forms.SelectMultiple(attrs={'class': 'form-control'}),
+                   'pregunta': forms.Select(attrs={'class': 'form-control'}),
+                   }
+
+class realizarVotacionForm(ModelForm):
+    # usuario = models.ForeignKey("auth.User", blank=True)
+    class Meta:
+        model = UsuarioVotacion
+        fields = 'user', 'Votacion', 'Pregunta', 'seleccion'
+        labels = {'user': (''), 'Votacion': (''),'Pregunta': (''), 'seleccion': ('Respuesta'),}
+        widgets = {'user': forms.Select(
+            attrs={'class': 'form-control', }),
+                   'Votacion': forms.Select(attrs={ 'class': 'form-control', }),
+                   'Pregunta': forms.Select(attrs={'class': 'form-control', }),
+                   'seleccion': forms.Select(attrs={'class': 'form-control'}),
+                   }
 
 class VotacionForm(ProcesoElectoralForm):
     voto_restringido = forms.BooleanField(required=False)
@@ -133,4 +138,9 @@ class PreguntaForm(BSModalForm):
 class PreguntaFormVotacion(ModelForm):
     class Meta:
         model = Pregunta
-        fields = ('enunciado', 'Votacion', )
+        fields = ('Votacion', 'enunciado', 'tipo_votacion' )
+        # labels = {'Votacion': ('')}
+        # widgets = {'Votacion': forms.Select(
+        # attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
+        #         'Votacion': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
+        #         }

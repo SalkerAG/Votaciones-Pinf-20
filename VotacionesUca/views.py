@@ -1,18 +1,20 @@
 from time import timezone
+
+from django.forms import ModelForm
 from django.views.generic.edit import FormMixin
 from django.urls import reverse
 from django.views.generic import TemplateView, FormView, CreateView, DetailView
 from django.views.generic.list import ListView
 from import_export import resources
-from django.http import HttpRequest as request
+from django.http import HttpRequest as request, HttpResponseRedirect
 from UsuarioUca.admin import UsuarioUcaResource
 from UsuarioUca.import_export_views import ImportView
 from UsuarioUca.models import UsuarioUca
 from VotacionesUca.admin import CensoResource
 from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, Censo, \
-    UsuarioVotacion
+    UsuarioVotacion, OpcionesCompleja
 from .forms import VotacionForm, PreguntaForm, createCensoForm, PreguntaFormVotacion, \
-    realizarVotacionForm
+    realizarVotacionForm, OpcionesComplejaForm
 from django.shortcuts import render, redirect
 import datetime
 import csv
@@ -49,31 +51,7 @@ class CrearCensoView(CreateView):
         return reverse('censo-detail', kwargs={"pk": self.object.pk})
 
 
-class RealizarVotacion(FormMixin, DetailView, request):
-    model = UsuarioVotacion
-    form_class = realizarVotacionForm
-    template_name = "RealizarVotacion.html"
 
-    def get_success_url(self):
-        return reverse('home')
-
-    def get_context_data(self, **kwargs):
-        context = super(RealizarVotacion, self).get_context_data(**kwargs)
-        context['form'] = realizarVotacionForm(
-            initial={'user': self.request.user, 'Votacion': self.object.Votacion, 'Pregunta': self.object.Pregunta})
-        return context
-
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        form = self.get_form()
-        if form.is_valid():
-            return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
-
-    def form_valid(self, form):
-        form.save()
-        return super(RealizarVotacion, self).form_valid(form)
 
 
 class CensoDetailView(DetailView):
@@ -113,6 +91,35 @@ class CensoExportView(ImportView, resources.ModelResource):
         # response['Content-Disposition'] = 'attachment; filename=Censo' + str(censo_id) + '.csv'
         # return response
 
+class VotacionView(FormMixin, DetailView, request):
+    model = Votacion
+    form_class = realizarVotacionForm
+    template_name = "RealizarVotacion.html"
+    success_url = reverse_lazy('home')
+
+    def get_success_url(self):
+        return reverse('home')
+
+    def get_context_data(self, **kwargs):
+        context = super(VotacionView, self).get_context_data(**kwargs)
+        cosas = self
+        context['form'] = realizarVotacionForm(
+            initial={'user': self.request.user, 'Votacion': self.object, 'Pregunta': self.object.pregunta})
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+
+    def form_valid(self, form):
+        form.save()
+        return super(VotacionView, self).form_valid(form)
+
 
 class CrearVotacionView(CreateView):
     model = Votacion
@@ -125,7 +132,7 @@ class CrearVotacionView(CreateView):
     #     if self.object.tipo_votacion == 1:
     #         return reverse('crearpreguntacompleja')
     def get_success_url(self):
-        return reverse('home')
+        return reverse('crearpreguntavotacion')
 
 
 def load_preguntas(request):
@@ -140,11 +147,20 @@ class CrearPregunta(CreateView):
     template_name = 'CrearPregunta.html'
 
     def get_success_url(self):
-        return reverse('home')
-    #     if self.object.tipo_votacion == "0":
-    #         return reverse('crearpreguntasimple')
-    #     else:
-    #         return reverse('crearpreguntacompleja')
+
+        if self.object.tipo_votacion == "0":
+            return reverse('home')
+        else:
+            return reverse('crearpreguntacompleja')
+
+    def get_context_data(self, **kwargs):
+        context = super(CrearPregunta, self).get_context_data(**kwargs)
+        context['form'] = PreguntaForm(
+            initial={'Votacion': self.object.Votacion, })
+        return context
+
+
+
 
 
 class CrearPreguntaVotacion(CreateView):
@@ -153,27 +169,27 @@ class CrearPreguntaVotacion(CreateView):
     template_name = 'CrearPreguntaVotacion.html'
 
     def get_success_url(self):
-        return reverse('home')
-    #     if self.object.tipo_votacion == "0":
-    #         return reverse('crearpreguntasimple')
-    #     else:
-    #         return reverse('crearpreguntacompleja')
+        # return reverse('home')
+        if self.object.tipo_votacion == "0":
+            return reverse('home')
+        else:
+            return reverse('crearpreguntacompleja')
 
 
-# class CrearPreguntaComplejaView(CreateView):
-#     model = OpcionesCompleja
-#     form_class = OpcionesComplejaForm
-#     template_name = 'CrearVotacionCompleja.html'
-#     success_url = '/crearpreguntacompleja'
-#
-#     def _init_(self, **kwargs):
-#         super()._init_(**kwargs)
-#         self.POST = None
-#         self.method = None
-#
-#     def index(self):
-#         form = OpcionesComplejaForm()
-#         return render(self, 'home.html', {'form': form, })
+class CrearPreguntaComplejaView(CreateView):
+    model = OpcionesCompleja
+    form_class = OpcionesComplejaForm
+    template_name = 'CrearVotacionCompleja.html'
+    success_url = '/crearpreguntacompleja'
+
+    def _init_(self, **kwargs):
+        super()._init_(**kwargs)
+        self.POST = None
+        self.method = None
+
+    def index(self):
+        form = OpcionesComplejaForm()
+        return render(self, 'home.html', {'form': form, })
 
 
 # class CrearPreguntaSimpleView(CreateView):
@@ -185,15 +201,57 @@ class CrearPreguntaVotacion(CreateView):
 #         return reverse('/')
 
 
-class VotacionView(DetailView):
+class VotacionView(FormMixin, DetailView, request):
     model = Votacion
+    form_class = realizarVotacionForm
+    template_name = "RealizarVotacion.html"
+    success_url = reverse_lazy('home')
+
+    def get_success_url(self):
+        return reverse('home')
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        pregunta = Pregunta.objects.get(votacion=self.object.id)
-        context['now'] = datetime.datetime.now()
-        context['opciones'] = Opciones.objects.filter(pregunta=pregunta.pk)
+        context = super(VotacionView, self).get_context_data(**kwargs)
+        cosas = self
+        context['form'] = realizarVotacionForm(
+            initial={'user': self.request.user, 'Votacion': self.object, 'Pregunta': self.object.pregunta})
         return context
+
+    # def post(self, request, *args, **kwargs):
+    #     self.object = self.get_object()
+    #     form = self.get_form()
+    #     usuario_votacion = UsuarioVotacion()
+    #     usuario_votacion.seleccion = form.data['seleccion']
+    #     usuario_votacion.user = self.request.user
+    #     usuario_votacion.Votacion = self.object
+    #     usuario_votacion.Pregunta = self.object.pregunta
+    #     usuario_votacion.save()
+    #     return reverse('home')
+
+    # def post(self, request, *args, **kwargs):
+    #     self.object = self.get_object()
+    #     form = self.get_form()
+    #     if form.is_valid():
+    #         self.form_valid(form)
+    #         return HttpResponseRedirect('home')
+    #     else:
+    #         self.form_invalid(form)
+    #         return HttpResponseRedirect('home')
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        usuario_votacion = UsuarioVotacion()
+        usuario_votacion.seleccion = form.data['seleccion']
+        usuario_votacion.user = self.request.user
+        usuario_votacion.Votacion = self.object
+        usuario_votacion.Pregunta = self.object.pregunta
+        usuario_votacion.save()
+        return HttpResponseRedirect('/')
+
+    def form_valid(self, form):
+        form.save()
+        return super(VotacionView, self).form_valid(form)
 
 
 class VotacionComplejaView(FormView):
