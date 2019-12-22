@@ -2,10 +2,10 @@ from django.contrib import admin
 from django.urls import path, include
 
 from UsuarioUca.views import HomeView
-from .views import CrearVotacionView, VotacionView,   \
-     CrearPregunta, CrearCensoView, CensoDetailView, CensoExportView, \
+from .views import CrearVotacionView, VotacionView, \
+    CrearPregunta, CrearCensoView, CensoDetailView, CensoExportView, \
     CrearPreguntaVotacion, RealizarVotacion, CrearPreguntaViewCenso, CrearPreguntaViewVotacion, \
-    CrearPreguntaViewRealizarVotacion, load_preguntas
+    CrearPreguntaViewRealizarVotacion, load_preguntas, VotacionComplejaView
 
 urlpatterns = [
     path('crearVotacion/', CrearVotacionView.as_view(), name="crearvotacion"),
@@ -23,5 +23,5 @@ urlpatterns = [
     path('realizarvotacion/<int:pk>', RealizarVotacion.as_view(), name='realizarvotacion'),
     path('', HomeView.as_view(), name="home"),
     path('ajax/load-preguntas/', load_preguntas, name='ajax_load_preguntas'),
-    # path('votacionCompleja/', VotacionComplejaView.as_view(), name="votacioncompleja")
+    path('votacionCompleja/', VotacionComplejaView.as_view(), name="votacioncompleja")
 ]
