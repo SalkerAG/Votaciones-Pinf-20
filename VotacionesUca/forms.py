@@ -145,19 +145,19 @@ class realizarVotacionComplejaForm(ModelForm):
     #                                                           choices=choices)
     qs = OpcionesCompleja.objects.all().values_list('respuesta', flat=True)
     print(qs)
-    opcionesCompleja = forms.ModelChoiceField(qs)
+    opcionesCompleja = forms.ModelChoiceField(qs, label='Respuesta:')
 
     class Meta:
         model = UsuarioVotacion
         fields = 'Votacion', 'Pregunta', 'opcionesCompleja'
-        exclude = ('seleccionSimple',)
-        labels = {'user': (''), 'Votacion': (''), 'Pregunta': ('')}
-        widgets = {'user': forms.Select(
+        # exclude = ('seleccionSimple',)
+        labels = {'user': (''), 'Votacion': (''), 'Pregunta': (''), 'opcionesCompleja': ('Respuesta') }
+        widgets = {'Votacion': forms.Select(
             attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
             'Votacion': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
             'Pregunta': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
             'seleccion': forms.Select(attrs={'class': 'form-control'}),
-            'opcionesCompleja': forms.SelectMultiple(attrs={'class': 'form-control'}),
+            # 'opcionesCompleja': forms.Select(attrs={'class': 'form-control'}),
         }
 
 
