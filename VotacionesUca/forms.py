@@ -180,6 +180,7 @@ class PreguntaFormVotacion(ModelForm):
         # 'seleccion': forms.Select(attrs={'class': 'form-control'}),
 
 class EleccionForm(ProcesoElectoralForm):
+    nombre_eleccion= forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Título de la votacion'}))
     c=[('0','Grupos'),('1','Unipersonales')]
     tipo_eleccion=forms.ChoiceField(choices=c)
     class Meta:
