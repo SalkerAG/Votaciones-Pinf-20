@@ -128,12 +128,6 @@ class UsuarioVotacion(models.Model):
 
         return super(UsuarioVotacion, self).save(*args, **kwargs)
 
-
-
-
-
 class Eleccion(ProcesoElectoral):
-    nie = models.IntegerField()
-    max_vacantes = models.IntegerField()
+    max_vacantes = models.IntegerField(default=0.7)
     tipo_eleccion = models.BooleanField(default=False)
-    censo = models.OneToOneField(Censo, on_delete=models.CASCADE)

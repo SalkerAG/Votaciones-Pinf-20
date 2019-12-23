@@ -14,7 +14,7 @@ from VotacionesUca.admin import CensoResource
 from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, Censo, \
     UsuarioVotacion, OpcionesCompleja
 from .forms import VotacionForm, PreguntaForm, createCensoForm, PreguntaFormVotacion, \
-    realizarVotacionForm, OpcionesComplejaForm, realizarVotacionComplejaForm
+    realizarVotacionForm, OpcionesComplejaForm, realizarVotacionComplejaForm, EleccionForm
 from django.shortcuts import render, redirect
 import datetime
 import csv
@@ -314,3 +314,9 @@ class ListaVotacionView(ListView):
         context = super().get_context_data(**kwargs)
         context['now'] = datetime.timezone.now()
         return context
+
+class CrearEleccionView(CreateView):
+    model = Eleccion
+    form_class = EleccionForm
+    def get_success_url(self):
+        return reverse('')

@@ -8,7 +8,7 @@ from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, Censo, Usuar
 from bootstrap_modal_forms.forms import BSModalForm
 
 
-# c=[('0','Simple'),('1','Compleja')]
+
 # b=[('0','No'),('1','Sí')]
 
 class ProcesoElectoralForm(forms.ModelForm):
@@ -178,3 +178,10 @@ class PreguntaFormVotacion(ModelForm):
         #     'Votacion': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', })}
         # 'tipo_votacion': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
         # 'seleccion': forms.Select(attrs={'class': 'form-control'}),
+
+class EleccionForm(ProcesoElectoralForm):
+    c=[('0','Grupos'),('1','Unipersonales')]
+    tipo_eleccion=forms.ChoiceField(choices=c)
+    class Meta:
+        model = Eleccion
+        fields = '__all__'
