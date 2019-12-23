@@ -1,4 +1,5 @@
 from django.db import models, transaction
+from django.db.models import Count
 from django.urls import reverse
 
 
@@ -102,9 +103,9 @@ class UsuarioVotacion(models.Model):
 
     user = models.ForeignKey(UsuarioUca, on_delete=models.PROTECT, null=True)
 
-    Votacion = models.OneToOneField(Votacion, on_delete=models.PROTECT)
+    Votacion = models.ForeignKey(Votacion, on_delete=models.PROTECT)
 
-    Pregunta = models.OneToOneField(Pregunta, on_delete=models.PROTECT, primary_key=True)
+    Pregunta = models.ForeignKey(Pregunta, on_delete=models.PROTECT)
 
     seleccion = models.CharField(max_length=20, null=True)
 
@@ -113,6 +114,20 @@ class UsuarioVotacion(models.Model):
 
     def get_absolute_url(self):
         return reverse('home')
+
+    def save(self, *args, **kwargs):
+        # duplicates = UsuarioVotacion.objects.values(
+        #     'Votacion'
+        # ).annotate(votacion=Count('Votacion')).filter(votacion=1)
+        # print (duplicates)
+        # records = UsuarioVotacion.objects.filter(Votacion=[item['Votacion'] for item in duplicates])
+        # print([item.id for item in records])
+        for row in UsuarioVotacion.objects.all():
+            if UsuarioVotacion.objects.filter(Votacion_id=row.Votacion_id).count() > 1 and UsuarioVotacion.objects.filter(Pregunta_id=row.Pregunta_id).count() > 1 and UsuarioVotacion.objects.filter(user_id=row.user_id).count() > 1:
+                 row.delete()
+
+        return super(UsuarioVotacion, self).save(*args, **kwargs)
+
 
 
 

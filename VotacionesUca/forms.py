@@ -144,12 +144,12 @@ class realizarVotacionComplejaForm(ModelForm):
     #     self.fields['opcionesCompleja'] = forms.ChoiceField(widget=forms.RadioSelect(),
     #                                                           choices=choices)
     qs = OpcionesCompleja.objects.all().values_list('respuesta', flat=True)
-    print(qs)
+    # print(qs)
     opcionesCompleja = forms.ModelChoiceField(qs, label='Respuesta:')
 
     class Meta:
         model = UsuarioVotacion
-        fields = 'Votacion', 'Pregunta', 'opcionesCompleja'
+        fields = 'Votacion', 'Pregunta',
         # exclude = ('seleccionSimple',)
         labels = {'user': (''), 'Votacion': (''), 'Pregunta': (''), 'opcionesCompleja': ('Respuesta') }
         widgets = {'Votacion': forms.Select(
