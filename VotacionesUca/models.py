@@ -129,5 +129,8 @@ class UsuarioVotacion(models.Model):
         return super(UsuarioVotacion, self).save(*args, **kwargs)
 
 class Eleccion(ProcesoElectoral):
-    max_vacantes = models.IntegerField(default=0.7)
+    max_candidatos = models.IntegerField(default=2)
+    max_vacantes = models.FloatField(default=0.7)
     tipo_eleccion = models.BooleanField(default=False)
+    #usuario = models.OneToOneField(UsuarioUca)
+    #censo = models.OneToOneField(Censo)
