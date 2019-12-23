@@ -42,25 +42,25 @@ class OpcionesComplejaForm(forms.ModelForm):
     class Meta:
         model = OpcionesCompleja
         fields = ('__all__')
-        labels = {'pregunta': ('Pregunta'), 'respuesta': ('respuesta') }
+        # labels = {'pregunta': ('Pregunta'), 'respuesta': ('respuesta') }
+        #
+        #
+        # widgets = {'respuesta': forms.SelectMultiple(attrs={'class': 'form-control'}),
+        #            'pregunta': forms.Select(attrs={'class': 'form-control'}),
+        #            }
 
-
-        widgets = {'respuesta': forms.SelectMultiple(attrs={'class': 'form-control'}),
-                   'pregunta': forms.Select(attrs={'class': 'form-control'}),
-                   }
-
-class realizarVotacionForm(ModelForm):
-    # usuario = models.ForeignKey("auth.User", blank=True)
-    class Meta:
-        model = UsuarioVotacion
-        fields = 'user', 'Votacion', 'Pregunta', 'seleccion'
-        labels = {'user': (''), 'Votacion': (''),'Pregunta': (''), 'seleccion': ('Respuesta'),}
-        widgets = {'user': forms.Select(
-            attrs={'class': 'form-control', }),
-                   'Votacion': forms.Select(attrs={ 'class': 'form-control', }),
-                   'Pregunta': forms.Select(attrs={'class': 'form-control', }),
-                   'seleccion': forms.Select(attrs={'class': 'form-control'}),
-                   }
+# class realizarVotacionForm(ModelForm):
+#     # usuario = models.ForeignKey("auth.User", blank=True)
+#     class Meta:
+#         model = UsuarioVotacion
+#         fields = 'user', 'Votacion', 'Pregunta', 'seleccion'
+#         labels = {'user': (''), 'Votacion': (''),'Pregunta': (''), 'seleccion': ('Respuesta'),}
+#         widgets = {'user': forms.Select(
+#             attrs={'class': 'form-control', }),
+#                    'Votacion': forms.Select(attrs={ 'class': 'form-control', }),
+#                    'Pregunta': forms.Select(attrs={'class': 'form-control', }),
+#                    'seleccion': forms.Select(attrs={'class': 'form-control'}),
+#                    }
 
 class VotacionForm(ProcesoElectoralForm):
     voto_restringido = forms.BooleanField(required=False)
@@ -103,6 +103,8 @@ class createCensoForm(ModelForm):
 
 class realizarVotacionForm(ModelForm):
     # usuario = models.ForeignKey("auth.User", blank=True)
+    CHOICES = (('SI', 'SI'), ('NO', 'NO'), ('ABSTENCIÓN', 'ABSTENCIÓN'))
+    seleccion = forms.ChoiceField(choices=CHOICES)
     class Meta:
         model = UsuarioVotacion
         fields = 'user', 'Votacion', 'Pregunta', 'seleccion'
@@ -128,9 +130,34 @@ class realizarVotacionForm(ModelForm):
     #         self.fields['Pregunta'].queryset = self.instance.Votacion.Pregunta_set.order_by('enunciado')
 
 
+class realizarVotacionComplejaForm(ModelForm):
+    # usuario = models.ForeignKey("auth.User", blank=True)
+    # def __init__(self, *args, **kwargs):
+    #     super(realizarVotacionComplejaForm, self).__init__(*args, **kwargs)
+    #
+    #     choices = [(OpcionesCompleja.respuesta)
+    #                for OpcionesCompleja.respuesta in OpcionesCompleja.objects.all()]
+    #
+    #     self.fields['opcionesCompleja'] = forms.ChoiceField(widget=forms.RadioSelect(),
+    #                                                           choices=choices)
+
+    class Meta:
+
+        model = UsuarioVotacion
+        fields = 'Votacion', 'Pregunta', 'opcionesCompleja'
+        exclude = ('seleccionSimple',)
+        labels = {'user': (''), 'Votacion': (''),'Pregunta': ('')}
+        widgets = {'user': forms.Select(
+            attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
+                   'Votacion': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
+                   'Pregunta': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
+                   'seleccion': forms.Select(attrs={'class': 'form-control'}),
+                   }
+
+
 class PreguntaForm(BSModalForm):
     class Meta:
-        model = Pregunta
+        model = Votacion
         fields = ('__all__')
 
 
@@ -138,9 +165,10 @@ class PreguntaForm(BSModalForm):
 class PreguntaFormVotacion(ModelForm):
     class Meta:
         model = Pregunta
-        fields = ('Votacion', 'enunciado', 'tipo_votacion' )
-        # labels = {'Votacion': ('')}
-        # widgets = {'Votacion': forms.Select(
-        # attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
-        #         'Votacion': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
-        #         }
+        fields = 'Votacion', 'tipo_votacion', 'enunciado',
+        labels = {'Votacion': (''), 'enunciado': ('Enunciado'), }
+        # widgets = {
+        #     attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
+        #     'Votacion': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', })}
+            # 'tipo_votacion': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
+            # 'seleccion': forms.Select(attrs={'class': 'form-control'}),

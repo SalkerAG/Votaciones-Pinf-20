@@ -85,14 +85,20 @@ class OpcionesCompleja(models.Model):
     # enunciado = models.CharField(max_length=50)
     respuesta = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.respuesta
+
+    def __unicode__(self):
+        return self.respuesta
+
 
 
 class UsuarioVotacion(models.Model):
-    RESPUESTA_CHOICES = (
-        ("SI", "SI"),
-        ("NO", "NO"),
-        ("ABSTENCIÓN", "ABSTENCIÓN"),
-    )
+    # RESPUESTA_CHOICES = (
+    #     ("SI", "SI"),
+    #     ("NO", "NO"),
+    #     ("ABSTENCIÓN", "ABSTENCIÓN"),
+    # )
 
     user = models.ForeignKey(UsuarioUca, on_delete=models.PROTECT, null=True)
 
@@ -100,7 +106,10 @@ class UsuarioVotacion(models.Model):
 
     Pregunta = models.OneToOneField(Pregunta, on_delete=models.PROTECT, primary_key=True)
 
-    seleccion = models.CharField(max_length=10, choices=RESPUESTA_CHOICES, default="SI")
+    seleccion = models.CharField(max_length=20, null=True)
+
+
+    opcionesCompleja = models.ForeignKey(OpcionesCompleja, on_delete=models.PROTECT, null=True)
 
     def get_absolute_url(self):
         return reverse('home')
