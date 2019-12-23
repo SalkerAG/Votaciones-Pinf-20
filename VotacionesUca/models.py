@@ -85,8 +85,8 @@ class OpcionesCompleja(models.Model):
     # enunciado = models.CharField(max_length=50)
     respuesta = models.CharField(max_length=50)
 
-    def __str__(self):
-        return self.respuesta
+    # def __str__(self):
+    #     return self.respuesta
 
     def __unicode__(self):
         return self.respuesta

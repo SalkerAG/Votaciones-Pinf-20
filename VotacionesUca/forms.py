@@ -39,6 +39,7 @@ class OpcionesSimpleForm(forms.ModelForm):
 
 
 class OpcionesComplejaForm(forms.ModelForm):
+    # respuesta= forms.ModelChoiceField(queryset=OpcionesCompleja.objects.all())
     class Meta:
         model = OpcionesCompleja
         fields = ('__all__')
@@ -48,6 +49,7 @@ class OpcionesComplejaForm(forms.ModelForm):
         # widgets = {'respuesta': forms.SelectMultiple(attrs={'class': 'form-control'}),
         #            'pregunta': forms.Select(attrs={'class': 'form-control'}),
         #            }
+
 
 # class realizarVotacionForm(ModelForm):
 #     # usuario = models.ForeignKey("auth.User", blank=True)
@@ -103,18 +105,19 @@ class createCensoForm(ModelForm):
 
 class realizarVotacionForm(ModelForm):
     # usuario = models.ForeignKey("auth.User", blank=True)
-    CHOICES = (('SI', 'SI'), ('NO', 'NO'), ('ABSTENCIÓN', 'ABSTENCIÓN'))
+    CHOICES = (('Si', 'Si'), ('No', 'No'), ('Abstención', 'Abstención'))
     seleccion = forms.ChoiceField(choices=CHOICES)
+
     class Meta:
         model = UsuarioVotacion
         fields = 'user', 'Votacion', 'Pregunta', 'seleccion'
-        labels = {'user': (''), 'Votacion': (''),'Pregunta': (''), 'seleccion': ('Respuesta'),}
+        labels = {'user': (''), 'Votacion': (''), 'Pregunta': (''), 'seleccion': ('Respuesta'), }
         widgets = {'user': forms.Select(
             attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
-                   'Votacion': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
-                   'Pregunta': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
-                   'seleccion': forms.Select(attrs={'class': 'form-control'}),
-                   }
+            'Votacion': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
+            'Pregunta': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
+            'seleccion': forms.Select(attrs={'class': 'form-control'}),
+        }
 
     # def _init_(self, *args, **kwargs):
     #     super()._init_(*args, **kwargs)
@@ -140,26 +143,29 @@ class realizarVotacionComplejaForm(ModelForm):
     #
     #     self.fields['opcionesCompleja'] = forms.ChoiceField(widget=forms.RadioSelect(),
     #                                                           choices=choices)
+    qs = OpcionesCompleja.objects.all().values_list('respuesta', flat=True)
+    print(qs)
+    opcionesCompleja = forms.ModelChoiceField(qs)
 
     class Meta:
-
         model = UsuarioVotacion
         fields = 'Votacion', 'Pregunta', 'opcionesCompleja'
         exclude = ('seleccionSimple',)
-        labels = {'user': (''), 'Votacion': (''),'Pregunta': ('')}
+        labels = {'user': (''), 'Votacion': (''), 'Pregunta': ('')}
         widgets = {'user': forms.Select(
             attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
-                   'Votacion': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
-                   'Pregunta': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
-                   'seleccion': forms.Select(attrs={'class': 'form-control'}),
-                   }
+            'Votacion': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
+            'Pregunta': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
+            'seleccion': forms.Select(attrs={'class': 'form-control'}),
+            'opcionesCompleja': forms.SelectMultiple(attrs={'class': 'form-control'}),
+        }
+
 
 
 class PreguntaForm(BSModalForm):
     class Meta:
         model = Votacion
         fields = ('__all__')
-
 
 
 class PreguntaFormVotacion(ModelForm):
@@ -170,5 +176,5 @@ class PreguntaFormVotacion(ModelForm):
         # widgets = {
         #     attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
         #     'Votacion': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', })}
-            # 'tipo_votacion': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
-            # 'seleccion': forms.Select(attrs={'class': 'form-control'}),
+        # 'tipo_votacion': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
+        # 'seleccion': forms.Select(attrs={'class': 'form-control'}),

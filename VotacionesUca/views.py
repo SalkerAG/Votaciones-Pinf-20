@@ -208,6 +208,8 @@ class CrearPreguntaComplejaView(CreateView):
         form = OpcionesComplejaForm()
         return render(self, 'home.html', {'form': form, })
 
+  
+
 
 # class CrearPreguntaSimpleView(CreateView):
 #     model = OpcionesSimple
