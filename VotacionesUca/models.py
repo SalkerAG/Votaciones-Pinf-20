@@ -29,7 +29,7 @@ class Votacion(ProcesoElectoral):
         return self.nombre_votacion
 
 class Opcion(models.Model):
-    respuesta = models.CharField(max_length=50)
+    respuesta = models.CharField(max_length=50, null=True)
     def __str__(self):
         return self.respuesta
 
@@ -56,10 +56,19 @@ class Pregunta(models.Model):
     # def get_absolute_url(self):
     #     return reverse('crearpreguntasimple')
 
+class Eleccion(ProcesoElectoral):
+    nombre = models.CharField(max_length=50)
+    max_candidatos = models.IntegerField(default=2)
+    max_vacantes = models.FloatField(default=0.7)
+    tipo_eleccion = models.BooleanField(default=False)
+    #usuario = models.OneToOneField(UsuarioUca)
+    #censo = models.OneToOneField(Censo)
+
 
 class Censo(models.Model):
     usuario = models.ManyToManyField(UsuarioUca, blank=False)
-    pregunta = models.OneToOneField(Pregunta, on_delete=models.PROTECT)
+    pregunta = models.OneToOneField(Pregunta, on_delete=models.PROTECT, blank=False)
+    eleccion = models.OneToOneField(Eleccion, on_delete=models.PROTECT, null=True)
 
 
 
@@ -127,10 +136,3 @@ class UsuarioVotacion(models.Model):
                  row.delete()
 
         return super(UsuarioVotacion, self).save(*args, **kwargs)
-
-class Eleccion(ProcesoElectoral):
-    max_candidatos = models.IntegerField(default=2)
-    max_vacantes = models.FloatField(default=0.7)
-    tipo_eleccion = models.BooleanField(default=False)
-    #usuario = models.OneToOneField(UsuarioUca)
-    #censo = models.OneToOneField(Censo)

@@ -319,4 +319,4 @@ class CrearEleccionView(CreateView):
     model = Eleccion
     form_class = EleccionForm
     def get_success_url(self):
-        return reverse('home')
+        return reverse('censo_create')
