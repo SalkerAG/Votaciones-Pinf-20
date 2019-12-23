@@ -63,12 +63,14 @@ class Eleccion(ProcesoElectoral):
     tipo_eleccion = models.BooleanField(default=False)
     #usuario = models.OneToOneField(UsuarioUca)
     #censo = models.OneToOneField(Censo)
+    def __str__(self):
+        return self.nombre
 
 
 class Censo(models.Model):
     usuario = models.ManyToManyField(UsuarioUca, blank=False)
-    pregunta = models.OneToOneField(Pregunta, on_delete=models.PROTECT, blank=False)
-    eleccion = models.OneToOneField(Eleccion, on_delete=models.PROTECT, null=True)
+    pregunta = models.OneToOneField(Pregunta, on_delete=models.PROTECT, null=True, blank=True)
+    eleccion = models.OneToOneField(Eleccion, on_delete=models.PROTECT, null=True, blank=True)
 
 
 
