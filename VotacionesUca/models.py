@@ -2,10 +2,10 @@ from django.db import models, transaction
 from django.db.models import Count
 from django.urls import reverse
 
-
 from django.utils import timezone
 
 from UsuarioUca.models import UsuarioUca
+
 
 class ProcesoElectoral(models.Model):
     voto_restringido = models.BooleanField(default=False)
@@ -17,10 +17,12 @@ class ProcesoElectoral(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     es_consulta = models.BooleanField(default=False)
 
+
 class Votacion(ProcesoElectoral):
     nombre_votacion = models.CharField(max_length=50, null=True)
     es_presencial = models.BooleanField(default=False)
     voto_rectificable = models.BooleanField(default=False)
+
     # tipo_votacion = models.BooleanField(default=False)
     # max_respuestas = models.IntegerField()
     # pregunta = models.OneToOneField(Pregunta, on_delete=models.CASCADE, null=True, blank=True)
@@ -28,10 +30,13 @@ class Votacion(ProcesoElectoral):
     def __str__(self):
         return self.nombre_votacion
 
+
 class Opcion(models.Model):
     respuesta = models.CharField(max_length=50)
+
     def __str__(self):
         return self.respuesta
+
 
 class Pregunta(models.Model):
     TIPO_CHOICES = (
@@ -43,12 +48,12 @@ class Pregunta(models.Model):
     Votacion = models.OneToOneField(Votacion, on_delete=models.PROTECT)
     tipo_votacion = models.CharField(max_length=10, choices=TIPO_CHOICES, default="Simple")
     enunciado = models.CharField(max_length=50)
+
     # opciones = models.ManyToManyField(Opcion, blank=False)
 
     def __str__(self):
         return self.enunciado
 
-    
     # curso_max = models.IntegerField(blank=False, null=False, default=1, choices=list(zip(range(1, 5), range(1, 5))))
 
     # class PreguntaSimple(OpcionesSimple):
@@ -57,22 +62,27 @@ class Pregunta(models.Model):
     #     return reverse('crearpreguntasimple')
 
 class Eleccion(ProcesoElectoral):
+    TIPO_ELECCION = (
+        ("0", "Grupos"),
+        ("1", "Unipersonales"),
+
+    )
     nombre = models.CharField(max_length=50)
     max_candidatos = models.IntegerField(default=2)
     max_vacantes = models.FloatField(default=0.7)
-    tipo_eleccion = models.BooleanField(default=False)
-    #usuario = models.OneToOneField(UsuarioUca)
-    #censo = models.OneToOneField(Censo)
+    tipo_eleccion = models.CharField(max_length=10, choices=TIPO_ELECCION, default="Simple")
+
+    # usuario = models.OneToOneField(UsuarioUca)
+    # censo = models.OneToOneField(Censo)
     def __str__(self):
         return self.nombre
+
+
 
 class Censo(models.Model):
     eleccion = models.OneToOneField(Eleccion, on_delete=models.PROTECT, null=True)
     usuario = models.ManyToManyField(UsuarioUca, blank=False)
     pregunta = models.OneToOneField(Pregunta, on_delete=models.PROTECT)
-
-
-
 
 
 # class OpcionesSimple(models.Model):
@@ -103,7 +113,6 @@ class OpcionesCompleja(models.Model):
         return self.respuesta
 
 
-
 class UsuarioVotacion(models.Model):
     # RESPUESTA_CHOICES = (
     #     ("SI", "SI"),
@@ -119,7 +128,6 @@ class UsuarioVotacion(models.Model):
 
     seleccion = models.CharField(max_length=20, null=True)
 
-
     # opcionesCompleja = models.ForeignKey(OpcionesCompleja, on_delete=models.PROTECT, null=True)
 
     def get_absolute_url(self):
@@ -133,12 +141,26 @@ class UsuarioVotacion(models.Model):
         # records = UsuarioVotacion.objects.filter(Votacion=[item['Votacion'] for item in duplicates])
         # print([item.id for item in records])
         for row in UsuarioVotacion.objects.all():
-            if UsuarioVotacion.objects.filter(Votacion_id=row.Votacion_id).count() > 1 and UsuarioVotacion.objects.filter(Pregunta_id=row.Pregunta_id).count() > 1 and UsuarioVotacion.objects.filter(user_id=row.user_id).count() > 1:
-                 row.delete()
+            if UsuarioVotacion.objects.filter(
+                    Votacion_id=row.Votacion_id).count() > 1 and UsuarioVotacion.objects.filter(
+                Pregunta_id=row.Pregunta_id).count() > 1 and UsuarioVotacion.objects.filter(
+                user_id=row.user_id).count() > 1:
+                row.delete()
 
         return super(UsuarioVotacion, self).save(*args, **kwargs)
 
 
 
+
+class Personas(models.Model):
+    nombre = models.CharField(max_length=20)
+
+
+class UsuarioEleccion(models.Model):
+    user = models.ForeignKey(UsuarioUca, on_delete=models.PROTECT, null=True)
+
+    Eleccion = models.ForeignKey(Eleccion,on_delete=models.PROTECT, null=True)
+
+    seleccion = models.CharField(max_length=20, null=True)
 
 

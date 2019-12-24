@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.views.generic import TemplateView, FormView, CreateView, DetailView
 from django.views.generic.list import ListView
 from import_export import resources
-from django.http import HttpRequest as request, HttpResponseRedirect
+from django.http import HttpRequest as request, HttpResponseRedirect, HttpResponse
 from odf import form
 
 from UsuarioUca.admin import UsuarioUcaResource
@@ -14,9 +14,9 @@ from UsuarioUca.import_export_views import ImportView
 from UsuarioUca.models import UsuarioUca
 from VotacionesUca.admin import CensoResource
 from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, Censo, \
-    UsuarioVotacion, OpcionesCompleja
+    UsuarioVotacion, OpcionesCompleja, UsuarioEleccion
 from .forms import VotacionForm, PreguntaForm, createCensoForm, PreguntaFormVotacion, \
-    realizarVotacionForm, OpcionesComplejaForm, realizarVotacionComplejaForm, EleccionForm
+    realizarVotacionForm, OpcionesComplejaForm, realizarVotacionComplejaForm, EleccionForm, realizarEleccionForm
 from django.shortcuts import render, redirect
 import datetime
 import csv
@@ -259,12 +259,12 @@ class VotacionView(FormMixin, DetailView, request):
     # def post(self, request, *args, **kwargs):
     #     self.object = self.get_object()
     #     form = self.get_form()
-    #     usuario_votacion = UsuarioVotacion()
-    #     usuario_votacion.seleccion = form.data['seleccion']
-    #     usuario_votacion.user = self.request.user
-    #     usuario_votacion.Votacion = self.object
-    #     usuario_votacion.Pregunta = self.object.pregunta
-    #     usuario_votacion.save()
+    #     usuario_eleccion = UsuarioVotacion()
+    #     usuario_eleccion.seleccion = form.data['seleccion']
+    #     usuario_eleccion.user = self.request.user
+    #     usuario_eleccion.Votacion = self.object
+    #     usuario_eleccion.Pregunta = self.object.pregunta
+    #     usuario_eleccion.save()
     #     return reverse('home')
 
     # def post(self, request, *args, **kwargs):
@@ -282,29 +282,28 @@ class VotacionView(FormMixin, DetailView, request):
         self.object = self.get_object()
         # print(self.object)
         form = self.get_form()
-        usuario_votacion = UsuarioVotacion()
+        usuario_eleccion = UsuarioVotacion()
 
-        usuario_votacion.user = self.request.user
-        usuario_votacion.Votacion = self.object
-        usuario_votacion.Pregunta = self.object.pregunta
+        usuario_eleccion.user = self.request.user
+        usuario_eleccion.Votacion = self.object
+        usuario_eleccion.Pregunta = self.object.pregunta
 
-        if usuario_votacion.Pregunta.tipo_votacion == '1':
+        if usuario_eleccion.Pregunta.tipo_votacion == '1':
 
-            usuario_votacion.seleccion = form.data['opcionesCompleja']
+            usuario_eleccion.seleccion = form.data['opcionesCompleja']
 
         else:
-            usuario_votacion.seleccion = form.data['seleccion']
-        # if (usuario_votacion.seleccion == 'Si'):
-
+            usuario_eleccion.seleccion = form.data['seleccion']
+        # if (usuario_eleccion.seleccion == 'Si'):
 
         qss = Censo.objects.all().values_list('usuario', flat=True)
-        print(qss)
-        if  qss.filter(usuario=self.request.user).exists():
+        # print(qss)
+        if qss.filter(usuario=self.request.user).exists():
             # print("hola")
-            usuario_votacion.save()
+            usuario_eleccion.save()
         else:
             return HttpResponseRedirect('/errorVotacion')
-        # usuario_votacion.save()
+        # usuario_eleccion.save()
         # def save(self, commit=True):
         #     Usu = super(VotacionView, self).save(commit=True)
         #     # if user.nif[1] == 'u':
@@ -318,6 +317,114 @@ class VotacionView(FormMixin, DetailView, request):
     def form_valid(self, form):
         form.save()
         return super(VotacionView, self).form_valid(form)
+
+
+class EleccionView(FormMixin, DetailView, request):
+    model = Eleccion
+    form_class = realizarEleccionForm
+    template_name = "RealizarEleccion.html"
+
+    success_url = reverse_lazy('home')
+
+    # def add_opcionescomplejas(request):
+    #     objectlist = OpcionesCompleja.objects.values('respuesta')
+    #     if request.method == 'POST':
+    #         form = realizarVotacionForm(request.POST)
+    #         if form.is_valid():
+    #             form.save()
+    #             return redirect('home')
+    #     else:
+    #         form = realizarVotacionForm()
+    #     return render(request, 'RealizarVotacion.html', {'form': form, 'objectlist': objectlist})
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def get_success_url(self):
+        return reverse('home')
+
+    # def get(self, request, *args, **kwargs):
+    #     qss = Censo.objects.all().values_list('usuario', flat=True)
+    #     print (qss)
+    #     if not qss.filter(usuario=self.request.user).exists():
+    #         print("hola")
+    #         return HttpResponseRedirect('/errorVotacion')
+    #     else:
+    #         return render(request, self.template_name)
+
+    def get_context_data(self, **kwargs):
+        context = super(EleccionView, self).get_context_data(**kwargs)
+        cosas = self
+
+        # if self.object.pregunta.tipo_votacion == '0':
+        context['form'] = realizarEleccionForm(
+            initial={'user': self.request.user, 'Eleccion': self.object})
+        return context
+        # else:
+        #     context['form'] = realizarVotacionComplejaForm(
+        #         initial={'user': self.request.user, 'Votacion': self.object, 'Pregunta': self.object.pregunta})
+        #     return context
+
+    # def post(self, request, *args, **kwargs):
+    #     self.object = self.get_object()
+    #     form = self.get_form()
+    #     usuario_eleccion = UsuarioVotacion()
+    #     usuario_eleccion.seleccion = form.data['seleccion']
+    #     usuario_eleccion.user = self.request.user
+    #     usuario_eleccion.Votacion = self.object
+    #     usuario_eleccion.Pregunta = self.object.pregunta
+    #     usuario_eleccion.save()
+    #     return reverse('home')
+
+    # def post(self, request, *args, **kwargs):
+    #     self.object = self.get_object()
+    #     form = self.get_form()
+    #     if form.is_valid():
+    #         self.form_valid(form)
+    #         return HttpResponseRedirect('home')
+    #     else:
+    #         self.form_invalid(form)
+    #         return HttpResponseRedirect('home')
+
+    def post(self, request, *args, **kwargs):
+
+        self.object = self.get_object()
+        # print(self.object)
+        form = self.get_form()
+        usuario_eleccion = UsuarioEleccion()
+
+        usuario_eleccion.user = self.request.user
+        usuario_eleccion.Eleccion = self.object
+
+        print(usuario_eleccion.Eleccion.tipo_eleccion)
+        if usuario_eleccion.Eleccion.tipo_eleccion == '1':
+            print ('hola')
+            usuario_eleccion.seleccion = form.data['seleccion']
+
+        # else:
+        #     usuario_eleccion.seleccion = form.data['seleccion']
+        # if (usuario_eleccion.seleccion == 'Si'):
+
+        # qss = Person.objects.all().values_list('usuario', flat=True)
+        # print(qss)
+        # if qss.filter(usuario=self.request.user).exists():
+            # print("hola")
+        usuario_eleccion.save()
+        # else:
+        #     return HttpResponseRedirect('/errorVotacion')
+        # usuario_eleccion.save()
+        # def save(self, commit=True):
+        #     Usu = super(VotacionView, self).save(commit=True)
+        #     # if user.nif[1] == 'u':
+        #     #     raise forms.ValidationError("Nif incorrecto")
+        #
+        #     if commit:
+        #         UsuarioVotacion.save()
+        #     return Usu
+        return HttpResponseRedirect('/')
+
+    def form_valid(self, form):
+        form.save()
+        return super(EleccionView, self).form_valid(form)
 
 
 class VotacionComplejaView(FormView):
@@ -352,6 +459,7 @@ class ErrorVotacionView(TemplateView):
 
     # def get(self, request, *args, **kwargs):
     #     return HttpResponseRedirect('/')
+
 
 class ExitoCensoVotacionView(TemplateView):
     template_name = 'ErrorVotacion.html'

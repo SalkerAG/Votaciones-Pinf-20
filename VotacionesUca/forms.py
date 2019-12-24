@@ -4,7 +4,8 @@ from django.core.exceptions import ValidationError
 from django import forms
 from django.utils import timezone
 from datetime import datetime
-from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, Censo, UsuarioVotacion, OpcionesCompleja
+from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, Censo, UsuarioVotacion, OpcionesCompleja, \
+    UsuarioEleccion, Personas
 from bootstrap_modal_forms.forms import BSModalForm
 
 
@@ -183,8 +184,25 @@ class PreguntaFormVotacion(ModelForm):
 
 class EleccionForm(ProcesoElectoralForm):
     nombre= forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Título de la elección'}))
-    c=[('0','Grupos'),('1','Unipersonales')]
-    tipo_eleccion=forms.ChoiceField(choices=c)
+    # c=[('0','Grupos'),('1','Unipersonales')]
+    # tipo_eleccion=forms.ChoiceField(choices=c)
     class Meta:
         model = Eleccion
         fields = '__all__'
+
+class realizarEleccionForm(ModelForm):
+    qs = Personas.objects.all().values_list('nombre', flat=True)
+    seleccion = forms.ModelChoiceField(qs, label='seleccion:')
+
+    class Meta:
+        model = UsuarioEleccion
+        fields = 'seleccion',
+
+        labels = {'user': (''), 'Eleccion': (''),}
+        widgets = {'Votacion': forms.Select(
+            attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
+            'Votacion': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
+            'Pregunta': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
+            'seleccion': forms.Select(attrs={'class': 'form-control'}),
+            # 'opcionesCompleja': forms.Select(attrs={'class': 'form-control'}),
+        }

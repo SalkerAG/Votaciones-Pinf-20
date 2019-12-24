@@ -6,11 +6,12 @@ from .views import CrearVotacionView, VotacionView, \
     CrearPregunta, CrearCensoView, CensoDetailView, CensoExportView, \
     CrearPreguntaVotacion, CrearPreguntaViewCenso, CrearPreguntaViewVotacion, \
     CrearPreguntaViewRealizarVotacion, load_preguntas, CrearPreguntaComplejaView, CrearEleccionView, ErrorVotacionView, \
-    ExitoCensoVotacionView
+    ExitoCensoVotacionView, EleccionView
 
 urlpatterns = [
     path('crearVotacion/', CrearVotacionView.as_view(), name="crearvotacion"),
     path('votacion/<slug:pk>', VotacionView.as_view(), name="votacion"),
+    path('eleccion/<slug:pk>', EleccionView.as_view(), name="votacion"),
     path('crearpreguntacompleja/', CrearPreguntaComplejaView.as_view(), name="crearpreguntacompleja"),
     # path('crearpreguntasimple/', CrearPreguntaSimpleView.as_view(), name="crearpreguntasimple"),
     path('crearpreguntavotacion/', CrearPreguntaVotacion.as_view(), name="crearpreguntavotacion"),
@@ -27,7 +28,6 @@ urlpatterns = [
     path('creareleccion/', CrearEleccionView.as_view(), name='create_eleccion'),
     path('errorVotacion/', ErrorVotacionView.as_view(), name='errorvotacion'),
     path('exitocensovotacion/', ExitoCensoVotacionView.as_view(), name='exitocensovotacion'),
-
 
     # path('votacionCompleja/', VotacionComplejaView.as_view(), name="votacioncompleja")
 ]
