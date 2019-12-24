@@ -188,7 +188,10 @@ class CrearPreguntaComplejaView(CreateView):
     model = OpcionesCompleja
     form_class = OpcionesComplejaForm
     template_name = 'CrearVotacionCompleja.html'
-    success_url = '/crearpreguntacompleja'
+    #success_url = '/crearpreguntacompleja'
+
+    def get_success_url(self):
+            return reverse('home')
 
     def _init_(self, **kwargs):
         super()._init_(**kwargs)
