@@ -234,14 +234,14 @@ class VotacionView(FormMixin, DetailView, request):
     def get_success_url(self):
         return reverse('home')
 
-    def get(self, request, *args, **kwargs):
-        qss = Censo.objects.all().values_list('usuario', flat=True)
-        print (qss)
-        if not qss.filter(usuario=self.request.user).exists():
-            print("hola")
-            return HttpResponseRedirect('/errorVotacion')
-        else:
-            return render(request, self.template_name)
+    # def get(self, request, *args, **kwargs):
+    #     qss = Censo.objects.all().values_list('usuario', flat=True)
+    #     print (qss)
+    #     if not qss.filter(usuario=self.request.user).exists():
+    #         print("hola")
+    #         return HttpResponseRedirect('/errorVotacion')
+    #     else:
+    #         return render(request, self.template_name)
 
     def get_context_data(self, **kwargs):
         context = super(VotacionView, self).get_context_data(**kwargs)
@@ -295,7 +295,16 @@ class VotacionView(FormMixin, DetailView, request):
         else:
             usuario_votacion.seleccion = form.data['seleccion']
         # if (usuario_votacion.seleccion == 'Si'):
-        usuario_votacion.save()
+
+
+        qss = Censo.objects.all().values_list('usuario', flat=True)
+        print(qss)
+        if  qss.filter(usuario=self.request.user).exists():
+            # print("hola")
+            usuario_votacion.save()
+        else:
+            return HttpResponseRedirect('/errorVotacion')
+        # usuario_votacion.save()
         # def save(self, commit=True):
         #     Usu = super(VotacionView, self).save(commit=True)
         #     # if user.nif[1] == 'u':
