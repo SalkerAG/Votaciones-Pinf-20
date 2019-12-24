@@ -88,6 +88,7 @@ class VotacionForm(ProcesoElectoralForm):
         return self.cleaned_data
 
 
+
 class createCensoForm(ModelForm):
     class Meta:
         model = Censo
@@ -168,6 +169,7 @@ class PreguntaForm(BSModalForm):
         fields = ('__all__')
 
 
+
 class PreguntaFormVotacion(ModelForm):
     class Meta:
         model = Pregunta
@@ -178,3 +180,11 @@ class PreguntaFormVotacion(ModelForm):
         #     'Votacion': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', })}
         # 'tipo_votacion': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
         # 'seleccion': forms.Select(attrs={'class': 'form-control'}),
+
+class EleccionForm(ProcesoElectoralForm):
+    nombre= forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Título de la elección'}))
+    c=[('0','Grupos'),('1','Unipersonales')]
+    tipo_eleccion=forms.ChoiceField(choices=c)
+    class Meta:
+        model = Eleccion
+        fields = '__all__'

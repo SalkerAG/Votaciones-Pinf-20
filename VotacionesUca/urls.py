@@ -4,8 +4,9 @@ from django.urls import path, include
 from UsuarioUca.views import HomeView
 from .views import CrearVotacionView, VotacionView, \
     CrearPregunta, CrearCensoView, CensoDetailView, CensoExportView, \
-    CrearPreguntaVotacion,  CrearPreguntaViewCenso, CrearPreguntaViewVotacion, \
-    CrearPreguntaViewRealizarVotacion, load_preguntas, CrearPreguntaComplejaView
+    CrearPreguntaVotacion, CrearPreguntaViewCenso, CrearPreguntaViewVotacion, \
+    CrearPreguntaViewRealizarVotacion, load_preguntas, CrearPreguntaComplejaView, CrearEleccionView, ErrorVotacionView, \
+    ExitoCensoVotacionView
 
 urlpatterns = [
     path('crearVotacion/', CrearVotacionView.as_view(), name="crearvotacion"),
@@ -23,5 +24,10 @@ urlpatterns = [
     path('realizarvotacion/<int:pk>', VotacionView.as_view(), name='realizarvotacion'),
     path('', HomeView.as_view(), name="home"),
     path('ajax/load-preguntas/', load_preguntas, name='ajax_load_preguntas'),
+    path('creareleccion/', CrearEleccionView.as_view(), name='create_eleccion'),
+    path('errorVotacion/', ErrorVotacionView.as_view(), name='errorvotacion'),
+    path('exitocensovotacion/', ExitoCensoVotacionView.as_view(), name='exitocensovotacion'),
+
+
     # path('votacionCompleja/', VotacionComplejaView.as_view(), name="votacioncompleja")
 ]

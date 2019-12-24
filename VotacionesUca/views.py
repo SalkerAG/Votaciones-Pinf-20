@@ -7,6 +7,8 @@ from django.views.generic import TemplateView, FormView, CreateView, DetailView
 from django.views.generic.list import ListView
 from import_export import resources
 from django.http import HttpRequest as request, HttpResponseRedirect
+from odf import form
+
 from UsuarioUca.admin import UsuarioUcaResource
 from UsuarioUca.import_export_views import ImportView
 from UsuarioUca.models import UsuarioUca
@@ -14,7 +16,7 @@ from VotacionesUca.admin import CensoResource
 from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, Censo, \
     UsuarioVotacion, OpcionesCompleja
 from .forms import VotacionForm, PreguntaForm, createCensoForm, PreguntaFormVotacion, \
-    realizarVotacionForm, OpcionesComplejaForm, realizarVotacionComplejaForm
+    realizarVotacionForm, OpcionesComplejaForm, realizarVotacionComplejaForm, EleccionForm
 from django.shortcuts import render, redirect
 import datetime
 import csv
@@ -213,6 +215,7 @@ class VotacionView(FormMixin, DetailView, request):
     model = Votacion
     form_class = realizarVotacionForm
     template_name = "RealizarVotacion.html"
+
     success_url = reverse_lazy('home')
 
     # def add_opcionescomplejas(request):
@@ -225,8 +228,20 @@ class VotacionView(FormMixin, DetailView, request):
     #     else:
     #         form = realizarVotacionForm()
     #     return render(request, 'RealizarVotacion.html', {'form': form, 'objectlist': objectlist})
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
     def get_success_url(self):
         return reverse('home')
+
+    def get(self, request, *args, **kwargs):
+        qss = Censo.objects.all().values_list('usuario', flat=True)
+        print (qss)
+        if not qss.filter(usuario=self.request.user).exists():
+            print("hola")
+            return HttpResponseRedirect('/errorVotacion')
+        else:
+            return render(request, self.template_name)
 
     def get_context_data(self, **kwargs):
         context = super(VotacionView, self).get_context_data(**kwargs)
@@ -291,7 +306,6 @@ class VotacionView(FormMixin, DetailView, request):
         #     return Usu
         return HttpResponseRedirect('/')
 
-
     def form_valid(self, form):
         form.save()
         return super(VotacionView, self).form_valid(form)
@@ -314,3 +328,24 @@ class ListaVotacionView(ListView):
         context = super().get_context_data(**kwargs)
         context['now'] = datetime.timezone.now()
         return context
+
+
+class CrearEleccionView(CreateView):
+    model = Eleccion
+    form_class = EleccionForm
+
+    def get_success_url(self):
+        return reverse('censo_create')
+
+
+class ErrorVotacionView(TemplateView):
+    template_name = 'ErrorVotacion.html'
+
+    # def get(self, request, *args, **kwargs):
+    #     return HttpResponseRedirect('/')
+
+class ExitoCensoVotacionView(TemplateView):
+    template_name = 'ErrorVotacion.html'
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponseRedirect('/')

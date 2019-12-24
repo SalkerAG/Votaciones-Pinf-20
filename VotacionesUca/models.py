@@ -56,8 +56,18 @@ class Pregunta(models.Model):
     # def get_absolute_url(self):
     #     return reverse('crearpreguntasimple')
 
+class Eleccion(ProcesoElectoral):
+    nombre = models.CharField(max_length=50)
+    max_candidatos = models.IntegerField(default=2)
+    max_vacantes = models.FloatField(default=0.7)
+    tipo_eleccion = models.BooleanField(default=False)
+    #usuario = models.OneToOneField(UsuarioUca)
+    #censo = models.OneToOneField(Censo)
+    def __str__(self):
+        return self.nombre
 
 class Censo(models.Model):
+    eleccion = models.OneToOneField(Eleccion, on_delete=models.PROTECT, null=True)
     usuario = models.ManyToManyField(UsuarioUca, blank=False)
     pregunta = models.OneToOneField(Pregunta, on_delete=models.PROTECT)
 
@@ -110,7 +120,7 @@ class UsuarioVotacion(models.Model):
     seleccion = models.CharField(max_length=20, null=True)
 
 
-    opcionesCompleja = models.ForeignKey(OpcionesCompleja, on_delete=models.PROTECT, null=True)
+    # opcionesCompleja = models.ForeignKey(OpcionesCompleja, on_delete=models.PROTECT, null=True)
 
     def get_absolute_url(self):
         return reverse('home')
@@ -132,8 +142,3 @@ class UsuarioVotacion(models.Model):
 
 
 
-class Eleccion(ProcesoElectoral):
-    nie = models.IntegerField()
-    max_vacantes = models.IntegerField()
-    tipo_eleccion = models.BooleanField(default=False)
-    censo = models.OneToOneField(Censo, on_delete=models.CASCADE)
