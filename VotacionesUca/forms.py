@@ -5,7 +5,7 @@ from django import forms
 from django.utils import timezone
 from datetime import datetime
 from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, Censo, UsuarioVotacion, OpcionesCompleja, \
-    UsuarioEleccion, Personas
+    UsuarioEleccion, Personas, Grupos
 from bootstrap_modal_forms.forms import BSModalForm
 
 
@@ -184,8 +184,8 @@ class PreguntaFormVotacion(ModelForm):
 
 class EleccionForm(ProcesoElectoralForm):
     nombre= forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Título de la elección'}))
-    # c=[('0','Grupos'),('1','Unipersonales')]
-    # tipo_eleccion=forms.ChoiceField(choices=c)
+    max_vacantes= forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Rellenar con un valor 0 a 1, válido solo para Grupos. Ej: 0.7'}))
+
     class Meta:
         model = Eleccion
         fields = '__all__'
@@ -237,4 +237,11 @@ class PersonaForm(ModelForm):
 
     class Meta:
         model = Personas
+        fields = '__all__'
+
+class PersonaGrupoForm(ModelForm):
+    nombre= forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre del elector'}))
+
+    class Meta:
+        model = Grupos
         fields = '__all__'

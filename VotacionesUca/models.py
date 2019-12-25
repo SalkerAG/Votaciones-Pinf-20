@@ -4,7 +4,7 @@ from django.forms import forms
 from django.urls import reverse
 
 from django.utils import timezone
-from localflavor.exceptions import ValidationError
+
 
 from UsuarioUca.models import UsuarioUca
 
@@ -121,6 +121,7 @@ class Eleccion(ProcesoElectoral):
 
     tipo_eleccion = models.CharField(max_length=10, choices=TIPO_ELECCION, default="Simple")
     max_candidatos = models.IntegerField(default=2)
+    max_vacantes = models.FloatField(null=True)
 
 
 
@@ -139,7 +140,7 @@ class Personas(models.Model):
     def clean_fields(self, exclude=None):
         # for row in Personas.objects.all():
         maxcandidatos = self.Eleccion.max_candidatos
-        if Personas.objects.filter(Eleccion_id=self.Eleccion_id).count() > maxcandidatos:
+        if Personas.objects.filter(Eleccion_id=self.Eleccion_id).count() > maxcandidatos-1:
             raise forms.ValidationError("Ha superado el numero de candidatos máximos")
         else:
             return super(Personas, self).save()
@@ -160,9 +161,19 @@ class Personas(models.Model):
 class Grupos(models.Model):
     Eleccion = models.ForeignKey(Eleccion, on_delete=models.PROTECT)
 
-    max_vacantes = models.FloatField(default=0.7)
 
-    nombre = models.CharField(max_length=20)
+
+    nombre = models.CharField(max_length=20, unique=True)
+
+    def clean_fields(self, exclude=None):
+        # for row in Personas.objects.all():
+
+        maxcandidatos = self.Eleccion.max_candidatos
+        print(maxcandidatos)
+        if Grupos.objects.filter(Eleccion_id=self.Eleccion_id).count() > maxcandidatos-1:
+            raise forms.ValidationError("Ha superado el numero de candidatos máximos")
+        else:
+            return super(Grupos, self).save()
 
 
 class UsuarioEleccion(models.Model):
