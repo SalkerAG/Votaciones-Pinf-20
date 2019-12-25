@@ -7,6 +7,9 @@ from django.utils import timezone
 from UsuarioUca.models import UsuarioUca
 
 
+
+
+
 class ProcesoElectoral(models.Model):
     voto_restringido = models.BooleanField(default=False)
     fecha_inicio = models.DateField()
@@ -61,53 +64,11 @@ class Pregunta(models.Model):
     # def get_absolute_url(self):
     #     return reverse('crearpreguntasimple')
 
-class Eleccion(ProcesoElectoral):
-    TIPO_ELECCION = (
-        ("0", "Grupos"),
-        ("1", "Unipersonales"),
-
-    )
-    nombre = models.CharField(max_length=50)
-    max_candidatos = models.IntegerField(default=2)
-    max_vacantes = models.FloatField(default=0.7)
-    tipo_eleccion = models.CharField(max_length=10, choices=TIPO_ELECCION, default="Simple")
-
-    # usuario = models.OneToOneField(UsuarioUca)
-    # censo = models.OneToOneField(Censo)
-    def __str__(self):
-        return self.nombre
-
-
-
-class Censo(models.Model):
-    eleccion = models.OneToOneField(Eleccion, on_delete=models.PROTECT, null=True)
-    usuario = models.ManyToManyField(UsuarioUca, blank=False)
-    pregunta = models.OneToOneField(Pregunta, on_delete=models.PROTECT)
-
-
-# class OpcionesSimple(models.Model):
-#     PREGUNTA_CHOICES = (
-#         ("SI", "SI"),
-#         ("NO", "NO"),
-#         ("ABSTENCIÓN", "ABSTENCIÓN"),
-#     )
-#
-#
-#     Pregunta = models.OneToOneField(Pregunta, on_delete=models.PROTECT, primary_key=True)
-#
-#     seleccion = models.CharField(max_length=10, choices=PREGUNTA_CHOICES, default="SI")
-#
-#     def get_absolute_url(self):
-#         return reverse('home')
-
 
 class OpcionesCompleja(models.Model):
     Pregunta = models.ForeignKey(Pregunta, on_delete=models.PROTECT)
     # enunciado = models.CharField(max_length=50)
     respuesta = models.CharField(max_length=50)
-
-    # def __str__(self):
-    #     return self.respuesta
 
     def __unicode__(self):
         return self.respuesta
@@ -150,9 +111,28 @@ class UsuarioVotacion(models.Model):
         return super(UsuarioVotacion, self).save(*args, **kwargs)
 
 
+class Eleccion(ProcesoElectoral):
+    nombre = models.CharField(max_length=50)
+
+    # usuario = models.OneToOneField(UsuarioUca)
+    # censo = models.OneToOneField(Censo)
+    def __str__(self):
+        return self.nombre
+
+
+class TipoEleccion(models.Model):
+    TIPO_ELECCION = (
+        ("0", "Grupos"),
+        ("1", "Unipersonales"),
+
+    )
+    Eleccion = models.OneToOneField(Eleccion, on_delete=models.PROTECT)
+    tipo_eleccion = models.CharField(max_length=10, choices=TIPO_ELECCION, default="Simple")
+    max_candidatos = models.IntegerField(default=2)
 
 
 class Personas(models.Model):
+    Eleccion = models.ForeignKey(Eleccion, on_delete=models.PROTECT)
     nombre = models.CharField(max_length=20)
 
     def __str__(self):
@@ -165,16 +145,26 @@ class Personas(models.Model):
         super(Personas, self).save(*args, **kwargs)
 
 
+class Grupos(models.Model):
+
+    Eleccion = models.ForeignKey(Eleccion, on_delete=models.PROTECT)
+
+    max_vacantes = models.FloatField(default=0.7)
+
+    nombre = models.CharField(max_length=20)
+
+
 class UsuarioEleccion(models.Model):
     user = models.ForeignKey(UsuarioUca, on_delete=models.PROTECT, null=True)
 
-    Eleccion = models.ForeignKey(Eleccion,on_delete=models.PROTECT, null=True)
+    Eleccion = models.ForeignKey(Eleccion, on_delete=models.PROTECT, null=True)
 
     seleccion = models.CharField(max_length=20, null=True)
 
     grupos = models.ManyToManyField(Personas, blank=False)
 
+class Censo(models.Model):
 
-
-
-
+    usuario = models.ManyToManyField(UsuarioUca, blank=False)
+    pregunta = models.OneToOneField(Pregunta, on_delete=models.PROTECT, null=True, blank=True)
+    eleccion = models.OneToOneField(Eleccion, on_delete=models.PROTECT, null=True, blank=True)

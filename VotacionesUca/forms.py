@@ -5,11 +5,11 @@ from django import forms
 from django.utils import timezone
 from datetime import datetime
 from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, Censo, UsuarioVotacion, OpcionesCompleja, \
-    UsuarioEleccion, Personas
+    UsuarioEleccion, Personas, TipoEleccion
 from bootstrap_modal_forms.forms import BSModalForm
 
 
-# c=[('0','Simple'),('1','Compleja')]
+
 # b=[('0','No'),('1','Sí')]
 
 class ProcesoElectoralForm(forms.ModelForm):
@@ -190,6 +190,13 @@ class EleccionForm(ProcesoElectoralForm):
         model = Eleccion
         fields = '__all__'
 
+class TipoEleccionForm(ModelForm):
+    # tipo_eleccion= forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Título de la elección'}))
+
+    class Meta:
+        model = TipoEleccion
+        fields = '__all__'
+
 class realizarEleccionForm(ModelForm):
     qs = Personas.objects.all().values_list('nombre', flat=True)
     seleccion = forms.ModelChoiceField(qs, label='seleccion:')
@@ -198,7 +205,7 @@ class realizarEleccionForm(ModelForm):
         model = UsuarioEleccion
         fields = 'seleccion',
 
-        labels = {'user': (''), 'Eleccion': (''),}
+        labels = {'user': (''), 'Eleccion': (''), }
         widgets = {'Votacion': forms.Select(
             attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
             'Votacion': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
@@ -224,3 +231,10 @@ class realizarEleccionFormGrupos(ModelForm):
         # widgets = {'grupos': forms.SelectMultiple(attrs={'class': 'form-control'}),
         #
                    # }
+
+class PersonaForm(ModelForm):
+    nombre= forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre del elector'}))
+
+    class Meta:
+        model = Personas
+        fields = '__all__'

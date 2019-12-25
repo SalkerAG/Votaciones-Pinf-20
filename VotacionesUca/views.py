@@ -14,10 +14,10 @@ from UsuarioUca.import_export_views import ImportView
 from UsuarioUca.models import UsuarioUca
 from VotacionesUca.admin import CensoResource
 from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, Censo, \
-    UsuarioVotacion, OpcionesCompleja, UsuarioEleccion, Personas
+    UsuarioVotacion, OpcionesCompleja, UsuarioEleccion, Personas, TipoEleccion
 from .forms import VotacionForm, PreguntaForm, createCensoForm, PreguntaFormVotacion, \
     realizarVotacionForm, OpcionesComplejaForm, realizarVotacionComplejaForm, EleccionForm, realizarEleccionForm, \
-    realizarEleccionFormGrupos
+    realizarEleccionFormGrupos, PersonaForm, TipoEleccionForm
 from django.shortcuts import render, redirect
 import datetime
 import csv
@@ -191,7 +191,9 @@ class CrearPreguntaComplejaView(CreateView):
     model = OpcionesCompleja
     form_class = OpcionesComplejaForm
     template_name = 'CrearVotacionCompleja.html'
-    success_url = '/crearpreguntacompleja'
+
+    def get_success_url(self):
+        return reverse('crearpreguntacompleja')
 
     def _init_(self, **kwargs):
         super()._init_(**kwargs)
@@ -356,9 +358,9 @@ class EleccionView(FormMixin, DetailView, request):
         context = super(EleccionView, self).get_context_data(**kwargs)
         cosas = self
 
-        if self.object.tipo_eleccion == '1':
+        if self.object.tipoeleccion.tipo_eleccion == '1':
             context['form'] = realizarEleccionForm(
-            initial={'user': self.request.user, 'Eleccion': self.object})
+                initial={'user': self.request.user, 'Eleccion': self.object})
             return context
         else:
             context['form'] = realizarEleccionFormGrupos(
@@ -393,20 +395,22 @@ class EleccionView(FormMixin, DetailView, request):
         form = self.get_form()
         usuario_eleccion = UsuarioEleccion()
 
-
         usuario_eleccion.user = self.request.user
         usuario_eleccion.Eleccion = self.object
 
+        if usuario_eleccion.Eleccion.tipoeleccion.tipo_eleccion == '1':
 
-        if usuario_eleccion.Eleccion.tipo_eleccion == '1':
-            print ('hola')
             usuario_eleccion.seleccion = form.data['seleccion']
             usuario_eleccion.save()
         else:
             usuario_eleccion.save()
 
-            gr = form.data['grupos']
-            usuario_eleccion.grupos.set(gr)
+            [gr] = form.data['grupos']
+            print(gr)
+            grr = form.data['grupos']
+            usuario_eleccion.grupos.set([gr])
+            # print([label for value, label in usuario_eleccion.grupos['grupos'].choices if
+            #        value in usuario_eleccion['grupos'].value()])
 
             # usuario_eleccion.grupos.set(form.data['grupos'])
 
@@ -415,8 +419,7 @@ class EleccionView(FormMixin, DetailView, request):
         # qss = Person.objects.all().values_list('usuario', flat=True)
         # print(qss)
         # if qss.filter(usuario=self.request.user).exists():
-            # print("hola")
-
+        # print("hola")
 
         # else:
         #     return HttpResponseRedirect('/errorVotacion')
@@ -460,7 +463,34 @@ class CrearEleccionView(CreateView):
     form_class = EleccionForm
 
     def get_success_url(self):
-        return reverse('censo_create')
+        return reverse('creartipoeleccion')
+
+
+class CrearTipoEleccionView(CreateView):
+    model = TipoEleccion
+    form_class = TipoEleccionForm
+
+    def get_success_url(self):
+        if self.object.tipo_eleccion == '1':
+            return reverse('crearpersona')
+        else:
+            return reverse('crearpersonagrupo')
+
+
+class CrearPersona(CreateView):
+    model = Personas
+    form_class = PersonaForm
+
+    def get_success_url(self):
+        return reverse('crearpersona')
+
+
+class CrearPersonaGrupo(CreateView):
+    model = Personas
+    form_class = PersonaForm
+
+    def get_success_url(self):
+        return reverse('crearpersonagrupo')
 
 
 class ErrorVotacionView(TemplateView):
