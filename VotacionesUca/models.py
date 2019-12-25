@@ -1,13 +1,12 @@
 from django.db import models, transaction
 from django.db.models import Count
+from django.forms import forms
 from django.urls import reverse
 
 from django.utils import timezone
+from localflavor.exceptions import ValidationError
 
 from UsuarioUca.models import UsuarioUca
-
-
-
 
 
 class ProcesoElectoral(models.Model):
@@ -114,39 +113,51 @@ class UsuarioVotacion(models.Model):
 class Eleccion(ProcesoElectoral):
     nombre = models.CharField(max_length=50)
 
-    # usuario = models.OneToOneField(UsuarioUca)
-    # censo = models.OneToOneField(Censo)
-    def __str__(self):
-        return self.nombre
-
-
-class TipoEleccion(models.Model):
     TIPO_ELECCION = (
         ("0", "Grupos"),
         ("1", "Unipersonales"),
 
     )
-    Eleccion = models.OneToOneField(Eleccion, on_delete=models.PROTECT)
+
     tipo_eleccion = models.CharField(max_length=10, choices=TIPO_ELECCION, default="Simple")
     max_candidatos = models.IntegerField(default=2)
 
 
-class Personas(models.Model):
-    Eleccion = models.ForeignKey(Eleccion, on_delete=models.PROTECT)
-    nombre = models.CharField(max_length=20)
+
 
     def __str__(self):
         return self.nombre
 
-    def save(self, *args, **kwargs):
-        if not self.id:
-            super(Personas, self).save(*args, **kwargs)
-        # process self.parent_subject (should be called ...subjects, semantically)
-        super(Personas, self).save(*args, **kwargs)
 
+class Personas(models.Model):
+    Eleccion = models.ForeignKey(Eleccion, on_delete=models.PROTECT)
+    nombre = models.CharField(max_length=20, unique=True)
+
+    def __str__(self):
+        return self.nombre
+
+    def clean_fields(self, exclude=None):
+        # for row in Personas.objects.all():
+        maxcandidatos = self.Eleccion.max_candidatos
+        if Personas.objects.filter(Eleccion_id=self.Eleccion_id).count() > maxcandidatos:
+            raise forms.ValidationError("Ha superado el numero de candidatos máximos")
+        else:
+            return super(Personas, self).save()
+
+
+
+        # super(Personas, self).save(*args, **kwargs)
+
+   # for row in UsuarioVotacion.objects.all():
+   #          if UsuarioVotacion.objects.filter(
+   #                  Votacion_id=row.Votacion_id).count() > 1 and UsuarioVotacion.objects.filter(
+   #              Pregunta_id=row.Pregunta_id).count() > 1 and UsuarioVotacion.objects.filter(
+   #              user_id=row.user_id).count() > 1:
+   #              row.delete()
+   #
+   #      return super(UsuarioVotacion, self).save(*args, **kwargs)
 
 class Grupos(models.Model):
-
     Eleccion = models.ForeignKey(Eleccion, on_delete=models.PROTECT)
 
     max_vacantes = models.FloatField(default=0.7)
@@ -163,8 +174,8 @@ class UsuarioEleccion(models.Model):
 
     grupos = models.ManyToManyField(Personas, blank=False)
 
-class Censo(models.Model):
 
+class Censo(models.Model):
     usuario = models.ManyToManyField(UsuarioUca, blank=False)
     pregunta = models.OneToOneField(Pregunta, on_delete=models.PROTECT, null=True, blank=True)
     eleccion = models.OneToOneField(Eleccion, on_delete=models.PROTECT, null=True, blank=True)

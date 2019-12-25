@@ -14,10 +14,10 @@ from UsuarioUca.import_export_views import ImportView
 from UsuarioUca.models import UsuarioUca
 from VotacionesUca.admin import CensoResource
 from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, Censo, \
-    UsuarioVotacion, OpcionesCompleja, UsuarioEleccion, Personas, TipoEleccion
+    UsuarioVotacion, OpcionesCompleja, UsuarioEleccion, Personas
 from .forms import VotacionForm, PreguntaForm, createCensoForm, PreguntaFormVotacion, \
     realizarVotacionForm, OpcionesComplejaForm, realizarVotacionComplejaForm, EleccionForm, realizarEleccionForm, \
-    realizarEleccionFormGrupos, PersonaForm, TipoEleccionForm
+    realizarEleccionFormGrupos, PersonaForm
 from django.shortcuts import render, redirect
 import datetime
 import csv
@@ -463,18 +463,22 @@ class CrearEleccionView(CreateView):
     form_class = EleccionForm
 
     def get_success_url(self):
-        return reverse('creartipoeleccion')
-
-
-class CrearTipoEleccionView(CreateView):
-    model = TipoEleccion
-    form_class = TipoEleccionForm
-
-    def get_success_url(self):
         if self.object.tipo_eleccion == '1':
             return reverse('crearpersona')
         else:
             return reverse('crearpersonagrupo')
+
+
+
+# class CrearTipoEleccionView(CreateView):
+#     model = TipoEleccion
+#     form_class = TipoEleccionForm
+#
+#     def get_success_url(self):
+#         if self.object.tipo_eleccion == '1':
+#             return reverse('crearpersona')
+#         else:
+#             return reverse('crearpersonagrupo')
 
 
 class CrearPersona(CreateView):
