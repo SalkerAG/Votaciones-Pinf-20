@@ -14,9 +14,10 @@ from UsuarioUca.import_export_views import ImportView
 from UsuarioUca.models import UsuarioUca
 from VotacionesUca.admin import CensoResource
 from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, Censo, \
-    UsuarioVotacion, OpcionesCompleja, UsuarioEleccion
+    UsuarioVotacion, OpcionesCompleja, UsuarioEleccion, Personas
 from .forms import VotacionForm, PreguntaForm, createCensoForm, PreguntaFormVotacion, \
-    realizarVotacionForm, OpcionesComplejaForm, realizarVotacionComplejaForm, EleccionForm, realizarEleccionForm
+    realizarVotacionForm, OpcionesComplejaForm, realizarVotacionComplejaForm, EleccionForm, realizarEleccionForm, \
+    realizarEleccionFormGrupos
 from django.shortcuts import render, redirect
 import datetime
 import csv
@@ -355,14 +356,14 @@ class EleccionView(FormMixin, DetailView, request):
         context = super(EleccionView, self).get_context_data(**kwargs)
         cosas = self
 
-        # if self.object.pregunta.tipo_votacion == '0':
-        context['form'] = realizarEleccionForm(
+        if self.object.tipo_eleccion == '1':
+            context['form'] = realizarEleccionForm(
             initial={'user': self.request.user, 'Eleccion': self.object})
-        return context
-        # else:
-        #     context['form'] = realizarVotacionComplejaForm(
-        #         initial={'user': self.request.user, 'Votacion': self.object, 'Pregunta': self.object.pregunta})
-        #     return context
+            return context
+        else:
+            context['form'] = realizarEleccionFormGrupos(
+                initial={'user': self.request.user, 'Eleccion': self.object})
+            return context
 
     # def post(self, request, *args, **kwargs):
     #     self.object = self.get_object()
@@ -392,23 +393,31 @@ class EleccionView(FormMixin, DetailView, request):
         form = self.get_form()
         usuario_eleccion = UsuarioEleccion()
 
+
         usuario_eleccion.user = self.request.user
         usuario_eleccion.Eleccion = self.object
 
-        print(usuario_eleccion.Eleccion.tipo_eleccion)
+
         if usuario_eleccion.Eleccion.tipo_eleccion == '1':
             print ('hola')
             usuario_eleccion.seleccion = form.data['seleccion']
+            usuario_eleccion.save()
+        else:
+            usuario_eleccion.save()
 
-        # else:
-        #     usuario_eleccion.seleccion = form.data['seleccion']
+            gr = form.data['grupos']
+            usuario_eleccion.grupos.set(gr)
+
+            # usuario_eleccion.grupos.set(form.data['grupos'])
+
         # if (usuario_eleccion.seleccion == 'Si'):
 
         # qss = Person.objects.all().values_list('usuario', flat=True)
         # print(qss)
         # if qss.filter(usuario=self.request.user).exists():
             # print("hola")
-        usuario_eleccion.save()
+
+
         # else:
         #     return HttpResponseRedirect('/errorVotacion')
         # usuario_eleccion.save()

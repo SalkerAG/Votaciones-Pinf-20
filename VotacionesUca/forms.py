@@ -206,3 +206,21 @@ class realizarEleccionForm(ModelForm):
             'seleccion': forms.Select(attrs={'class': 'form-control'}),
             # 'opcionesCompleja': forms.Select(attrs={'class': 'form-control'}),
         }
+
+class realizarEleccionFormGrupos(ModelForm):
+
+    # qs = Personas.objects.all().values_list('nombre', flat=True)
+    grupos = forms.SelectMultiple()
+
+    class Meta:
+        model = UsuarioEleccion
+        fields = ('grupos',)
+        labels = {'grupos': ('Seleccione (con la tecla Ctrl) aquellos candidatos que desee') }
+        # help_texts = {'usuario': (
+        #     'Elige los usuarios que pertenecen al censo. Recuerda que serán los usuarios que tendrán acceso a la votación'),
+        #     'pregunta': ('Elige la pregunta a la que hace referencia el censo'),
+        # }
+
+        # widgets = {'grupos': forms.SelectMultiple(attrs={'class': 'form-control'}),
+        #
+                   # }

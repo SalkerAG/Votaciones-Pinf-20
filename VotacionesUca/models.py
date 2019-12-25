@@ -155,6 +155,15 @@ class UsuarioVotacion(models.Model):
 class Personas(models.Model):
     nombre = models.CharField(max_length=20)
 
+    def __str__(self):
+        return self.nombre
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            super(Personas, self).save(*args, **kwargs)
+        # process self.parent_subject (should be called ...subjects, semantically)
+        super(Personas, self).save(*args, **kwargs)
+
 
 class UsuarioEleccion(models.Model):
     user = models.ForeignKey(UsuarioUca, on_delete=models.PROTECT, null=True)
@@ -162,5 +171,10 @@ class UsuarioEleccion(models.Model):
     Eleccion = models.ForeignKey(Eleccion,on_delete=models.PROTECT, null=True)
 
     seleccion = models.CharField(max_length=20, null=True)
+
+    grupos = models.ManyToManyField(Personas, blank=False)
+
+
+
 
 
