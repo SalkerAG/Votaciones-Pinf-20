@@ -36,7 +36,7 @@
             <!--Formulario-->
             <form method="post">{% csrf_token %}
                 <div class="form-group">
-{#                    <label for="form-tittle" class="col-lg-3 col-form-label">Enunciado</label>#}
+              <h1 style="text-align: center">Votación: {{ form.initial.Votacion.nombre_votacion }}</h1>
                     <div class="col-lg-12">
 {#                          {% if True == False %}#}
                                         {{ form.as_p }}
