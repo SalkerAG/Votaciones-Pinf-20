@@ -138,10 +138,6 @@ class HomeView(TemplateView):
     template_name = "home.html"
 
 
-class ListaVotacionesView(TemplateView):
-    template_name = "ListaVotaciones.html"
-
-
 class CrearVotacionView(TemplateView):
     template_name = "CrearVotacion.html"
 

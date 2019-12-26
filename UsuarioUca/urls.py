@@ -3,7 +3,7 @@ from django.urls import path, include
 # from django.contrib.auth import views as auth_views
 
 from . import views
-from .views import HomeView, ListaVotacionesView, CrearVotacionView, FAQView, EstadisticasVotacionSimpleView, \
+from .views import HomeView, CrearVotacionView, FAQView, EstadisticasVotacionSimpleView, \
     EstadisticasEleccionView, UsuarioUcaListView, UsuarioUcaUpdate, UsuarioUcaCreate, MyModelImportView, \
     UsuarioUcaExportView, PASSCreate, ProfesorCreate, EstudianteCreate
 
@@ -16,7 +16,6 @@ urlpatterns = [
     path('crearprofesor/', ProfesorCreate.as_view(), name='profesor_create'),
     path('crearpass/', PASSCreate.as_view(), name='pass_create'),
     path('crearestudiante/', EstudianteCreate.as_view(), name='estudiante_create'),
-    path('listavotaciones/', ListaVotacionesView.as_view(), name="listavotaciones"),
     path('usuariouca/import/', MyModelImportView.as_view(), name='usuariouca_import'),
     path('usuariouca/export/', UsuarioUcaExportView.as_view(), name='usuariouca_export'),
     path('usuariouca/import/confirm/', MyModelImportView.as_view(confirm=True),

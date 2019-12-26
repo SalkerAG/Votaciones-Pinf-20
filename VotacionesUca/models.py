@@ -2,7 +2,7 @@ from django.db import models, transaction
 from django.db.models import Count
 from django.forms import forms
 from django.urls import reverse
-
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils import timezone
 
 from UsuarioUca.models import UsuarioUca
@@ -62,16 +62,6 @@ class Pregunta(models.Model):
     # def get_absolute_url(self):
     #     return reverse('crearpreguntasimple')
 
-class Eleccion(ProcesoElectoral):
-    nombre = models.CharField(max_length=50)
-    max_candidatos = models.IntegerField(default=2)
-    max_vacantes = models.FloatField(default=0.7)
-    tipo_eleccion = models.BooleanField(default=False)
-    #usuario = models.OneToOneField(UsuarioUca)
-    #censo = models.OneToOneField(Censo)
-    def __str__(self):
-        return self.nombre
-
 class OpcionesCompleja(models.Model):
     Pregunta = models.ForeignKey(Pregunta, on_delete=models.PROTECT)
     # enunciado = models.CharField(max_length=50)
@@ -115,16 +105,13 @@ class UsuarioVotacion(models.Model):
 
 class Eleccion(ProcesoElectoral):
     nombre = models.CharField(max_length=50)
-
     TIPO_ELECCION = (
         ("0", "Grupos"),
         ("1", "Unipersonales"),
-
     )
-
     tipo_eleccion = models.CharField(max_length=10, choices=TIPO_ELECCION, default="Simple")
-    max_candidatos = models.IntegerField(default=2)
-    max_vacantes = models.FloatField(null=True)
+    max_candidatos = models.IntegerField(default=2, validators=[MinValueValidator(2)])
+    max_vacantes = models.FloatField(null=True, default=0.7, validators=[MinValueValidator(0.1), MaxValueValidator(0.99)])
 
     def __str__(self):
         return self.nombre

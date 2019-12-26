@@ -13,7 +13,7 @@
         <br/>
         <div>
             {% for Votacion in object_list %}
-                <li>{{ Votacion.name }}</li>
+                <li>{{ Votacion.nombre_votacion }}</li>
             {% empty %}
                 <li>No articles yet.</li>
             {% endfor %}
@@ -76,6 +76,15 @@
             </tr>
             </tbody>
         </table>
+    
+        <h1>Votaciones</h1>
+        <ul>
+        {% for votacion in object_list %}
+            <li>{{ votacion.nombre_votacion }}</li>
+        {% empty %}
+            <li>No articles yet.</li>
+        {% endfor %}
+        </ul>
 
         <!-- Fin Tabla -->
     </div>

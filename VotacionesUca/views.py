@@ -434,14 +434,10 @@ class VotacionComplejaView(FormView):
         return super().form_valid(form)
 
 
-class ListaVotacionView(ListView):
+class ListaVotacionesView(ListView):
     model = Votacion
     paginate_by = 100  # if pagination is desired
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['now'] = datetime.timezone.now()
-        return context
+    template_name = "ListaVotaciones.html"
 
 
 class CrearEleccionView(CreateView):
