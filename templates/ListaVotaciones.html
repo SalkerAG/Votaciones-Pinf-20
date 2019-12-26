@@ -12,11 +12,6 @@
         </div>
         <br/>
         <div>
-            {% for Votacion in object_list %}
-                <li>{{ Votacion.nombre_votacion }}</li>
-            {% empty %}
-                <li>No articles yet.</li>
-            {% endfor %}
             <form class="form-inline col-sm-6">
                 <i class="fas fa-search" aria-hidden="true"></i>
                 <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
@@ -25,19 +20,34 @@
         </div>
         <br/>
         <!-- Tabla -->
-        <table id="dtVotaciones" class="table table-responsive table-hover-condensed text center" cellspacing="0"
-               width="100%">
-            <thead>
+        <table id="dtVotaciones" class="table table-responsive table-hover-condensed text center" align="center" cellspacing="0" width="100%">
             <tr>
-                <th class="col-sm-6">Votaciones</th>
-                <th class="col-sm-2">Estado</th>
+                <th>Votaciones</th>
+                <th>Estado</th>
                 {% if user.is_superuser %}
-                    <th class="col-sm-2">Modificar</th>
-                    <th class="col-sm-2">Eliminar</th>
+                    <th>Modificar</th>
+                    <th>Eliminar</th>
                 {% endif %}
             </tr>
-            </thead>
-            <tbody>
+                {% if object_list %}
+                    {% for votacion in object_list %}
+                    <tr>
+                        <td><a class="nav-link" href="{% url 'estadisticasvotacionsimple' %}">{{votacion.nombre_votacion}}</a></td>
+                        <td>Abierto</td>
+                        {% if user.is_superuser %}
+                            <td><a href="" class="btn btn-warning">
+                                <i class="fas fa-edit"></i></a>
+                            </td>
+                            <td><a href="" class="btn btn-danger">
+                                <i class="fas fa-trash"></i></a>
+                            </td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <h1>No hay votaciones disponibles</h1>
+                {% endif %}
+            <!--tbody>
             <tr>
                 <td><a class="nav-link" href="{% url 'estadisticasvotacionsimple' %}">Votacion 1</a></td>
                 <td>Abierta</td>
@@ -74,17 +84,8 @@
                     </td>
                 {% endif %}
             </tr>
-            </tbody>
+            </tbody-->
         </table>
-    
-        <h1>Votaciones</h1>
-        <ul>
-        {% for votacion in object_list %}
-            <li>{{ votacion.nombre_votacion }}</li>
-        {% empty %}
-            <li>No articles yet.</li>
-        {% endfor %}
-        </ul>
 
         <!-- Fin Tabla -->
     </div>
