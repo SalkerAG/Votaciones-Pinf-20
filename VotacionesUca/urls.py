@@ -11,7 +11,7 @@ from .views import CrearVotacionView, VotacionView, \
 urlpatterns = [
     path('crearVotacion/', CrearVotacionView.as_view(), name="crearvotacion"),
     path('votacion/<slug:pk>', VotacionView.as_view(), name="votacion"),
-    path('eleccion/<slug:pk>', EleccionView.as_view(), name="votacion"),
+    path('eleccion/<slug:pk>', EleccionView.as_view(), name="eleccion"),
     path('crearpreguntacompleja/', CrearPreguntaComplejaView.as_view(), name="crearpreguntacompleja"),
     # path('crearpreguntasimple/', CrearPreguntaSimpleView.as_view(), name="crearpreguntasimple"),
     path('crearpreguntavotacion/', CrearPreguntaVotacion.as_view(), name="crearpreguntavotacion"),
