@@ -5,7 +5,7 @@ from django import forms
 from django.utils import timezone
 from datetime import datetime
 from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, Censo, UsuarioVotacion, OpcionesCompleja, \
-    UsuarioEleccion, Personas, Grupos
+    UsuarioEleccion, Personas
 from bootstrap_modal_forms.forms import BSModalForm
 
 
@@ -150,6 +150,7 @@ class realizarVotacionComplejaForm(ModelForm):
     opcionesCompleja = forms.ModelChoiceField(qs, label='Respuesta:')
 
     class Meta:
+
         model = UsuarioVotacion
         fields = 'Votacion', 'Pregunta',
         # exclude = ('seleccionSimple',)
@@ -214,23 +215,23 @@ class realizarEleccionForm(ModelForm):
             # 'opcionesCompleja': forms.Select(attrs={'class': 'form-control'}),
         }
 
-class realizarEleccionFormGrupos(ModelForm):
-
-    # qs = Personas.objects.all().values_list('nombre', flat=True)
-    grupos = forms.SelectMultiple()
-
-    class Meta:
-        model = UsuarioEleccion
-        fields = ('grupos',)
-        labels = {'grupos': ('Seleccione (con la tecla Ctrl) aquellos candidatos que desee') }
-        # help_texts = {'usuario': (
-        #     'Elige los usuarios que pertenecen al censo. Recuerda que serán los usuarios que tendrán acceso a la votación'),
-        #     'pregunta': ('Elige la pregunta a la que hace referencia el censo'),
-        # }
-
-        # widgets = {'grupos': forms.SelectMultiple(attrs={'class': 'form-control'}),
-        #
-                   # }
+# class realizarEleccionFormGrupos(ModelForm):
+#
+#     # qs = Personas.objects.all().values_list('nombre', flat=True)
+#     grupos = forms.SelectMultiple()
+#
+#     class Meta:
+#         model = UsuarioEleccion
+#         fields = ('grupos',)
+#         labels = {'grupos': ('Seleccione (con la tecla Ctrl) aquellos candidatos que desee') }
+#         # help_texts = {'usuario': (
+#         #     'Elige los usuarios que pertenecen al censo. Recuerda que serán los usuarios que tendrán acceso a la votación'),
+#         #     'pregunta': ('Elige la pregunta a la que hace referencia el censo'),
+#         # }
+#
+#         # widgets = {'grupos': forms.SelectMultiple(attrs={'class': 'form-control'}),
+#         #
+#                    # }
 
 class PersonaForm(ModelForm):
     nombre= forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre del elector'}))
@@ -239,9 +240,9 @@ class PersonaForm(ModelForm):
         model = Personas
         fields = '__all__'
 
-class PersonaGrupoForm(ModelForm):
-    nombre= forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre del elector'}))
-
-    class Meta:
-        model = Grupos
-        fields = '__all__'
+# class PersonaGrupoForm(ModelForm):
+#     nombre= forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre del elector'}))
+#
+#     class Meta:
+#         model = Grupos
+#         fields = '__all__'

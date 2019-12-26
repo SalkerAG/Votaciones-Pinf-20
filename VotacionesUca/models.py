@@ -5,7 +5,6 @@ from django.urls import reverse
 
 from django.utils import timezone
 
-
 from UsuarioUca.models import UsuarioUca
 
 
@@ -94,12 +93,7 @@ class UsuarioVotacion(models.Model):
         return reverse('home')
 
     def save(self, *args, **kwargs):
-        # duplicates = UsuarioVotacion.objects.values(
-        #     'Votacion'
-        # ).annotate(votacion=Count('Votacion')).filter(votacion=1)
-        # print (duplicates)
-        # records = UsuarioVotacion.objects.filter(Votacion=[item['Votacion'] for item in duplicates])
-        # print([item.id for item in records])
+        super(UsuarioVotacion, self).save(*args, **kwargs)
         for row in UsuarioVotacion.objects.all():
             if UsuarioVotacion.objects.filter(
                     Votacion_id=row.Votacion_id).count() > 1 and UsuarioVotacion.objects.filter(
@@ -107,7 +101,7 @@ class UsuarioVotacion(models.Model):
                 user_id=row.user_id).count() > 1:
                 row.delete()
 
-        return super(UsuarioVotacion, self).save(*args, **kwargs)
+
 
 
 class Eleccion(ProcesoElectoral):
@@ -123,16 +117,13 @@ class Eleccion(ProcesoElectoral):
     max_candidatos = models.IntegerField(default=2)
     max_vacantes = models.FloatField(null=True)
 
-
-
-
     def __str__(self):
         return self.nombre
 
 
 class Personas(models.Model):
     Eleccion = models.ForeignKey(Eleccion, on_delete=models.PROTECT)
-    nombre = models.CharField(max_length=20, unique=True)
+    nombre = models.CharField(max_length=20)
 
     def __str__(self):
         return self.nombre
@@ -140,40 +131,37 @@ class Personas(models.Model):
     def clean_fields(self, exclude=None):
         # for row in Personas.objects.all():
         maxcandidatos = self.Eleccion.max_candidatos
-        if Personas.objects.filter(Eleccion_id=self.Eleccion_id).count() > maxcandidatos-1:
+        if Personas.objects.filter(Eleccion_id=self.Eleccion_id).count() > maxcandidatos - 1:
             raise forms.ValidationError("Ha superado el numero de candidatos máximos")
         else:
             return super(Personas, self).save()
 
-
-
         # super(Personas, self).save(*args, **kwargs)
 
-   # for row in UsuarioVotacion.objects.all():
-   #          if UsuarioVotacion.objects.filter(
-   #                  Votacion_id=row.Votacion_id).count() > 1 and UsuarioVotacion.objects.filter(
-   #              Pregunta_id=row.Pregunta_id).count() > 1 and UsuarioVotacion.objects.filter(
-   #              user_id=row.user_id).count() > 1:
-   #              row.delete()
-   #
-   #      return super(UsuarioVotacion, self).save(*args, **kwargs)
 
-class Grupos(models.Model):
-    Eleccion = models.ForeignKey(Eleccion, on_delete=models.PROTECT)
+# for row in UsuarioVotacion.objects.all():
+#          if UsuarioVotacion.objects.filter(
+#                  Votacion_id=row.Votacion_id).count() > 1 and UsuarioVotacion.objects.filter(
+#              Pregunta_id=row.Pregunta_id).count() > 1 and UsuarioVotacion.objects.filter(
+#              user_id=row.user_id).count() > 1:
+#              row.delete()
+#
+#      return super(UsuarioVotacion, self).save(*args, **kwargs)
 
-
-
-    nombre = models.CharField(max_length=20, unique=True)
-
-    def clean_fields(self, exclude=None):
-        # for row in Personas.objects.all():
-
-        maxcandidatos = self.Eleccion.max_candidatos
-        print(maxcandidatos)
-        if Grupos.objects.filter(Eleccion_id=self.Eleccion_id).count() > maxcandidatos-1:
-            raise forms.ValidationError("Ha superado el numero de candidatos máximos")
-        else:
-            return super(Grupos, self).save()
+# class Grupos(models.Model):
+#     Eleccion = models.ForeignKey(Eleccion, on_delete=models.PROTECT)
+#
+#     nombre = models.CharField(max_length=20, unique=True)
+#
+#     def clean_fields(self, exclude=None):
+#         # for row in Personas.objects.all():
+#
+#         maxcandidatos = self.Eleccion.max_candidatos
+#         print(maxcandidatos)
+#         if Grupos.objects.filter(Eleccion_id=self.Eleccion_id).count() > maxcandidatos - 1:
+#             raise forms.ValidationError("Ha superado el numero de candidatos máximos")
+#         else:
+#             return super(Grupos, self).save()
 
 
 class UsuarioEleccion(models.Model):
@@ -183,7 +171,25 @@ class UsuarioEleccion(models.Model):
 
     seleccion = models.CharField(max_length=20, null=True)
 
-    grupos = models.ManyToManyField(Personas, blank=False)
+    # grupos = models.ManyToManyField(Personas, blank=False)
+
+    def save(self, exclude=None):
+
+        maxcandidatos = self.Eleccion.max_candidatos
+        maxvacantes = self.Eleccion.max_vacantes
+        for row in UsuarioEleccion.objects.all():
+            if self.Eleccion.tipo_eleccion == '0':
+
+                res = int (maxvacantes * maxcandidatos)
+                print (res)
+                contador =  (UsuarioEleccion.objects.filter(Eleccion_id = self.Eleccion_id).count())
+                if contador > res:
+                    raise ValueError("Ha superado el numero de candidatos máximos")
+
+                else:
+                    return super(UsuarioEleccion, self).save(*args, **kwargs)
+
+
 
 
 class Censo(models.Model):

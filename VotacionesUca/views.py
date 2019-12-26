@@ -14,10 +14,10 @@ from UsuarioUca.import_export_views import ImportView
 from UsuarioUca.models import UsuarioUca
 from VotacionesUca.admin import CensoResource
 from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, Censo, \
-    UsuarioVotacion, OpcionesCompleja, UsuarioEleccion, Personas, Grupos
+    UsuarioVotacion, OpcionesCompleja, UsuarioEleccion, Personas
 from .forms import VotacionForm, PreguntaForm, createCensoForm, PreguntaFormVotacion, \
     realizarVotacionForm, OpcionesComplejaForm, realizarVotacionComplejaForm, EleccionForm, realizarEleccionForm, \
-    realizarEleccionFormGrupos, PersonaForm, PersonaGrupoForm
+    PersonaForm
 from django.shortcuts import render, redirect
 import datetime
 import csv
@@ -358,14 +358,9 @@ class EleccionView(FormMixin, DetailView, request):
         context = super(EleccionView, self).get_context_data(**kwargs)
         cosas = self
 
-        if self.object.tipoeleccion.tipo_eleccion == '1':
-            context['form'] = realizarEleccionForm(
-                initial={'user': self.request.user, 'Eleccion': self.object})
-            return context
-        else:
-            context['form'] = realizarEleccionFormGrupos(
-                initial={'user': self.request.user, 'Eleccion': self.object})
-            return context
+        context['form'] = realizarEleccionForm(
+            initial={'user': self.request.user, 'Eleccion': self.object})
+        return context
 
     # def post(self, request, *args, **kwargs):
     #     self.object = self.get_object()
@@ -389,7 +384,6 @@ class EleccionView(FormMixin, DetailView, request):
     #         return HttpResponseRedirect('home')
 
     def post(self, request, *args, **kwargs):
-
         self.object = self.get_object()
         # print(self.object)
         form = self.get_form()
@@ -398,21 +392,13 @@ class EleccionView(FormMixin, DetailView, request):
         usuario_eleccion.user = self.request.user
         usuario_eleccion.Eleccion = self.object
 
-        if usuario_eleccion.Eleccion.tipoeleccion.tipo_eleccion == '1':
+        usuario_eleccion.seleccion = form.data['seleccion']
+        usuario_eleccion.save()
 
-            usuario_eleccion.seleccion = form.data['seleccion']
-            usuario_eleccion.save()
-        else:
-            usuario_eleccion.save()
+        # print([label for value, label in usuario_eleccion.grupos['grupos'].choices if
+        #        value in usuario_eleccion['grupos'].value()])
 
-            [gr] = form.data['grupos']
-            print(gr)
-            grr = form.data['grupos']
-            usuario_eleccion.grupos.set([gr])
-            # print([label for value, label in usuario_eleccion.grupos['grupos'].choices if
-            #        value in usuario_eleccion['grupos'].value()])
-
-            # usuario_eleccion.grupos.set(form.data['grupos'])
+        # usuario_eleccion.grupos.set(form.data['grupos'])
 
         # if (usuario_eleccion.seleccion == 'Si'):
 
@@ -432,7 +418,7 @@ class EleccionView(FormMixin, DetailView, request):
         #     if commit:
         #         UsuarioVotacion.save()
         #     return Usu
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect(self.request.path_info)
 
     def form_valid(self, form):
         form.save()
@@ -463,11 +449,7 @@ class CrearEleccionView(CreateView):
     form_class = EleccionForm
 
     def get_success_url(self):
-        if self.object.tipo_eleccion == '1':
-            return reverse('crearpersona')
-        else:
-            return reverse('crearpersonagrupo')
-
+        return reverse('crearpersona')
 
 
 # class CrearTipoEleccionView(CreateView):
@@ -489,12 +471,12 @@ class CrearPersona(CreateView):
         return reverse('crearpersona')
 
 
-class CrearPersonaGrupo(CreateView):
-    model = Grupos
-    form_class = PersonaGrupoForm
-
-    def get_success_url(self):
-        return reverse('crearpersonagrupo')
+# class CrearPersonaGrupo(CreateView):
+#     model = Grupos
+#     form_class = PersonaGrupoForm
+#
+#     def get_success_url(self):
+#         return reverse('crearpersonagrupo')
 
 
 class ErrorVotacionView(TemplateView):

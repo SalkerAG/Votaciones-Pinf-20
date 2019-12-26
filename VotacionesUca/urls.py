@@ -6,7 +6,7 @@ from .views import CrearVotacionView, VotacionView, \
     CrearPregunta, CrearCensoView, CensoDetailView, CensoExportView, \
     CrearPreguntaVotacion, CrearPreguntaViewCenso, CrearPreguntaViewVotacion, \
     CrearPreguntaViewRealizarVotacion, load_preguntas, CrearPreguntaComplejaView, CrearEleccionView, ErrorVotacionView, \
-    ExitoCensoVotacionView, EleccionView, CrearPersona, CrearPersonaGrupo
+    ExitoCensoVotacionView, EleccionView, CrearPersona
 
 urlpatterns = [
     path('crearVotacion/', CrearVotacionView.as_view(), name="crearvotacion"),
@@ -30,7 +30,7 @@ urlpatterns = [
     path('errorVotacion/', ErrorVotacionView.as_view(), name='errorvotacion'),
     path('exitocensovotacion/', ExitoCensoVotacionView.as_view(), name='exitocensovotacion'),
     path('crearpersona/', CrearPersona.as_view(), name="crearpersona"),
-    path('creargrupo/', CrearPersonaGrupo.as_view(), name="crearpersonagrupo"),
+    # path('creargrupo/', CrearPersonaGrupo.as_view(), name="crearpersonagrupo"),
 
     # path('creartipoeleccion/', CrearTipoEleccionView.as_view(), name="creartipoeleccion"),
 
