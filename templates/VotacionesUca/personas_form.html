@@ -51,14 +51,11 @@
             </tr>
             </thead>
         <tbody>
-
-        {% for personas in persona %}
+        {% for persona in view.people %}
         <tr>
-
-                <td>{{ personas.id }}</td>
-                <td>{{ personas.nombre }}</td>
-                <td>{{ personas.Eleccion_id }}</td>
-
+                <td>{{ persona.nombre }}</td>
+                <td><option value="{{ personas.pk }}">{{ persona.enunciado }}</option></td>
+                <td>{{ persona.Eleccion}}</td>
         </tr>
         {% endfor %}
         </tbody>

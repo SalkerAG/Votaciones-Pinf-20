@@ -471,10 +471,8 @@ class CrearPersona(CreateView):
     def get_success_url(self):
         return reverse('crearpersona')
 
-    def persona_list(request):
-        persona = Personas.objects.all()
-        contexto = {'personas':persona}
-        return render(request, 'templates/VotacionesUca/personas_form.html', contexto)
+    def people(self):
+        return Personas.objects.all()
 
 # class CrearPersonaGrupo(CreateView):
 #     model = Grupos

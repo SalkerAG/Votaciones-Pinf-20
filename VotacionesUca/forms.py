@@ -248,6 +248,7 @@ class PersonaForm(ModelForm):
         model = Personas
         fields = '__all__'
 
+
 class ListaVotacionForm(ModelForm):
     class Meta:
         model = Votacion
