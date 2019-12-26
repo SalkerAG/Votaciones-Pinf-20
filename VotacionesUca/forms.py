@@ -4,7 +4,8 @@ from django.core.exceptions import ValidationError
 from django import forms
 from django.utils import timezone
 from datetime import datetime
-from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, Censo, UsuarioVotacion, OpcionesCompleja
+from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, Censo, UsuarioVotacion, OpcionesCompleja, \
+    UsuarioEleccion, Personas
 from bootstrap_modal_forms.forms import BSModalForm
 
 
@@ -88,6 +89,7 @@ class VotacionForm(ProcesoElectoralForm):
         return self.cleaned_data
 
 
+
 class createCensoForm(ModelForm):
     class Meta:
         model = Censo
@@ -148,6 +150,7 @@ class realizarVotacionComplejaForm(ModelForm):
     opcionesCompleja = forms.ModelChoiceField(qs, label='Respuesta:')
 
     class Meta:
+
         model = UsuarioVotacion
         fields = 'Votacion', 'Pregunta',
         # exclude = ('seleccionSimple',)
@@ -168,6 +171,7 @@ class PreguntaForm(BSModalForm):
         fields = ('__all__')
 
 
+
 class PreguntaFormVotacion(ModelForm):
     class Meta:
         model = Pregunta
@@ -180,9 +184,65 @@ class PreguntaFormVotacion(ModelForm):
         # 'seleccion': forms.Select(attrs={'class': 'form-control'}),
 
 class EleccionForm(ProcesoElectoralForm):
-    nombre_eleccion= forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Título de la votacion'}))
-    c=[('0','Grupos'),('1','Unipersonales')]
-    tipo_eleccion=forms.ChoiceField(choices=c)
+    nombre= forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Título de la elección'}))
+    max_vacantes= forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Rellenar con un valor 0 a 1, válido solo para Grupos. Ej: 0.7'}))
+
     class Meta:
         model = Eleccion
         fields = '__all__'
+
+# class TipoEleccionForm(ModelForm):
+#     # tipo_eleccion= forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Título de la elección'}))
+#
+#     class Meta:
+#         model = TipoEleccion
+#         fields = '__all__'
+
+class realizarEleccionForm(ModelForm):
+    qs = Personas.objects.all().values_list('nombre', flat=True)
+    seleccion = forms.ModelChoiceField(qs, label='seleccion:')
+
+    class Meta:
+        model = UsuarioEleccion
+        fields = 'seleccion',
+
+        labels = {'user': (''), 'Eleccion': (''), }
+        widgets = {'Votacion': forms.Select(
+            attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
+            'Votacion': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
+            'Pregunta': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
+            'seleccion': forms.Select(attrs={'class': 'form-control'}),
+            # 'opcionesCompleja': forms.Select(attrs={'class': 'form-control'}),
+        }
+
+# class realizarEleccionFormGrupos(ModelForm):
+#
+#     # qs = Personas.objects.all().values_list('nombre', flat=True)
+#     grupos = forms.SelectMultiple()
+#
+#     class Meta:
+#         model = UsuarioEleccion
+#         fields = ('grupos',)
+#         labels = {'grupos': ('Seleccione (con la tecla Ctrl) aquellos candidatos que desee') }
+#         # help_texts = {'usuario': (
+#         #     'Elige los usuarios que pertenecen al censo. Recuerda que serán los usuarios que tendrán acceso a la votación'),
+#         #     'pregunta': ('Elige la pregunta a la que hace referencia el censo'),
+#         # }
+#
+#         # widgets = {'grupos': forms.SelectMultiple(attrs={'class': 'form-control'}),
+#         #
+#                    # }
+
+class PersonaForm(ModelForm):
+    nombre= forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre del elector'}))
+
+    class Meta:
+        model = Personas
+        fields = '__all__'
+
+# class PersonaGrupoForm(ModelForm):
+#     nombre= forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre del elector'}))
+#
+#     class Meta:
+#         model = Grupos
+#         fields = '__all__'

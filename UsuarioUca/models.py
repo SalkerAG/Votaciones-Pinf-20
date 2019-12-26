@@ -189,3 +189,4 @@ class Profesor(models.Model):
     user = models.OneToOneField(UsuarioUca, on_delete=models.PROTECT, primary_key=True)
     permanente = models.BooleanField(default=False)
     doctor = models.BooleanField(default=False)
+
