@@ -4,6 +4,7 @@ from django.forms import forms
 from django.urls import reverse
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils import timezone
+from datetime import datetime
 
 from UsuarioUca.models import UsuarioUca
 
@@ -27,6 +28,9 @@ class Votacion(ProcesoElectoral):
     # tipo_votacion = models.BooleanField(default=False)
     # max_respuestas = models.IntegerField()
     # pregunta = models.OneToOneField(Pregunta, on_delete=models.CASCADE, null=True, blank=True)
+    @property
+    def votacion_cerrada(self):
+        return (self.fecha_fin.strftime('%Y-%m-%d') > datetime.now().strftime('%Y-%m-%d')) or (self.fecha_fin.strftime('%Y-%m-%d') == (datetime.now().strftime('%Y-%m-%d')) and (self.hora_fin.strftime('%H:%M') < datetime.now().strftime('%H:%M')))
 
     def __str__(self):
         return self.nombre_votacion

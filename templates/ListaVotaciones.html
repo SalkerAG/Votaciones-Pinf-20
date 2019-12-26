@@ -21,19 +21,31 @@
         <br/>
         <!-- Tabla -->
         <table id="dtVotaciones" class="table table-responsive table-hover-condensed text center" align="center" cellspacing="0" width="100%">
+            <thead>
             <tr>
-                <th class="col-sm-6">Votaciones</th>
+                <th class="col-sm-3">Votaciones</th> 
                 <th class="col-sm-2">Estado</th>
                 {% if user.is_superuser %}
-                    <th class="col-sm-2">Modificar</th>
-                    <th class="col-sm-2">Eliminar</th>
+                <th class="col-sm-2">Modificar</th> 
+                <th class="col-sm-2">Eliminar</th> 
                 {% endif %}
             </tr>
+            </thead>
+            <tbody>
                 {% if object_list %}
                     {% for votacion in object_list %}
                     <tr>
-                        <td><a class="nav-link" href="{% url 'estadisticasvotacionsimple' %}">{{votacion.nombre_votacion}}</a></td>
-                        <td>Abierto</td>
+                        {% if votacion.votacion_cerrada %}
+                            <td><a class="nav-link" href="{% url 'votacion' pk=votacion.pk %}">{{votacion.nombre_votacion}}</a></td>
+                        {% else %}
+                            <td><a class="nav-link" href="{% url 'estadisticasvotacionsimple' %}">{{votacion.nombre_votacion}}</a></td>
+                        {% endif %}
+                    
+                        {% if votacion.votacion_cerrada %}
+                            <td>Abierta</td>
+                        {% else %}
+                            <td>Cerrada</td>
+                        {% endif %}
                         {% if user.is_superuser %}
                             <td><a href="" class="btn btn-warning">
                                 <i class="fas fa-edit"></i></a>
@@ -47,6 +59,7 @@
                 {% else %}
                     <h1>No hay votaciones disponibles</h1>
                 {% endif %}
+            </tbody>
             <!--tbody>
             <tr>
                 <td><a class="nav-link" href="{% url 'estadisticasvotacionsimple' %}">Votacion 1</a></td>
