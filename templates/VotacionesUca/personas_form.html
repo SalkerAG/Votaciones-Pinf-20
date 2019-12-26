@@ -44,8 +44,14 @@
     <br>
     <div style="width: 80%; padding-left: 10%">
         <form method="post">{% csrf_token %}
+            <div class="form-group">
             {{ form.as_p }}
-            <input type="submit" class="btn btn-primary" value="Guardar">
+            </div>
+            <div class="submit-row">
+                <input type="submit" class="btn btn-primary" value="Guardar">
+                <a href="/" class="btn btn-primary" input type="submit">Volver Al Menu Principal</a>
+
+            </div>
         </form>
 <!--        <button id="pregunta-modal" class="create-book btn btn-primary" type="button" name="button">Crear Pregunta</button-->
     </div>
