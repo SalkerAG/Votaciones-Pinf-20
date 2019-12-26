@@ -22,11 +22,11 @@
         <!-- Tabla -->
         <table id="dtVotaciones" class="table table-responsive table-hover-condensed text center" align="center" cellspacing="0" width="100%">
             <tr>
-                <th>Votaciones</th>
-                <th>Estado</th>
+                <th class="col-sm-6">Votaciones</th>
+                <th class="col-sm-2">Estado</th>
                 {% if user.is_superuser %}
-                    <th>Modificar</th>
-                    <th>Eliminar</th>
+                    <th class="col-sm-2">Modificar</th>
+                    <th class="col-sm-2">Eliminar</th>
                 {% endif %}
             </tr>
                 {% if object_list %}
