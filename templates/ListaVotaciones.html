@@ -47,10 +47,10 @@
                             <td>Cerrada</td>
                         {% endif %}
                         {% if user.is_superuser %}
-                            <td><a href="" class="btn btn-warning">
+                            <td><a href="/editarvotacion/{{ votacion.procesoelectoral_ptr_id }}" class="btn btn-warning">
                                 <i class="fas fa-edit"></i></a>
                             </td>
-                            <td><a href="" class="btn btn-danger">
+                            <td><a href="/eliminarvotacion/{{ votacion.procesoelectoral_ptr_id }}" class="btn btn-danger">
                                 <i class="fas fa-trash"></i></a>
                             </td>
                         {% endif %}

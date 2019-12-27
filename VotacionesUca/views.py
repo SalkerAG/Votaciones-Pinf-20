@@ -1,7 +1,7 @@
 from time import timezone
 
 from django.forms import ModelForm
-from django.views.generic.edit import FormMixin
+from django.views.generic.edit import FormMixin, UpdateView
 from django.urls import reverse
 from django.views.generic import TemplateView, FormView, CreateView, DetailView
 from django.views.generic.list import ListView
@@ -591,3 +591,16 @@ class ExitoCensoVotacionView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         return HttpResponseRedirect('/')
+
+class VotacionUpdate(UpdateView):
+    model = Votacion
+    form_class = VotacionForm
+    template_name_suffix = '_update_form'
+
+    def get_success_url(self):
+        return reverse('votacion_edit',kwargs={'pk': self.object.pk})
+
+def erase_request(request, pk):
+    Votacion.objects.filter(id=pk).delete()
+    return redirect('listavotaciones')
+

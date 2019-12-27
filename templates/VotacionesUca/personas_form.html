@@ -53,8 +53,9 @@
         <tbody>
         {% for persona in view.people %}
         <tr>
+
+                <td><option value="{{ persona.pk }}">{{ persona.enunciado }}</option></td>
                 <td>{{ persona.nombre }}</td>
-                <td><option value="{{ personas.pk }}">{{ persona.enunciado }}</option></td>
                 <td>{{ persona.Eleccion}}</td>
         </tr>
         {% endfor %}
