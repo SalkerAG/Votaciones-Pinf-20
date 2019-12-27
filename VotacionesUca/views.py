@@ -17,7 +17,7 @@ from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, Censo, \
     UsuarioVotacion, OpcionesCompleja, UsuarioEleccion, Personas
 from .forms import VotacionForm, PreguntaForm, createCensoForm, PreguntaFormVotacion, \
     realizarVotacionForm, OpcionesComplejaForm, realizarVotacionComplejaForm, EleccionForm, realizarEleccionForm, \
-    PersonaForm, ListaVotacionForm
+    PersonaForm, ListaVotacionForm, ListaEleccionForm, ListaCensoForm
 from django.shortcuts import render, redirect
 import datetime
 import csv
@@ -495,6 +495,24 @@ class ListaVotacionesView(ListView):
     def get_success_url(self):
         return reverse('votacion', kwargs={"pk": self.object.pk})
 
+class ListaEleccionesView(ListView):
+    model = Eleccion
+    form_class = ListaEleccionForm
+    paginate_by = 100  # if pagination is desired
+    template_name = "ListaElecciones.html"
+
+    def get_success_url(self):
+        return reverse('eleccion', kwargs={"pk": self.object.pk})
+
+
+class ListaCensosView(ListView):
+    model = Censo
+    form_class = ListaCensoForm
+    paginate_by = 100  # if pagination is desired
+    template_name = "ListaCensos.html"
+
+    def get_success_url(self):
+        return reverse('censo', kwargs={"pk": self.object.pk})
 
 class CrearEleccionView(CreateView):
     model = Eleccion
@@ -502,6 +520,8 @@ class CrearEleccionView(CreateView):
 
     def get_success_url(self):
         return reverse ('crearpersona', kwargs={"pk": self.object.pk})
+
+
 
 
 

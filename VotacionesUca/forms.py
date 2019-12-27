@@ -246,11 +246,14 @@ class PersonaForm(ModelForm):
 class ListaVotacionForm(ModelForm):
     class Meta:
         model = Votacion
-        fields = '__all__'
+        fields = ('__all__')
 
-# class PersonaGrupoForm(ModelForm):
-#     nombre= forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre del elector'}))
-#
-#     class Meta:
-#         model = Grupos
-#         fields = '__all__'
+class ListaEleccionForm(ModelForm):
+    class Meta:
+        model = Eleccion
+        fields = ('__all__')
+
+class ListaCensoForm(ModelForm):
+    class Meta:
+        model = Censo
+        fields = ('__all__')

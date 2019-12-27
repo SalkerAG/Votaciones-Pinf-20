@@ -133,18 +133,20 @@
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Votaciones</a>
             <div class="dropdown-menu">
+                   <a class="dropdown-item" href="{% url 'crearvotacion' %}">Crear votación</a>
                 <a class="dropdown-item" href="{% url 'listavotaciones' %}">Lista de votaciones</a>
-                <a class="dropdown-item" href="#">Votaciones finalizadas</a>
-                <a class="dropdown-item" href="{% url 'crearvotacion' %}">Crear votación</a>
+
+
             </div>
         </li>
 
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Elecciones</a>
             <div class="dropdown-menu">
-                <a class="dropdown-item" href="{% url 'home' %}">Lista de elecciones</a>
-                <a class="dropdown-item" href="#">Elecciones finalizadas</a>
-                <a class="dropdown-item" href="{% url 'create_eleccion' %}">Crear elección</a>
+                  <a class="dropdown-item" href="{% url 'create_eleccion' %}">Crear elección</a>
+                <a class="dropdown-item" href="{% url 'listaelecciones' %}">Lista de elecciones</a>
+
+
             </div>
         </li>
 
@@ -160,7 +162,7 @@
             <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Censo</a>
             <div class="dropdown-menu">
                 <a class="dropdown-item" href="{% url 'censo_create' %}">Crear censo</a>
-                <a class="dropdown-item" href="{% url 'home' %}">Lista de censos</a>
+                <a class="dropdown-item" href="{% url 'listacensos' %}">Lista de censos</a>
             </div>
         </li>
 
