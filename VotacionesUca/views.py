@@ -600,7 +600,31 @@ class VotacionUpdate(UpdateView):
     def get_success_url(self):
         return reverse('votacion_edit',kwargs={'pk': self.object.pk})
 
-def erase_request(request, pk):
+def erase_request1(request, pk):
     Votacion.objects.filter(id=pk).delete()
     return redirect('listavotaciones')
+
+class EleccionUpdate(UpdateView):
+    model = Eleccion
+    form_class = EleccionForm
+    template_name_suffix = '_update_form'
+
+    def get_success_url(self):
+        return reverse('eleccion_edit',kwargs={'pk': self.object.pk})
+
+def erase_request2(request, pk):
+    Eleccion.objects.filter(id=pk).delete()
+    return redirect('listaelecciones')
+
+class CensoUpdate(UpdateView):
+    model = Censo
+    form_class = ListaCensoForm
+    template_name_suffix = '_update_form'
+
+    def get_success_url(self):
+        return reverse('censo_edit',kwargs={'pk': self.object.pk})
+
+def erase_request3(request, pk):
+    Censo.objects.filter(id=pk).delete()
+    return redirect('listacensos')
 

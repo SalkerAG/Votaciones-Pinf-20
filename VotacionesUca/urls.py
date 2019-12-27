@@ -8,7 +8,7 @@ from .views import CrearVotacionView, VotacionView, \
     CrearPreguntaVotacion, CrearPreguntaViewCenso, CrearPreguntaViewVotacion, \
     CrearPreguntaViewRealizarVotacion, load_preguntas, CrearPreguntaComplejaView, CrearEleccionView, ErrorVotacionView, \
     ExitoCensoVotacionView, EleccionView, CrearPersona, ListaVotacionesView, ListaEleccionesView, ListaCensosView, \
-    VotacionUpdate
+    VotacionUpdate,EleccionUpdate,CensoUpdate
 
 urlpatterns = [
     path('crearVotacion/', CrearVotacionView.as_view(), name="crearvotacion"),
@@ -34,9 +34,13 @@ urlpatterns = [
     path('crearpersona/<slug:pk>', CrearPersona.as_view(), name="crearpersona"),
     path('listavotaciones/', ListaVotacionesView.as_view(), name="listavotaciones"),
     path('editarvotacion/<int:pk>', VotacionUpdate.as_view(), name='votacion_edit'),
-    path('eliminarvotacion/<int:pk>', views.erase_request, name="eliminar"),
+    path('eliminarvotacion/<int:pk>', views.erase_request1, name="eliminar_votacion"),
     path('listaelecciones/', ListaEleccionesView.as_view(), name="listaelecciones"),
+    path('editareleccion/<int:pk>', EleccionUpdate.as_view(), name='eleccion_edit'),
+    path('eliminareleccion/<int:pk>', views.erase_request2, name="eliminar_eleccion"),
     path('listacensos/', ListaCensosView.as_view(), name="listacensos"),
+    path('editarcenso/<int:pk>', CensoUpdate.as_view(), name='censo_edit'),
+    path('eliminarcenso/<int:pk>', views.erase_request3, name="eliminar_censo"),
     # path('creargrupo/', CrearPersonaGrupo.as_view(), name="crearpersonagrupo"),
 
     # path('creartipoeleccion/', CrearTipoEleccionView.as_view(), name="creartipoeleccion"),
