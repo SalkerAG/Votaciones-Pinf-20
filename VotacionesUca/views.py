@@ -17,7 +17,7 @@ from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, Censo, \
     UsuarioVotacion, OpcionesCompleja, UsuarioEleccion, Personas
 from .forms import VotacionForm, PreguntaForm, createCensoForm, PreguntaFormVotacion, \
     realizarVotacionForm, OpcionesComplejaForm, realizarVotacionComplejaForm, EleccionForm, realizarEleccionForm, \
-    PersonaForm
+    PersonaForm, ListaVotacionForm
 from django.shortcuts import render, redirect
 import datetime
 import csv
@@ -486,14 +486,14 @@ class VotacionComplejaView(FormView):
         return super().form_valid(form)
 
 
-class ListaVotacionView(ListView):
+class ListaVotacionesView(ListView):
     model = Votacion
+    form_class = ListaVotacionForm
     paginate_by = 100  # if pagination is desired
+    template_name = "ListaVotaciones.html"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['now'] = datetime.timezone.now()
-        return context
+    def get_success_url(self):
+        return reverse('votacion', kwargs={"pk": self.object.pk})
 
 
 class CrearEleccionView(CreateView):
@@ -521,6 +521,8 @@ class CrearPersona(FormMixin, DetailView, request):
     def get_success_url(self):
         return reverse('home')
 
+    def people(self):
+        return Personas.objects.all()
 
 
     def get_context_data(self, **kwargs):

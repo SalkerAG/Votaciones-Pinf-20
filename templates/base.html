@@ -99,22 +99,68 @@
             <a class="nav-link" href="{% url 'home' %}">Inicio</a>
         </li>
 
+        {% if not user.is_superuser %}
+        <!-- Dropdown -->
+        <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'listavotaciones' %}">Votaciones</a>
+        </li>
+
+             <li class="nav-item">
+            <a class="nav-link" href="{% url 'listavotaciones' %}">Elecciones</a>
+        </li>
+
+
+
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'faq' %}">Ayuda</a>
+        </li>
+
+        <li class="nav-item nav-item-right">
+            {% if user.is_authenticated %}
+                <a class="nav-link float-right" href="{% url 'logout' %}">Salir</a>
+
+            {% else %}
+                <a class="nav-link float-right" href="{% url 'login' %}">Entrar</a>
+            {% endif %}
+        </li>
+
+
+    </ul>
+
+    {% else %}
         <!-- Dropdown -->
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Votaciones</a>
             <div class="dropdown-menu">
                 <a class="dropdown-item" href="{% url 'listavotaciones' %}">Lista de votaciones</a>
                 <a class="dropdown-item" href="#">Votaciones finalizadas</a>
-                <a class="dropdown-item" href="{% url 'crearvotacion' %}">Crear Votación</a>
+                <a class="dropdown-item" href="{% url 'crearvotacion' %}">Crear votación</a>
             </div>
         </li>
 
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Elecciones</a>
             <div class="dropdown-menu">
-                <a class="dropdown-item" href="{% url 'home' %}">Lista de Elecciones</a>
+                <a class="dropdown-item" href="{% url 'home' %}">Lista de elecciones</a>
                 <a class="dropdown-item" href="#">Elecciones finalizadas</a>
-                <a class="dropdown-item" href="{% url 'create_eleccion' %}">Crear Elección</a>
+                <a class="dropdown-item" href="{% url 'create_eleccion' %}">Crear elección</a>
+            </div>
+        </li>
+
+      <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Usuarios</a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="{% url 'usuariouca_create' %}">Crear usuario</a>
+                <a class="dropdown-item" href="{% url 'usuariouca_list' %}">Lista de usuarios</a>
+            </div>
+        </li>
+
+      <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Censo</a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="{% url 'censo_create' %}">Crear censo</a>
+                <a class="dropdown-item" href="{% url 'home' %}">Lista de censos</a>
             </div>
         </li>
 
@@ -133,6 +179,7 @@
 
 
     </ul>
+    {% endif %}
     {% if user.is_authenticated %}
         <div class="usernif">
             <a style="...">Usuario: {{ user.nif }}</a>

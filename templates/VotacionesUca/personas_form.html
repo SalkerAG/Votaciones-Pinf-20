@@ -41,11 +41,36 @@
         <h1 id="censo" style="margin-top: 20px"><strong> Crear Persona </h1>
     </div>
     <br>
+
+    <table class=" table table-bordered">
+            <thead>
+            <tr>
+                <td>Id</td>
+                <td>Nombre</td>
+                <td>Eleccion_id</td>
+            </tr>
+            </thead>
+        <tbody>
+        {% for persona in view.people %}
+        <tr>
+                <td>{{ persona.nombre }}</td>
+                <td><option value="{{ personas.pk }}">{{ persona.enunciado }}</option></td>
+                <td>{{ persona.Eleccion}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+            </table>
+
     <br>
     <div style="width: 80%; padding-left: 10%">
         <form method="post">{% csrf_token %}
+            <div class="form-group">
             {{ form.as_p }}
-            <input type="submit" class="btn btn-primary" value="Guardar">
+            </div>
+            <div class="submit-row">
+                <input type="submit" class="btn btn-primary" value="Guardar">
+                <a href="/" class="btn btn-primary" input type="submit">Volver Al Menu Principal</a>
+            </div>
         </form>
 <!--        <button id="pregunta-modal" class="create-book btn btn-primary" type="button" name="button">Crear Pregunta</button-->
     </div>
@@ -74,7 +99,7 @@
 
 <!-- (Optional) Latest compiled and minified JavaScript translation files -->
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="{% static 'js/bootstrap.js' %}"></script>>
+<script src="{% static 'js/bootstrap.js' %}"></script>
 <script src="{% static 'js/jquery.bootstrap.modal.forms.min.js' %}"></script>
 </body>
 <script type="text/javascript">

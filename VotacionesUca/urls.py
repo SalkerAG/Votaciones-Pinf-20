@@ -6,12 +6,12 @@ from .views import CrearVotacionView, VotacionView, \
     CrearPregunta, CrearCensoView, CensoDetailView, CensoExportView, \
     CrearPreguntaVotacion, CrearPreguntaViewCenso, CrearPreguntaViewVotacion, \
     CrearPreguntaViewRealizarVotacion, load_preguntas, CrearPreguntaComplejaView, CrearEleccionView, ErrorVotacionView, \
-    ExitoCensoVotacionView, EleccionView, CrearPersona
+    ExitoCensoVotacionView, EleccionView, CrearPersona, ListaVotacionesView
 
 urlpatterns = [
     path('crearVotacion/', CrearVotacionView.as_view(), name="crearvotacion"),
     path('votacion/<slug:pk>', VotacionView.as_view(), name="votacion"),
-    path('eleccion/<slug:pk>', EleccionView.as_view(), name="votacion"),
+    path('eleccion/<slug:pk>', EleccionView.as_view(), name="eleccion"),
     path('crearpreguntacompleja/<slug:pk>', CrearPreguntaComplejaView.as_view(), name="crearpreguntacompleja"),
     # path('crearpreguntasimple/', CrearPreguntaSimpleView.as_view(), name="crearpreguntasimple"),
     path('crearpreguntavotacion/<slug:pk>', CrearPreguntaVotacion.as_view(), name="crearpreguntavotacion"),
@@ -30,6 +30,7 @@ urlpatterns = [
     path('errorVotacion/', ErrorVotacionView.as_view(), name='errorvotacion'),
     path('exitocensovotacion/', ExitoCensoVotacionView.as_view(), name='exitocensovotacion'),
     path('crearpersona/<slug:pk>', CrearPersona.as_view(), name="crearpersona"),
+    path('listavotaciones/', ListaVotacionesView.as_view(), name="listavotaciones"),
     # path('creargrupo/', CrearPersonaGrupo.as_view(), name="crearpersonagrupo"),
 
     # path('creartipoeleccion/', CrearTipoEleccionView.as_view(), name="creartipoeleccion"),

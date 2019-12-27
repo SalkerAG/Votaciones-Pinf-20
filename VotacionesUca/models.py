@@ -2,8 +2,9 @@ from django.db import models, transaction
 from django.db.models import Count
 from django.forms import forms
 from django.urls import reverse
-
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils import timezone
+from datetime import datetime
 
 from UsuarioUca.models import UsuarioUca
 
@@ -27,6 +28,9 @@ class Votacion(ProcesoElectoral):
     # tipo_votacion = models.BooleanField(default=False)
     # max_respuestas = models.IntegerField()
     # pregunta = models.OneToOneField(Pregunta, on_delete=models.CASCADE, null=True, blank=True)
+    @property
+    def votacion_cerrada(self):
+        return (self.fecha_fin.strftime('%Y-%m-%d') > datetime.now().strftime('%Y-%m-%d')) or (self.fecha_fin.strftime('%Y-%m-%d') == (datetime.now().strftime('%Y-%m-%d')) and (self.hora_fin.strftime('%H:%M') < datetime.now().strftime('%H:%M')))
 
     def __str__(self):
         return self.nombre_votacion
@@ -61,7 +65,6 @@ class Pregunta(models.Model):
     #
     # def get_absolute_url(self):
     #     return reverse('crearpreguntasimple')
-
 
 class OpcionesCompleja(models.Model):
     Pregunta = models.ForeignKey(Pregunta, on_delete=models.PROTECT)
@@ -106,16 +109,13 @@ class UsuarioVotacion(models.Model):
 
 class Eleccion(ProcesoElectoral):
     nombre = models.CharField(max_length=50)
-
     TIPO_ELECCION = (
         ("0", "Grupos"),
         ("1", "Unipersonales"),
-
     )
-
     tipo_eleccion = models.CharField(max_length=10, choices=TIPO_ELECCION, default="Simple")
-    max_candidatos = models.IntegerField(default=2)
-    max_vacantes = models.FloatField(null=True)
+    max_candidatos = models.IntegerField(default=2, validators=[MinValueValidator(2)])
+    max_vacantes = models.FloatField(null=True, default=0.7, validators=[MinValueValidator(0.1), MaxValueValidator(0.99)])
 
     def __str__(self):
         return self.nombre
