@@ -43,7 +43,7 @@ class OpcionesComplejaForm(forms.ModelForm):
     # respuesta= forms.ModelChoiceField(queryset=OpcionesCompleja.objects.all())
     class Meta:
         model = OpcionesCompleja
-        fields = ('__all__')
+        fields = ('respuesta', )
         # labels = {'pregunta': ('Pregunta'), 'respuesta': ('respuesta') }
         #
         #
@@ -144,25 +144,17 @@ class realizarVotacionForm(ModelForm):
 
 
 class realizarVotacionComplejaForm(ModelForm):
-    # usuario = models.ForeignKey("auth.User", blank=True)
-    # def __init__(self, *args, **kwargs):
-    #     super(realizarVotacionComplejaForm, self).__init__(*args, **kwargs)
-    #
-    #     choices = [(OpcionesCompleja.respuesta)
-    #                for OpcionesCompleja.respuesta in OpcionesCompleja.objects.all()]
-    #
-    #     self.fields['opcionesCompleja'] = forms.ChoiceField(widget=forms.RadioSelect(),
-    #                                                           choices=choices)
+
     qs = OpcionesCompleja.objects.all().values_list('respuesta', flat=True)
-    # print(qs)
+
     opcionesCompleja = forms.ModelChoiceField(qs, label='Respuesta:')
 
     class Meta:
 
-        model = UsuarioVotacion
-        fields = 'Votacion', 'Pregunta',
-        # exclude = ('seleccionSimple',)
-        labels = {'user': (''), 'Votacion': (''), 'Pregunta': (''), 'opcionesCompleja': ('Respuesta') }
+        model = OpcionesCompleja
+        fields = ('Pregunta', )
+
+        labels = {'opcionesCompleja': ('Respuesta') }
         widgets = {'Votacion': forms.Select(
             attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
             'Votacion': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
@@ -185,11 +177,13 @@ class PreguntaFormVotacion(ModelForm):
         model = Pregunta
         fields = 'Votacion', 'tipo_votacion', 'enunciado',
         labels = {'Votacion': (''), 'enunciado': ('Enunciado'), }
-        # widgets = {
-        #     attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
-        #     'Votacion': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', })}
-        # 'tipo_votacion': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
-        # 'seleccion': forms.Select(attrs={'class': 'form-control'}),
+        widgets = {'Votacion': forms.Select(
+            attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
+            'Votacion': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
+            'Pregunta': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
+            'seleccion': forms.Select(attrs={'class': 'form-control'}),
+            # 'opcionesCompleja': forms.Select(attrs={'class': 'form-control'}),
+        }
 
 class EleccionForm(ProcesoElectoralForm):
     nombre= forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Título de la elección'}))
@@ -242,21 +236,24 @@ class realizarEleccionForm(ModelForm):
 #                    # }
 
 class PersonaForm(ModelForm):
-    nombre= forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre del elector'}))
+    # nombre= forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre del elector'}))
 
     class Meta:
         model = Personas
-        fields = '__all__'
+        fields = ('nombre',)
 
 
 class ListaVotacionForm(ModelForm):
     class Meta:
         model = Votacion
-        fields = '__all__'
+        fields = ('__all__')
 
-# class PersonaGrupoForm(ModelForm):
-#     nombre= forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre del elector'}))
-#
-#     class Meta:
-#         model = Grupos
-#         fields = '__all__'
+class ListaEleccionForm(ModelForm):
+    class Meta:
+        model = Eleccion
+        fields = ('__all__')
+
+class ListaCensoForm(ModelForm):
+    class Meta:
+        model = Censo
+        fields = ('__all__')

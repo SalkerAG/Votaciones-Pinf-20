@@ -53,7 +53,7 @@ class UsuarioUcaUpdate(UpdateView):
     template_name_suffix = '_update_form'
 
     def get_success_url(self):
-        return reverse('usuariouca_edit', kwargs={'pk': self.object.pk})
+        return reverse('usuariouca_list', )
 
 
 class UsuarioUcaCreate(CreateView):

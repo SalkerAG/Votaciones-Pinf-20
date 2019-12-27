@@ -7,15 +7,16 @@ from .views import CrearVotacionView, VotacionView, \
     CrearPregunta, CrearCensoView, CensoDetailView, CensoExportView, \
     CrearPreguntaVotacion, CrearPreguntaViewCenso, CrearPreguntaViewVotacion, \
     CrearPreguntaViewRealizarVotacion, load_preguntas, CrearPreguntaComplejaView, CrearEleccionView, ErrorVotacionView, \
-    ExitoCensoVotacionView, EleccionView, CrearPersona, ListaVotacionesView, VotacionUpdate
+    ExitoCensoVotacionView, EleccionView, CrearPersona, ListaVotacionesView, ListaEleccionesView, ListaCensosView, \
+    VotacionUpdate
 
 urlpatterns = [
     path('crearVotacion/', CrearVotacionView.as_view(), name="crearvotacion"),
     path('votacion/<slug:pk>', VotacionView.as_view(), name="votacion"),
     path('eleccion/<slug:pk>', EleccionView.as_view(), name="eleccion"),
-    path('crearpreguntacompleja/', CrearPreguntaComplejaView.as_view(), name="crearpreguntacompleja"),
+    path('crearpreguntacompleja/<slug:pk>', CrearPreguntaComplejaView.as_view(), name="crearpreguntacompleja"),
     # path('crearpreguntasimple/', CrearPreguntaSimpleView.as_view(), name="crearpreguntasimple"),
-    path('crearpreguntavotacion/', CrearPreguntaVotacion.as_view(), name="crearpreguntavotacion"),
+    path('crearpreguntavotacion/<slug:pk>', CrearPreguntaVotacion.as_view(), name="crearpreguntavotacion"),
     path('crearpregunta/', CrearPregunta.as_view(), name="crearpregunta"),
     path('crearcenso/', CrearCensoView.as_view(), name="censo_create"),
     path('censo/<int:pk>/', CensoDetailView.as_view(), name='censo-detail'),
@@ -30,10 +31,12 @@ urlpatterns = [
     path('creareleccion/', CrearEleccionView.as_view(), name='create_eleccion'),
     path('errorVotacion/', ErrorVotacionView.as_view(), name='errorvotacion'),
     path('exitocensovotacion/', ExitoCensoVotacionView.as_view(), name='exitocensovotacion'),
-    path('crearpersona/', CrearPersona.as_view(), name="crearpersona"),
+    path('crearpersona/<slug:pk>', CrearPersona.as_view(), name="crearpersona"),
     path('listavotaciones/', ListaVotacionesView.as_view(), name="listavotaciones"),
     path('editarvotacion/<int:pk>', VotacionUpdate.as_view(), name='votacion_edit'),
     path('eliminarvotacion/<int:pk>', views.erase_request, name="eliminar"),
+    path('listaelecciones/', ListaEleccionesView.as_view(), name="listaelecciones"),
+    path('listacensos/', ListaCensosView.as_view(), name="listacensos"),
     # path('creargrupo/', CrearPersonaGrupo.as_view(), name="crearpersonagrupo"),
 
     # path('creartipoeleccion/', CrearTipoEleccionView.as_view(), name="creartipoeleccion"),
