@@ -25,9 +25,7 @@ class Votacion(ProcesoElectoral):
     es_presencial = models.BooleanField(default=False)
     voto_rectificable = models.BooleanField(default=False)
 
-    # tipo_votacion = models.BooleanField(default=False)
-    # max_respuestas = models.IntegerField()
-    # pregunta = models.OneToOneField(Pregunta, on_delete=models.CASCADE, null=True, blank=True)
+
     @property
     def votacion_cerrada(self):
         return (self.fecha_fin.strftime('%Y-%m-%d') > datetime.now().strftime('%Y-%m-%d')) or (self.fecha_fin.strftime('%Y-%m-%d') == (datetime.now().strftime('%Y-%m-%d')) and (self.hora_fin.strftime('%H:%M') < datetime.now().strftime('%H:%M')))
@@ -54,21 +52,16 @@ class Pregunta(models.Model):
     tipo_votacion = models.CharField(max_length=10, choices=TIPO_CHOICES, default="Simple")
     enunciado = models.CharField(max_length=50)
 
-    # opciones = models.ManyToManyField(Opcion, blank=False)
+
 
     def __str__(self):
         return self.enunciado
 
-    # curso_max = models.IntegerField(blank=False, null=False, default=1, choices=list(zip(range(1, 5), range(1, 5))))
 
-    # class PreguntaSimple(OpcionesSimple):
-    #
-    # def get_absolute_url(self):
-    #     return reverse('crearpreguntasimple')
 
 class OpcionesCompleja(models.Model):
     Pregunta = models.ForeignKey(Pregunta, on_delete=models.CASCADE)
-    # enunciado = models.CharField(max_length=50)
+
     respuesta = models.CharField(max_length=50)
 
     def __unicode__(self):
@@ -76,11 +69,7 @@ class OpcionesCompleja(models.Model):
 
 
 class UsuarioVotacion(models.Model):
-    # RESPUESTA_CHOICES = (
-    #     ("SI", "SI"),
-    #     ("NO", "NO"),
-    #     ("ABSTENCIÓN", "ABSTENCIÓN"),
-    # )
+
 
     user = models.ForeignKey(UsuarioUca, on_delete=models.PROTECT, null=True)
 
@@ -90,7 +79,7 @@ class UsuarioVotacion(models.Model):
 
     seleccion = models.CharField(max_length=20, null=True)
 
-    # opcionesCompleja = models.ForeignKey(OpcionesCompleja, on_delete=models.PROTECT, null=True)
+
 
     def get_absolute_url(self):
         return reverse('home')
@@ -129,39 +118,14 @@ class Personas(models.Model):
         return self.nombre
 
     def clean_fields(self, exclude=None):
-        # for row in Personas.objects.all():
+
         maxcandidatos = self.Eleccion.max_candidatos
         if Personas.objects.filter(Eleccion_id=self.Eleccion_id).count() > maxcandidatos - 1:
             raise forms.ValidationError("Ha superado el numero de candidatos máximos")
         else:
             return super(Personas, self).save()
 
-        # super(Personas, self).save(*args, **kwargs)
 
-
-# for row in UsuarioVotacion.objects.all():
-#          if UsuarioVotacion.objects.filter(
-#                  Votacion_id=row.Votacion_id).count() > 1 and UsuarioVotacion.objects.filter(
-#              Pregunta_id=row.Pregunta_id).count() > 1 and UsuarioVotacion.objects.filter(
-#              user_id=row.user_id).count() > 1:
-#              row.delete()
-#
-#      return super(UsuarioVotacion, self).save(*args, **kwargs)
-
-# class Grupos(models.Model):
-#     Eleccion = models.ForeignKey(Eleccion, on_delete=models.PROTECT)
-#
-#     nombre = models.CharField(max_length=20, unique=True)
-#
-#     def clean_fields(self, exclude=None):
-#         # for row in Personas.objects.all():
-#
-#         maxcandidatos = self.Eleccion.max_candidatos
-#         print(maxcandidatos)
-#         if Grupos.objects.filter(Eleccion_id=self.Eleccion_id).count() > maxcandidatos - 1:
-#             raise forms.ValidationError("Ha superado el numero de candidatos máximos")
-#         else:
-#             return super(Grupos, self).save()
 
 
 class UsuarioEleccion(models.Model):
@@ -171,7 +135,7 @@ class UsuarioEleccion(models.Model):
 
     seleccion = models.CharField(max_length=20, null=True)
 
-    # grupos = models.ManyToManyField(Personas, blank=False)
+
 
     def save(self, exclude=None):
 
