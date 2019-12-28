@@ -2,7 +2,9 @@
 
 {% block content %}
 
+
     {% if not user.is_superuser %}
+
         <div class="container">
             <!-- Cabecera -->
             <br/>
@@ -13,6 +15,7 @@
             </div>
         </div>
     {% else %}
+
         <head>
             <!-- Movil y teclado -->
             <meta charset="utf-8">
@@ -108,6 +111,8 @@
         </div>
         </form>
     </div>
+    {% endif %}
+{% endblock %}
 
         <!-- Requisitos para bootstrap 4 y js  -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -138,7 +143,6 @@
 
         </body>
 
-        </html>
 
-    {% endif %}
-{% endblock %}
+
+
