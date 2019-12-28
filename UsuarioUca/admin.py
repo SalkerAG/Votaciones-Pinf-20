@@ -2,7 +2,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.hashers import check_password, identify_hasher, is_password_usable
-from django.core.validators import RegexValidator
+
 from import_export.admin import ImportExportModelAdmin
 from .forms import CustomUserCreationForm, CustomUserChangeForm, UserLoginForm
 from .models import UsuarioUca, Profesor, PASS, Estudiante, validonifspain, validonifworld, uvalidonifspain, \
@@ -14,7 +14,7 @@ from django.forms import ValidationError
 
 
 
-# regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
+
 regex = '^\w+([\.-]?\w+)*@alum.uca.es'
 regexname = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*"
 
