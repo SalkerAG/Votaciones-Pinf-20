@@ -52,8 +52,6 @@ class Pregunta(models.Model):
     tipo_votacion = models.CharField(max_length=10, choices=TIPO_CHOICES, default="Simple")
     enunciado = models.CharField(max_length=50)
 
-
-
     def __str__(self):
         return self.enunciado
 
@@ -61,7 +59,6 @@ class Pregunta(models.Model):
 
 class OpcionesCompleja(models.Model):
     Pregunta = models.ForeignKey(Pregunta, on_delete=models.CASCADE)
-
     respuesta = models.CharField(max_length=50)
 
     def __unicode__(self):
@@ -69,17 +66,10 @@ class OpcionesCompleja(models.Model):
 
 
 class UsuarioVotacion(models.Model):
-
-
     user = models.ForeignKey(UsuarioUca, on_delete=models.PROTECT, null=True)
-
     Votacion = models.ForeignKey(Votacion, on_delete=models.PROTECT)
-
     Pregunta = models.ForeignKey(Pregunta, on_delete=models.PROTECT)
-
     seleccion = models.CharField(max_length=20, null=True)
-
-
 
     def get_absolute_url(self):
         return reverse('home')
@@ -92,8 +82,6 @@ class UsuarioVotacion(models.Model):
                 Pregunta_id=row.Pregunta_id).count() > 1 and UsuarioVotacion.objects.filter(
                 user_id=row.user_id).count() > 1:
                 row.delete()
-
-
 
 
 class Eleccion(ProcesoElectoral):
@@ -130,12 +118,8 @@ class Personas(models.Model):
 
 class UsuarioEleccion(models.Model):
     user = models.ForeignKey(UsuarioUca, on_delete=models.PROTECT, null=True)
-
     Eleccion = models.ForeignKey(Eleccion, on_delete=models.PROTECT, null=True)
-
     seleccion = models.CharField(max_length=20, null=True)
-
-
 
     def save(self, exclude=None):
 
