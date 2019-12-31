@@ -1,14 +1,14 @@
 from django.contrib import admin
 from django.urls import path, include
 
-from UsuarioUca.views import HomeView
+from UsuarioUca.views import HomeView, EstadisticasEleccionView
 from . import views
 from .views import CrearVotacionView, VotacionView, \
     CrearPregunta, CrearCensoView, CensoDetailView, CensoExportView, \
     CrearPreguntaVotacion, CrearPreguntaViewCenso, CrearPreguntaViewVotacion, \
     CrearPreguntaViewRealizarVotacion, load_preguntas, CrearPreguntaComplejaView, CrearEleccionView, ErrorVotacionView, \
     ExitoCensoVotacionView, EleccionView, CrearPersona, ListaVotacionesView, ListaEleccionesView, ListaCensosView, \
-    VotacionUpdate,EleccionUpdate,CensoUpdate
+    VotacionUpdate, EleccionUpdate, CensoUpdate, EstadisticasVotacionSimpleView
 
 urlpatterns = [
     path('crearVotacion/', CrearVotacionView.as_view(), name="crearvotacion"),
@@ -41,6 +41,8 @@ urlpatterns = [
     path('listacensos/', ListaCensosView.as_view(), name="listacensos"),
     path('editarcenso/<int:pk>', CensoUpdate.as_view(), name='censo_edit'),
     path('eliminarcenso/<int:pk>', views.erase_request3, name="eliminar_censo"),
+    path('estadisticasVotacionSimple/<int:pk>', EstadisticasVotacionSimpleView.as_view(), name="estadisticasvotacionsimple"),
+    path('estadisticasEleccion/<int:pk>', EstadisticasEleccionView.as_view(), name="estadisticaseleccion"),
     # path('creargrupo/', CrearPersonaGrupo.as_view(), name="crearpersonagrupo"),
 
     # path('creartipoeleccion/', CrearTipoEleccionView.as_view(), name="creartipoeleccion"),

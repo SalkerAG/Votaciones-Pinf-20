@@ -38,7 +38,7 @@
                         {% if votacion.votacion_cerrada %}
                             <td><a class="nav-link" href="{% url 'votacion' pk=votacion.pk %}">{{votacion.nombre_votacion}}</a></td>
                         {% else %}
-                            <td><a class="nav-link" href="{% url 'estadisticasvotacionsimple' %}">{{votacion.nombre_votacion}}</a></td>
+                            <td><a class="nav-link" href="{% url 'estadisticasvotacionsimple' pk=votacion.pk %}">{{votacion.nombre_votacion}}</a></td>
                         {% endif %}
                     
                         {% if votacion.votacion_cerrada %}
@@ -60,44 +60,6 @@
                     <h1>No hay votaciones disponibles</h1>
                 {% endif %}
             </tbody>
-            <!--tbody>
-            <tr>
-                <td><a class="nav-link" href="{% url 'estadisticasvotacionsimple' %}">Votacion 1</a></td>
-                <td>Abierta</td>
-                {% if user.is_superuser %}
-                    <td><a href="" class="btn btn-warning">
-                        <i class="fas fa-edit"></i></a>
-                    </td>
-                    <td><a href="" class="btn btn-danger">
-                        <i class="fas fa-trash"></i></a>
-                    </td>
-                {% endif %}
-            </tr>
-            <tr>
-                <td><a class="nav-link" href="{% url 'estadisticasvotacionsimple' %}">Votacion 2</a></td>
-                <td>Cerrada</td>
-                {% if user.is_superuser %}
-                    <td><a href="" class="btn btn-warning">
-                        <i class="fas fa-edit"></i></a>
-                    </td>
-                    <td><a href="" class="btn btn-danger">
-                        <i class="fas fa-trash"></i></a>
-                    </td>
-                {% endif %}
-            </tr>
-            <tr>
-                <td><a class="nav-link" href="{% url 'estadisticasvotacionsimple' %}">Votacion 3</a></td>
-                <td>Finalizada</td>
-                {% if user.is_superuser %}
-                    <td><a href="" class="btn btn-warning">
-                        <i class="fas fa-edit"></i></a>
-                    </td>
-                    <td><a href="" class="btn btn-danger">
-                        <i class="fas fa-trash"></i></a>
-                    </td>
-                {% endif %}
-            </tr>
-            </tbody-->
         </table>
 
         <!-- Fin Tabla -->

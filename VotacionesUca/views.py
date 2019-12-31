@@ -628,3 +628,48 @@ def erase_request3(request, pk):
     Censo.objects.filter(id=pk).delete()
     return redirect('listacensos')
 
+class EstadisticasVotacionSimpleView(DetailView):
+    template_name = "votacionSimpleResultados.html"
+    model = Votacion
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['now'] = datetime.datetime.now()
+        context['censo'] = Censo.objects.get(pk=context['votacion'].pregunta.censo.pk)
+        context['usuariosCenso'] = context['censo'].usuario.all().count()
+        context['total'] = 0
+        context['si'] = 0
+        context['no'] = 0
+        context['abstencion'] = 0
+        context['resultado'] = UsuarioVotacion.objects.filter(Votacion_id=context['votacion'].id)
+        for resultado in context['resultado']:
+            context['total'] += 1
+            if resultado.seleccion == 'Si':
+                context['si'] += 1
+            if resultado.seleccion == 'No':
+                context['no'] += 1
+            else:
+                context['abstencion'] += 1
+        context['participacion'] = context['total']/context['usuariosCenso']
+        context['abstencionporcentaje'] = context['abstencion']/context['usuariosCenso']
+        return context
+
+class EstadisticasEleccionView(DetailView):
+    template_name = "votacionEleccionesResultados.html"
+    model = Votacion
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['now'] = datetime.datetime.now()
+        context['censo'] = Censo.objects.get(pk=context['votacion'].pregunta.censo.pk)
+        context['usuariosCenso'] = context['censo'].usuario.all().count()
+        context['total'] = 0
+
+        context['resultado'] = UsuarioVotacion.objects.filter(Votacion_id=context['votacion'].id)
+        for resultado in context['resultado']:
+            context['total'] += 1
+
+        context['participacion'] = context['total']/context['usuariosCenso']
+        context['abstencionporcentaje'] = context['abstencion']/context['usuariosCenso']
+        return context
+
