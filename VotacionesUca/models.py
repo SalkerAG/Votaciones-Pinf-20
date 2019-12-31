@@ -116,6 +116,9 @@ class Eleccion(ProcesoElectoral):
     tipo_eleccion = models.CharField(max_length=10, choices=TIPO_ELECCION, default="Simple")
     max_candidatos = models.IntegerField(default=2, validators=[MinValueValidator(2)])
     max_vacantes = models.FloatField(null=True, default=0.7, validators=[MinValueValidator(0.1), MaxValueValidator(0.99)])
+    @property
+    def eleccion_cerrada(self):
+        return (self.fecha_fin.strftime('%Y-%m-%d') > datetime.now().strftime('%Y-%m-%d')) or (self.fecha_fin.strftime('%Y-%m-%d') == (datetime.now().strftime('%Y-%m-%d')) and (self.hora_fin.strftime('%H:%M') < datetime.now().strftime('%H:%M')))
 
     def __str__(self):
         return self.nombre

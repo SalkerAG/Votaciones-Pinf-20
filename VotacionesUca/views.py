@@ -470,8 +470,6 @@ class EleccionView(FormMixin, DetailView, request):
         else:
             return HttpResponseRedirect('/errorVotacion')
 
-
-
     def form_valid(self, form):
         form.save()
         return super(EleccionView, self).form_valid(form)

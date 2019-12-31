@@ -35,13 +35,13 @@
                 {% if object_list %}
                     {% for eleccion in object_list %}
                     <tr>
-                        {% if  votacion.votacion_cerrada %}
+                        {% if  eleccion.eleccion_cerrada %}
                                              <td><a class="nav-link" href="{% url 'eleccion' pk=eleccion.pk %}">{{eleccion.nombre}}</a></td>
                         {% else %}
                             <td><a class="nav-link" href="{% url 'estadisticaseleccion' pk=eleccion.pk %}">{{eleccion.nombre}}</a></td>
                         {% endif %}
                     
-                        {% if votacion.votacion_cerrada %}
+                        {% if eleccion.eleccion_cerrada %}
                             <td>Abierta</td>
                         {% else %}
                             <td>Cerrada</td>
