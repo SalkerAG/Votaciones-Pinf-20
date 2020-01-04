@@ -94,6 +94,7 @@ class CrearVotacionView(CreateView):
     model = Votacion
     form_class = VotacionForm
 
+
     def get_success_url(self):
         return reverse('crearpreguntavotacion', kwargs={"pk": self.object.pk})
 
@@ -419,7 +420,7 @@ class CrearPersona(FormMixin, DetailView, request):
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
-        # print(self.object)
+
         form = self.get_form()
         per = Personas()
 

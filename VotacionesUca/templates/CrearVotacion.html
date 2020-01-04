@@ -1,4 +1,7 @@
+{% extends 'base.html' %}
 
+<!doctype html>
+<html>
 <head>
 
     <!-- Movil y teclado -->
@@ -47,6 +50,7 @@
     </ul>
 </nav>
 <!-- Fin header  -->
+    {% block content %}
 
 <div class="container">
     <!-- Cabecera -->
@@ -81,7 +85,7 @@
         </div>
     </div>
 
-
+{% endblock %}
     <!-- Footer  -->
 
     <footer class="footer-area footer--light">
