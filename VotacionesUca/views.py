@@ -366,15 +366,6 @@ class VotacionView(FormMixin, DetailView, request):
     def get_success_url(self):
         return reverse('home')
 
-    # def get(self, request, *args, **kwargs):
-    #     qss = Censo.objects.all().values_list('usuario', flat=True)
-    #     print (qss)
-    #     if not qss.filter(usuario=self.request.user).exists():
-    #         print("hola")
-    #         return HttpResponseRedirect('/errorVotacion')
-    #     else:
-    #         return render(request, self.template_name)
-
     def get_context_data(self, **kwargs):
         context = super(VotacionView, self).get_context_data(**kwargs)
         cosas = self
@@ -469,6 +460,7 @@ class EleccionView(FormMixin, DetailView, request):
             usuario_eleccion.save()
         else:
             return HttpResponseRedirect('/errorVotacion')
+        return HttpResponseRedirect('/')
 
     def form_valid(self, form):
         form.save()
@@ -644,10 +636,11 @@ class EstadisticasVotacionSimpleView(DetailView):
             context['total'] += 1
             if resultado.seleccion == 'Si':
                 context['si'] += 1
-            if resultado.seleccion == 'No':
-                context['no'] += 1
-            else:
-                context['abstencion'] += 1
+            else :
+                if resultado.seleccion == 'No':
+                    context['no'] += 1
+                else:
+                    context['abstencion'] += 1
         context['participacion'] = context['total']/context['usuariosCenso']
         context['abstencionporcentaje'] = context['abstencion']/context['usuariosCenso']
         return context
