@@ -35,11 +35,17 @@
                 {% if object_list %}
                     {% for votacion in object_list %}
                     <tr>
-                        {% if votacion.votacion_cerrada %}
-                            <td><a class="nav-link" href="{% url 'votacion' pk=votacion.pk %}">{{votacion.nombre_votacion}}</a></td>
+                        {%if votacion.es_consulta %}
+                            <td><a class="nav-link" href="{% url 'votacion' pk=votacion.pk %}">{{votacion.nombre_votacion}}
+                            <a class="nav-link" href="{% url 'estadisticasvotacionsimple' pk=votacion.pk %}">Resultados</a></td>
                         {% else %}
-                            <td><a class="nav-link" href="{% url 'estadisticasvotacionsimple' pk=votacion.pk %}">{{votacion.nombre_votacion}}</a></td>
+                            {% if votacion.votacion_cerrada %}
+                                <td><a class="nav-link" href="{% url 'votacion' pk=votacion.pk %}">{{votacion.nombre_votacion}}</a></td>
+                            {% else %}
+                                <td><a class="nav-link" href="{% url 'estadisticasvotacionsimple' pk=votacion.pk %}">{{votacion.nombre_votacion}}</a></td>
+                            {% endif %}
                         {% endif %}
+
                     
                         {% if votacion.votacion_cerrada %}
                             <td>Abierta</td>

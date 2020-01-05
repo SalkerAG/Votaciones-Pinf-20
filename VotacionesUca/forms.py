@@ -117,13 +117,14 @@ class realizarVotacionForm(ModelForm):
     # usuario = models.ForeignKey("auth.User", blank=True)
     CHOICES = (('Si', 'Si'), ('No', 'No'), ('Abstención', 'Abstención'))
     seleccion = forms.ChoiceField(choices=CHOICES)
+    #seleccion = forms.ChoiceField(label='', choices=CHOICES, widget=forms.Select(attrs={'class':'regDropDown'}))
 
     class Meta:
         model = UsuarioVotacion
         fields = 'user', 'Votacion', 'Pregunta', 'seleccion'
         labels = {'user': (''), 'Votacion': (''), 'Pregunta': (''), 'seleccion': ('Respuesta'), }
         widgets = {'user': forms.Select(
-            attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
+            attrs={'disabled': 'disabled', 'class': 'bootstrap-select', 'hidden': 'hidden', }),
             'Votacion': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
             'Pregunta': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
             'seleccion': forms.Select(attrs={'class': 'form-control'}),
