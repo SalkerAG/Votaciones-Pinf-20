@@ -83,48 +83,17 @@ class CensoExportView(ImportView, resources.ModelResource):
         writer.writerow(['Nif'])
         for user in query_set:
             output.append([user])
-        # CSV Data
+
         writer.writerows(output)
         return response
-        # dataset = CensoResource().export(queryset)
-        # response = HttpResponse(dataset.csv, content_type="csv")
-        # response['Content-Disposition'] = 'attachment; filename=Censo' + str(censo_id) + '.csv'
-        # return response
 
 
-# class VotacionView(FormMixin, DetailView, request):
-#     model = Votacion
-#     form_class = realizarVotacionForm
-#     template_name = "RealizarVotacion.html"
-#     success_url = reverse_lazy('home')
-#
-#     def get_success_url(self):
-#         return reverse('home')
-#
-#     def get_context_data(self, **kwargs):
-#         context = super(VotacionView, self).get_context_data(**kwargs)
-#         cosas = self
-#         context['form'] = realizarVotacionForm(
-#             initial={'user': self.request.user, 'Votacion': self.object, 'Pregunta': self.object.pregunta})
-#         return context
-#
-#     def post(self, request, *args, **kwargs):
-#         self.object = self.get_object()
-#         form = self.get_form()
-#         if form.is_valid():
-#             return self.form_valid(form)
-#         else:
-#             return self.form_invalid(form)
-#
-#
-#     def form_valid(self, form):
-#         form.save()
-#         return super(VotacionView, self).form_valid(form)
 
 
 class CrearVotacionView(CreateView):
     model = Votacion
     form_class = VotacionForm
+
 
     def get_success_url(self):
         return reverse('crearpreguntavotacion', kwargs={"pk": self.object.pk})
@@ -148,11 +117,6 @@ class CrearPregunta(CreateView):
         else:
             return reverse('crearpreguntacompleja')
 
-    # def get_context_data(self, **kwargs):
-    #     context = super(CrearPregunta, self).get_context_data(**kwargs)
-    #     context['form'] = PreguntaForm(
-    #         initial={'Votacion': self.object.Votacion, })
-    #     return context
 
 
 class CrearPreguntaVotacion(FormMixin, DetailView, request):
@@ -162,30 +126,14 @@ class CrearPreguntaVotacion(FormMixin, DetailView, request):
 
     success_url = reverse_lazy('home')
 
-    # def add_opcionescomplejas(request):
-    #     objectlist = OpcionesCompleja.objects.values('respuesta')
-    #     if request.method == 'POST':
-    #         form = realizarVotacionForm(request.POST)
-    #         if form.is_valid():
-    #             form.save()
-    #             return redirect('home')
-    #     else:
-    #         form = realizarVotacionForm()
-    #     return render(request, 'RealizarVotacion.html', {'form': form, 'objectlist': objectlist})
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
     def get_success_url(self):
         return reverse('home')
 
-    # def get(self, request, *args, **kwargs):
-    #     qss = Censo.objects.all().values_list('usuario', flat=True)
-    #     print (qss)
-    #     if not qss.filter(usuario=self.request.user).exists():
-    #         print("hola")
-    #         return HttpResponseRedirect('/errorVotacion')
-    #     else:
-    #         return render(request, self.template_name)
+
 
     def get_context_data(self, **kwargs):
         context = super(CrearPreguntaVotacion, self).get_context_data(**kwargs)
@@ -201,45 +149,25 @@ class CrearPreguntaVotacion(FormMixin, DetailView, request):
     def post(self, request, *args, **kwargs):
 
         self.object = self.get_object()
-        # print(self.object)
+
         form = self.get_form()
         pregunta = Pregunta()
 
-        # usuario_eleccion.user = self.request.user
-        pregunta.Votacion = self.object
-        # usuario_eleccion.Pregunta = self.object.pregunta
 
-        # if usuario_eleccion.Pregunta.tipo_votacion == '1':
+        pregunta.Votacion = self.object
+
 
         pregunta.enunciado = form.data['enunciado']
         pregunta.tipo_votacion = form.data['tipo_votacion']
 
-        # else:
-        #     usuario_eleccion.seleccion = form.data['seleccion']
-        # if (usuario_eleccion.seleccion == 'Si'):
 
-        # qss = Censo.objects.all().values_list('usuario', flat=True)
-        # print(qss)
-        # if qss.filter(usuario=self.request.user).exists():
-        #     print("hola")
-            # usuario_eleccion.save()
-        # else:
-        #     return HttpResponseRedirect('/errorVotacion')
         pregunta.save()
         if pregunta.tipo_votacion == '0':
             return HttpResponseRedirect('/')
         else:
             url = reverse('crearpreguntacompleja', kwargs={"pk": self.object.pregunta.pk})
             return HttpResponseRedirect(url)
-        # def save(self, commit=True):
-        #     Usu = super(VotacionView, self).save(commit=True)
-        #     # if user.nif[1] == 'u':
-        #     #     raise forms.ValidationError("Nif incorrecto")
-        #
-        #     if commit:
-        #         UsuarioVotacion.save()
-        #     return Usu
-        # return HttpResponseRedirect('/')
+
 
     def form_valid(self, form):
         form.save()
@@ -253,30 +181,14 @@ class CrearPreguntaComplejaView(FormMixin, DetailView, request):
 
     success_url = reverse_lazy('home')
 
-    # def add_opcionescomplejas(request):
-    #     objectlist = OpcionesCompleja.objects.values('respuesta')
-    #     if request.method == 'POST':
-    #         form = realizarVotacionForm(request.POST)
-    #         if form.is_valid():
-    #             form.save()
-    #             return redirect('home')
-    #     else:
-    #         form = realizarVotacionForm()
-    #     return render(request, 'RealizarVotacion.html', {'form': form, 'objectlist': objectlist})
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
     def get_success_url(self):
         return reverse('home')
 
-    # def get(self, request, *args, **kwargs):
-    #     qss = Censo.objects.all().values_list('usuario', flat=True)
-    #     print (qss)
-    #     if not qss.filter(usuario=self.request.user).exists():
-    #         print("hola")
-    #         return HttpResponseRedirect('/errorVotacion')
-    #     else:
-    #         return render(request, self.template_name)
+
 
     def get_context_data(self, **kwargs):
         context = super(CrearPreguntaComplejaView, self).get_context_data(**kwargs)
@@ -286,26 +198,6 @@ class CrearPreguntaComplejaView(FormMixin, DetailView, request):
             initial={'Pregunta': self.object})
         return context
 
-    # def post(self, request, *args, **kwargs):
-    #     self.object = self.get_object()
-    #     form = self.get_form()
-    #     usuario_eleccion = UsuarioVotacion()
-    #     usuario_eleccion.seleccion = form.data['seleccion']
-    #     usuario_eleccion.user = self.request.user
-    #     usuario_eleccion.Votacion = self.object
-    #     usuario_eleccion.Pregunta = self.object.pregunta
-    #     usuario_eleccion.save()
-    #     return reverse('home')
-
-    # def post(self, request, *args, **kwargs):
-    #     self.object = self.get_object()
-    #     form = self.get_form()
-    #     if form.is_valid():
-    #         self.form_valid(form)
-    #         return HttpResponseRedirect('home')
-    #     else:
-    #         self.form_invalid(form)
-    #         return HttpResponseRedirect('home')
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -319,13 +211,7 @@ class CrearPreguntaComplejaView(FormMixin, DetailView, request):
         oc.respuesta = form.data['respuesta']
         oc.save()
 
-        # qss = Censo.objects.all().values_list('usuario', flat=True)
-        # # print(qss)
-        # if qss.filter(usuario=self.request.user).exists():
-        #     # print("hola")
-        #     usuario_eleccion.save()
-        # else:
-        #     return HttpResponseRedirect('/errorVotacion')
+
 
         return HttpResponseRedirect(self.request.path_info)
 
@@ -334,13 +220,7 @@ class CrearPreguntaComplejaView(FormMixin, DetailView, request):
         return super(CrearPreguntaComplejaView, self).form_valid(form)
 
 
-# class CrearPreguntaSimpleView(CreateView):
-#     model = OpcionesSimple
-#     fields = '_all_'
-#     template_name = 'CrearVotacionSimple.html'
-#
-#     def get_succes_url(self):
-#         return reverse('/')
+
 
 
 class VotacionView(FormMixin, DetailView, request):
@@ -350,16 +230,7 @@ class VotacionView(FormMixin, DetailView, request):
 
     success_url = reverse_lazy('home')
 
-    # def add_opcionescomplejas(request):
-    #     objectlist = OpcionesCompleja.objects.values('respuesta')
-    #     if request.method == 'POST':
-    #         form = realizarVotacionForm(request.POST)
-    #         if form.is_valid():
-    #             form.save()
-    #             return redirect('home')
-    #     else:
-    #         form = realizarVotacionForm()
-    #     return render(request, 'RealizarVotacion.html', {'form': form, 'objectlist': objectlist})
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
@@ -384,7 +255,7 @@ class VotacionView(FormMixin, DetailView, request):
     def post(self, request, *args, **kwargs):
 
         self.object = self.get_object()
-        # print(self.object)
+
         form = self.get_form()
         usuario_eleccion = UsuarioVotacion()
 
@@ -398,12 +269,12 @@ class VotacionView(FormMixin, DetailView, request):
 
         else:
             usuario_eleccion.seleccion = form.data['seleccion']
-        # if (usuario_eleccion.seleccion == 'Si'):
+
 
         qss = Censo.objects.all().values_list('usuario', flat=True)
-        # print(qss)
+
         if qss.filter(usuario=self.request.user).exists():
-            # print("hola")
+
             usuario_eleccion.save()
         else:
             return HttpResponseRedirect('/errorVotacion')
@@ -443,7 +314,7 @@ class EleccionView(FormMixin, DetailView, request):
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
-        # print(self.object)
+
         form = self.get_form()
         usuario_eleccion = UsuarioEleccion()
 
@@ -454,9 +325,9 @@ class EleccionView(FormMixin, DetailView, request):
         usuario_eleccion.save()
 
         qss = Censo.objects.all().values_list('usuario', flat=True)
-        # print(qss)
+
         if qss.filter(usuario=self.request.user).exists():
-            # print("hola")
+
             usuario_eleccion.save()
         else:
             return HttpResponseRedirect('/errorVotacion')
@@ -547,7 +418,7 @@ class CrearPersona(FormMixin, DetailView, request):
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
-        # print(self.object)
+
         form = self.get_form()
         per = Personas()
 
@@ -557,8 +428,7 @@ class CrearPersona(FormMixin, DetailView, request):
         per.nombre = form.data['nombre']
         per.save()
 
-        # url = reverse('crearpersona', kwargs={"pk": self.object.pk})
-        # return HttpResponseRedirect(url)
+
 
 
         return HttpResponseRedirect(self.request.path_info)
@@ -572,8 +442,7 @@ class CrearPersona(FormMixin, DetailView, request):
 class ErrorVotacionView(TemplateView):
     template_name = 'ErrorVotacion.html'
 
-    # def get(self, request, *args, **kwargs):
-    #     return HttpResponseRedirect('/')
+
 
 
 class ExitoCensoVotacionView(TemplateView):

@@ -1,5 +1,5 @@
 from datetime import datetime
-# from importlib import resources
+
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect
@@ -11,7 +11,7 @@ from django.utils import timezone
 from django.views.generic.list import ListView
 from django.views.generic.edit import UpdateView, CreateView
 from import_export.formats import base_formats
-# from sqlalchemy.sql.functions import userdd/
+
 
 from UsuarioUca.admin import UsuarioUcaResource
 from UsuarioUca.forms import createUserForm, editUserForm
@@ -48,7 +48,7 @@ class UsuarioUcaListView(ListView):
 
 class UsuarioUcaUpdate(UpdateView):
     model = UsuarioUca
-    # fields = '__all__'
+
     form_class = editUserForm
     template_name_suffix = '_update_form'
 
@@ -58,7 +58,7 @@ class UsuarioUcaUpdate(UpdateView):
 
 class UsuarioUcaCreate(CreateView):
     model = UsuarioUca
-    # fields = '__all__'
+
     form_class = createUserForm
 
     def get_success_url(self):

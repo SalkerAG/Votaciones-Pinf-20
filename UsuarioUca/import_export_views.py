@@ -42,7 +42,7 @@ class ImportView(FormView):
     tmp_storage_class = None
     success_url = None
 
-    # NB serve .as_view(confirm=True) at a different URL to perform the import
+
     confirm = False
 
     def get(self, request, *args, **kwargs):
@@ -120,8 +120,7 @@ class ImportView(FormView):
             int(form.cleaned_data['input_format'])
         ]()
         import_file = form.cleaned_data['import_file']
-        # first always write the uploaded file to disk as it may be a
-        # memory file or else based on settings upload handlers
+
         tmp_storage = self.get_tmp_storage_class()()
         data = bytes()
         for chunk in import_file.chunks():
@@ -129,8 +128,7 @@ class ImportView(FormView):
 
         tmp_storage.save(data, input_format.get_read_mode())
 
-        # then read the file, using the proper format-specific mode
-        # warning, big files may exceed memory
+
         data = tmp_storage.read(input_format.get_read_mode())
         if not input_format.is_binary() and self.from_encoding:
             data = force_text(data, self.from_encoding)

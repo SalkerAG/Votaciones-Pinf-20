@@ -1,18 +1,13 @@
-# users/models.py
-from audioop import reverse
+
+
 
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.core.validators import RegexValidator
-from django.db import models
+
 from django.forms import forms
 
-
-import csv
-
-from django.conf import settings
 from django.db import models
-from django.core.exceptions import ValidationError
-from django.utils.translation import ugettext_lazy as _
+
 
 istextvalidator = RegexValidator("^[a-zA-Z0]*$",
                                      message='El Nombre/Apellidos no debe contener números',
@@ -25,7 +20,7 @@ def uvalidonifworld(nif):
     numeros = "1234567890"
 
     if len(nif) == 10:
-        # dig_control = nif[9]
+
         nif = nif[:10]
         print (nif[0])
 
@@ -42,7 +37,7 @@ def uvalidonifspain(nif):
     numeros = "1234567890"
 
     if len(nif) == 9:
-        # dig_control = nif[8]
+
         nif = nif[:9]
         if nif[0] in dig_ext:
             nif = nif.replace(nif[0], reemp_dig_ext[nif[0]])
@@ -57,7 +52,7 @@ def validonifworld(nif):
     numeros = "1234567890"
 
     if len(nif) == 9 and nif[0] in dig_ext:
-        # dig_control = nif[8]
+
         nif = nif[:9]
         if nif[0] in dig_ext:
             nif = nif.replace(nif[0], reemp_dig_ext[nif[0]])
@@ -70,7 +65,7 @@ def validonifspain(nif):
     numeros = "1234567890"
 
     if len(nif) == 8:
-        # dig_control = nif[7]
+
         nif = nif[:8]
 
 
@@ -123,7 +118,7 @@ class UsuarioUca(AbstractUser):
     )
 
     username = None
-    #default=320850900
+
     first_name = models.CharField(max_length=20, blank=False)
     last_name = models.CharField(max_length=30, blank=False)
     nif = models.CharField(max_length=10, blank=False, null=False, unique=True)
@@ -145,12 +140,6 @@ class UsuarioUca(AbstractUser):
 
 
 
-
-
-        # if (len(password.__str__())<6):
-        #     raise forms.ValidationError("La contraseña debe ser de 6 caracteres mínimo")
-        # if  nif[1] == 'u':
-        #     raise forms.ValidationError("Nif incorrecto")
 
 
 

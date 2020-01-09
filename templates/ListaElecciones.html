@@ -40,9 +40,14 @@
                             <td>Cerrada</td>
                         {% endif %}
                         {% if user.is_superuser %}
-                            <td><a href="/editareleccion/{{ eleccion.procesoelectoral_ptr_id }}" class="btn btn-warning">
-                                <i class="fas fa-edit"></i></a>
-                            </td>
+                            {% if votacion.votacion_cerrada %}
+                                <td><a href="/editareleccion/{{ eleccion.procesoelectoral_ptr_id }}" class="btn btn-warning">
+                                    <i class="fas fa-edit"></i></a>
+                                </td>
+                            {% else %}
+                                <td> </td>
+                            {% endif %}
+                            
                             <td><a href="/eliminareleccion/{{ eleccion.procesoelectoral_ptr_id }}" class="btn btn-danger">
                                 <i class="fas fa-trash"></i></a>
                             </td>

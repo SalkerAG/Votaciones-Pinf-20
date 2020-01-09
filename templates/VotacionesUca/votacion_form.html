@@ -2,7 +2,9 @@
 
 {% block content %}
 
+
     {% if not user.is_superuser %}
+
         <div class="container">
             <!-- Cabecera -->
             <br/>
@@ -13,6 +15,7 @@
             </div>
         </div>
     {% else %}
+
         <head>
             <!-- Movil y teclado -->
             <meta charset="utf-8">
@@ -68,20 +71,7 @@
                         </label>
                     </div>
                 </div>
-                <!-- Adjuntar Censo >
-                <div class="form-group row px-5">
-                    <label for="AdjuntarCenso">Censo de electores</label>
-                    <div class="px-3">
-                    <input type="file" id="AdjuntarCenso" required="true">
-                    <a href="{% url 'censo_create' %}">Crear censo</a>
-                </div>
-                < Miembro de la mesa electoral -->
-                <!--div class="form-group">
-                    <label for="MiembroMesa" class="col-lg-3 col-form-label" >Miembro de la mesa electoral</label>
-                    <div class="col-lg-12">
-                        <input type="text" class="form-control" id="MiembroMesa" placeholder="Miembro de la mesa" required="true">
-                    </div>
-                </div-->
+
                 <!-- Elección fecha y hora para votación pública -->
                 <br>
                 <div class="form-group" id="BloqueVotAnticipada">
@@ -121,6 +111,8 @@
         </div>
         </form>
     </div>
+    {% endif %}
+{% endblock %}
 
         <!-- Requisitos para bootstrap 4 y js  -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -151,7 +143,6 @@
 
         </body>
 
-        </html>
 
-    {% endif %}
-{% endblock %}
+
+

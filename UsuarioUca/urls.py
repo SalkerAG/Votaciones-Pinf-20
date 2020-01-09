@@ -22,7 +22,6 @@ urlpatterns = [
         name='usuariouca_import_confirm'),
     path('faq/', FAQView.as_view(), name="faq"),
     path('estadisticasEleccion/', EstadisticasEleccionView.as_view(), name="estadisticaseleccion"),
-    # path('logout/', LogoutView.as_view(), name="logout"),
     path('logout/', views.logout_request, name="logout"),
     path('eliminarusuario/<int:pk>', views.erase_request, name="eliminar"),
 
