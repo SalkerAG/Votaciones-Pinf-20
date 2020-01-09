@@ -512,19 +512,16 @@ class EstadisticasVotacionComplejaView(LoginRequiredMixin, DetailView):
         context['usuariosCenso'] = context['censo'].usuario.all().count()
         context['total'] = 0
         resultados = []
-        fields = {}
         context['resultado'] = UsuarioVotacion.objects.filter(Votacion_id=context['votacion'].id)
 
         for resultado in context['resultado']:
             if resultado.seleccion not in resultados:
                 resultados.append(resultado.seleccion)
-                fields[resultado.seleccion] = 0
+                context[resultado.seleccion] = 0
 
         for resultado in context['resultado']:
-            fields[resultado.seleccion] += 1
+            context[resultado.seleccion] += 1
             
-        context[resultados]
-        context[fields]
         context['participacion'] = context['total'] / context['usuariosCenso']
         return context
 
@@ -541,18 +538,15 @@ class EstadisticasEleccionView(LoginRequiredMixin, DetailView):
         context['usuariosCenso'] = context['censo'].usuario.all().count()
         context['total'] = 0
         resultados = []
-        fields = {}
         context['resultado'] = UsuarioVotacion.objects.filter(Votacion_id=context['votacion'].id)
 
         for resultado in context['resultado']:
             if resultado.seleccion not in resultados:
                 resultados.append(resultado.seleccion)
-                fields[resultado.seleccion] = 0
+                context[resultado.seleccion] = 0
 
         for resultado in context['resultado']:
-            fields[resultado.seleccion] += 1
+            context[resultado.seleccion] += 1
             
-        context[resultados]
-        context[fields]
         context['participacion'] = context['total'] / context['usuariosCenso']
         return context
