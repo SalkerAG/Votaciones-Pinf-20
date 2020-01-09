@@ -336,12 +336,13 @@ class ListaEleccionesView(ListView):
 
 class ListaCensosView(ListView):
     model = Censo
-    form_class = ListaCensoForm
     paginate_by = 100  # if pagination is desired
     template_name = "ListaCensos.html"
 
-    def get_success_url(self):
-        return reverse('censo', kwargs={"pk": self.object.pk})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['now'] = datetime.datetime.now()
+        return context
 
 
 class CrearEleccionView(CreateView):
