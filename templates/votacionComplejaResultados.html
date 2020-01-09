@@ -7,9 +7,6 @@
 
  <head>
 
-
-
-
     <!-- Your custom styles (optional) -->
      <!-- SCRIPTS -->
     <!-- JQuery -->
@@ -51,16 +48,7 @@
                     <td>{{value}}</td>
                 </tr>
               {% endfor %}
-
- <!--             <tr>
-                <th scope="row">Participación</th>
-                <td>{{ participacion|floatformat }}%</td>
-              </tr>
-
-              <tr>
-                <th scope="row">Abstención</th>
-                <td>{{ abstencionporcentaje|floatformat }}%</td>
-              </tr-->
+              
             </tbody>
               </table>
             </div>
@@ -99,9 +87,11 @@
       var myPieChart = new Chart(ctxP, {
         type: 'pie',
         data: {
-          labels: ["A favor", "En Cont", "Abstención"],
+          labels: [{% for key, value in fields.items %}
+                    {{value}}
+                  {% endfor %}],
           datasets: [{
-            data: [{{si}}, {{no}}, {{abstencion}}],
+            data: [{{si}}],
             backgroundColor: ["#46BFBD", "#F7464A", "#FDB45C", "#949FB1", "#4D5360"],
             hoverBackgroundColor: ["#5AD3D1", "#FF5A5E",  "#FFC870", "#A8B3C5", "#616774"]
           }]
@@ -109,42 +99,6 @@
         options: {
           responsive: true
         }
-      });
-    </script>
-    <script type="text/javascript">
-      var ctxB = document.getElementById("barChart").getContext('2d');
-      var myBarChart = new Chart(ctxB, {
-      type: 'horizontalBar',
-      data: {
-        labels: ["A favor", "En contra"],
-        datasets: [{
-          label: 'Votos',
-          data: [{{si}}, {{no}}],
-          backgroundColor: [
-            'rgb(70, 191, 189, 0.7)',
-            'rgb(247, 70, 74, 0.7)'
-          ],
-          borderColor: [
-            'rgb(70, 191, 189, 1)',
-            'rgb(247, 70, 74, 1)'
-          ],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        title: {
-          display: true,
-          text: 'Resultado Votación',
-        },
-        scales: {
-          xAxes: [{
-          ticks: {
-            min: 0,
-            beginAtZero: true,
-          }
-          }]
-        }
-      }
       });
     </script>
      {% endblock %}
