@@ -88,12 +88,9 @@ class CensoExportView(ImportView, resources.ModelResource):
         return response
 
 
-
-
 class CrearVotacionView(CreateView):
     model = Votacion
     form_class = VotacionForm
-
 
     def get_success_url(self):
         return reverse('crearpreguntavotacion', kwargs={"pk": self.object.pk})
@@ -118,7 +115,6 @@ class CrearPregunta(CreateView):
             return reverse('crearpreguntacompleja')
 
 
-
 class CrearPreguntaVotacion(FormMixin, DetailView, request):
     model = Votacion
     form_class = PreguntaFormVotacion
@@ -126,25 +122,19 @@ class CrearPreguntaVotacion(FormMixin, DetailView, request):
 
     success_url = reverse_lazy('home')
 
-
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
     def get_success_url(self):
         return reverse('home')
 
-
-
     def get_context_data(self, **kwargs):
         context = super(CrearPreguntaVotacion, self).get_context_data(**kwargs)
         cosas = self
 
         context['form'] = PreguntaFormVotacion(
-            initial={ 'Votacion': self.object })
+            initial={'Votacion': self.object})
         return context
-
-
-
 
     def post(self, request, *args, **kwargs):
 
@@ -153,13 +143,10 @@ class CrearPreguntaVotacion(FormMixin, DetailView, request):
         form = self.get_form()
         pregunta = Pregunta()
 
-
         pregunta.Votacion = self.object
-
 
         pregunta.enunciado = form.data['enunciado']
         pregunta.tipo_votacion = form.data['tipo_votacion']
-
 
         pregunta.save()
         if pregunta.tipo_votacion == '0':
@@ -167,7 +154,6 @@ class CrearPreguntaVotacion(FormMixin, DetailView, request):
         else:
             url = reverse('crearpreguntacompleja', kwargs={"pk": self.object.pregunta.pk})
             return HttpResponseRedirect(url)
-
 
     def form_valid(self, form):
         form.save()
@@ -181,14 +167,11 @@ class CrearPreguntaComplejaView(FormMixin, DetailView, request):
 
     success_url = reverse_lazy('home')
 
-
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
     def get_success_url(self):
         return reverse('home')
-
-
 
     def get_context_data(self, **kwargs):
         context = super(CrearPreguntaComplejaView, self).get_context_data(**kwargs)
@@ -198,20 +181,16 @@ class CrearPreguntaComplejaView(FormMixin, DetailView, request):
             initial={'Pregunta': self.object})
         return context
 
-
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         # print(self.object)
         form = self.get_form()
         oc = OpcionesCompleja()
 
-
         oc.Pregunta = self.object
 
         oc.respuesta = form.data['respuesta']
         oc.save()
-
-
 
         return HttpResponseRedirect(self.request.path_info)
 
@@ -220,16 +199,12 @@ class CrearPreguntaComplejaView(FormMixin, DetailView, request):
         return super(CrearPreguntaComplejaView, self).form_valid(form)
 
 
-
-
-
 class VotacionView(FormMixin, DetailView, request):
     model = Votacion
     form_class = realizarVotacionForm
     template_name = "RealizarVotacion.html"
 
     success_url = reverse_lazy('home')
-
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -250,8 +225,6 @@ class VotacionView(FormMixin, DetailView, request):
                 initial={'user': self.request.user, 'Votacion': self.object, 'Pregunta': self.object.pregunta})
             return context
 
-
-
     def post(self, request, *args, **kwargs):
 
         self.object = self.get_object()
@@ -269,7 +242,6 @@ class VotacionView(FormMixin, DetailView, request):
 
         else:
             usuario_eleccion.seleccion = form.data['seleccion']
-
 
         qss = Censo.objects.all().values_list('usuario', flat=True)
 
@@ -293,14 +265,11 @@ class EleccionView(FormMixin, DetailView, request):
 
     success_url = reverse_lazy('home')
 
-
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
     def get_success_url(self):
         return reverse('home')
-
-
 
     def get_context_data(self, **kwargs):
         context = super(EleccionView, self).get_context_data(**kwargs)
@@ -309,8 +278,6 @@ class EleccionView(FormMixin, DetailView, request):
         context['form'] = realizarEleccionForm(
             initial={'user': self.request.user, 'Eleccion': self.object})
         return context
-
-
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -356,6 +323,7 @@ class ListaVotacionesView(ListView):
     def get_success_url(self):
         return reverse('votacion', kwargs={"pk": self.object.pk})
 
+
 class ListaEleccionesView(ListView):
     model = Eleccion
     form_class = ListaEleccionForm
@@ -375,17 +343,13 @@ class ListaCensosView(ListView):
     def get_success_url(self):
         return reverse('censo', kwargs={"pk": self.object.pk})
 
+
 class CrearEleccionView(CreateView):
     model = Eleccion
     form_class = EleccionForm
 
     def get_success_url(self):
-        return reverse ('crearpersona', kwargs={"pk": self.object.pk})
-
-
-
-
-
+        return reverse('crearpersona', kwargs={"pk": self.object.pk})
 
 
 class CrearPersona(FormMixin, DetailView, request):
@@ -394,7 +358,6 @@ class CrearPersona(FormMixin, DetailView, request):
     template_name = "personas_form.html"
 
     success_url = reverse_lazy('home')
-
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -405,7 +368,6 @@ class CrearPersona(FormMixin, DetailView, request):
     def people(self):
         return Personas.objects.all()
 
-
     def get_context_data(self, **kwargs):
         context = super(CrearPersona, self).get_context_data(**kwargs)
         cosas = self
@@ -414,22 +376,16 @@ class CrearPersona(FormMixin, DetailView, request):
             initial={'Eleccion': self.object})
         return context
 
-
-
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
 
         form = self.get_form()
         per = Personas()
 
-
         per.Eleccion = self.object
 
         per.nombre = form.data['nombre']
         per.save()
-
-
-
 
         return HttpResponseRedirect(self.request.path_info)
 
@@ -438,11 +394,8 @@ class CrearPersona(FormMixin, DetailView, request):
         return super(CrearPersona, self).form_valid(form)
 
 
-
 class ErrorVotacionView(TemplateView):
     template_name = 'ErrorVotacion.html'
-
-
 
 
 class ExitoCensoVotacionView(TemplateView):
@@ -451,17 +404,20 @@ class ExitoCensoVotacionView(TemplateView):
     def get(self, request, *args, **kwargs):
         return HttpResponseRedirect('/')
 
+
 class VotacionUpdate(UpdateView):
     model = Votacion
     form_class = VotacionForm
     template_name_suffix = '_update_form'
 
     def get_success_url(self):
-        return reverse('votacion_edit',kwargs={'pk': self.object.pk})
+        return reverse('votacion_edit', kwargs={'pk': self.object.pk})
+
 
 def erase_request1(request, pk):
     Votacion.objects.filter(id=pk).delete()
     return redirect('listavotaciones')
+
 
 class EleccionUpdate(UpdateView):
     model = Eleccion
@@ -469,11 +425,13 @@ class EleccionUpdate(UpdateView):
     template_name_suffix = '_update_form'
 
     def get_success_url(self):
-        return reverse('eleccion_edit',kwargs={'pk': self.object.pk})
+        return reverse('eleccion_edit', kwargs={'pk': self.object.pk})
+
 
 def erase_request2(request, pk):
     Eleccion.objects.filter(id=pk).delete()
     return redirect('listaelecciones')
+
 
 class CensoUpdate(UpdateView):
     model = Censo
@@ -481,11 +439,13 @@ class CensoUpdate(UpdateView):
     template_name_suffix = '_update_form'
 
     def get_success_url(self):
-        return reverse('censo_edit',kwargs={'pk': self.object.pk})
+        return reverse('censo_edit', kwargs={'pk': self.object.pk})
+
 
 def erase_request3(request, pk):
     Censo.objects.filter(id=pk).delete()
     return redirect('listacensos')
+
 
 class EstadisticasVotacionSimpleView(DetailView):
     template_name = "votacionSimpleResultados.html"
@@ -505,14 +465,15 @@ class EstadisticasVotacionSimpleView(DetailView):
             context['total'] += 1
             if resultado.seleccion == 'Si':
                 context['si'] += 1
-            else :
+            else:
                 if resultado.seleccion == 'No':
                     context['no'] += 1
                 else:
                     context['abstencion'] += 1
-        context['participacion'] = context['total']/context['usuariosCenso']
-        context['abstencionporcentaje'] = context['abstencion']/context['usuariosCenso']
+        context['participacion'] = context['total'] / context['usuariosCenso']
+        context['abstencionporcentaje'] = context['abstencion'] / context['usuariosCenso']
         return context
+
 
 class EstadisticasEleccionView(DetailView):
     template_name = "votacionEleccionesResultados.html"
@@ -529,7 +490,6 @@ class EstadisticasEleccionView(DetailView):
         for resultado in context['resultado']:
             context['total'] += 1
 
-        context['participacion'] = context['total']/context['usuariosCenso']
-        context['abstencionporcentaje'] = context['abstencion']/context['usuariosCenso']
+        context['participacion'] = context['total'] / context['usuariosCenso']
+        context['abstencionporcentaje'] = context['abstencion'] / context['usuariosCenso']
         return context
-

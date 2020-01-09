@@ -14,17 +14,13 @@ from bootstrap_modal_forms.forms import BSModalForm
 
 class ProcesoElectoralForm(forms.ModelForm):
     fecha_inicio = forms.DateField(
-        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control inputstl', 'placeholder': 'Select Date'},
-                               format='%Y/%m/%d'))
+        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control inputstl', 'placeholder': 'Select Date'}))
     fecha_fin = forms.DateField(
-        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control inputstl', 'placeholder': 'Select Date'},
-                               format='%Y/%m/%d'))
+        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control inputstl', 'placeholder': 'Select Date'}))
 
     es_consulta = forms.BooleanField(required=False)
     hora_inicio = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time', 'class': 'form-control inputstl'}))
     hora_fin = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time', 'class': 'form-control inputstl'}))
-
-
 
     class Meta:
         model = ProcesoElectoral
@@ -146,7 +142,7 @@ class EleccionForm(ProcesoElectoralForm):
 
 class realizarEleccionForm(ModelForm):
     qs = Personas.objects.all().values_list('nombre', flat=True)
-    seleccion = forms.ModelChoiceField(qs, label='seleccion:')
+    seleccion = forms.ModelChoiceField(qs, label='Seleccion:')
 
     class Meta:
         model = UsuarioEleccion

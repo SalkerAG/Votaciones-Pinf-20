@@ -56,114 +56,37 @@
             </div>
         </div>
     </div>
- {% if user in Censo.Usuario %}
-    <div class="container">
-        <!-- Cabecera -->
-        <br/>
-        <div class="row justify-content-center">
-            <div class="page-header">
-                <h1>Dispones de los permisos requeridos para ver este contenido.</h1>
+    {% if user in Censo.Usuario %}
+        <div class="container">
+            <!-- Cabecera -->
+            <br/>
+            <div class="row justify-content-center">
+                <div class="page-header">
+                    <h1>Dispones de los permisos requeridos para ver este contenido.</h1>
+                </div>
             </div>
         </div>
-    </div>
 
     {% endif %}
     <div id="censo" align='center'>
-        <h1 id="censo" style="margin-top: 20px"><strong> Realizar Votación </h1>
+        <h1 id="censo" style="margin-top: 20px"><strong> Realizar Votación</h1>
     </div>
     <br>
     <br>
     <div style="width: 80%; padding-left: 10%">
         <h1 style="text-align: center">Votación: {{ form.initial.Votacion.nombre_votacion }}</h1>
         <h1 style="text-align: center">{{ form.initial.Pregunta.enunciado }}</h1>
-{#                <h1 style="text-align: center">{{ form.initial.user.id }}</h1>#}
-{#                  <h1 style="text-align: center">{{ form.initial.Eleccion.nombre }}</h1>#}
-          <h1 style="text-align: center">{{ form.initial.Censo.id }}</h1>
-        <form method="post" id="realizarVotacionForm"  data-preguntas-url={% url 'ajax_load_preguntas' %}>{% csrf_token %}
-
-            {# {{ form.as_p }} #}
-
-
-
-            <div class="container">
-		<div class="centered">
-		  <div class="row justify-content-md-center">
-			<div class="col-4 ">
-			  <div class="list-group">
-				<a href="#" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#aFavorModalCenter">A favor</a>
-				<a href="#" class="list-group-item list-group-item-action"data-toggle="modal" data-target="#enContraModalCenter">En contra</a>
-				<a href="#" class="list-group-item list-group-item-action"data-toggle="modal" data-target="#abstencionModalCenter">Abstención</a>
-			  </div>
-			</div>
-		  </div>
-		</div>
-	</div>
-
-            <div class="modal fade" id="aFavorModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-	  <div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content">
-		  <div class="modal-header">
-			<h5 class="modal-title" id="exampleModalLongTitle">¿Confirmar Voto a favor?</h5>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			  <span aria-hidden="true">&times;</span>
-			</button>
-		  </div>
-		  <div class="modal-body">
-			Al confirmar se enviará el voto.
-		  </div>
-		  <div class="modal-footer">
-			<input type="submit" class="btn btn-primary" value="Enviar">
-			<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-		  </div>
-		</div>
-	  </div>
-	</div>
-
-
-	<div class="modal fade" id="enContraModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
-	  <div class="modal-content">
-		<div class="modal-header">
-		  <h5 class="modal-title" id="exampleModalLongTitle">¿Confirmar Voto en contra?</h5>
-		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-		  </button>
-		</div>
-		<div class="modal-body">
-		  Al confirmar se enviará el voto.
-		</div>
-		<div class="modal-footer">
-		  <input type="submit" class="btn btn-primary" value="Enviar">
-		  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-		</div>
-	  </div>
-	</div>
-	</div>
-
-	<div class="modal fade" id="abstencionModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-		  <div class="modal-content">
-			<div class="modal-header">
-			  <h5 class="modal-title" id="exampleModalLongTitle">¿Confirmar Voto en contra?</h5>
-			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			  </button>
-			</div>
-			<div class="modal-body">
-			  Al confirmar se enviará el voto.
-			</div>
-			<div class="modal-footer">
-			  <input  type="submit" class="btn btn-primary" value="Enviar">
-			  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-			</div>
-		  </div>
-		</div>
-	</div>
-
-            {#  <input type="submit" class="btn btn-primary" value="Guardar"> #}
+        {#                <h1 style="text-align: center">{{ form.initial.user.id }}</h1>#}
+        {#                  <h1 style="text-align: center">{{ form.initial.Eleccion.nombre }}</h1>#}
+        <h1 style="text-align: center">{{ form.initial.Censo.id }}</h1>
+        <form method="post" id="realizarVotacionForm"
+              data-preguntas-url={% url 'ajax_load_preguntas' %}>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" class="btn btn-primary" value="Guardar">
         </form>
-{#       <button id="pregunta-modal" class="create-book btn btn-primary" type="button" name="button">Crear Pregunta</button>#}
-{#    <button id="votacion-modal" class="create-book btn btn-primary" type="button" name="button">Crear Pregunta</button>#}
+        {#       <button id="pregunta-modal" class="create-book btn btn-primary" type="button" name="button">Crear Pregunta</button>#}
+        {#    <button id="votacion-modal" class="create-book btn btn-primary" type="button" name="button">Crear Pregunta</button>#}
     </div>
 
 {% endblock %}
@@ -313,23 +236,23 @@
 </script>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <script>
+<script>
     $("#id_Votacion").change(function () {
-      var url = $("#realizarVotacionForm").attr("data-preguntas-url");  // get the url of the `load_cities` view
-      var VotacionId = $(this).val();  // get the selected country ID from the HTML input
+        var url = $("#realizarVotacionForm").attr("data-preguntas-url");  // get the url of the `load_cities` view
+        var VotacionId = $(this).val();  // get the selected country ID from the HTML input
 
-      $.ajax({                       // initialize an AJAX request
-        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
-        data: {
-          'Votacion': VotacionId       // add the country id to the GET parameters
-        },
-        success: function (data) {   // `data` is the return of the `load_cities` view function
-          $("#id_Pregunta").html(data);  // replace the contents of the city input with the data that came from the server
-        }
-      });
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+            data: {
+                'Votacion': VotacionId       // add the country id to the GET parameters
+            },
+            success: function (data) {   // `data` is the return of the `load_cities` view function
+                $("#id_Pregunta").html(data);  // replace the contents of the city input with the data that came from the server
+            }
+        });
 
     });
-  </script>
+</script>
 <script type="text/javascript">
     $(document).ready(function () {
 
