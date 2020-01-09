@@ -500,6 +500,31 @@ class EstadisticasVotacionSimpleView(LoginRequiredMixin, DetailView):
         context['abstencionporcentaje'] = context['abstencion'] / context['usuariosCenso']
         return context
 
+class EstadisticasVotacionComplejaView(LoginRequiredMixin, DetailView):
+
+    template_name = "votacionComplejaResultados.html"
+    model = Votacion
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['now'] = datetime.datetime.now()
+        context['censo'] = Censo.objects.get(pk=context['votacion'].pregunta.censo.pk)
+        context['usuariosCenso'] = context['censo'].usuario.all().count()
+        context['total'] = 0
+        resultados = []
+        context['resultado'] = UsuarioVotacion.objects.filter(Votacion_id=context['votacion'].id)
+
+        for resultado in context['resultado']:
+            if resultado.seleccion not in resultados:
+                resultados.append(resultado.seleccion)
+                context[resultado.seleccion] = 0
+
+        for resultado in context['resultado']:
+            context[resultado.seleccion] += 1
+            
+        context['participacion'] = context['total'] / context['usuariosCenso']
+        return context
+
 
 class EstadisticasEleccionView(LoginRequiredMixin, DetailView):
 
