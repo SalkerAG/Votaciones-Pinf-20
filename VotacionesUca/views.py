@@ -537,11 +537,16 @@ class EstadisticasEleccionView(LoginRequiredMixin, DetailView):
         context['censo'] = Censo.objects.get(pk=context['votacion'].pregunta.censo.pk)
         context['usuariosCenso'] = context['censo'].usuario.all().count()
         context['total'] = 0
-
+        resultados = []
         context['resultado'] = UsuarioVotacion.objects.filter(Votacion_id=context['votacion'].id)
-        for resultado in context['resultado']:
-            context['total'] += 1
 
+        for resultado in context['resultado']:
+            if resultado.seleccion not in resultados:
+                resultados.append(resultado.seleccion)
+                context[resultado.seleccion] = 0
+
+        for resultado in context['resultado']:
+            context[resultado.seleccion] += 1
+            
         context['participacion'] = context['total'] / context['usuariosCenso']
-        context['abstencionporcentaje'] = context['abstencion'] / context['usuariosCenso']
         return context
