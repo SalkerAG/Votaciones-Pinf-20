@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect
@@ -36,7 +36,7 @@ def my_view(request):
         ...
 
 
-class UsuarioUcaListView(ListView):
+class UsuarioUcaListView(LoginRequiredMixin, ListView):
     model = UsuarioUca
     paginate_by = 100  # if pagination is desired
 
@@ -46,7 +46,7 @@ class UsuarioUcaListView(ListView):
         return context
 
 
-class UsuarioUcaUpdate(UpdateView):
+class UsuarioUcaUpdate(LoginRequiredMixin, UpdateView):
     model = UsuarioUca
 
     form_class = editUserForm
@@ -56,9 +56,8 @@ class UsuarioUcaUpdate(UpdateView):
         return reverse('usuariouca_list', )
 
 
-class UsuarioUcaCreate(CreateView):
+class UsuarioUcaCreate(LoginRequiredMixin, CreateView):
     model = UsuarioUca
-
     form_class = createUserForm
 
     def get_success_url(self):
@@ -70,7 +69,7 @@ class UsuarioUcaCreate(CreateView):
             return reverse('pass_create')
 
 
-class EstudianteCreate(CreateView):
+class EstudianteCreate(LoginRequiredMixin, CreateView):
     model = Estudiante
     fields = '__all__'
 
@@ -78,7 +77,7 @@ class EstudianteCreate(CreateView):
         return reverse('usuariouca_edit', kwargs={'pk': self.object.pk})
 
 
-class ProfesorCreate(CreateView):
+class ProfesorCreate(LoginRequiredMixin,CreateView):
     model = Profesor
     fields = '__all__'
 
@@ -86,7 +85,7 @@ class ProfesorCreate(CreateView):
         return reverse('usuariouca_edit', kwargs={'pk': self.object.pk})
 
 
-class PASSCreate(CreateView):
+class PASSCreate(LoginRequiredMixin, CreateView):
     model = PASS
     fields = '__all__'
 
@@ -94,7 +93,7 @@ class PASSCreate(CreateView):
         return reverse('usuariouca_edit', kwargs={'pk': self.object.pk})
 
 
-class UsuarioUcaExportView(ImportView, resources.ModelResource):
+class UsuarioUcaExportView(LoginRequiredMixin, ImportView, resources.ModelResource):
     class Meta:
         model = UsuarioUca
 
@@ -106,7 +105,7 @@ class UsuarioUcaExportView(ImportView, resources.ModelResource):
         return response
 
 
-class MyModelImportView(ImportView):
+class MyModelImportView(LoginRequiredMixin, ImportView):
     model = UsuarioUca
     template_name = 'usuariouca_upload.html'
     formats = (base_formats.CSV,)
@@ -124,7 +123,7 @@ class MyModelImportView(ImportView):
                            header="source_user")
         return dataset
 
-class VotacionView(DetailView):
+class VotacionView(LoginRequiredMixin, DetailView):
     model = Votacion
 
     def get_context_data(self, **kwargs):
@@ -134,29 +133,28 @@ class VotacionView(DetailView):
         context['opciones'] = Opciones.objects.filter(pregunta=pregunta.pk)
         return context
 
-class HomeView(TemplateView):
+class HomeView(LoginRequiredMixin, TemplateView):
     template_name = "home.html"
 
 
-class CrearVotacionView(TemplateView):
+class CrearVotacionView(LoginRequiredMixin, TemplateView):
     template_name = "CrearVotacion.html"
 
 
-class FAQView(TemplateView):
+class FAQView(LoginRequiredMixin, TemplateView):
     template_name = "faq2.0.html"
 
 
-class EstadisticasVotacionSimpleView(TemplateView):
+class EstadisticasVotacionSimpleView(LoginRequiredMixin, TemplateView):
     template_name = "votacionSimpleResultados.html"
 
 
-class EstadisticasEleccionView(TemplateView):
+class EstadisticasEleccionView(LoginRequiredMixin, TemplateView):
     template_name = "votacionEleccionesResultado.html"
 
 
 def logout_request(request):
     logout(request)
-    messages.info(request, "Se ha cerrado la sesión correctamente")
     return redirect('home')
 
 

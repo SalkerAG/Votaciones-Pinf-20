@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.auth.decorators import login_required, permission_required
 
 from UsuarioUca.views import HomeView, EstadisticasEleccionView
 from . import views
@@ -24,7 +25,7 @@ urlpatterns = [
     path('preguntacrearvotacion/', CrearPreguntaViewVotacion.as_view(), name='create_pregunta'),
     path('creareleccion/', CrearEleccionView.as_view(), name='create_eleccion'),
     path('realizarvotacion/<int:pk>', VotacionView.as_view(), name='realizarvotacion'),
-    path('', HomeView.as_view(), name="home"),
+    path('', login_required(HomeView.as_view()), name="home"),
     path('ajax/load-preguntas/', load_preguntas, name='ajax_load_preguntas'),
     path('creareleccion/', CrearEleccionView.as_view(), name='create_eleccion'),
     path('errorVotacion/', ErrorVotacionView.as_view(), name='errorvotacion'),

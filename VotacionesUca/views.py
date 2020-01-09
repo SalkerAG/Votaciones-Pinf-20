@@ -1,5 +1,6 @@
 from time import timezone
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import ModelForm
 from django.views.generic.edit import FormMixin, UpdateView
 from django.urls import reverse
@@ -25,28 +26,32 @@ from bootstrap_modal_forms.generic import BSModalCreateView
 from django.urls import reverse_lazy
 
 
-class CrearPreguntaViewCenso(BSModalCreateView):
+class CrearPreguntaViewCenso(LoginRequiredMixin, BSModalCreateView):
+
     form_class = PreguntaForm
     template_name = "CrearPregunta.html"
     success_message = 'Exito: Pregunta creada.'
     success_url = reverse_lazy('censo_create')
 
 
-class CrearPreguntaViewRealizarVotacion(BSModalCreateView):
+class CrearPreguntaViewRealizarVotacion(LoginRequiredMixin, BSModalCreateView):
+
     form_class = PreguntaForm
     template_name = "CrearPregunta.html"
     success_message = 'Exito: Pregunta creada.'
     success_url = reverse_lazy('realizarvotacion')
 
 
-class CrearPreguntaViewVotacion(BSModalCreateView):
+class CrearPreguntaViewVotacion(LoginRequiredMixin, BSModalCreateView):
+
     form_class = PreguntaForm
     template_name = "CrearPregunta.html"
     success_message = 'Exito: Pregunta creada.'
     success_url = reverse_lazy('crearvotacion')
 
 
-class CrearCensoView(CreateView):
+class CrearCensoView(LoginRequiredMixin, CreateView):
+
     model = Censo
     form_class = createCensoForm
 
@@ -54,7 +59,8 @@ class CrearCensoView(CreateView):
         return reverse('censo-detail', kwargs={"pk": self.object.pk})
 
 
-class CensoDetailView(DetailView):
+class CensoDetailView(LoginRequiredMixin, DetailView):
+
     model = Censo
 
     def get_context_data(self, **kwargs):
@@ -64,7 +70,8 @@ class CensoDetailView(DetailView):
         return context
 
 
-class CensoExportView(ImportView, resources.ModelResource):
+class CensoExportView(LoginRequiredMixin, ImportView, resources.ModelResource):
+
     class Meta:
         model = UsuarioUca
 
@@ -88,7 +95,8 @@ class CensoExportView(ImportView, resources.ModelResource):
         return response
 
 
-class CrearVotacionView(CreateView):
+class CrearVotacionView(LoginRequiredMixin, CreateView):
+
     model = Votacion
     form_class = VotacionForm
 
@@ -102,7 +110,8 @@ def load_preguntas(request):
     return render(request, 'preguntas_list_options.html', {'preguntas': preguntas})
 
 
-class CrearPregunta(CreateView):
+class CrearPregunta(LoginRequiredMixin, CreateView):
+
     model = Pregunta
     form_class = PreguntaForm
     template_name = 'CrearPregunta.html'
@@ -115,7 +124,8 @@ class CrearPregunta(CreateView):
             return reverse('crearpreguntacompleja')
 
 
-class CrearPreguntaVotacion(FormMixin, DetailView, request):
+class CrearPreguntaVotacion(LoginRequiredMixin, FormMixin, DetailView, request):
+
     model = Votacion
     form_class = PreguntaFormVotacion
     template_name = "CrearPreguntaVotacion.html"
@@ -160,7 +170,8 @@ class CrearPreguntaVotacion(FormMixin, DetailView, request):
         return super(CrearPreguntaVotacion, self).form_valid(form)
 
 
-class CrearPreguntaComplejaView(FormMixin, DetailView, request):
+class CrearPreguntaComplejaView(LoginRequiredMixin, FormMixin, DetailView, request):
+
     model = Pregunta
     form_class = OpcionesComplejaForm
     template_name = "CrearVotacionCompleja.html"
@@ -199,7 +210,8 @@ class CrearPreguntaComplejaView(FormMixin, DetailView, request):
         return super(CrearPreguntaComplejaView, self).form_valid(form)
 
 
-class VotacionView(FormMixin, DetailView, request):
+class VotacionView(LoginRequiredMixin, FormMixin, DetailView, request):
+
     model = Votacion
     form_class = realizarVotacionForm
     template_name = "RealizarVotacion.html"
@@ -258,7 +270,8 @@ class VotacionView(FormMixin, DetailView, request):
         return super(VotacionView, self).form_valid(form)
 
 
-class EleccionView(FormMixin, DetailView, request):
+class EleccionView(LoginRequiredMixin, FormMixin, DetailView, request):
+
     model = Eleccion
     form_class = realizarEleccionForm
     template_name = "RealizarEleccion.html"
@@ -305,7 +318,8 @@ class EleccionView(FormMixin, DetailView, request):
         return super(EleccionView, self).form_valid(form)
 
 
-class VotacionComplejaView(FormView):
+class VotacionComplejaView(LoginRequiredMixin, FormView):
+
     template_name = 'VotacionCompleja.html'
     success_url = '/votacionCompleja/'
     form_class = VotacionForm
@@ -314,7 +328,8 @@ class VotacionComplejaView(FormView):
         return super().form_valid(form)
 
 
-class ListaVotacionesView(ListView):
+class ListaVotacionesView(LoginRequiredMixin, ListView):
+
     model = Votacion
     form_class = ListaVotacionForm
     paginate_by = 100  # if pagination is desired
@@ -324,7 +339,8 @@ class ListaVotacionesView(ListView):
         return reverse('votacion', kwargs={"pk": self.object.pk})
 
 
-class ListaEleccionesView(ListView):
+class ListaEleccionesView(LoginRequiredMixin, ListView):
+
     model = Eleccion
     form_class = ListaEleccionForm
     paginate_by = 100  # if pagination is desired
@@ -334,7 +350,8 @@ class ListaEleccionesView(ListView):
         return reverse('eleccion', kwargs={"pk": self.object.pk})
 
 
-class ListaCensosView(ListView):
+class ListaCensosView(LoginRequiredMixin, ListView):
+
     model = Censo
     paginate_by = 100  # if pagination is desired
     template_name = "ListaCensos.html"
@@ -345,7 +362,8 @@ class ListaCensosView(ListView):
         return context
 
 
-class CrearEleccionView(CreateView):
+class CrearEleccionView(LoginRequiredMixin, CreateView):
+
     model = Eleccion
     form_class = EleccionForm
 
@@ -353,7 +371,8 @@ class CrearEleccionView(CreateView):
         return reverse('crearpersona', kwargs={"pk": self.object.pk})
 
 
-class CrearPersona(FormMixin, DetailView, request):
+class CrearPersona(LoginRequiredMixin, FormMixin, DetailView, request):
+
     model = Eleccion
     form_class = PersonaForm
     template_name = "personas_form.html"
@@ -395,18 +414,21 @@ class CrearPersona(FormMixin, DetailView, request):
         return super(CrearPersona, self).form_valid(form)
 
 
-class ErrorVotacionView(TemplateView):
+class ErrorVotacionView(LoginRequiredMixin, TemplateView):
+
     template_name = 'ErrorVotacion.html'
 
 
-class ExitoCensoVotacionView(TemplateView):
+class ExitoCensoVotacionView(LoginRequiredMixin, TemplateView):
+
     template_name = 'ErrorVotacion.html'
 
     def get(self, request, *args, **kwargs):
         return HttpResponseRedirect('/')
 
 
-class VotacionUpdate(UpdateView):
+class VotacionUpdate(LoginRequiredMixin, UpdateView):
+
     model = Votacion
     form_class = VotacionForm
     template_name_suffix = '_update_form'
@@ -420,7 +442,8 @@ def erase_request1(request, pk):
     return redirect('listavotaciones')
 
 
-class EleccionUpdate(UpdateView):
+class EleccionUpdate(LoginRequiredMixin, UpdateView):
+
     model = Eleccion
     form_class = EleccionForm
     template_name_suffix = '_update_form'
@@ -434,7 +457,8 @@ def erase_request2(request, pk):
     return redirect('listaelecciones')
 
 
-class CensoUpdate(UpdateView):
+class CensoUpdate(LoginRequiredMixin, UpdateView):
+
     model = Censo
     form_class = ListaCensoForm
     template_name_suffix = '_update_form'
@@ -448,7 +472,8 @@ def erase_request3(request, pk):
     return redirect('listacensos')
 
 
-class EstadisticasVotacionSimpleView(DetailView):
+class EstadisticasVotacionSimpleView(LoginRequiredMixin, DetailView):
+
     template_name = "votacionSimpleResultados.html"
     model = Votacion
 
@@ -476,7 +501,8 @@ class EstadisticasVotacionSimpleView(DetailView):
         return context
 
 
-class EstadisticasEleccionView(DetailView):
+class EstadisticasEleccionView(LoginRequiredMixin, DetailView):
+
     template_name = "votacionEleccionesResultados.html"
     model = Votacion
 
