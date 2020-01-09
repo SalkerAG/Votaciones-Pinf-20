@@ -40,32 +40,17 @@
               <table class="table table-bordered">
                 <tbody>
 
-              {% for re in votacion.resultado %}
-                <tr>
-                  <th scope="row"> re </th>
-                  <td>{{ re }}</td>
-                </tr>
-              {% endfor %}
-
               <tr>
                 <th scope="row">Total Electores</th>
                 <td>{{usuariosCenso}}</td>
               </tr>
 
-              <tr>
-                <th scope="row">Votos a favor</th>
-                <td>{{si}}</td>
-              </tr>
-
-              <tr>
-                <th scope="row">Votos en contra</th>
-                <td>{{no}}</td>
-              </tr>
-
-              <tr>
-                <th scope="row">Abstencion</th>
-                <td>{{abstencion}}</td>
-              </tr>
+              {% for x in fields %}
+                <tr>
+                  <th scope="row">{{ x }}</th>
+                  <td>{{ fields[x] }}</td>
+                </tr>
+              {% endfor %}
 
 {#              <tr>#}
 {#                <th scope="row">Votos totales válidos</th>#}

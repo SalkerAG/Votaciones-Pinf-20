@@ -523,8 +523,8 @@ class EstadisticasVotacionComplejaView(LoginRequiredMixin, DetailView):
         for resultado in context['resultado']:
             fields[resultado.seleccion] += 1
             
-        context[resultados]
-        context[fields]
+        #context[resultados]
+        context['fields']=fields
         context['participacion'] = context['total'] / context['usuariosCenso']
         return context
 
