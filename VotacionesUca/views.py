@@ -511,47 +511,45 @@ class EstadisticasVotacionComplejaView(LoginRequiredMixin, DetailView):
         context['censo'] = Censo.objects.get(pk=context['votacion'].pregunta.censo.pk)
         context['usuariosCenso'] = context['censo'].usuario.all().count()
         context['total'] = 0
-        resultados = []
         fields = {}
         context['resultado'] = UsuarioVotacion.objects.filter(Votacion_id=context['votacion'].id)
 
         for resultado in context['resultado']:
-            if resultado.seleccion not in resultados:
-                resultados.append(resultado.seleccion)
+            if resultado.seleccion not in fields:
                 fields[resultado.seleccion] = 0
 
         for resultado in context['resultado']:
+            context['total']+=1
             fields[resultado.seleccion] += 1
             
-        context['fields']=fields
-        context['participacion'] = context['total'] / context['usuariosCenso']
+        context['fields'] = fields
+        context['participacion'] = (context['total'] / context['usuariosCenso']) * 100
         return context
 
 
 class EstadisticasEleccionView(LoginRequiredMixin, DetailView):
 
     template_name = "votacionEleccionesResultados.html"
-    model = Votacion
+    model = Eleccion
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['now'] = datetime.datetime.now()
-        context['censo'] = Censo.objects.get(pk=context['votacion'].pregunta.censo.pk)
+        context['censo'] = Censo.objects.get(pk=context['eleccion'].pregunta.censo.pk)
         context['usuariosCenso'] = context['censo'].usuario.all().count()
         context['total'] = 0
-        resultados = []
         fields = {}
-        context['resultado'] = UsuarioVotacion.objects.filter(Votacion_id=context['votacion'].id)
+        context['resultado'] = UsuarioVotacion.objects.filter(Eleccion_id=context['eleccion'].id)
 
         for resultado in context['resultado']:
-            if resultado.seleccion not in resultados:
-                resultados.append(resultado.seleccion)
+            if resultado.seleccion not in fields:
                 fields[resultado.seleccion] = 0
 
         for resultado in context['resultado']:
+            context['total']+=1
             fields[resultado.seleccion] += 1
             
-        context['fields']=fields
-        context['participacion'] = context['total'] / context['usuariosCenso']
+        context['fields'] = fields
+        context['participacion'] = (context['total'] / context['usuariosCenso']) * 100
         return context
 

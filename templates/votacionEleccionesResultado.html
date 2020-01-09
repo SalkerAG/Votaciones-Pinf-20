@@ -7,239 +7,67 @@
 
  <head>
 
+    <!-- Your custom styles (optional) -->
+     <!-- SCRIPTS -->
+    <!-- JQuery -->
     <script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <!-- Bootstrap tooltips -->
 
+    <!-- Bootstrap core JavaScript -->
+
+    <!-- MDB core JavaScript -->
     <script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
   </head>
 
   <body>
 
-    <div>{% extends 'base.html' %}
-      {% load static %}
-      {% block content %}
-      
-      <!DOCTYPE html>
-      <html lang="en">
-      
-       <head>
-      
-          <!-- Your custom styles (optional) -->
-           <!-- SCRIPTS -->
-          <!-- JQuery -->
-          <script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
-          <!-- Bootstrap tooltips -->
-      
-          <!-- Bootstrap core JavaScript -->
-      
-          <!-- MDB core JavaScript -->
-          <script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
-        </head>
-      
-        <body>
-      
-            <!-- TITLE -->
-            <div class="container text-center py-5">
-              <h1 class="display-12">Resultado Elección: {{ votacion.nombre_votacion }} </h1>
-            </div>
-      
-            <!-- PIE CHART -->
-            <div class="container-fluid">
-            <div class="row center px-5">
-                  <div class="col-xl-6 ">
-                    <canvas id="pieChart"></canvas>
-                  </div>
-      
-                  <div class="col-xl-6">
-                    <table class="table table-bordered">
-                      <tbody>
-      
-                    <tr>
-                      <th scope="row">Total Electores</th>
-                      <td>{{usuariosCenso}}</td>
-                    </tr>
-      
-                    {% for key, value in fields.items %}
-                      <tr>
-                        <th scope="row">{{key}}</td>
-                          <td>{{value}}</td>
-                      </tr>
-                    {% endfor %}
-                    
-                  </tbody>
-                    </table>
-                  </div>
-      
-                  <div class="col-xl-6 ">
-                    <canvas id="barChart"></canvas>
-                  </div>
-            </div>
-            </div>
-      <!--
-        <div class="row center ">
-        </div> -->
-      
-        </strong>
-          </div>
-      
-          <!-- Start your project here-->
-      
-          <!-- /Start your project here-->
-      
-          <!-- SCRIPTS -->
-          <!-- JQuery -->
-          <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
-          <!-- Bootstrap tooltips -->
-          <script type="text/javascript" src="js/popper.min.js"></script>
-          <!-- Bootstrap core JavaScript -->
-          <script type="text/javascript" src="js/bootstrap.min.js"></script>
-          <!-- MDB core JavaScript -->
-          <script type="text/javascript" src="js/mdb.min.js"></script>
-      
-      
-      
-          <script type="text/javascript">
-            //pie
-            var ctxP = document.getElementById("pieChart").getContext('2d');
-            var myPieChart = new Chart(ctxP, {
-              type: 'pie',
-              data: {
-                labels: [{% for key, value in fields.items %}
-                          {{value}}
-                        {% endfor %}],
-                datasets: [{
-                  data: [{{si}}],
-                  backgroundColor: ["#46BFBD", "#F7464A", "#FDB45C", "#949FB1", "#4D5360"],
-                  hoverBackgroundColor: ["#5AD3D1", "#FF5A5E",  "#FFC870", "#A8B3C5", "#616774"]
-                }]
-              },
-              options: {
-                responsive: true
-              }
-            });
-          </script>
-           {% endblock %}
-        </body>
-      
-      </html>
       <!-- TITLE -->
       <div class="container text-center py-5">
-        <h1 class="display-12">Resultado Elecciones: 000 </h1>
+        <h1 class="display-12">Resultado Votación: {{ eleccion.nombre }} </h1>
       </div>
-    </div>
-
-    <div class="container-fluid">
-        <div class="row center px-5">
 
       <!-- PIE CHART -->
-
-
-            <div class="col-xl-6">
+      <div class="container-fluid">
+      <div class="row center px-5">
+            <div class="col-xl-6 ">
               <canvas id="pieChart"></canvas>
             </div>
 
-
-      <!-- TABLE -->
             <div class="col-xl-6">
               <table class="table table-bordered">
                 <tbody>
+
               <tr>
                 <th scope="row">Total Electores</th>
-                <td>000</td>
+                <td>{{usuariosCenso}}</td>
               </tr>
 
-              <tr>
-                <th scope="row">Votos a candidaturas</th>
-                <td>000</td>
-              </tr>
+              {% for key, value in fields.items %}
+                <tr>
+                  <th scope="row">{{key}}</td>
+                    <td>{{value}}</td>
+                </tr>
+              {% endfor %}
 
-              <tr>
-                <th scope="row">Votos en blanco</th>
-                <td>000</td>
-              </tr>
-
-              <tr>
-                <th scope="row">Votos Nulos</th>
-                <td>000</td>
-              </tr>
-
-              <tr>
-                <th scope="row">Votos totales válidos</th>
-                <td>000</td>
-              </tr>
 
               <tr>
                 <th scope="row">Participación</th>
-                <td>0%</td>
+                <td>{{participacion}}%</td>
               </tr>
-
-              <tr>
-                <th scope="row">Abstención</th>
-                <td>0%</td>
-              </tr>
+              
             </tbody>
               </table>
             </div>
-</div>
-<div class="row center px-5">
-      <!-- TABLE RESULTADO -->
-            <div class="col-xl-12">
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th scope="col">Candidato</th>
-                    <th scope="col">Partido1</th>
-                    <th scope="col">Partido2</th>
-                    <th scope="col">Partido3</th>
-                    <th scope="col">Resultado Final</th>
-                    <th scope="col">Resultado %</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">Candidato1</th>
-                    <td>000</td>
-                    <td>000</td>
-                    <td>000</td>
-                    <td>000</td>
-                    <td>0%</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Candidato2</th>
-                    <td>000</td>
-                    <td>000</td>
-                    <td>000</td>
-                    <td>000</td>
-                    <td>0%</td>
-                  </tr>
-
-                  <tr class="table-active">
-                    <th scope="row">Total</th>
-                    <td>000</td>
-                    <td>000</td>
-                    <td>000</td>
-                    <td>000</td>
-                    <td>0%</td>
-                  </tr>
-
-                </tbody>
-              </table>
-            </div>
-</div>
-      <!-- CHART RESULTADO -->
-<div class="row justify-content-center">
 
             <div class="col-xl-6 ">
               <canvas id="barChart"></canvas>
             </div>
+      </div>
+      </div>
+<!--
+  <div class="row center ">
+  </div> -->
 
-
-      <!-- CHART RESULTADO % -->
-            <div class="col-xl-6 ">
-                <canvas id="canvas"></canvas>
-            </div>
-</div>
-
-</div>
   </strong>
     </div>
 
@@ -258,18 +86,18 @@
     <script type="text/javascript" src="js/mdb.min.js"></script>
 
 
-    <!-- PIE CHART JS -->
+
     <script type="text/javascript">
       //pie
       var ctxP = document.getElementById("pieChart").getContext('2d');
       var myPieChart = new Chart(ctxP, {
         type: 'pie',
         data: {
-          labels: ["Candidato1", "Candidato2", "Abstención"],
+          labels: [{% for key,value in fields.items %}  "{{key}}",   {% endfor %}],
           datasets: [{
-            data: [300, 50, 100],
-            backgroundColor: ["rgba(255,99,132,0.7)", "rgba(54, 162, 235, 0.7)", "#FDB45C"],
-            hoverBackgroundColor: ["rgba(255,99,132,1)", "rgba(54, 162, 235, 1)",  "#FFC870"]
+            data: [{% for key,value in fields.items %}  "{{value}}",   {% endfor %}],
+            backgroundColor: ["#46BFBD", "#F7464A", "#FDB45C", "#949FB1", "#4D5360"],
+            hoverBackgroundColor: ["#5AD3D1", "#FF5A5E",  "#FFC870", "#A8B3C5", "#616774"]
           }]
         },
         options: {
@@ -277,25 +105,22 @@
         }
       });
     </script>
-
-    <!-- HORIZONTAL BAR CHART JS -->
-
     <script type="text/javascript">
       var ctxB = document.getElementById("barChart").getContext('2d');
       var myBarChart = new Chart(ctxB, {
       type: 'horizontalBar',
       data: {
-        labels: ["Candidato1", "Candidato2"],
+        labels: [{% for key,value in fields.items %}  "{{key}}",   {% endfor %}],
         datasets: [{
           label: 'Votos',
-          data: [47, 41],
+          data: [{% for key,value in fields.items %}  "{{value}}",   {% endfor %}],
           backgroundColor: [
-            'rgba(255, 99, 132, 0.7)',
-            'rgba(54, 162, 235, 0.7)'
+            'rgb(70, 191, 189, 0.7)',
+            'rgb(247, 70, 74, 0.7)'
           ],
           borderColor: [
-            'rgba(255,99,132,1)',
-            'rgba(54, 162, 235, 1)'
+            'rgb(70, 191, 189, 1)',
+            'rgb(247, 70, 74, 1)'
           ],
           borderWidth: 1
         }]
@@ -303,7 +128,7 @@
       options: {
         title: {
           display: true,
-          text: 'Resultado Elecciones'
+          text: 'Resultado Votación',
         },
         scales: {
           xAxes: [{
@@ -316,72 +141,7 @@
       }
       });
     </script>
-
-    <!-- STACKED BAR CHART JS -->
-    <script type="text/javascript">
-        window.chartColors = {
-          red: 'rgb(255, 99, 132)',
-          orange: 'rgb(255, 159, 64)',
-          yellow: 'rgb(255, 205, 86)',
-          green: 'rgb(75, 192, 192)',
-          blue: 'rgb(54, 162, 235)',
-          purple: 'rgb(153, 102, 255)',
-          grey: 'rgb(201, 203, 207)'
-        };
-        <!-- Chart -->
-        var barChartData = {
-          labels: ['Partido1', 'Partido2', 'Partido3'],
-          datasets: [{
-            label: 'Candidato1',
-            backgroundColor: window.chartColors.red,
-            data: [
-              47,
-              35,
-              95
-            ]
-          }, {
-            label: 'Candidato2',
-            backgroundColor: window.chartColors.blue,
-            data: [
-              53,
-              65,
-              5
-            ]
-          }]
-        };
-        window.onload = function () {
-          var ctx = document.getElementById('canvas').getContext('2d');
-          window.myBar = new Chart(ctx, {
-            type: 'horizontalBar',
-            data: barChartData,
-            options: {
-              title: {
-                display: true,
-                text: 'Resultado Elecciones %'
-              },
-              tooltips: {
-                mode: 'index',
-                intersect: false
-              },
-              responsive: true,
-              scales: {
-                xAxes: [{
-                  stacked: true,
-                }],
-                yAxes: [{
-                  min: 100, //horizontalBar has inverted x and y axis
-                  max: 100,
-                  callback: function (value) {
-                    return (value / this.max * 100).toFixed(0) + '%'; // convert it to percentage
-                  },
-                  stacked: true
-                }]
-              }
-            }
-          });
-        };
-    </script>
-   {% endblock %}
+     {% endblock %}
   </body>
 
 </html>

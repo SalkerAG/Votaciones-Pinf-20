@@ -55,8 +55,6 @@ class Pregunta(models.Model):
     def __str__(self):
         return self.enunciado
 
-
-
 class OpcionesCompleja(models.Model):
     Pregunta = models.ForeignKey(Pregunta, on_delete=models.CASCADE)
     respuesta = models.CharField(max_length=50)
@@ -100,6 +98,21 @@ class Eleccion(ProcesoElectoral):
     def __str__(self):
         return self.nombre
 
+class UsuarioEleccion(models.Model):
+    user = models.ForeignKey(UsuarioUca, on_delete=models.PROTECT, null=True)
+    Eleccion = models.ForeignKey(Eleccion, on_delete=models.PROTECT)
+    seleccion = models.CharField(max_length=20, null=True)
+
+    def get_absolute_url(self):
+        return reverse('home')
+
+    def save(self, *args, **kwargs):
+        super(UsuarioVotacion, self).save(*args, **kwargs)
+        for row in UsuarioVotacion.objects.all():
+            if UsuarioVotacion.objects.filter(
+                Eleccion_id=row.Votacion_id).count() > 1 and UsuarioVotacion.objects.filter(
+                user_id=row.user_id).count() > 1:
+                row.delete()
 
 class Personas(models.Model):
     Eleccion = models.ForeignKey(Eleccion, on_delete=models.CASCADE)
@@ -115,33 +128,6 @@ class Personas(models.Model):
             raise forms.ValidationError("Ha superado el numero de candidatos máximos")
         else:
             return super(Personas, self).save()
-
-
-
-
-class UsuarioEleccion(models.Model):
-    user = models.ForeignKey(UsuarioUca, on_delete=models.PROTECT, null=True)
-    Eleccion = models.ForeignKey(Eleccion, on_delete=models.PROTECT, null=True)
-    seleccion = models.CharField(max_length=20, null=True)
-
-    def save(self, exclude=None):
-
-        maxcandidatos = self.Eleccion.max_candidatos
-        maxvacantes = self.Eleccion.max_vacantes
-        for row in UsuarioEleccion.objects.all():
-            if self.Eleccion.tipo_eleccion == '0':
-
-                res = int (maxvacantes * maxcandidatos)
-                print (res)
-                contador =  (UsuarioEleccion.objects.filter(Eleccion_id = self.Eleccion_id).count())
-                if contador > res:
-                    raise ValueError("Ha superado el numero de candidatos máximos")
-
-                else:
-                    return super(UsuarioEleccion, self).save(*args, **kwargs)
-
-
-
 
 class Censo(models.Model):
     usuario = models.ManyToManyField(UsuarioUca, blank=False)
