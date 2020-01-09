@@ -19,7 +19,7 @@ from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, Censo, \
 from .forms import VotacionForm, PreguntaForm, createCensoForm, PreguntaFormVotacion, \
     realizarVotacionForm, OpcionesComplejaForm, realizarVotacionComplejaForm, EleccionForm, realizarEleccionForm, \
     PersonaForm, ListaVotacionForm, ListaEleccionForm, ListaCensoForm
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, render_to_response
 import datetime
 import csv
 from bootstrap_modal_forms.generic import BSModalCreateView
@@ -225,8 +225,18 @@ class VotacionView(LoginRequiredMixin, FormMixin, DetailView, request):
         return reverse('home')
 
     def get_context_data(self, **kwargs):
+
+        # ESTO AFAN ES LO QUE HE INTENTADO PERO NADA, LO QUE QUIERO ES QUE COMPRUEBE AL CARGAR LA VISTA SI LA VOTACION TIENE
+        # VOTO RECTIFICABLE, DE NO TENERLO COMPROBAR SI EL USUARIO HA VOTADO Y SI YA LO HA HECHO QUE REDIRIJA, SI ES CONSULTA
+        # A LAS ESTADISTICAS Y SI NO LO ES AL HOME
+
+        if not self.object.voto_rectificable:
+            if UsuarioVotacion.objects.filter(user=self.request.user, Votacion=self.object).exists():
+                return reverse('estadisticasvotacionsimple', kwargs={'pk': self.object.pk})
+
+
+
         context = super(VotacionView, self).get_context_data(**kwargs)
-        cosas = self
 
         if self.object.pregunta.tipo_votacion == '0':
             context['form'] = realizarVotacionForm(
