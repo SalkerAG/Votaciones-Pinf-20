@@ -28,6 +28,7 @@ class Votacion(ProcesoElectoral):
     voto_rectificable = models.BooleanField(default=False)
 
 
+
     @property
     def votacion_cerrada(self):
         return (self.fecha_fin.strftime('%Y-%m-%d') > datetime.now().strftime('%Y-%m-%d')) or (self.fecha_fin.strftime('%Y-%m-%d') == (datetime.now().strftime('%Y-%m-%d')) and (self.hora_fin.strftime('%H:%M') < datetime.now().strftime('%H:%M')))
