@@ -239,6 +239,7 @@ class VotacionView(LoginRequiredMixin, FormMixin, DetailView, request):
 
     def post(self, request, *args, **kwargs):
 
+        global seleccionprevia
         self.object = self.get_object()
 
         form = self.get_form()
@@ -255,6 +256,28 @@ class VotacionView(LoginRequiredMixin, FormMixin, DetailView, request):
         else:
             usuario_eleccion.seleccion = form.data['seleccion']
 
+        if self.object.pregunta.Votacion.voto_rectificable==False:
+
+            
+
+            for row in UsuarioVotacion.objects.all():
+
+
+                seleccionprevia=row.seleccion
+                print (seleccionprevia)
+
+            if usuario_eleccion.seleccion != seleccionprevia:
+
+                usuario_eleccion.user = self.request.user
+                usuario_eleccion.Votacion = self.object
+                usuario_eleccion.Pregunta = self.object.pregunta
+                usuario_eleccion.seleccion = seleccionprevia
+
+                print(seleccionprevia)
+
+                print('no rectificable')
+                return HttpResponseRedirect('/errorVotacionRectificable')
+
         qss = Censo.objects.all().values_list('usuario', flat=True)
 
         if qss.filter(usuario=self.request.user).exists():
@@ -263,11 +286,16 @@ class VotacionView(LoginRequiredMixin, FormMixin, DetailView, request):
         else:
             return HttpResponseRedirect('/errorVotacion')
 
+
+
+
+
+
+
+
         return HttpResponseRedirect('/')
 
-    def form_valid(self, form):
-        form.save()
-        return super(VotacionView, self).form_valid(form)
+
 
 
 class EleccionView(LoginRequiredMixin, FormMixin, DetailView, request):
@@ -418,6 +446,9 @@ class ErrorVotacionView(LoginRequiredMixin, TemplateView):
 
     template_name = 'ErrorVotacion.html'
 
+class ErrorVotacionRectificableView(LoginRequiredMixin, TemplateView):
+
+    template_name = 'ErrorVotacionRectificable.html'
 
 class ExitoCensoVotacionView(LoginRequiredMixin, TemplateView):
 

@@ -9,7 +9,8 @@ from .views import CrearVotacionView, VotacionView, \
     CrearPreguntaVotacion, CrearPreguntaViewCenso, CrearPreguntaViewVotacion, \
     CrearPreguntaViewRealizarVotacion, load_preguntas, CrearPreguntaComplejaView, CrearEleccionView, ErrorVotacionView, \
     ExitoCensoVotacionView, EleccionView, CrearPersona, ListaVotacionesView, ListaEleccionesView, ListaCensosView, \
-    VotacionUpdate, EleccionUpdate, CensoUpdate, EstadisticasVotacionSimpleView, EstadisticasVotacionComplejaView
+    VotacionUpdate, EleccionUpdate, CensoUpdate, EstadisticasVotacionSimpleView, EstadisticasVotacionComplejaView, \
+    ErrorVotacionRectificableView
 
 urlpatterns = [
     path('crearVotacion/', CrearVotacionView.as_view(), name="crearvotacion"),
@@ -43,6 +44,7 @@ urlpatterns = [
     path('estadisticasVotacionSimple/<int:pk>', EstadisticasVotacionSimpleView.as_view(), name="estadisticasvotacionsimple"),
     path('estadisticasVotacionCompleja/<int:pk>', EstadisticasVotacionComplejaView.as_view(), name="estadisticasvotacionsimple"),
     path('estadisticasEleccion/<int:pk>', EstadisticasEleccionView.as_view(), name="estadisticaseleccion"),
+    path('errorVotacionRectificable/', ErrorVotacionRectificableView.as_view(), name="errorvotacionrectificable"),
     # path('creargrupo/', CrearPersonaGrupo.as_view(), name="crearpersonagrupo"),
 
 ]

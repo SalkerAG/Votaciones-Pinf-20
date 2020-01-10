@@ -1,6 +1,8 @@
 from django.db import models, transaction
 from django.db.models import Count
 from django.forms import forms
+from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
 from django.urls import reverse
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils import timezone
@@ -72,9 +74,14 @@ class UsuarioVotacion(models.Model):
     def get_absolute_url(self):
         return reverse('home')
 
+
     def save(self, *args, **kwargs):
+
         super(UsuarioVotacion, self).save(*args, **kwargs)
+
+
         for row in UsuarioVotacion.objects.all():
+
             if UsuarioVotacion.objects.filter(
                     Votacion_id=row.Votacion_id).count() > 1 and UsuarioVotacion.objects.filter(
                 Pregunta_id=row.Pregunta_id).count() > 1 and UsuarioVotacion.objects.filter(
