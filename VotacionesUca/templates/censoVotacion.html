@@ -45,12 +45,17 @@
     <br>
     <br>
     <div style="width: 80%; padding-left: 10%">
+        <p style="color:#9E9E9E ";>Usuarios pertenecientes al censo:</p>
         <form method="post">{% csrf_token %}
             {{ form.usuario }}
-            {{ form.pregunta }}
+            <p style="color:#9E9E9E ";>Elige los usuarios que pertenecen al censo. Recuerda que serán los usuarios que tendrán acceso a la votación.</p>
+            <p style="color:#9E9E9E ";>Votación: {{ form.votacion }}</p>
             <input type="submit" class="btn btn-primary" value="Guardar">
+            <a href="{% url 'crearvotacion' %}">
+                <button id="pregunta-modal" class="create-book btn btn-primary" type="button" name="button">Crear Votación</button>
+            </a>
         </form>
-        <button id="pregunta-modal" class="create-book btn btn-primary" type="button" name="button">Crear Pregunta</button>
+
     </div>
 
 {% endif %}

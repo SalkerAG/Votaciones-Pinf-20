@@ -39,8 +39,6 @@ class OpcionesComplejaForm(forms.ModelForm):
 
 
 
-
-
 class VotacionForm(ProcesoElectoralForm):
     voto_restringido = forms.BooleanField(required=False)
     nombre_votacion = forms.CharField(

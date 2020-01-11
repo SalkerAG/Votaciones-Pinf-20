@@ -47,12 +47,22 @@ class CrearPreguntaViewVotacion(LoginRequiredMixin, BSModalCreateView):
     success_url = reverse_lazy('crearvotacion')
 
 
-class CrearCensoView(LoginRequiredMixin, CreateView):
+class CrearCensoVotacionView(LoginRequiredMixin, CreateView):
     model = Censo
     form_class = createCensoForm
-
+    template_name = 'censoVotacion.html'
+    
     def get_success_url(self):
         return reverse('censo-detail', kwargs={"pk": self.object.pk})
+
+class CrearCensoEleccionView(LoginRequiredMixin, CreateView):
+    model = Censo
+    form_class = createCensoForm
+    template_name = 'censoEleccion.html'
+    
+    def get_success_url(self):
+        return reverse('censo-detail', kwargs={"pk": self.object.pk})
+
 
 
 class CensoDetailView(LoginRequiredMixin, DetailView):

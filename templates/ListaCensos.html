@@ -24,10 +24,11 @@
             <thead>
             <tr>
                 <th class="col-sm-3">Censos</th>
+                <th class="col-sm-3">Tipo</th>
 
                 {% if user.is_superuser %}
-                <th class="col-sm-2">Modificar</th> 
-                <th class="col-sm-2">Eliminar</th> 
+                    <th class="col-sm-2">Modificar</th> 
+                    <th class="col-sm-2">Eliminar</th> 
                 {% endif %}
             </tr>
             </thead>
@@ -35,7 +36,15 @@
                 {% if object_list %}
                     {% for censo in object_list %}
                     <tr>
-                            <td><a class="nav-link" href="{% url 'censo-detail' pk=censo.pk %}">{{censo.pregunta}}</a></td>
+
+                            {% if not censo.votacion_id %}
+                                <td><a class="nav-link" href="{% url 'censo-detail' pk=censo.pk %}">{{censo.eleccion}}</a></td>
+                                <td><a>Elección</a></td>
+                            {% else %}
+                                <td><a class="nav-link" href="{% url 'censo-detail' pk=censo.pk %}">{{censo.votacion}}</a></td>
+                                <td><a>Votación</a></td>
+                            {% endif %}
+                                
 
                         {% if user.is_superuser %}
                             <td><a href="/editarcenso/{{ censo.id }}" class="btn btn-warning">

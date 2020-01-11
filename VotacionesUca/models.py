@@ -83,7 +83,7 @@ class UsuarioVotacion(models.Model):
         for row in UsuarioVotacion.objects.all():
 
             if UsuarioVotacion.objects.filter(
-                    Votacion_id=row.Votacion_id).count() > 1 and UsuarioVotacion.objects.filter(
+                Votacion_id=row.Votacion_id).count() > 1 and UsuarioVotacion.objects.filter(
                 Pregunta_id=row.Pregunta_id).count() > 1 and UsuarioVotacion.objects.filter(
                 user_id=row.user_id).count() > 1:
                 row.delete()
@@ -145,5 +145,5 @@ class Personas(models.Model):
 
 class Censo(models.Model):
     usuario = models.ManyToManyField(UsuarioUca, blank=False)
-    pregunta = models.OneToOneField(Pregunta, on_delete=models.CASCADE, null=True, blank=True)
+    votacion = models.OneToOneField(Votacion, on_delete=models.CASCADE, null=True, blank=True)
     eleccion = models.OneToOneField(Eleccion, on_delete=models.CASCADE, null=True, blank=True)

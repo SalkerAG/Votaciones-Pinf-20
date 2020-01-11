@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from UsuarioUca.views import HomeView, EstadisticasEleccionView
 from . import views
 from .views import CrearVotacionView, VotacionView, \
-    CrearPregunta, CrearCensoView, CensoDetailView, CensoExportView, \
+    CrearPregunta, CrearCensoVotacionView, CrearCensoEleccionView, CensoDetailView, CensoExportView, \
     CrearPreguntaVotacion, CrearPreguntaViewCenso, CrearPreguntaViewVotacion, \
     CrearPreguntaViewRealizarVotacion, load_preguntas, CrearPreguntaComplejaView, CrearEleccionView, ErrorVotacionView, \
     ExitoCensoVotacionView, EleccionView, CrearPersona, ListaVotacionesView, ListaEleccionesView, ListaCensosView, \
@@ -19,7 +19,8 @@ urlpatterns = [
     path('crearpreguntacompleja/<slug:pk>', CrearPreguntaComplejaView.as_view(), name="crearpreguntacompleja"),
     path('crearpreguntavotacion/<slug:pk>', CrearPreguntaVotacion.as_view(), name="crearpreguntavotacion"),
     path('crearpregunta/', CrearPregunta.as_view(), name="crearpregunta"),
-    path('crearcenso/', CrearCensoView.as_view(), name="censo_create"),
+    path('crearcensoVotacion/', CrearCensoVotacionView.as_view(), name="censoV_create"),
+    path('crearcensoEleccion/', CrearCensoEleccionView.as_view(), name="censoE_create"),
     path('censo/<int:pk>/', CensoDetailView.as_view(), name='censo-detail'),
     path('censo/<int:pk>/export/', CensoExportView.as_view(), name='censo_export'),
     path('preguntacrearcenso/', CrearPreguntaViewCenso.as_view(), name='create_pregunta'),
