@@ -392,8 +392,7 @@ class CrearPersona(LoginRequiredMixin, FormMixin, DetailView, request):
 
     def get_context_data(self, **kwargs):
         context = super(CrearPersona, self).get_context_data(**kwargs)
-        cosas = self
-
+        context['personas'] = Personas.objects.filter(Eleccion_id=kwargs['object'].id)
         context['form'] = PersonaForm(
             initial={'Eleccion': self.object})
         return context
@@ -453,8 +452,14 @@ class EleccionUpdate(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse('eleccion_edit', kwargs={'pk': self.object.pk})
 
+def erase_persona(request, pk):
+    persona = Personas.objects.get(id=pk)
+    id = persona.Eleccion_id
+    Personas.objects.filter(id=pk).delete()
+    return redirect('crearpersona', pk=id)
 
 def erase_request2(request, pk):
+
     Eleccion.objects.filter(id=pk).delete()
     return redirect('listaelecciones')
 

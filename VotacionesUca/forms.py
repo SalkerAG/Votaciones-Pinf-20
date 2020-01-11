@@ -160,10 +160,14 @@ class realizarEleccionForm(ModelForm):
 
 class PersonaForm(ModelForm):
 
-
     class Meta:
         model = Personas
         fields = ('nombre',)
+        labels = {'nombre': ('Nombre del candidato')}
+        help_texts = {'nombre': ('Añada uno por uno el nombre de los candidatos a la elección que se muestra en la parte superior')}
+        widgets = {'nombre': forms.TextInput(
+            attrs={'class': 'form-control', }),
+        }
 
 
 class ListaVotacionForm(ModelForm):
