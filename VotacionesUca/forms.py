@@ -32,10 +32,15 @@ class OpcionesSimpleForm(forms.ModelForm):
 
 
 class OpcionesComplejaForm(forms.ModelForm):
-
     class Meta:
         model = OpcionesCompleja
         fields = ('respuesta', )
+        labels = {'respuesta': ('Respuesta')}
+        help_texts = {'respuesta': (
+            'Añada las respuestas que perteneceran a las opciones disponibles de la votación'),
+        }
+        widgets = {'respuesta': forms.TextInput(attrs={'class': 'form-control'}),
+                   }
 
 
 
@@ -138,6 +143,7 @@ class EleccionForm(ProcesoElectoralForm):
 
 
 
+
 class realizarEleccionForm(ModelForm):
     qs = Personas.objects.all().values_list('nombre', flat=True)
     seleccion = forms.ModelChoiceField(qs, label='Seleccion:')
@@ -158,10 +164,14 @@ class realizarEleccionForm(ModelForm):
 
 class PersonaForm(ModelForm):
 
-
     class Meta:
         model = Personas
         fields = ('nombre',)
+        labels = {'nombre': ('Nombre del candidato')}
+        help_texts = {'nombre': ('Añada uno por uno el nombre de los candidatos a la elección que se muestra en la parte superior')}
+        widgets = {'nombre': forms.TextInput(
+            attrs={'class': 'form-control', }),
+        }
 
 
 class ListaVotacionForm(ModelForm):
