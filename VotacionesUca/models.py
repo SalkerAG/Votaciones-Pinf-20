@@ -27,11 +27,11 @@ class Votacion(ProcesoElectoral):
     es_presencial = models.BooleanField(default=False)
     voto_rectificable = models.BooleanField(default=False)
 
-
-
     @property
     def votacion_cerrada(self):
-        return (self.fecha_fin.strftime('%Y-%m-%d') > datetime.now().strftime('%Y-%m-%d')) or (self.fecha_fin.strftime('%Y-%m-%d') == (datetime.now().strftime('%Y-%m-%d')) and (self.hora_fin.strftime('%H:%M') < datetime.now().strftime('%H:%M')))
+        return (self.fecha_fin.strftime('%Y-%m-%d') > datetime.now().strftime('%Y-%m-%d')) or (
+                self.fecha_fin.strftime('%Y-%m-%d') == (datetime.now().strftime('%Y-%m-%d')) and (
+                self.hora_fin.strftime('%H:%M') < datetime.now().strftime('%H:%M')))
 
     def __str__(self):
         return self.nombre_votacion
@@ -58,6 +58,7 @@ class Pregunta(models.Model):
     def __str__(self):
         return self.enunciado
 
+
 class OpcionesCompleja(models.Model):
     Pregunta = models.ForeignKey(Pregunta, on_delete=models.CASCADE)
     respuesta = models.CharField(max_length=50)
@@ -75,11 +76,9 @@ class UsuarioVotacion(models.Model):
     def get_absolute_url(self):
         return reverse('home')
 
-
     def save(self, *args, **kwargs):
 
         super(UsuarioVotacion, self).save(*args, **kwargs)
-
 
         for row in UsuarioVotacion.objects.all():
 
@@ -98,13 +97,18 @@ class Eleccion(ProcesoElectoral):
     )
     tipo_eleccion = models.CharField(max_length=10, choices=TIPO_ELECCION, default="Simple")
     max_candidatos = models.IntegerField(default=2, validators=[MinValueValidator(2)])
-    max_vacantes = models.FloatField(null=True, default=0.7, validators=[MinValueValidator(0.1), MaxValueValidator(0.99)])
+    max_vacantes = models.FloatField(null=True, default=0.7,
+                                     validators=[MinValueValidator(0.1), MaxValueValidator(0.99)])
+
     @property
     def eleccion_cerrada(self):
-        return (self.fecha_fin.strftime('%Y-%m-%d') > datetime.now().strftime('%Y-%m-%d')) or (self.fecha_fin.strftime('%Y-%m-%d') == (datetime.now().strftime('%Y-%m-%d')) and (self.hora_fin.strftime('%H:%M') < datetime.now().strftime('%H:%M')))
+        return (self.fecha_fin.strftime('%Y-%m-%d') > datetime.now().strftime('%Y-%m-%d')) or (
+                self.fecha_fin.strftime('%Y-%m-%d') == (datetime.now().strftime('%Y-%m-%d')) and (
+                self.hora_fin.strftime('%H:%M') < datetime.now().strftime('%H:%M')))
 
     def __str__(self):
         return self.nombre
+
 
 class UsuarioEleccion(models.Model):
     user = models.ForeignKey(UsuarioUca, on_delete=models.PROTECT, null=True)
@@ -115,12 +119,13 @@ class UsuarioEleccion(models.Model):
         return reverse('home')
 
     def save(self, *args, **kwargs):
-        super(UsuarioVotacion, self).save(*args, **kwargs)
-        for row in UsuarioVotacion.objects.all():
-            if UsuarioVotacion.objects.filter(
-                Eleccion_id=row.Votacion_id).count() > 1 and UsuarioVotacion.objects.filter(
+        super(UsuarioEleccion, self).save(*args, **kwargs)
+        for row in UsuarioEleccion.objects.all():
+            if UsuarioEleccion.objects.filter(
+                    Eleccion_id=row.Eleccion_id).count() > 1 and UsuarioEleccion.objects.filter(
                 user_id=row.user_id).count() > 1:
                 row.delete()
+
 
 class Personas(models.Model):
     Eleccion = models.ForeignKey(Eleccion, on_delete=models.CASCADE)
@@ -136,6 +141,7 @@ class Personas(models.Model):
             raise forms.ValidationError("Ha superado el numero de candidatos máximos")
         else:
             return super(Personas, self).save()
+
 
 class Censo(models.Model):
     usuario = models.ManyToManyField(UsuarioUca, blank=False)
