@@ -83,7 +83,22 @@
     .usernif {
         color: white;
         text-align: end;
+        width: 100%;
+    }
 
+    @media screen and (max-width: 700px) {
+        .navbar-nav {
+            width: 100%;
+            flex-direction: column !important;
+        }
+
+        .nav-item-right {
+            width: fit-content;
+        }
+
+        .usernif {
+            width: fit-content;
+        }
     }
 </style>
  <!-- header  -->
@@ -119,13 +134,10 @@
         <li class="nav-item nav-item-right">
             {% if user.is_authenticated %}
                 <a class="nav-link float-right" href="{% url 'logout' %}">Salir</a>
-
             {% else %}
                 <a class="nav-link float-right" href="{% url 'login' %}">Entrar</a>
             {% endif %}
         </li>
-
-
     </ul>
 
     {% else %}
