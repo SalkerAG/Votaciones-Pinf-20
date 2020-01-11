@@ -32,10 +32,15 @@ class OpcionesSimpleForm(forms.ModelForm):
 
 
 class OpcionesComplejaForm(forms.ModelForm):
-
     class Meta:
         model = OpcionesCompleja
         fields = ('respuesta', )
+        labels = {'respuesta': ('Respuesta')}
+        help_texts = {'respuesta': (
+            'Añada las respuestas que perteneceran a las opciones disponibles de la votación'),
+        }
+        widgets = {'respuesta': forms.TextInput(attrs={'class': 'form-control'}),
+                   }
 
 
 
@@ -137,6 +142,7 @@ class EleccionForm(ProcesoElectoralForm):
     class Meta:
         model = Eleccion
         fields = '__all__'
+
 
 
 

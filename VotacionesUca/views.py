@@ -131,7 +131,6 @@ class CrearPreguntaVotacion(LoginRequiredMixin, FormMixin, DetailView, request):
 
     def get_context_data(self, **kwargs):
         context = super(CrearPreguntaVotacion, self).get_context_data(**kwargs)
-        cosas = self
 
         context['form'] = PreguntaFormVotacion(
             initial={'Votacion': self.object})
@@ -176,7 +175,7 @@ class CrearPreguntaComplejaView(LoginRequiredMixin, FormMixin, DetailView, reque
 
     def get_context_data(self, **kwargs):
         context = super(CrearPreguntaComplejaView, self).get_context_data(**kwargs)
-        cosas = self
+        context['respuestas'] = OpcionesCompleja.objects.filter(Pregunta_id=kwargs['object'].id)
 
         context['form'] = OpcionesComplejaForm(
             initial={'Pregunta': self.object})
@@ -457,6 +456,12 @@ def erase_persona(request, pk):
     id = persona.Eleccion_id
     Personas.objects.filter(id=pk).delete()
     return redirect('crearpersona', pk=id)
+
+def erase_respuesta(request, pk):
+    respuesta = OpcionesCompleja.objects.get(id=pk)
+    id = respuesta.Pregunta_id
+    OpcionesCompleja.objects.filter(id=pk).delete()
+    return redirect('crearpreguntacompleja', pk=id)
 
 def erase_request2(request, pk):
 

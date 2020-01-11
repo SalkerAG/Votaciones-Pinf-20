@@ -14,7 +14,7 @@
             </div>
         </div>
     {% else %}
-<html>
+        <html>
         <head>
             <!-- Movil y teclado -->
             <meta charset="utf-8">
@@ -23,7 +23,8 @@
 
             <!-- Bootstrap CSS -->
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+            <link rel="stylesheet"
+                  href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 
             <title>Crear Votación UCA</title>
         </head>
@@ -36,58 +37,76 @@
             </div>
             <!--Formulario-->
             <form method="post">{% csrf_token %}
-       <div class="form-group">
-                   <h1 style="text-align: center">Pregunta: {{ form.initial.Pregunta.enunciado }}</h1>
+                <div class="form-group">
+                    <h1 style="text-align: center">Pregunta: {{ form.initial.Pregunta.enunciado }}</h1>
                 </div>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Respuestas añadidas</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for respuesta in respuestas %}
+                        <tr>
+                            <td style="font-weight: normal">{{ respuesta.respuesta }}</td>
+                            <td><a href="/eliminarrespuesta/{{ respuesta.id }}" class="btn btn-danger">
+                                <i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
                 <div class="form-group">
                     {{ form.as_p }}
                 </div>
 
                 <br>
-               
+
                 <div class="submit-row">
                     <a href="/" class="btn btn-primary" input type="submit">Guardar</a>
                     <input type="submit" value="Añadir respuesta" class="btn btn-primary" name="_save">
                 </div>
-                
+
                 <br>
 
                 <br>
-                
+
             </form>
         </div>
-            {% endif %}
+    {% endif %}
 {% endblock %}
 
-        <!-- Requisitos para bootstrap 4 y js  -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-                integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-                crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-                crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-                crossorigin="anonymous"></script>
-        <script type="text/javascript"
-                src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<!-- Requisitos para bootstrap 4 y js  -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
-        <!-- Código javascript -->
-        <script>
-            $(document).ready(function () {
-                $("#from-datepicker").datepicker({
-                    format: 'yyyy-mm-dd'
-                });
-                $("#from-datepicker").on("change", function () {
-                    var fromdate = $(this).val();
-                    alert(fromdate);
-                });
-            });
-        </script>
+<!-- Código javascript -->
+<script>
+    $(document).ready(function () {
+        $("#from-datepicker").datepicker({
+            format: 'yyyy-mm-dd'
+        });
+        $("#from-datepicker").on("change", function () {
+            var fromdate = $(this).val();
+            alert(fromdate);
+        });
+    });
+</script>
 
-        </body>
+</body>
 
-        </html>
+</html>
 
 

@@ -42,6 +42,7 @@ urlpatterns = [
     path('editarcenso/<int:pk>', CensoUpdate.as_view(), name='censo_edit'),
     path('eliminarcenso/<int:pk>', views.erase_request3, name="eliminar_censo"),
     path('eliminarpersona/<int:pk>', views.erase_persona, name="eliminar_persona"),
+    path('eliminarrespuesta/<int:pk>', views.erase_respuesta, name="eliminar_respuesta"),
     path('estadisticasVotacionSimple/<int:pk>', EstadisticasVotacionSimpleView.as_view(), name="estadisticasvotacionsimple"),
     path('estadisticasVotacionCompleja/<int:pk>', EstadisticasVotacionComplejaView.as_view(), name="estadisticasvotacionsimple"),
     path('estadisticasEleccion/<int:pk>', EstadisticasEleccionView.as_view(), name="estadisticaseleccion"),
