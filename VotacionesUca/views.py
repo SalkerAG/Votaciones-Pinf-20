@@ -225,19 +225,24 @@ class VotacionView(LoginRequiredMixin, FormMixin, DetailView, request):
 
     def render_to_response(self, context, **response_kwargs):
         votacion = Votacion.objects.get(pk=context['votacion'].id)
-        if UsuarioVotacion.objects.filter(user_id=self.request.user.id, Votacion_id=votacion.id).exists():
-            if not votacion.voto_rectificable:
-                if votacion.es_consulta:
-                    if Pregunta.objects.get(Votacion_id=votacion.id).tipo_votacion == '0':
-                        url = reverse('estadisticasvotacionsimple', kwargs={'pk': votacion.id})
-                        return HttpResponseRedirect(url)
+        censo = Censo.objects.get(pk=context['votacion'].id)
+        if self.request.user not in censo.usuario.all():
+            url = reverse('home')
+            return HttpResponseRedirect(url)
+        else:
+            if UsuarioVotacion.objects.filter(user_id=self.request.user.id, Votacion_id=votacion.id).exists():
+                if not votacion.voto_rectificable:
+                    if votacion.es_consulta:
+                        if Pregunta.objects.get(Votacion_id=votacion.id).tipo_votacion == '0':
+                            url = reverse('estadisticasvotacionsimple', kwargs={'pk': votacion.id})
+                            return HttpResponseRedirect(url)
+                        else:
+                            url = reverse('estadisticasvotacioncompleja', kwargs={'pk': votacion.id})
+                            return HttpResponseRedirect(url)
                     else:
-                        url = reverse('estadisticasvotacioncompleja', kwargs={'pk': votacion.id})
+                        url = reverse('home')
                         return HttpResponseRedirect(url)
-                else:
-                    url = reverse('home')
-                    return HttpResponseRedirect(url)
-        return super(VotacionView, self).render_to_response(context, **response_kwargs)
+            return super(VotacionView, self).render_to_response(context, **response_kwargs)
 
     # def get(self, *args, **kwargs):
     #     votacion = Votacion.objects.get(pk=kwargs['pk'])

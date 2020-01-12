@@ -76,18 +76,12 @@ class UsuarioVotacion(models.Model):
         return reverse('home')
 
     def save(self, *args, **kwargs):
-
-
-
         super(UsuarioVotacion, self).save(*args, **kwargs)
 
         for row in UsuarioVotacion.objects.filter(user_id=self.user_id):
-
-
             if UsuarioVotacion.objects.filter(
-                Votacion_id=row.Votacion_id).count() > 2 and UsuarioVotacion.objects.filter(
-                Pregunta_id=row.Pregunta_id).count() > 2:
-
+                Votacion_id=row.Votacion_id, user=self.user_id).count() >= 2 and UsuarioVotacion.objects.filter(
+                Pregunta_id=row.Pregunta_id, user=self.user_id).count() >= 2:
                 row.delete()
 
 
