@@ -29,7 +29,7 @@
                 {% if object_list %}
                     {% for votacion in object_list %}
                     <tr>
-                        <td><a class="nav-link" href="{% url 'votacion' pk=votacion.pk %}">{{votacion.nombre_votacion}}</a></td>                     
+                        <td><a class="nav-link" href="{% url 'votacion' pk=votacion.pk %}">{{votacion.nombre_votacion}}</a></td>
                         {% if votacion.votacion_cerrada %}
                             <td><a class="nav-link" style="text-align: center">Abierta</a></td>
                         {% else %}
@@ -60,7 +60,7 @@
                                     <i class="fas fa-edit"></i></a>
                                 </td>
                             {% else %}
-                                <td style="text-align: center"><a class="btn btn-warning">
+                                <td style="text-align: center"><a class="btn btn-secondary">
                                     <i class="fas fa-edit"></i></a>
                                 </td>                            
                             {% endif %}
