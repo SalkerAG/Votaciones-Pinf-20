@@ -68,7 +68,7 @@
                 <td>{{ user.first_name }} {{ user.last_name }}</td>
                 <td>{{ user.nif|user_nif_filter }}</td>
                 <td>{{ user.email }}</td>
-                <td>{{ user.is_superuser }}</td>
+                <td>{{ user.rol }}</td>
                 <td>
                     <a href='/editarusuario/{{ user.id }}' class="btn btn-warning">
                         <i class="fas fa-edit"></i>
