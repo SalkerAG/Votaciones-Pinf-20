@@ -1,7 +1,8 @@
 from time import timezone
 
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.forms import ModelForm
+from django.forms import ModelForm, forms
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.edit import FormMixin, UpdateView
 from django.urls import reverse
@@ -488,7 +489,17 @@ class CrearPersona(LoginRequiredMixin, FormMixin, DetailView, request):
         per.Eleccion = self.object
 
         per.nombre = form.data['nombre']
-        per.save()
+
+        maxcandidatos = per.Eleccion.max_candidatos
+
+        print (maxcandidatos)
+
+        if not Personas.objects.filter(Eleccion_id=per.Eleccion).count() > maxcandidatos - 1:
+
+            per.save()
+        else:
+
+            messages.error(request, "Límite de candidatos posibles superado")
 
         return HttpResponseRedirect(self.request.path_info)
 

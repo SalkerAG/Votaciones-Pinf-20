@@ -96,6 +96,8 @@ class Eleccion(ProcesoElectoral):
     max_vacantes = models.FloatField(null=True, default=0.7,
                                      validators=[MinValueValidator(0.1), MaxValueValidator(0.99)])
 
+
+
     @property
     def eleccion_cerrada(self):
         return (self.fecha_fin.strftime('%Y-%m-%d') > datetime.now().strftime('%Y-%m-%d')) or (
@@ -124,13 +126,10 @@ class Personas(models.Model):
     def __str__(self):
         return self.nombre
 
-    def clean_fields(self, exclude=None):
 
-        maxcandidatos = self.Eleccion.max_candidatos
-        if Personas.objects.filter(Eleccion_id=self.Eleccion_id).count() > maxcandidatos - 1:
-            raise forms.ValidationError("Ha superado el numero de candidatos máximos")
-        else:
-            return super(Personas, self).save()
+
+
+
 
 
 class Censo(models.Model):

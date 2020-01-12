@@ -29,7 +29,7 @@ urlpatterns = [
     path('realizarvotacion/<int:pk>', VotacionView.as_view(), name='realizarvotacion'),
     path('', login_required(HomeView.as_view()), name="home"),
     path('ajax/load-preguntas/', load_preguntas, name='ajax_load_preguntas'),
-    path('creareleccion/', CrearEleccionView.as_view(), name='create_eleccion'),
+
     path('errorVotacion/', ErrorVotacionView.as_view(), name='errorvotacion'),
     path('exitocensovotacion/', ExitoCensoVotacionView.as_view(), name='exitocensovotacion'),
     path('crearpersona/<slug:pk>', CrearPersona.as_view(), name="crearpersona"),
