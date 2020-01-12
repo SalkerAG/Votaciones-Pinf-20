@@ -40,7 +40,7 @@
             <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
                 <div class="my-3 p-3">
                 {% if votacion_list %}
-                    <h2 class="display-5"><Var>Votaciones  Recientes</Var> </h2>
+                <h2 class="display-5">Votaciones Recientes</h2>
                     {% for votacion in votacion_list %}
                         {% if votacion.votacion_cerrada %}
                             <a class="nav-link" href="{% url 'votacion' pk=votacion.pk %}" style="color:#898b96">{{votacion.nombre_votacion}}</a>
@@ -51,7 +51,7 @@
                 {% endif %}
                 <br>
                 {% if eleccion_list %}
-                    <h2 class="display-5"><Var>Elecciones  Recientes</Var> </h2>
+                    <h2 class="display-5">Elecciones Recientes</h2>
                     {% for eleccion in eleccion_list %}
                         {% if eleccion.eleccion_cerrada %}
                             <a class="nav-link" href="{% url 'eleccion' pk=eleccion.pk %}" style="color:#898b96">{{eleccion.nombre}}</a>
