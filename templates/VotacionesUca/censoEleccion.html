@@ -14,6 +14,7 @@
     </div>
 </div>
 {% else %}
+<div class="container">
 <!doctype html>
 <html>
 
@@ -40,11 +41,11 @@
     </div>
 
     <div id="censo" align='center'>
-        <h1 id="censo" style="margin-top: 20px"><strong> Nombre del Censo</h1>
+        <h1 id="censo" style="margin-top: 20px"> Nombre del Censo</h1>
     </div>
     <br>
     <br>
-    <div style="width: 80%; padding-left: 10%">
+
         <form method="post">{% csrf_token %}
             {{ form.usuario }}
             {{ form.eleccion }}
