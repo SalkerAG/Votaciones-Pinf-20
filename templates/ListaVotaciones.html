@@ -29,9 +29,7 @@
                 {% if object_list %}
                     {% for votacion in object_list %}
                     <tr>
-                        <td><a class="nav-link" href="{% url 'votacion' pk=votacion.pk %}">{{votacion.nombre_votacion}}</a></td>
-                        <a class="nav-link" href="{% url 'estadisticasvotacionsimple' pk=votacion.pk %}">Resultados</a></td>
-                        
+                        <td><a class="nav-link" href="{% url 'votacion' pk=votacion.pk %}">{{votacion.nombre_votacion}}</a></td>                     
                         {% if votacion.votacion_cerrada %}
                             <td><a class="nav-link" style="text-align: center">Abierta</a></td>
                         {% else %}
