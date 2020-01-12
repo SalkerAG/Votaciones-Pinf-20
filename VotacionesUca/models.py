@@ -77,14 +77,17 @@ class UsuarioVotacion(models.Model):
 
     def save(self, *args, **kwargs):
 
+
+
         super(UsuarioVotacion, self).save(*args, **kwargs)
 
-        for row in UsuarioVotacion.objects.all():
+        for row in UsuarioVotacion.objects.filter(user_id=self.user_id):
+
 
             if UsuarioVotacion.objects.filter(
-                Votacion_id=row.Votacion_id).count() > 1 and UsuarioVotacion.objects.filter(
-                Pregunta_id=row.Pregunta_id).count() > 1 and UsuarioVotacion.objects.filter(
-                user_id=row.user_id).count() > 1:
+                Votacion_id=row.Votacion_id).count() > 2 and UsuarioVotacion.objects.filter(
+                Pregunta_id=row.Pregunta_id).count() > 2:
+
                 row.delete()
 
 
