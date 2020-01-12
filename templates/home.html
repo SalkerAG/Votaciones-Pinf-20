@@ -20,11 +20,26 @@
         </div>
         <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
             <div class="my-3 py-3">
-                <h2 class="display-5">Últimas noticias </h2>
-                <p>Votacion a Rectorado de la Universidad</p>
-                <br>
-                <p>Votacion para delegado GII 19/20</p>
-                <br>
+                {% if votacion_list %}
+                    <h2 class="display-5"><Var>Votaciones Recientes</Var> </h2>
+                    {% for votacion in votacion_list %}
+                        <p><a class="nav-link" href="{% url 'votacion' pk=votacion.pk %}" style="color:#898b96">{{votacion.nombre_votacion}}</a></p>
+                    {% endfor %}
+                    <br>
+                {% else %}
+                    <h2 class="display-5"><Var>No hay votaciones disponibles</Var> </h2>
+                {% endif %}
+                {% if eleccion_list %}
+                    <h2 class="display-5"><Var>Elecciones:</Var> </h2>
+                    {% for eleccion in eleccion_list %}
+                        {% if eleccion.eleccion_cerrada %}
+                            <p><a class="nav-link" href="{% url 'eleccion' pk=eleccion.pk %}" style="color:#898b96">{{eleccion.nombre}}</a></p>
+                        {% endif %}
+                    {% endfor %}
+                    <br>
+                {% else %}
+                    <h2 class="display-5"><Var>No hay elecciones disponibles</Var> </h2>
+                {% endif %}
             </div>
         </div>
 

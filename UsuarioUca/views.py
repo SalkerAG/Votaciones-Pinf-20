@@ -20,7 +20,7 @@ from UsuarioUca.models import UsuarioUca, Estudiante, Profesor, PASS
 from import_export import resources, fields
 from django.contrib import messages
 
-from VotacionesUca.models import Votacion
+from VotacionesUca.models import Votacion, Eleccion
 
 
 def my_view(request):
@@ -133,9 +133,22 @@ class VotacionView(LoginRequiredMixin, DetailView):
         context['opciones'] = Opciones.objects.filter(pregunta=pregunta.pk)
         return context
 
-class HomeView(LoginRequiredMixin, TemplateView):
+class HomeView(LoginRequiredMixin, ListView):
     template_name = "home.html"
+    context_object_name = 'votacion_list'
+    model = Votacion
 
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+        context.update({
+            'eleccion_list': Eleccion.objects.order_by('nombre'),
+            'more_context': Eleccion.objects.all(),
+        })
+        return context
+
+    def get_queryset(self):
+        return Votacion.objects.order_by('nombre_votacion')
+    
 
 class CrearVotacionView(LoginRequiredMixin, TemplateView):
     template_name = "CrearVotacion.html"
