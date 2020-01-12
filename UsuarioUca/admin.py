@@ -57,13 +57,15 @@ class UsuarioUcaResource(resources.ModelResource):
     def export(self, queryset=None, *args, **kwargs):
 
         qs = list(queryset)
-        print(qs)
+
         for user in qs:
             user.nif = user.nif.replace("u", "")
 
         return super(UsuarioUcaResource, self).export(qs, *args, **kwargs)
 
     def before_import(self, dataset, using_transactions, dry_run=True, **kwargs):
+
+
 
         for row in dataset:
             email = row[13]
@@ -73,8 +75,10 @@ class UsuarioUcaResource(resources.ModelResource):
             last_name = row[10]
             is_staff = row[6]
             is_active = row[7]
-            print (identify_hasher(password))
-            print (identify_hasher(passwordtemplate))
+
+            rol = row[14]
+            print (rol)
+            roluser = {'Estudiante', 'Profesor', 'PASS', }
 
 
             if checkemail(email) == False:
@@ -119,6 +123,12 @@ class UsuarioUcaResource(resources.ModelResource):
             if int(is_staff) < 0 or int(is_staff) > 1:
                 raise ValidationError('Distinto de 0 o 1. '
                                       'Error en la fila con nif = %s' % row[11])
+            if rol.__contains__("Estudiante") or rol.__contains__("PASS") or rol.__contains__("Profesor"):
+                pass
+            else:
+                raise ValidationError('Rol no identificado'
+                                      'Error en la fila con nif = %s' % row[11])
+
 
 
             def replace_row(row_index, row_dict):
