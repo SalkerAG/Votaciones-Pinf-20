@@ -244,20 +244,6 @@ class VotacionView(LoginRequiredMixin, FormMixin, DetailView, request):
                         return HttpResponseRedirect(url)
             return super(VotacionView, self).render_to_response(context, **response_kwargs)
 
-    # def get(self, *args, **kwargs):
-    #     votacion = Votacion.objects.get(pk=kwargs['pk'])
-    #     if UsuarioVotacion.objects.filter(user_id=self.request.user.id, Votacion_id=votacion.id).exists():
-    #         if not votacion.voto_rectificable:
-    #             if votacion.es_consulta:
-    #                 if Pregunta.objects.get(Votacion_id=votacion.id).tipo_votacion == '0':
-    #                     url = reverse('estadisticasvotacionsimple', kwargs={'pk': votacion.id})
-    #                     return HttpResponseRedirect(url)
-    #                 else:
-    #                     url = reverse('estadisticasvotacioncompleja', kwargs={'pk': votacion.id})
-    #                     return HttpResponseRedirect(url)
-    #             else:
-    #                 return HttpResponseRedirect('/')
-    #     return super().get(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(VotacionView, self).get_context_data(**kwargs)
@@ -331,6 +317,7 @@ class EleccionView(LoginRequiredMixin, FormMixin, DetailView, request):
     form_class = realizarEleccionForm
     template_name = "RealizarEleccion.html"
 
+
     success_url = reverse_lazy('home')
 
     def __init__(self, **kwargs):
@@ -338,6 +325,24 @@ class EleccionView(LoginRequiredMixin, FormMixin, DetailView, request):
 
     def get_success_url(self):
         return reverse('home')
+
+    def render_to_response(self, context, **response_kwargs):
+        eleccion = Eleccion.objects.get(pk=context['eleccion'].id)
+        censoeleccion = Censo.objects.get(pk=context['eleccion'].id)
+        if self.request.user not in censoeleccion.usuario.all():
+            url = reverse('home')
+            return HttpResponseRedirect(url)
+        else:
+            if UsuarioEleccion.objects.filter(user_id=self.request.user.id, Eleccion_id=eleccion.id).exists():
+                if eleccion.es_consulta:
+
+                    url = reverse('estadisticaseleccion', kwargs={'pk': eleccion.id})
+                    return HttpResponseRedirect(url)
+
+                else:
+                        url = reverse('home')
+                        return HttpResponseRedirect(url)
+            return super(EleccionView, self).render_to_response(context, **response_kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(EleccionView, self).get_context_data(**kwargs)
@@ -353,10 +358,40 @@ class EleccionView(LoginRequiredMixin, FormMixin, DetailView, request):
         form = self.get_form()
         usuario_eleccion = UsuarioEleccion()
 
+        listado_usuarios_votacion = Censo.objects.get(eleccion_id=self.object.id)
+
         usuario_eleccion.user = self.request.user
         usuario_eleccion.Eleccion = self.object
 
         usuario_eleccion.seleccion = form.data['seleccion']
+
+        if usuario_eleccion.user not in listado_usuarios_votacion.usuario.all():
+            return HttpResponseRedirect('/errorVotacion')
+        else:
+            print ('estoy')
+
+        # listado_usuarios = UsuarioEleccion.objects.filter(Eleccion_id=self.object.id).all()
+        # listado_usuarios_votados = []
+        # for user in listado_usuarios:
+        #     listado_usuarios_votados.append(user.user)
+        #     if usuario_eleccion.user in listado_usuarios_votados:
+        #         if self.object.es_consulta == True:
+        #
+        #             url = reverse('estadisticaseleccion', kwargs={"pk": self.object.pk})
+        #             return HttpResponseRedirect(url)
+        #
+        #         elif self.object.es_consulta == False:
+        #             return HttpResponseRedirect('/errorVotacionRectificable')
+        #         else:
+        #             usuario_eleccion.save()
+        #             if usuario_eleccion.Eleccion.es_consulta:
+        #                     url = reverse('estadisticasvotacioncompleja', kwargs={'pk': usuario_eleccion.Votacion.id})
+        #                     return HttpResponseRedirect(url)
+        #     else:
+        #         return HttpResponseRedirect('/')
+
+
+
         usuario_eleccion.save()
 
         qss = Censo.objects.all().values_list('usuario', flat=True)
@@ -365,7 +400,7 @@ class EleccionView(LoginRequiredMixin, FormMixin, DetailView, request):
 
             usuario_eleccion.save()
         else:
-            return HttpResponseRedirect('/errorVotacion')
+            return HttpResponseRedirect('/')
         return HttpResponseRedirect('/')
 
     def form_valid(self, form):

@@ -114,13 +114,7 @@ class UsuarioEleccion(models.Model):
     def get_absolute_url(self):
         return reverse('home')
 
-    def save(self, *args, **kwargs):
-        super(UsuarioEleccion, self).save(*args, **kwargs)
-        for row in UsuarioEleccion.objects.all():
-            if UsuarioEleccion.objects.filter(
-                    Eleccion_id=row.Eleccion_id).count() > 1 and UsuarioEleccion.objects.filter(
-                user_id=row.user_id).count() > 1:
-                row.delete()
+
 
 
 class Personas(models.Model):
