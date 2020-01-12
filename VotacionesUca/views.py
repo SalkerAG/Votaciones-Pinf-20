@@ -2,6 +2,7 @@ from time import timezone
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import ModelForm
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.edit import FormMixin, UpdateView
 from django.urls import reverse
 from django.views.generic import TemplateView, FormView, CreateView, DetailView
@@ -221,7 +222,7 @@ class VotacionView(LoginRequiredMixin, FormMixin, DetailView, request):
 
     def get_success_url(self):
         return reverse('home')
-    
+
 
     def get_context_data(self, **kwargs):
         context = super(VotacionView, self).get_context_data(**kwargs)
@@ -238,7 +239,6 @@ class VotacionView(LoginRequiredMixin, FormMixin, DetailView, request):
             return context
 
     def post(self, request, *args, **kwargs):
-
         global seleccionprevia
         self.object = self.get_object()
 
@@ -252,7 +252,7 @@ class VotacionView(LoginRequiredMixin, FormMixin, DetailView, request):
         if usuario_eleccion.Pregunta.tipo_votacion == '1':
             usuario_eleccion.seleccion = form.data['respuesta']
         else:
-            usuario_eleccion.seleccion = form.data['seleccion']
+            usuario_eleccion.seleccion = form.data['respuesta']
 
         if usuario_eleccion.user not in listado_usuarios_votacion.usuario.all():
             return HttpResponseRedirect('/errorVotacion')
@@ -267,6 +267,9 @@ class VotacionView(LoginRequiredMixin, FormMixin, DetailView, request):
                     return HttpResponseRedirect(url)
                 elif self.object.pregunta.Votacion.voto_rectificable == False and self.object.pregunta.Votacion.es_consulta == False:
                     return HttpResponseRedirect('/errorVotacionRectificable')
+                else:
+                    usuario_eleccion.save()
+                    return HttpResponseRedirect('/')
             else:
                 usuario_eleccion.save()
                 return HttpResponseRedirect('/')
