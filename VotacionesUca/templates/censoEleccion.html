@@ -40,7 +40,7 @@
     </div>
 
     <div id="censo" align='center'>
-        <h1 id="censo" style="margin-top: 20px"><strong> Nombre del Censo</h1>
+        <h1 id="censo" style="margin-top: 20px"><strong> Crear Censo Elección</h1>
     </div>
     <br>
     <br>
@@ -50,12 +50,21 @@
             {{ form.usuario }}
             <p style="color:#9E9E9E ";>Elige los usuarios que pertenecen al censo. Recuerda que serán los usuarios que tendrán acceso a la elección.</p>
             <p style="color:#9E9E9E ";>Elección: {{ form.eleccion }}</p>
-            <input type="submit" class="btn btn-primary" value="Guardar">
-            <a href="{% url 'create_eleccion' %}">
-                <button id="pregunta-modal" class="create-book btn btn-primary" type="button" name="button">Crear Elección</button>
+             <div align="center">
+                   <a href="{% url 'create_eleccion' %}">
+                 <button id="pregunta-modal" class="create-book btn btn-primary" type="button" name="button">Crear elección adicional</button>
+
+            <br>
+            <br>
+
+
+                 <input type="submit" class="btn btn-primary" value="Guardar censo">
+                     </div>
             </a>
+
         </form>
-        
+<br>
+
     </div>
 
 {% endif %}

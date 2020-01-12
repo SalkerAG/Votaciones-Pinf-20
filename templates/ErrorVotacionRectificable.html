@@ -1,3 +1,7 @@
+{% extends 'base.html' %}
+
+
+
 {% load static %}
 <!doctype html>
 <html>
@@ -56,12 +60,17 @@
             </div>
         </div>
     </div>
-
+    <br>
     <div id="censo" align='center'>
          <h1>La pregunta seleccionada no puede ser modificada, pertenece a una votación no rectificable.</h1>
     </div>
     <br>
     <br>
+    <div align="center">
+           <a href="/" class="btn btn-primary" input type="submit">Volver al menú principal</a>
+    </div>
+    <br>
+
     <div style="width: 80%; padding-left: 10%">
 
         <form method="post" id="realizarVotacionForm" data-preguntas-url={% url 'ajax_load_preguntas' %}>{% csrf_token %}
