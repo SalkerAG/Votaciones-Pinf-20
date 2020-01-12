@@ -72,36 +72,52 @@
     <div id="censo" align='center'>
         <h1 id="censo" style="margin-top: 20px"><strong> Realizar Votación</h1>
     </div>
+    <h1 style="text-align: center">Votación: {{ form.initial.Votacion.nombre_votacion }}</h1>
+    <h1 style="text-align: center">{{ form.initial.Pregunta.enunciado }}</h1>
     <br>
     <br>
-    <div style="width: 80%; padding-left: 10%">
-        <h1 style="text-align: center">Votación: {{ form.initial.Votacion.nombre_votacion }}</h1>
-        <h1 style="text-align: center">{{ form.initial.Pregunta.enunciado }}</h1>
+    <div style="width: 100%; text-align: center">
         {#                <h1 style="text-align: center">{{ form.initial.user.id }}</h1>#}
         {#                  <h1 style="text-align: center">{{ form.initial.Eleccion.nombre }}</h1>#}
         <h1 style="text-align: center">{{ form.initial.Censo.id }}</h1>
-        {% if form.initial.Pregunta.tipo_votacion == '0'  %}
-            <form method="POST" id="realizarVotacionForm" action="">
+        {% if form.initial.Pregunta.tipo_votacion == '0' %}
+            <form method="POST" id="realizarVotacionForm" action="" style="display: inline-block;
+    width: 40%;">
                 {% csrf_token %}
                 {% for respuesta in form.CHOICES %}
                     <div class="list-group">
-                        <input type="submit" class="list-group-item list-group-item-action" name="respuesta"
+                        <input style="margin-bottom: 5px" type="submit" class="list-group-item list-group-item-action"
+                               name="respuesta"
                                data-toggle="modal" data-target="#multiModalCenter" value="{{ respuesta.0 }}">
                     </div>
                 {% endfor %}
+                <a class="btn btn-primary" style="margin-top: 10px" href={% url 'home' %}>Volver Inicio</a>
+                {% if form.initial.Votacion.es_consulta %}
+                    <a class="btn btn-primary" style="margin-top: 10px"
+                       href={% url 'estadisticasvotacionsimple' pk=form.initial.Votacion.id %}>Estadisticas</a>
+                {% endif %}
             </form>
         {% else %}
-            <form method="POST" id="realizarVotacionForm" action="">
+            <form method="POST" id="realizarVotacionForm" action="" style="display: inline-block;
+    width: 40%;">
                 {% csrf_token %}
                 {% for respuesta in form.initial.respuestas %}
                     <div class="list-group">
-                        <input type="submit" class="list-group-item list-group-item-action" name="respuesta"
+                        <input style="margin-bottom: 5px" type="submit" class="list-group-item list-group-item-action"
+                               name="respuesta"
                                data-toggle="modal" data-target="#multiModalCenter" value="{{ respuesta.respuesta }}">
                     </div>
                 {% endfor %}
+                <a class="btn btn-primary" style="margin-top: 10px" href={% url 'home' %}>Volver Inicio</a>
+                {% if form.initial.Votacion.es_consulta %}
+                    <a class="btn btn-primary" style="margin-top: 10px"
+                       href={% url 'estadisticasvotacioncompleja' pk=form.initial.Votacion.id %}>Estadisticas</a>
+                {% endif %}
             </form>
         {% endif %}
     </div>
+    <br>
+    <br>
 {% endblock %}
 <br>
 <br>
