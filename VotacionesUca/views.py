@@ -489,7 +489,7 @@ class EstadisticasVotacionSimpleView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['now'] = datetime.datetime.now()
-        context['censo'] = Censo.objects.get(pk=context['votacion'].pregunta.censo.pk)
+        context['censo'] = Censo.objects.get(pk=context['votacion'].votacion.censo.pk)
         context['usuariosCenso'] = context['censo'].usuario.all().count()
         context['total'] = 0
         context['si'] = 0

@@ -30,6 +30,7 @@
                     {% for votacion in object_list %}
                     <tr>
                         <td><a class="nav-link" href="{% url 'votacion' pk=votacion.pk %}">{{votacion.nombre_votacion}}</a></td>
+                        <a class="nav-link" href="{% url 'estadisticasvotacionsimple' pk=votacion.pk %}">Resultados</a></td>
                         
                         {% if votacion.votacion_cerrada %}
                             <td><a class="nav-link">Abierta</a></td>
