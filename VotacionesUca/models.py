@@ -48,7 +48,6 @@ class Pregunta(models.Model):
     TIPO_CHOICES = (
         ("0", "Simple"),
         ("1", "Compleja"),
-
     )
 
     Votacion = models.OneToOneField(Votacion, on_delete=models.CASCADE)

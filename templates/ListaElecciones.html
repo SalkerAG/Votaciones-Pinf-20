@@ -18,9 +18,10 @@
             <tr>
                 <th class="col-sm-3">Elecciones</th>
                 <th class="col-sm-2">Estado</th>
+                <th class="col-sm-2">Resultados</th>
                 {% if user.is_superuser %}
-                <th class="col-sm-2">Modificar</th> 
-                <th class="col-sm-2">Eliminar</th> 
+                    <th class="col-sm-2">Modificar</th> 
+                    <th class="col-sm-2">Eliminar</th> 
                 {% endif %}
             </tr>
             </thead>
@@ -28,24 +29,33 @@
                 {% if object_list %}
                     {% for eleccion in object_list %}
                     <tr>
-                        {% if  eleccion.eleccion_cerrada %}
-                                             <td><a class="nav-link" href="{% url 'eleccion' pk=eleccion.pk %}">{{eleccion.nombre}}</a></td>
-                        {% else %}
-                            <td><a class="nav-link" href="{% url 'estadisticaseleccion' pk=eleccion.pk %}">{{eleccion.nombre}}</a></td>
-                        {% endif %}
-                    
+                        <td><a class="nav-link" href="{% url 'eleccion' pk=eleccion.pk %}">{{eleccion.nombre}}</a></td>
+                                   
                         {% if eleccion.eleccion_cerrada %}
-                            <td>Abierta</td>
+                            <td><a class="nav-link">Abierta</a></td>
                         {% else %}
-                            <td>Cerrada</td>
+                            <td><a class="nav-link">Cerrada</a></td>
                         {% endif %}
+
+                        {% if  eleccion.eleccion_cerrada %}
+                            <td><a class="nav-link">
+                                <i class="fas fa-chart-pie" style="color:#9E9E9E ";></i></a>
+                            </td>  
+                        {% else %}
+                            <td><a class="nav-link" href="{% url 'estadisticaseleccion' pk=eleccion.pk %}">
+                                <i class="fas fa-chart-pie"></i></a>
+                            </td>                        
+                        {% endif %}     
+
                         {% if user.is_superuser %}
-                            {% if votacion.votacion_cerrada %}
+                            {% if eleccion.eleccion_cerrada %}
                                 <td><a href="/editareleccion/{{ eleccion.procesoelectoral_ptr_id }}" class="btn btn-warning">
                                     <i class="fas fa-edit"></i></a>
                                 </td>
                             {% else %}
-                                <td> </td>
+                            <td><a class="btn btn-warning">
+                                <i class="fas fa-edit"></i></a>
+                            </td>
                             {% endif %}
                             
                             <td><a href="/eliminareleccion/{{ eleccion.procesoelectoral_ptr_id }}" class="btn btn-danger">
