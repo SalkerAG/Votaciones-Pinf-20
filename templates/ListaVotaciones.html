@@ -17,11 +17,11 @@
             <thead>
             <tr>
                 <th class="col-sm-3">Votaciones</th> 
-                <th class="col-sm-2">Estado</th>
-                <th class="col-sm-2">Resultados</th>
+                <th class="col-sm-2" style="text-align: center">Estado</th>
+                <th class="col-sm-2" style="text-align: center">Resultados</th>
                 {% if user.is_superuser %}
-                    <th class="col-sm-2">Modificar</th> 
-                    <th class="col-sm-2">Eliminar</th> 
+                    <th class="col-sm-2" style="text-align: center">Modificar</th>
+                    <th class="col-sm-2" style="text-align: center">Eliminar</th>
                 {% endif %}
             </tr>
             </thead>
@@ -33,23 +33,23 @@
                         <a class="nav-link" href="{% url 'estadisticasvotacionsimple' pk=votacion.pk %}">Resultados</a></td>
                         
                         {% if votacion.votacion_cerrada %}
-                            <td><a class="nav-link">Abierta</a></td>
+                            <td><a class="nav-link" style="text-align: center">Abierta</a></td>
                         {% else %}
-                            <td><a class="nav-link">Cerrada</a></td>
+                            <td><a class="nav-link" style="text-align: center">Cerrada</a></td>
                         {% endif %}
                         
 
-                        {% if votacion.votacion_cerrada %}
-                            <td><a class="nav-link">
+                        {% if votacion.votacion_cerrada and not votacion.es_consulta %}
+                            <td><a class="nav-link" style="text-align: center">
                                 <i class="fas fa-chart-pie" style="color:#9E9E9E ";></i></a>
                             </td>
                         {% else %}
                             {% if votacion.pregunta.tipo_votacion == "0" %}
-                                <td><a class="nav-link" href="{% url 'estadisticasvotacionsimple' pk=votacion.pk %}">
-                                    <i class="fas fa-chart-pie"></i></a> 
+                                <td style="text-align: center"><a class="nav-link" href="{% url 'estadisticasvotacionsimple' pk=votacion.pk %}">
+                                    <i class="fas fa-chart-pie"></i></a>
                                 </td>
                             {% else %}
-                                <td><a class="nav-link" href="{% url 'estadisticasvotacioncompleja' pk=votacion.pk %}">
+                                <td style="text-align: center"><a class="nav-link" href="{% url 'estadisticasvotacioncompleja' pk=votacion.pk %}">
                                     <i class="fas fa-chart-pie"></i></a> 
                                 </td>
                             {% endif %}
@@ -58,15 +58,15 @@
             
                         {% if user.is_superuser %}
                             {% if votacion.votacion_cerrada %}
-                                <td><a href="/editarvotacion/{{ votacion.procesoelectoral_ptr_id }}" class="btn btn-warning">
+                                <td style="text-align: center"><a href="/editarvotacion/{{ votacion.procesoelectoral_ptr_id }}" class="btn btn-warning">
                                     <i class="fas fa-edit"></i></a>
                                 </td>
                             {% else %}
-                                <td><a class="btn btn-warning">
+                                <td style="text-align: center"><a class="btn btn-warning">
                                     <i class="fas fa-edit"></i></a>
                                 </td>                            
                             {% endif %}
-                            <td><a href="/eliminarvotacion/{{ votacion.procesoelectoral_ptr_id }}" class="btn btn-danger">
+                            <td style="text-align: center"><a href="/eliminarvotacion/{{ votacion.procesoelectoral_ptr_id }}" class="btn btn-danger">
                                 <i class="fas fa-trash"></i></a>
                             </td>
                         {% endif %}
