@@ -99,14 +99,11 @@ class realizarVotacionComplejaForm(ModelForm):
     opcionesCompleja = forms.ModelChoiceField(qs, label='Respuesta:')
 
     class Meta:
-
         model = OpcionesCompleja
         fields = ('Pregunta', )
-
-        labels = {'opcionesCompleja': ('Respuesta') }
+        labels = {'respuestasComplejas': ('Respuesta') }
         widgets = {'Votacion': forms.Select(
             attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
-            'Votacion': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
             'Pregunta': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
             'seleccion': forms.Select(attrs={'class': 'form-control'}),
 

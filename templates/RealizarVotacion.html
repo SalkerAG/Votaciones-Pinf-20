@@ -80,11 +80,15 @@
         {#                <h1 style="text-align: center">{{ form.initial.user.id }}</h1>#}
         {#                  <h1 style="text-align: center">{{ form.initial.Eleccion.nombre }}</h1>#}
         <h1 style="text-align: center">{{ form.initial.Censo.id }}</h1>
-        <form method="post" id="realizarVotacionForm"
-              data-preguntas-url={% url 'ajax_load_preguntas' %}>
+        <form method="POST" id="realizarVotacionForm" action="">
             {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" class="btn btn-primary" value="Guardar">
+            {% for respuesta in form.initial.respuestas %}
+                <div class="list-group">
+                    <input type="submit" class="list-group-item list-group-item-action" name="respuesta" data-toggle="modal" data-target="#multiModalCenter" value="{{ respuesta.respuesta }}">
+                </div>
+            {% endfor %}
+{#            {{ form.as_p }}#}
+{#            <input type="submit" class="btn btn-primary" value="Guardar">#}
         </form>
         {#       <button id="pregunta-modal" class="create-book btn btn-primary" type="button" name="button">Crear Pregunta</button>#}
         {#    <button id="votacion-modal" class="create-book btn btn-primary" type="button" name="button">Crear Pregunta</button>#}
