@@ -1,6 +1,4 @@
 
-
-
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.core.validators import RegexValidator
 
@@ -9,8 +7,8 @@ from django.forms import forms
 from django.db import models
 
 
-istextvalidator = RegexValidator("^[a-zA-Z0]*$",
-                                     message='El Nombre/Apellidos no debe contener números',
+istextvalidator = RegexValidator("^(?=.{3,15}$)[A-ZÁÉÍÓÚ][a-zñáéíóú]+(?: [A-ZÁÉÍÓÚ][a-zñáéíóú]+)?$",
+                                     message='Nombre/Apellidos incorrectos',
                                      code='Campo invalido')
 
 
@@ -138,15 +136,17 @@ class UsuarioUca(AbstractUser):
         istextvalidator(first_name)
         istextvalidator(last_name)
 
-
-
-
-
+      
+        if nif[1] == 'u':
+            raise forms.ValidationError("Nif incorrecto")
 
         nif = nif.replace("u", "")
-        if validonifspain(nif) == True or validonifworld(nif) == True:
+        if (validonifspain(nif) == True or validonifworld(nif) == True):
+
 
             return nif
+
+
         else:
             raise forms.ValidationError("Nif incorrecto")
 
@@ -178,4 +178,3 @@ class Profesor(models.Model):
     user = models.OneToOneField(UsuarioUca, on_delete=models.PROTECT, primary_key=True)
     permanente = models.BooleanField(default=False)
     doctor = models.BooleanField(default=False)
-

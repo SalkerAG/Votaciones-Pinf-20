@@ -9,9 +9,9 @@ from .models import UsuarioUca, uvalidonifworld, uvalidonifspain, validonifspain
 from django.core.validators import RegexValidator
 
 
-istextvalidator = RegexValidator("^[a-zA-Z0]*$",
+istextvalidator = RegexValidator("^(?=.{3,15}$)[A-ZÁÉÍÓÚ][a-zñáéíóú]+(?: [A-ZÁÉÍÓÚ][a-zñáéíóú]+)?$",
                                  message='El Nombre no debe contener números',
-                                 code='Nombre/Apellido invalido')
+                                 code='Nombre/Apellidos incorrectos')
 isemailvalidator = RegexValidator("^\w+([\.-]?\w+)*@alum.uca.es",
                                   message='El email debe pertenecer al dominio de la UCA',
                                   code='Email invalido')
@@ -75,7 +75,7 @@ class createUserForm(ModelForm):
     class Meta:
         model = UsuarioUca
         fields = ['nif', 'first_name', 'last_name', 'email', 'password', 'rol']
-        labels = {'first_name': ('Nombre'), 'last_name': ('Apellido'), 'nif': ('NIF'),
+        labels = {'first_name': ('Nombre'), 'last_name': ('Apellidos'), 'nif': ('NIF'),
                   'email': ('Correo electrónico'), 'password': ('Contraseña'), 'rol': ('Rol'), }
         help_texts = {'first_name': ('Introduce un nombre valido.'), 'last_name': ('Introduce los apellidos válidos.'),
                       'nif': ('Introduce un nif válido'),
