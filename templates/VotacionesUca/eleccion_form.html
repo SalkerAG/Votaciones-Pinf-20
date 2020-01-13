@@ -15,7 +15,6 @@
 </div>
 {% else %}
 <div class="container">
-<html>
 <head>
     <!-- Movil y teclado -->
     <meta charset="utf-8">
@@ -27,7 +26,7 @@
     <title>Votaciones UCA</title>
 </head>
 
-<body>
+<div>
 
 <!-- Fin header  -->
     <div class="modal fade" tabindex="-1" role="dialog" id="modal">
@@ -42,15 +41,120 @@
         <h1 id="censo" style="margin-top: 20px"> Crear Eleccion </h1>
     </div>
 
-
-        <form method="post">{% csrf_token %}
-            {{ form.as_p }}
-            <div align="center">
-            <input type="submit" class="btn btn-primary" value="Guardar">
+    <form method="post">{% csrf_token %}
+                <div class="col-lg-10">
+                    <div class="form-check" id="CheckboxRectVotos">
+                        <!--<div class="px-5">-->
+                        <label class="form-check-label">
+                            {{form.voto_restringido}} Voto restringido
+                            <p>Sí la votación es restringida, solo se podrá votar por un determinado tiempo.</p>
+                        </label>
+                    </div>
                 </div>
-        </form>
+
+                <div class="col-lg-10">
+                    <div class="form-check" id="CheckboxRectVotos">
+                        <!--<div class="px-5">-->
+                        <label class="form-check-label">
+                            {{form.es_consulta}} ¿Es consulta?
+                            <p>Sí es una consulta, crearás una votación no vinculante entre los miembros de un colectivo.</p>
+
+                        </label>
+                    </div>
+                </div>
+                <br>
+
+
+                <!-- Elección fecha y hora para votación pública -->
+                <div class="form-group" id="BloqueVotAnticipada">
+                    <div class="form-group row px-5">
+                        <div class="col-lg-6" id="FechaInicio">
+                            <label for="FechaInicio" class="control-label">Fecha inicio:</label>
+                                <div class="input-group date">
+                                    {{form.fecha_inicio}} <!--input type="date" class="form-control inputstl" placeholder="Select Date"-->
+                                </div>
+                        </div>
+
+
+
+                        <div class="col-lg-6" id="FechaFin">
+                            <label for="FechaFin" class="control-label">Fecha fin:</label>
+                                <div class="input-group date">
+                                    {{form.fecha_fin}} <!--input type="date" class="form-control inputstl" placeholder="Select Date"-->
+                                </div>
+                        </div>
+                        </div>
+
+
+                    <div class="form-group row px-5">
+                        <div class="col-lg-6" id="HoraInicio">
+                            <label for="HoraInicio" class="control-label">Hora inicio:</label>
+                                <div class="input-group time">
+                                    {{form.hora_inicio}} <!--input type="time" class="form-control inputstl"-->
+                                </div>
+                        </div>
+
+
+
+                        <div class="col-lg-6" id="HoraFin">
+                            <label for="HoraFin" class="control-label">Hora fin:</label>
+                            <div class="input-group time">
+                                {{form.hora_fin}} <!--input type="time" class="form-control inputstl"-->
+                            </div>
+                        </div>
+                        </div>
+
+
+
+
+                <div class="form-group row px-5">
+                    <label for="form-tittle" class="col-lg-3 col-form-label">Nombre: </label>
+                    <div class="col-lg-12">
+                        {{ form.nombre }}
+                    </div>
+                </div>
+
+
+
+                <div class="form-group row px-5">
+                    <label for="form-tittle" class="col-lg-3 col-form-label">Tipo eleccion: </label>
+                    <div class="col-lg-12">
+                        {{ form.tipo_eleccion }}
+                    </div>
+                </div>
+
+
+                 <div class="form-group row px-5">
+                    <label for="form-tittle" class="col-lg-3 col-form-label">Max candidatos: </label>
+                    <div class="col-lg-12">
+                        {{ form.max_candidatos }}
+                    </div>
+                </div>
+
+                <div class="form-group row px-5">
+                    <label for="form-tittle" class="col-lg-3 col-form-label">Max vacantes: </label>
+                    <div class="col-lg-12">
+                        {{ form.max_vacantes }}
+                    </div>
+                </div>
+
+                  <!-- Fin fecha y hora votación pública -->
+                <div class="center align=">
+                    <br>
+                    <div align="center">
+                    <input type="submit" value="Guardar" class="btn btn-primary">
+                        </div>
+                </div>
+
+
+        </div>
+    </form>
+
+</div>
+</div>
+
 <!--        <button id="pregunta-modal" class="create-book btn btn-primary" type="button" name="button">Crear Pregunta</button-->
-    </div>
+
 
 <br>
 <br>
