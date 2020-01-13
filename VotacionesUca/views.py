@@ -202,7 +202,13 @@ class CrearPreguntaComplejaView(LoginRequiredMixin, FormMixin, DetailView, reque
         oc.Pregunta = self.object
 
         oc.respuesta = form.data['respuesta']
-        oc.save()
+
+
+
+        if OpcionesCompleja.objects.filter(Pregunta_id=oc.Pregunta, respuesta=oc.respuesta).count() > 0:
+            messages.error(request, "Respuesta ya introducida en la pregunta")
+        else:
+            oc.save()
 
         return HttpResponseRedirect(self.request.path_info)
 
@@ -492,11 +498,17 @@ class CrearPersona(LoginRequiredMixin, FormMixin, DetailView, request):
 
         maxcandidatos = per.Eleccion.max_candidatos
 
-        print (maxcandidatos)
 
-        if not Personas.objects.filter(Eleccion_id=per.Eleccion).count() > maxcandidatos - 1:
+
+
+        if Personas.objects.filter(Eleccion_id=per.Eleccion, nombre=per.nombre).count() > 0:
+            messages.error(request, "Nombre ya introducido en la elección")
+
+        elif not Personas.objects.filter(Eleccion_id=per.Eleccion).count() > maxcandidatos - 1:
 
             per.save()
+
+
         else:
 
             messages.error(request, "Límite de candidatos posibles superado")
