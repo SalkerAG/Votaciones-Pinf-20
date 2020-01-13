@@ -104,15 +104,12 @@
 <!-- header  -->
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <!-- Brand-->
-    <a class="navbar-brand" href=" ">
+    <a class="navbar-brand" href="{% url 'home' %}">
         <img src="{% static 'images/SenUca.png' %}" alt="" class="img-fluid" width="50" height="60">
     </a>
 
     <!-- Links -->
     <ul class="navbar-nav" style="width: 100%">
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'home' %}">Inicio</a>
-        </li>
 
         {% if not user.is_superuser %}
             <!-- Dropdown -->
