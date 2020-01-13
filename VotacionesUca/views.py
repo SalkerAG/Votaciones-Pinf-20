@@ -335,7 +335,7 @@ class EleccionView(LoginRequiredMixin, FormMixin, DetailView, request):
 
     def render_to_response(self, context, **response_kwargs):
         eleccion = Eleccion.objects.get(pk=context['eleccion'].id)
-        censoeleccion = Censo.objects.get(pk=context['eleccion'].id)
+        censoeleccion = Censo.objects.get(eleccion_id=context['eleccion'].id)
         if self.request.user not in censoeleccion.usuario.all():
             url = reverse('home')
             return HttpResponseRedirect(url)
@@ -646,17 +646,17 @@ class EstadisticasVotacionComplejaView(LoginRequiredMixin, DetailView):
 
 
 class EstadisticasEleccionView(LoginRequiredMixin, DetailView):
-    template_name = "votacionEleccionesResultados.html"
+    template_name = "votacionEleccionesResultado.html"
     model = Eleccion
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['now'] = datetime.datetime.now()
-        context['censo'] = Censo.objects.get(pk=context['eleccion'].pregunta.censo.pk)
+        context['censo'] = Censo.objects.get(eleccion_id=context['eleccion'].id)
         context['usuariosCenso'] = context['censo'].usuario.all().count()
         context['total'] = 0
         fields = {}
-        context['resultado'] = UsuarioVotacion.objects.filter(Eleccion_id=context['eleccion'].id)
+        context['resultado'] = UsuarioEleccion.objects.filter(Eleccion_id=context['eleccion'].id)
 
         for resultado in context['resultado']:
             if resultado.seleccion not in fields:
@@ -668,4 +668,5 @@ class EstadisticasEleccionView(LoginRequiredMixin, DetailView):
 
         context['fields'] = fields
         context['participacion'] = (context['total'] / context['usuariosCenso']) * 100
+        context['abstencionporcentaje'] = (context['usuariosCenso'] - context['total']) / context['usuariosCenso'] *100
         return context

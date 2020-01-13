@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth.decorators import login_required, permission_required
 
-from UsuarioUca.views import HomeView, EstadisticasEleccionView
+from UsuarioUca.views import HomeView
 from . import views
 from .views import CrearVotacionView, VotacionView, \
     CrearPregunta, CrearCensoVotacionView, CrearCensoEleccionView, CensoDetailView, CensoExportView, \
@@ -10,7 +10,7 @@ from .views import CrearVotacionView, VotacionView, \
     CrearPreguntaViewRealizarVotacion, load_preguntas, CrearPreguntaComplejaView, CrearEleccionView, ErrorVotacionView, \
     ExitoCensoVotacionView, EleccionView, CrearPersona, ListaVotacionesView, ListaEleccionesView, ListaCensosView, \
     VotacionUpdate, EleccionUpdate, CensoUpdate, EstadisticasVotacionSimpleView, EstadisticasVotacionComplejaView, \
-    ErrorVotacionRectificableView
+    ErrorVotacionRectificableView, EstadisticasEleccionView
 
 urlpatterns = [
     path('crearVotacion/', CrearVotacionView.as_view(), name="crearvotacion"),
