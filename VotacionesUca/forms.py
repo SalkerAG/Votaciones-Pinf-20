@@ -1,4 +1,4 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, Select
 from django import forms
 from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, Censo, UsuarioVotacion, OpcionesCompleja, \
     UsuarioEleccion, Personas
@@ -125,8 +125,10 @@ class EleccionForm(ProcesoElectoralForm):
 
 
 class realizarEleccionForm(ModelForm):
-    qs = Personas.objects.all().values_list('nombre', flat=True)
-    seleccion = forms.ModelChoiceField(qs, label='Seleccion:')
+    # qs = OpcionesCompleja.objects.all().values_list('respuesta', flat=True)
+    #
+    # opcionesCompleja = forms.ModelChoiceField(qs, label='Respuesta:')
+
 
     class Meta:
         model = UsuarioEleccion
@@ -135,25 +137,28 @@ class realizarEleccionForm(ModelForm):
         labels = {'user': (''), 'Eleccion': (''), }
         widgets = {'Votacion': forms.Select(
             attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
-            'Votacion': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
             'Pregunta': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
-            'seleccion': forms.Select(attrs={'class': 'form-control'}),
+            'seleccion': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
+        }
+    # def __init__(self, *args, **kwargs):
+    #     super(realizarEleccionForm, self).__init__(*args, **kwargs)
+    #
+    #     self.fields['seleccion'].queryset = Personas.objects.filter(Eleccion_id=self.Eleccion)
+
+class realizarEleccionFormGrupos(forms.ModelForm):
+    # qs = Personas.objects.filter(Eleccion_id=22)
+    # seleccion = forms.ModelMultipleChoiceField(qs, label='Seleccion:')
+    class Meta:
+        model = UsuarioEleccion
+        fields = ('seleccion', )
+        widgets = {
+            'seleccion': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
 
         }
 
-
-class realizarEleccionFormGrupos(ModelForm):
-
-    qs = Personas.objects.all().values_list('nombre', flat=True)
-    seleccion = forms.ModelMultipleChoiceField(label="Selección", widget=forms.SelectMultiple(attrs={'class': 'form-control'}),
-                                               queryset=qs)
-    # seleccion = forms.ModelChoiceField(qs, label='seleccion:')
-    class Meta:
-        model = UsuarioEleccion
-        fields = ('seleccion',)
-
-        labels = {'seleccion': ('Seleccione (con la tecla Ctrl) aquellos candidatos que desee') }
-
+    # def __init__(self, *args, **kwargs):
+    #     super(realizarEleccionFormGrupos, self).__init__(*args, **kwargs)
+    #     self.fields['seleccion'].queryset = Personas.objects.filter(Eleccion_id=self.seleccion)
 
 
 

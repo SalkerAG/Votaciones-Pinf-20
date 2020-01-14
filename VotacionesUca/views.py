@@ -2,7 +2,7 @@ from time import timezone
 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.forms import ModelForm, forms
+from django.forms import ModelForm, forms, formset_factory
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.edit import FormMixin, UpdateView
 from django.urls import reverse
@@ -324,6 +324,12 @@ class EleccionView(LoginRequiredMixin, FormMixin, DetailView, request):
 
     success_url = reverse_lazy('home')
 
+    def get_form(self, form_class=realizarEleccionForm):
+        form = super().get_form(form_class=self.form_class)
+        form.fields['seleccion'].queryset = Personas.objects.all()
+
+        return form
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
@@ -348,21 +354,34 @@ class EleccionView(LoginRequiredMixin, FormMixin, DetailView, request):
                     return HttpResponseRedirect(url)
             return super(EleccionView, self).render_to_response(context, **response_kwargs)
 
+
+
     def get_context_data(self, **kwargs):
+
+
         context = super(EleccionView, self).get_context_data(**kwargs)
         cosas = self
 
         if self.object.tipo_eleccion == '1':
+            seleccion = Personas.objects.filter(Eleccion_id=self.object.id)
 
             context['form'] = realizarEleccionForm(
-                initial={'user': self.request.user, 'Eleccion': self.object})
+                initial={'user': self.request.user, 'Eleccion': self.object, 'seleccion': seleccion})
             return context
 
         else:
-
+            seleccion = Personas.objects.filter(Eleccion_id=self.object.id)
             context['form'] = realizarEleccionFormGrupos(
-                initial={'user': self.request.user, 'Eleccion': self.object})
+                initial={'user': self.request.user, 'Eleccion': self.object, 'seleccion': seleccion})
+
             return context
+
+
+
+
+
+
+
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
