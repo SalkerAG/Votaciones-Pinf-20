@@ -143,17 +143,23 @@ class realizarEleccionForm(ModelForm):
 
 
 class realizarEleccionFormGrupos(ModelForm):
-    qs = Personas.objects.all().values_list('nombre', flat=True)
-    seleccion = forms.SelectMultiple()
 
+    qs = Personas.objects.all().values_list('nombre', flat=True)
+    seleccion = forms.ModelMultipleChoiceField(label="Selección", widget=forms.SelectMultiple(attrs={'class': 'form-control'}),
+                                               queryset=qs)
+    # seleccion = forms.ModelChoiceField(qs, label='seleccion:')
     class Meta:
         model = UsuarioEleccion
         fields = ('seleccion',)
-        labels = {'nombre': ('Seleccione (con la tecla Ctrl) aquellos candidatos que desee')}
-        widgets = {
 
-            'seleccion': forms.SelectMultiple(attrs={'class': 'form-control'}),
-        }
+        labels = {'seleccion': ('Seleccione (con la tecla Ctrl) aquellos candidatos que desee') }
+
+
+
+
+
+
+
 
 
 class PersonaForm(ModelForm):

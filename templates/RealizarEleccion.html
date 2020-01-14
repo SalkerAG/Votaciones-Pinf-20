@@ -83,7 +83,9 @@
         <form method="post" id="realizarVotacionForm"  data-preguntas-url={% url 'ajax_load_preguntas' %}>{% csrf_token %}
 
             {{ form.as_p }}
+            <div align="center">
             <input type="submit" class="btn btn-primary" value="Guardar">
+            </div>
         </form>
 {#       <button id="pregunta-modal" class="create-book btn btn-primary" type="button" name="button">Crear Pregunta</button>#}
 {#    <button id="votacion-modal" class="create-book btn btn-primary" type="button" name="button">Crear Pregunta</button>#}

@@ -380,7 +380,9 @@ class EleccionView(LoginRequiredMixin, FormMixin, DetailView, request):
         if usuario_eleccion.user not in listado_usuarios_votacion.usuario.all():
             return HttpResponseRedirect('/errorVotacion')
         else:
-            print('estoy')
+
+            pass
+
 
         # listado_usuarios = UsuarioEleccion.objects.filter(Eleccion_id=self.object.id).all()
         # listado_usuarios_votados = []
