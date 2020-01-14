@@ -688,8 +688,8 @@ class EstadisticasVotacionSimpleView(LoginRequiredMixin, DetailView):
                     context['no'] += 1
                 else:
                     context['abstencion'] += 1
-        context['participacion'] = context['total'] / context['usuariosCenso']
-        context['abstencionporcentaje'] = context['abstencion'] / context['usuariosCenso']
+        context['participacion'] = (context['total'] / context['usuariosCenso']) * 100
+        context['abstencion'] = 100 - context['participacion']
         return context
 
 
@@ -716,6 +716,7 @@ class EstadisticasVotacionComplejaView(LoginRequiredMixin, DetailView):
 
         context['fields'] = fields
         context['participacion'] = (context['total'] / context['usuariosCenso']) * 100
+        context['abstencion'] = 100 - context['participacion']
         return context
 
 

@@ -27,14 +27,17 @@
             </div>
         </div>
     </div>
-
     {% else %}
     <div class="container">
         <!-- Cabecera -->
         <br/>
         <div class="row justify-content-center">
             <div class="page-header">
-                <h1>Censo para la pregunta {{ object.pregunta.enunciado }}</h1>
+                {% if not censo.votacion_id %}
+                    <h1>Censo para  la Elección:  {{object.eleccion.nombre}}</h1>
+                {% else %}
+                    <h1>Censo para la Votación: {{object.votacion.nombre_votacion}}</h1>
+                {% endif %}
             </div>
         </div>
     </div>
