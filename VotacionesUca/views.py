@@ -231,7 +231,7 @@ class VotacionView(LoginRequiredMixin, FormMixin, DetailView, request):
 
     def render_to_response(self, context, **response_kwargs):
         votacion = Votacion.objects.get(pk=context['votacion'].id)
-        censo = Censo.objects.get(pk=context['votacion'].id)
+        censo = Censo.objects.get(votacion_id=context['votacion'].id)
         if self.request.user not in censo.usuario.all():
             url = reverse('home')
             return HttpResponseRedirect(url)
@@ -591,7 +591,7 @@ def erase_request1(request, pk):
 class EleccionUpdate(LoginRequiredMixin, UpdateView):
     model = Eleccion
     form_class = EleccionForm
-    template_name_suffix = '_update_form'
+    template_name = "VotacionesUca/eleccion_update_form.html"
 
     def get_success_url(self):
         return reverse('eleccion_edit', kwargs={'pk': self.object.pk})

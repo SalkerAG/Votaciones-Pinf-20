@@ -55,7 +55,7 @@
 
                         {% if user.is_superuser %}
                             {% if eleccion.eleccion_cerrada %}
-                                <td style="text-align: center"><a href=href="/editareleccion/{{ eleccion.procesoelectoral_ptr_id }}" class="btn btn-warning">
+                                <td style="text-align: center"><a href="{% url 'eleccion_edit' pk=eleccion.pk %}" class="btn btn-warning">
                                     <i class="fas fa-edit"></i></a>
                                 </td>
                             {% else %}
@@ -63,7 +63,7 @@
                                     <i class="fas fa-edit"></i></a>
                                 </td>                            
                             {% endif %}
-                            <td style="text-align: center"><a href="/eliminareleccion/{{ eleccion.procesoelectoral_ptr_id }}" class="btn btn-danger">
+                            <td style="text-align: center"><a href="{% url 'eliminar_eleccion' pk=eleccion.pk %}" class="btn btn-danger">
                                 <i class="fas fa-trash"></i></a>
                             </td>
                         {% endif %}
