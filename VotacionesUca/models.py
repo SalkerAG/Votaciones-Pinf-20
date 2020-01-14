@@ -28,6 +28,10 @@ class Votacion(ProcesoElectoral):
     voto_rectificable = models.BooleanField(default=False)
 
     @property
+    def espera(self):
+        return self.fecha_inicio.strftime('%Y-%m-%d')>datetime.now().strftime('%Y-%m-%d') or (self.fecha_inicio.strftime('%Y-%m-%d')==datetime.now().strftime('%Y-%m-%d') and self.hora_fin.strftime('%H:%M')<datetime.now().strftime('%H:%M'))
+
+    @property
     def votacion_cerrada(self):
         return (self.fecha_fin.strftime('%Y-%m-%d') > datetime.now().strftime('%Y-%m-%d')) or (
                 self.fecha_fin.strftime('%Y-%m-%d') == (datetime.now().strftime('%Y-%m-%d')) and (
@@ -97,6 +101,9 @@ class Eleccion(ProcesoElectoral):
                                      validators=[MinValueValidator(0.1), MaxValueValidator(0.99)])
 
 
+    @property
+    def espera(self):
+        return self.fecha_inicio.strftime('%Y-%m-%d')>datetime.now().strftime('%Y-%m-%d') or (self.fecha_inicio.strftime('%Y-%m-%d')==datetime.now().strftime('%Y-%m-%d') and self.hora_fin.strftime('%H:%M')<datetime.now().strftime('%H:%M'))
 
     @property
     def eleccion_cerrada(self):

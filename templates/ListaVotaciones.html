@@ -31,15 +31,18 @@
                     <tr>
 
 
-                        
                         {% if votacion.votacion_cerrada %}
-                            <td><a class="nav-link" href="{% url 'votacion' pk=votacion.pk %}">{{votacion.nombre_votacion}}</a></td>
-                            <td><a class="nav-link" style="text-align: center">Abierta</a></td>
+                            {% if votacion.espera %}
+                                <td><a class="nav-link" href="{% url 'listavotaciones' %}">{{votacion.nombre_votacion}}</a></td>
+                                <td><a class="nav-link" style="text-align: center" style="color:yellow;">Espera</a></td>
+                            {% else %}
+                                <td><a class="nav-link" href="{% url 'votacion' pk=votacion.pk %}">{{votacion.nombre_votacion}}</a></td>
+                                <td><a class="nav-link" style="text-align: center" style="color:green;">Abierta</a></td>
+                            {% endif %}
                         {% else %}
                             <td><a class="nav-link" href="{% url 'listavotaciones' %}">{{votacion.nombre_votacion}}</a></td>
-                            <td><a class="nav-link" style="text-align: center">Cerrada</a></td>
-                        {% endif %}
-                        
+                            <td><a class="nav-link" style="text-align: center" style="color:red;">Cerrada</a></td>
+                        {% endif %} 
 
                         {% if votacion.votacion_cerrada and not votacion.es_consulta %}
                             <td><a class="nav-link" style="text-align: center">

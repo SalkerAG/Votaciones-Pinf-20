@@ -29,13 +29,19 @@
                 {% if object_list %}
                     {% for eleccion in object_list %}
                     <tr>
-                        <td><a class="nav-link" href="{% url 'eleccion' pk=eleccion.pk %}">{{eleccion.nombre}}</a></td>
                                    
                         {% if eleccion.eleccion_cerrada %}
-                            <td><a class="nav-link">Abierta</a></td>
+                            {% if eleccion.espera %}
+                                <td><a class="nav-link" href="{% url 'listaelecciones' %}">{{eleccion.nombre}}</a></td>
+                                <td><a class="nav-link" style="text-align: center" style="color:yellow;">Espera</a></td>
+                            {% else %}
+                                <td><a class="nav-link" href="{% url 'eleccion' pk=eleccion.pk %}">{{eleccion.nombre}}</a></td>
+                                <td><a class="nav-link" style="text-align: center" style="color:green;">Abierta</a></td>
+                            {% endif %}
                         {% else %}
-                            <td><a class="nav-link">Cerrada</a></td>
-                        {% endif %}
+                            <td><a class="nav-link" href="{% url 'listaelecciones' %}">{{eleccion.nombre}}</a></td>
+                            <td><a class="nav-link" style="text-align: center" style="color:red;">Cerrada</a></td>
+                        {% endif %} 
 
                         {% if  eleccion.eleccion_cerrada %}
                             <td><a class="nav-link">
@@ -49,16 +55,15 @@
 
                         {% if user.is_superuser %}
                             {% if eleccion.eleccion_cerrada %}
-                                <td><a href="/editareleccion/{{ eleccion.procesoelectoral_ptr_id }}" class="btn btn-warning">
+                                <td style="text-align: center"><a href=href="/editareleccion/{{ eleccion.procesoelectoral_ptr_id }}" class="btn btn-warning">
                                     <i class="fas fa-edit"></i></a>
                                 </td>
                             {% else %}
-                            <td><a class="btn btn-warning">
-                                <i class="fas fa-edit"></i></a>
-                            </td>
+                                <td style="text-align: center"><a class="btn btn-secondary">
+                                    <i class="fas fa-edit"></i></a>
+                                </td>                            
                             {% endif %}
-                            
-                            <td><a href="/eliminareleccion/{{ eleccion.procesoelectoral_ptr_id }}" class="btn btn-danger">
+                            <td style="text-align: center"><a href="/eliminareleccion/{{ eleccion.procesoelectoral_ptr_id }}" class="btn btn-danger">
                                 <i class="fas fa-trash"></i></a>
                             </td>
                         {% endif %}

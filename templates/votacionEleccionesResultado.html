@@ -23,6 +23,10 @@
     <body>
 
     <!-- TITLE -->
+    {% if eleccion.eleccion_cerrada %}
+        <h1>Resultados de la eleccion no disponibles.</h1>
+    {% else %}
+
     <div class="container text-center py-5">
         <h1 class="display-12">Resultado Eleccion: {{ eleccion.nombre }} </h1>
     </div>
@@ -107,7 +111,7 @@
             </div>
         </div>
     </div>
-    </div>
+    {% endif %}
     <!--
       <div class="row center ">
       </div> -->
