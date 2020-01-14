@@ -20,7 +20,8 @@ from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, Censo, \
     UsuarioVotacion, OpcionesCompleja, UsuarioEleccion, Personas
 from .forms import VotacionForm, PreguntaForm, createCensoForm, PreguntaFormVotacion, \
     realizarVotacionForm, OpcionesComplejaForm, realizarVotacionComplejaForm, EleccionForm, realizarEleccionForm, \
-    PersonaForm, ListaVotacionForm, ListaEleccionForm, ListaCensoForm, realizarEleccionFormGrupos
+    PersonaForm, ListaVotacionForm, ListaEleccionForm, ListaCensoForm, realizarEleccionFormGrupos, \
+    EleccionCensoFormUpdate
 from django.shortcuts import render, redirect
 import datetime
 import csv
@@ -203,8 +204,6 @@ class CrearPreguntaComplejaView(LoginRequiredMixin, FormMixin, DetailView, reque
 
         oc.respuesta = form.data['respuesta']
 
-
-
         if OpcionesCompleja.objects.filter(Pregunta_id=oc.Pregunta, respuesta=oc.respuesta).count() > 0:
             messages.error(request, "Respuesta ya introducida en la pregunta")
         else:
@@ -250,7 +249,6 @@ class VotacionView(LoginRequiredMixin, FormMixin, DetailView, request):
                         url = reverse('home')
                         return HttpResponseRedirect(url)
             return super(VotacionView, self).render_to_response(context, **response_kwargs)
-
 
     def get_context_data(self, **kwargs):
         context = super(VotacionView, self).get_context_data(**kwargs)
@@ -324,7 +322,6 @@ class EleccionView(LoginRequiredMixin, FormMixin, DetailView, request):
     form_class = realizarEleccionForm
     template_name = "RealizarEleccion.html"
 
-
     success_url = reverse_lazy('home')
 
     def __init__(self, **kwargs):
@@ -347,8 +344,8 @@ class EleccionView(LoginRequiredMixin, FormMixin, DetailView, request):
                     return HttpResponseRedirect(url)
 
                 else:
-                        url = reverse('home')
-                        return HttpResponseRedirect(url)
+                    url = reverse('home')
+                    return HttpResponseRedirect(url)
             return super(EleccionView, self).render_to_response(context, **response_kwargs)
 
     def get_context_data(self, **kwargs):
@@ -367,7 +364,6 @@ class EleccionView(LoginRequiredMixin, FormMixin, DetailView, request):
                 initial={'user': self.request.user, 'Eleccion': self.object})
             return context
 
-
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
 
@@ -384,7 +380,7 @@ class EleccionView(LoginRequiredMixin, FormMixin, DetailView, request):
         if usuario_eleccion.user not in listado_usuarios_votacion.usuario.all():
             return HttpResponseRedirect('/errorVotacion')
         else:
-            print ('estoy')
+            print('estoy')
 
         # listado_usuarios = UsuarioEleccion.objects.filter(Eleccion_id=self.object.id).all()
         # listado_usuarios_votados = []
@@ -405,8 +401,6 @@ class EleccionView(LoginRequiredMixin, FormMixin, DetailView, request):
         #                     return HttpResponseRedirect(url)
         #     else:
         #         return HttpResponseRedirect('/')
-
-
 
         usuario_eleccion.save()
 
@@ -533,8 +527,7 @@ class CrearPersona(LoginRequiredMixin, FormMixin, DetailView, request):
         maxvacantes = per.Eleccion.max_vacantes
         res = int(maxvacantes * maxcandidatos)
 
-        print (res)
-
+        print(res)
 
         if Personas.objects.filter(Eleccion_id=per.Eleccion, nombre=per.nombre).count() > 0:
             messages.error(request, "Nombre ya introducido en la elección")
@@ -619,6 +612,15 @@ def erase_respuesta(request, pk):
 def erase_request2(request, pk):
     Eleccion.objects.filter(id=pk).delete()
     return redirect('listaelecciones')
+
+
+class CensoEleccionUpdate(LoginRequiredMixin, UpdateView):
+    model = Censo
+    form_class = EleccionCensoFormUpdate
+    template_name_suffix = '_eleccion_update_form'
+
+    def get_success_url(self):
+        return reverse('censo_eleccion_update', kwargs={'pk': self.object.pk})
 
 
 class CensoUpdate(LoginRequiredMixin, UpdateView):
@@ -712,5 +714,5 @@ class EstadisticasEleccionView(LoginRequiredMixin, DetailView):
 
         context['fields'] = fields
         context['participacion'] = (context['total'] / context['usuariosCenso']) * 100
-        context['abstencionporcentaje'] = (context['usuariosCenso'] - context['total']) / context['usuariosCenso'] *100
+        context['abstencionporcentaje'] = (context['usuariosCenso'] - context['total']) / context['usuariosCenso'] * 100
         return context

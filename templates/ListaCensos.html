@@ -13,45 +13,54 @@
         <br/>
 
         <!-- Tabla -->
-        <table id="dtVotaciones" class="table table-responsive table-hover-condensed text center" align="center" cellspacing="0" width="100%">
+        <table id="dtVotaciones" class="table table-responsive table-hover-condensed text center" align="center"
+               cellspacing="0" width="100%">
             <thead>
             <tr>
                 <th class="col-sm-3">Censos</th>
                 <th class="col-sm-3">Tipo</th>
 
                 {% if user.is_superuser %}
-                    <th class="col-sm-2">Modificar</th> 
-                    <th class="col-sm-2">Eliminar</th> 
+                    <th class="col-sm-2">Modificar</th>
+                    <th class="col-sm-2">Eliminar</th>
                 {% endif %}
             </tr>
             </thead>
             <tbody>
-                {% if object_list %}
-                    {% for censo in object_list %}
+            {% if object_list %}
+                {% for censo in object_list %}
                     <tr>
 
-                            {% if not censo.votacion_id %}
-                                <td><a class="nav-link" href="{% url 'censo-detail' pk=censo.pk %}">{{censo.eleccion}}</a></td>
-                                <td><a class="nav-link">Elección</a></td>
-                            {% else %}
-                                <td><a class="nav-link" href="{% url 'censo-detail' pk=censo.pk %}">{{censo.votacion}}</a></td>
-                                <td><a class="nav-link">Votación</a></td>
-                            {% endif %}
-                                
+                        {% if not censo.votacion_id %}
+                            <td><a class="nav-link" href="{% url 'censo-detail' pk=censo.pk %}">{{ censo.eleccion }}</a>
+                            </td>
+                            <td><a class="nav-link">Elección</a></td>
+                        {% else %}
+                            <td><a class="nav-link" href="{% url 'censo-detail' pk=censo.pk %}">{{ censo.votacion }}</a>
+                            </td>
+                            <td><a class="nav-link">Votación</a></td>
+                        {% endif %}
+
 
                         {% if user.is_superuser %}
-                            <td><a href="/editarcenso/{{ censo.id }}" class="btn btn-warning">
-                                <i class="fas fa-edit"></i></a>
-                            </td>
+                            {% if censo.votacion_id == None %}
+                                <td><a href='{% url 'censo_eleccion_update' pk=censo.id %}' class="btn btn-warning">
+                                    <i class="fas fa-edit"></i></a>
+                                </td>
+                            {% else %}
+                                <td><a href='{% url 'censo_edit' pk=censo.id %}' class="btn btn-warning">
+                                    <i class="fas fa-edit"></i></a>
+                                </td>
+                            {% endif %}
                             <td><a href="/eliminarcenso/{{ censo.id }}" class="btn btn-danger">
                                 <i class="fas fa-trash"></i></a>
                             </td>
                         {% endif %}
                     </tr>
-                    {% endfor %}
-                {% else %}
-                    <h1>No hay votaciones disponibles</h1>
-                {% endif %}
+                {% endfor %}
+            {% else %}
+                <h1>No hay votaciones disponibles</h1>
+            {% endif %}
             </tbody>
         </table>
 

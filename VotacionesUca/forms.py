@@ -1,15 +1,8 @@
-
 from django.forms import ModelForm
-from django.core.exceptions import ValidationError
 from django import forms
-from django.utils import timezone
-from datetime import datetime
 from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, Censo, UsuarioVotacion, OpcionesCompleja, \
     UsuarioEleccion, Personas
 from bootstrap_modal_forms.forms import BSModalForm
-
-
-
 
 
 class ProcesoElectoralForm(forms.ModelForm):
@@ -27,21 +20,16 @@ class ProcesoElectoralForm(forms.ModelForm):
         fields = ('__all__')
 
 
-class OpcionesSimpleForm(forms.ModelForm):
-    pass
-
-
 class OpcionesComplejaForm(forms.ModelForm):
     class Meta:
         model = OpcionesCompleja
-        fields = ('respuesta', )
+        fields = ('respuesta',)
         labels = {'respuesta': ('Respuesta')}
         help_texts = {'respuesta': (
             'Añada las respuestas que perteneceran a las opciones disponibles de la votación'),
         }
         widgets = {'respuesta': forms.TextInput(attrs={'class': 'form-control'}),
                    }
-
 
 
 class VotacionForm(ProcesoElectoralForm):
@@ -54,8 +42,6 @@ class VotacionForm(ProcesoElectoralForm):
     class Meta:
         model = Votacion
         fields = ('__all__')
-
-
 
 
 class createCensoForm(ModelForm):
@@ -77,7 +63,8 @@ class realizarVotacionForm(ModelForm):
     # usuario = models.ForeignKey("auth.User", blank=True)
     CHOICES = (('Si', 'Si'), ('No', 'No'), ('Abstención', 'Abstención'))
     seleccion = forms.ChoiceField(choices=CHOICES)
-    #seleccion = forms.ChoiceField(label='', choices=CHOICES, widget=forms.Select(attrs={'class':'regDropDown'}))
+
+    # seleccion = forms.ChoiceField(label='', choices=CHOICES, widget=forms.Select(attrs={'class':'regDropDown'}))
 
     class Meta:
         model = UsuarioVotacion
@@ -91,17 +78,15 @@ class realizarVotacionForm(ModelForm):
         }
 
 
-
 class realizarVotacionComplejaForm(ModelForm):
-
     qs = OpcionesCompleja.objects.all().values_list('respuesta', flat=True)
 
     opcionesCompleja = forms.ModelChoiceField(qs, label='Respuesta:')
 
     class Meta:
         model = OpcionesCompleja
-        fields = ('Pregunta', )
-        labels = {'respuestasComplejas': ('Respuesta') }
+        fields = ('Pregunta',)
+        labels = {'respuestasComplejas': ('Respuesta')}
         widgets = {'Votacion': forms.Select(
             attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
             'Pregunta': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
@@ -110,12 +95,10 @@ class realizarVotacionComplejaForm(ModelForm):
         }
 
 
-
 class PreguntaForm(BSModalForm):
     class Meta:
         model = Votacion
         fields = ('__all__')
-
 
 
 class PreguntaFormVotacion(ModelForm):
@@ -125,20 +108,20 @@ class PreguntaFormVotacion(ModelForm):
         labels = {'Votacion': (''), 'enunciado': ('Enunciado'), }
         widgets = {'Votacion': forms.Select(
             attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
-            'Votacion': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
             'Pregunta': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control', 'hidden': 'hidden', }),
             'seleccion': forms.Select(attrs={'class': 'form-control'}),
         }
 
+
 class EleccionForm(ProcesoElectoralForm):
-    nombre= forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Título de la elección'}))
-    max_vacantes= forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Rellenar con un valor 0 a 1, válido solo para Grupos. Ej: 0.7'}))
+    nombre = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Título de la elección'}))
+    max_vacantes = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control',
+                                                                 'placeholder': 'Rellenar con un valor 0 a 1, válido solo para Grupos. Ej: 0.7'}))
 
     class Meta:
         model = Eleccion
         fields = '__all__'
-
-
 
 
 class realizarEleccionForm(ModelForm):
@@ -158,6 +141,7 @@ class realizarEleccionForm(ModelForm):
 
         }
 
+
 class realizarEleccionFormGrupos(ModelForm):
     qs = Personas.objects.all().values_list('nombre', flat=True)
     seleccion = forms.SelectMultiple()
@@ -165,21 +149,20 @@ class realizarEleccionFormGrupos(ModelForm):
     class Meta:
         model = UsuarioEleccion
         fields = ('seleccion',)
-        labels = {'nombre': ('Seleccione (con la tecla Ctrl) aquellos candidatos que desee') }
+        labels = {'nombre': ('Seleccione (con la tecla Ctrl) aquellos candidatos que desee')}
         widgets = {
-         
+
             'seleccion': forms.SelectMultiple(attrs={'class': 'form-control'}),
         }
 
 
-
 class PersonaForm(ModelForm):
-
     class Meta:
         model = Personas
         fields = ('nombre',)
         labels = {'nombre': ('Nombre del candidato')}
-        help_texts = {'nombre': ('Añada uno por uno el nombre de los candidatos a la elección que se muestra en la parte superior')}
+        help_texts = {'nombre': (
+            'Añada uno por uno el nombre de los candidatos a la elección que se muestra en la parte superior')}
         widgets = {'nombre': forms.TextInput(
             attrs={'class': 'form-control', }),
         }
@@ -190,14 +173,21 @@ class ListaVotacionForm(ModelForm):
         model = Votacion
         fields = ('__all__')
 
+
 class ListaEleccionForm(ModelForm):
     class Meta:
         model = Eleccion
         fields = ('__all__')
+
 
 class ListaCensoForm(ModelForm):
     class Meta:
         model = Censo
         fields = ('__all__')
 
+
+class EleccionCensoFormUpdate(ModelForm):
+    class Meta:
+        model = Censo
+        fields = ('__all__')
 

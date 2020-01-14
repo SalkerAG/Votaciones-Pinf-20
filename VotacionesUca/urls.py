@@ -10,7 +10,7 @@ from .views import CrearVotacionView, VotacionView, \
     CrearPreguntaViewRealizarVotacion, load_preguntas, CrearPreguntaComplejaView, CrearEleccionView, ErrorVotacionView, \
     ExitoCensoVotacionView, EleccionView, CrearPersona, ListaVotacionesView, ListaEleccionesView, ListaCensosView, \
     VotacionUpdate, EleccionUpdate, CensoUpdate, EstadisticasVotacionSimpleView, EstadisticasVotacionComplejaView, \
-    ErrorVotacionRectificableView, EstadisticasEleccionView
+    ErrorVotacionRectificableView, EstadisticasEleccionView, CensoEleccionUpdate
 
 urlpatterns = [
     path('crearVotacion/', CrearVotacionView.as_view(), name="crearvotacion"),
@@ -29,7 +29,7 @@ urlpatterns = [
     path('realizarvotacion/<int:pk>', VotacionView.as_view(), name='realizarvotacion'),
     path('', login_required(HomeView.as_view()), name="home"),
     path('ajax/load-preguntas/', load_preguntas, name='ajax_load_preguntas'),
-
+    path('editarCensoEleccion/<int:pk>', CensoEleccionUpdate.as_view(), name='censo_eleccion_update'),
     path('errorVotacion/', ErrorVotacionView.as_view(), name='errorvotacion'),
     path('exitocensovotacion/', ExitoCensoVotacionView.as_view(), name='exitocensovotacion'),
     path('crearpersona/<slug:pk>', CrearPersona.as_view(), name="crearpersona"),
@@ -44,8 +44,10 @@ urlpatterns = [
     path('eliminarcenso/<int:pk>', views.erase_request3, name="eliminar_censo"),
     path('eliminarpersona/<int:pk>', views.erase_persona, name="eliminar_persona"),
     path('eliminarrespuesta/<int:pk>', views.erase_respuesta, name="eliminar_respuesta"),
-    path('estadisticasVotacionSimple/<int:pk>', EstadisticasVotacionSimpleView.as_view(), name="estadisticasvotacionsimple"),
-    path('estadisticasVotacionCompleja/<int:pk>', EstadisticasVotacionComplejaView.as_view(), name="estadisticasvotacioncompleja"),
+    path('estadisticasVotacionSimple/<int:pk>', EstadisticasVotacionSimpleView.as_view(),
+         name="estadisticasvotacionsimple"),
+    path('estadisticasVotacionCompleja/<int:pk>', EstadisticasVotacionComplejaView.as_view(),
+         name="estadisticasvotacioncompleja"),
     path('estadisticasEleccion/<int:pk>', EstadisticasEleccionView.as_view(), name="estadisticaseleccion"),
     path('errorVotacionRectificable/', ErrorVotacionRectificableView.as_view(), name="errorvotacionrectificable"),
     # path('creargrupo/', CrearPersonaGrupo.as_view(), name="crearpersonagrupo"),
