@@ -439,6 +439,18 @@ class ListaVotacionesView(LoginRequiredMixin, ListView):
     paginate_by = 100  # if pagination is desired
     template_name = "ListaVotaciones.html"
 
+    def get_queryset(self):
+        votaciones_user = []
+        if not self.request.user.is_superuser:
+            censos_user = Censo.objects.filter(usuario=self.request.user).values_list('votacion_id', flat=True)
+            if Censo.objects.filter(usuario=self.request.user).exists():
+                votaciones_user = Votacion.objects.filter(id__in=censos_user)
+            else:
+                Votacion.objects.none()
+            return votaciones_user
+        else:
+            return Votacion.objects.filter()
+
     def get_success_url(self):
         return reverse('votacion', kwargs={"pk": self.object.pk})
 
