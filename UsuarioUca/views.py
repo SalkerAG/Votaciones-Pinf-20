@@ -1,5 +1,6 @@
 from datetime import datetime
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Avg
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect
@@ -20,7 +21,7 @@ from UsuarioUca.models import UsuarioUca, Estudiante, Profesor, PASS
 from import_export import resources, fields
 from django.contrib import messages
 
-from VotacionesUca.models import Votacion, Eleccion
+from VotacionesUca.models import Votacion, Eleccion, Censo
 
 
 def my_view(request):
@@ -139,15 +140,17 @@ class HomeView(LoginRequiredMixin, ListView):
     model = Votacion
 
     def get_context_data(self, **kwargs):
+        censos_id = Censo.objects.filter(usuario=self.request.user).values_list('eleccion_id', flat=True)
         context = super(HomeView, self).get_context_data(**kwargs)
         context.update({
-            'eleccion_list': Eleccion.objects.order_by('nombre'),
-            'more_context': Eleccion.objects.all(),
+            'eleccion_list': Eleccion.objects.filter(id__in=censos_id),
+            'more_context': Eleccion.objects.filter(id__in=censos_id),
         })
         return context
 
     def get_queryset(self):
-        return Votacion.objects.order_by('nombre_votacion')
+        censos_id = Censo.objects.filter(usuario=self.request.user).values_list('votacion_id', flat=True)
+        return Votacion.objects.filter(id__in=censos_id)
     
 
 class CrearVotacionView(LoginRequiredMixin, TemplateView):
