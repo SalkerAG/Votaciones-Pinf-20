@@ -158,6 +158,20 @@ class realizarEleccionForm(ModelForm):
 
         }
 
+class realizarEleccionFormGrupos(ModelForm):
+    qs = Personas.objects.all().values_list('nombre', flat=True)
+    seleccion = forms.SelectMultiple()
+
+    class Meta:
+        model = UsuarioEleccion
+        fields = ('seleccion',)
+        labels = {'nombre': ('Seleccione (con la tecla Ctrl) aquellos candidatos que desee') }
+        widgets = {
+         
+            'seleccion': forms.SelectMultiple(attrs={'class': 'form-control'}),
+        }
+
+
 
 class PersonaForm(ModelForm):
 
@@ -185,3 +199,5 @@ class ListaCensoForm(ModelForm):
     class Meta:
         model = Censo
         fields = ('__all__')
+
+

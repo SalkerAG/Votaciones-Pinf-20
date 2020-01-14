@@ -20,7 +20,7 @@ from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, Censo, \
     UsuarioVotacion, OpcionesCompleja, UsuarioEleccion, Personas
 from .forms import VotacionForm, PreguntaForm, createCensoForm, PreguntaFormVotacion, \
     realizarVotacionForm, OpcionesComplejaForm, realizarVotacionComplejaForm, EleccionForm, realizarEleccionForm, \
-    PersonaForm, ListaVotacionForm, ListaEleccionForm, ListaCensoForm
+    PersonaForm, ListaVotacionForm, ListaEleccionForm, ListaCensoForm, realizarEleccionFormGrupos
 from django.shortcuts import render, redirect
 import datetime
 import csv
@@ -355,9 +355,18 @@ class EleccionView(LoginRequiredMixin, FormMixin, DetailView, request):
         context = super(EleccionView, self).get_context_data(**kwargs)
         cosas = self
 
-        context['form'] = realizarEleccionForm(
-            initial={'user': self.request.user, 'Eleccion': self.object})
-        return context
+        if self.object.tipo_eleccion == '1':
+
+            context['form'] = realizarEleccionForm(
+                initial={'user': self.request.user, 'Eleccion': self.object})
+            return context
+
+        else:
+
+            context['form'] = realizarEleccionFormGrupos(
+                initial={'user': self.request.user, 'Eleccion': self.object})
+            return context
+
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -497,8 +506,10 @@ class CrearPersona(LoginRequiredMixin, FormMixin, DetailView, request):
         per.nombre = form.data['nombre']
 
         maxcandidatos = per.Eleccion.max_candidatos
+        maxvacantes = per.Eleccion.max_vacantes
+        res = int(maxvacantes * maxcandidatos)
 
-
+        print (res)
 
 
         if Personas.objects.filter(Eleccion_id=per.Eleccion, nombre=per.nombre).count() > 0:
@@ -512,6 +523,15 @@ class CrearPersona(LoginRequiredMixin, FormMixin, DetailView, request):
         else:
 
             messages.error(request, "Límite de candidatos posibles superado")
+
+        if per.Eleccion.tipo_eleccion == '0':
+
+            contador = (Personas.objects.filter(Eleccion_id=per.Eleccion_id).count())
+            if contador > res:
+                messages.error(request, "Límite de candidatos del grupo superado")
+
+            else:
+                per.save()
 
         return HttpResponseRedirect(self.request.path_info)
 
