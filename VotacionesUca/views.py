@@ -21,7 +21,7 @@ from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, Censo, \
 from .forms import VotacionForm, PreguntaForm, createCensoForm, PreguntaFormVotacion, \
     realizarVotacionForm, OpcionesComplejaForm, realizarVotacionComplejaForm, EleccionForm, realizarEleccionForm, \
     PersonaForm, ListaVotacionForm, ListaEleccionForm, ListaCensoForm, realizarEleccionFormGrupos, \
-    EleccionCensoFormUpdate
+    EleccionCensoFormUpdate, EleccionUpdateForm
 from django.shortcuts import render, redirect
 import datetime
 import csv
@@ -590,8 +590,8 @@ def erase_request1(request, pk):
 
 class EleccionUpdate(LoginRequiredMixin, UpdateView):
     model = Eleccion
-    form_class = EleccionForm
-    template_name = "VotacionesUca/eleccion_update_form.html"
+    form_class = EleccionUpdateForm
+    template_name_suffix = '_update_form'
 
     def get_success_url(self):
         return reverse('eleccion_edit', kwargs={'pk': self.object.pk})

@@ -114,14 +114,25 @@ class PreguntaFormVotacion(ModelForm):
 
 
 class EleccionForm(ProcesoElectoralForm):
+    voto_restringido = forms.BooleanField(required=False)
     nombre = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Título de la elección'}))
-    max_vacantes = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                 'placeholder': 'Rellenar con un valor 0 a 1, válido solo para Grupos. Ej: 0.7'}))
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Título de la elección'}), required=True)
+    es_presencial = forms.BooleanField(required=False)
+    voto_rectificable = forms.BooleanField(required=False)
 
     class Meta:
         model = Eleccion
         fields = '__all__'
+
+class EleccionUpdateForm(ProcesoElectoralForm):
+    voto_restringido = forms.BooleanField(required=False)
+    es_consulta = forms.BooleanField(required=False)
+    nombre = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Título de la elección'}), required=True)
+
+    class Meta:
+        model = Eleccion
+        fields = ('nombre','voto_restringido', 'es_consulta', 'fecha_inicio', 'fecha_fin', 'hora_inicio', 'hora_fin')
 
 
 class realizarEleccionForm(ModelForm):

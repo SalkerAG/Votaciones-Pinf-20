@@ -45,7 +45,7 @@
                                     <form method="post">{% csrf_token %}
                                         {{ form.usuario }}
                                         <p style="color:#9E9E9E ";>Elige los usuarios que pertenecen al censo. Recuerda que serán los usuarios que tendrán acceso a la votación.</p>
-                                        <p style="color:#9E9E9E ";>Votación: {{ form.votacion }}</p>
+                                        <p style="color:#9E9E9E ";>Elección: {{ form.eleccion }}</p>
                                         <div style="text-align: center">
 
                                             <button href="/listacensos" type="submit" class="btn btn-primary">Actualizar</button>
