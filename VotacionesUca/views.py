@@ -21,7 +21,7 @@ from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, Censo, \
 from .forms import VotacionForm, PreguntaForm, createCensoForm, PreguntaFormVotacion, \
     realizarVotacionForm, OpcionesComplejaForm, realizarVotacionComplejaForm, EleccionForm, realizarEleccionForm, \
     PersonaForm, ListaVotacionForm, ListaEleccionForm, ListaCensoForm, realizarEleccionFormGrupos, \
-    EleccionCensoFormUpdate
+    EleccionCensoFormUpdate, EleccionUpdateForm
 from django.shortcuts import render, redirect
 import datetime
 import csv
@@ -231,7 +231,11 @@ class VotacionView(LoginRequiredMixin, FormMixin, DetailView, request):
 
     def render_to_response(self, context, **response_kwargs):
         votacion = Votacion.objects.get(pk=context['votacion'].id)
-        censo = Censo.objects.get(votacion_id=context['votacion'].id)
+        if Censo.objects.filter(votacion_id=context['votacion'].id).exists():
+            censo = Censo.objects.get(votacion_id=context['votacion'].id)
+        else:
+            url = reverse('home')
+            return HttpResponseRedirect(url)
         if self.request.user not in censo.usuario.all():
             url = reverse('home')
             return HttpResponseRedirect(url)
@@ -338,7 +342,11 @@ class EleccionView(LoginRequiredMixin, FormMixin, DetailView, request):
 
     def render_to_response(self, context, **response_kwargs):
         eleccion = Eleccion.objects.get(pk=context['eleccion'].id)
-        censoeleccion = Censo.objects.get(eleccion_id=context['eleccion'].id)
+        if Censo.objects.filter(eleccion_id=context['eleccion'].id).exists():
+            censoeleccion = Censo.objects.get(eleccion_id=context['eleccion'].id)
+        else:
+            url = reverse('home')
+            return HttpResponseRedirect(url)
         if self.request.user not in censoeleccion.usuario.all():
             url = reverse('home')
             return HttpResponseRedirect(url)
@@ -401,7 +409,6 @@ class EleccionView(LoginRequiredMixin, FormMixin, DetailView, request):
         else:
 
             pass
-
 
         # listado_usuarios = UsuarioEleccion.objects.filter(Eleccion_id=self.object.id).all()
         # listado_usuarios_votados = []
@@ -609,8 +616,8 @@ def erase_request1(request, pk):
 
 class EleccionUpdate(LoginRequiredMixin, UpdateView):
     model = Eleccion
-    form_class = EleccionForm
-    template_name = "VotacionesUca/eleccion_update_form.html"
+    form_class = EleccionUpdateForm
+    template_name_suffix = '_update_form'
 
     def get_success_url(self):
         return reverse('eleccion_edit', kwargs={'pk': self.object.pk})
