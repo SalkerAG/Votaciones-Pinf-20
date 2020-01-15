@@ -379,8 +379,7 @@ class EleccionView(LoginRequiredMixin, FormMixin, DetailView, request):
 
         else:
             seleccion = Personas.objects.filter(Eleccion_id=self.object.id)
-            context['form'] = realizarEleccionFormGrupos(
-                initial={'user': self.request.user, 'Eleccion': self.object, 'seleccion': seleccion})
+            context['form'] = realizarEleccionFormGrupos(id=self.object.id)
 
             return context
 
@@ -402,7 +401,7 @@ class EleccionView(LoginRequiredMixin, FormMixin, DetailView, request):
         usuario_eleccion.user = self.request.user
         usuario_eleccion.Eleccion = self.object
 
-        usuario_eleccion.seleccion = form.data['seleccion']
+        usuario_eleccion.seleccion = request.POST.getlist('seleccion')
 
         if usuario_eleccion.user not in listado_usuarios_votacion.usuario.all():
             return HttpResponseRedirect('/errorVotacion')

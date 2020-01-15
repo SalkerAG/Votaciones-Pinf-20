@@ -157,8 +157,12 @@ class realizarEleccionForm(ModelForm):
     #     self.fields['seleccion'].queryset = Personas.objects.filter(Eleccion_id=self.Eleccion)
 
 class realizarEleccionFormGrupos(forms.ModelForm):
-    # qs = Personas.objects.filter(Eleccion_id=22)
-    # seleccion = forms.ModelMultipleChoiceField(qs, label='Seleccion:')
+    seleccion = forms.ModelMultipleChoiceField(queryset=None, widget=forms.CheckboxSelectMultiple)
+    def __init__(self, id, *args, **kwargs):
+        super(realizarEleccionFormGrupos, self).__init__(*args, **kwargs)
+        qs = Personas.objects.filter(Eleccion_id=id).values_list('nombre', flat=True)
+        self.fields['seleccion'].queryset = qs
+
     class Meta:
         model = UsuarioEleccion
         fields = ('seleccion', )
