@@ -21,8 +21,7 @@
 
             <!-- Bootstrap CSS -->
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-            <link rel="stylesheet"
-                  href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 
             <title>Crear Votación UCA</title>
         </head>
@@ -31,25 +30,17 @@
             <!-- Cabecera -->
             <br>
             <div class="row justify-content-center">
-                <div class="page-header"><h1>Crear Pregunta </h1></div>
+                <div class="page-header"><h1>Crear Pregunta</h1></div>
             </div>
             <!--Formulario-->
             <form method="post">{% csrf_token %}
                 <div class="form-group">
               <h1 style="text-align: center">Votación: {{ form.initial.Votacion.nombre_votacion }}</h1>
                     <div class="col-lg-12">
-                                        {{ form.as_p }}
+                        {{ form.as_p }}
                     </div>
                 </div>
                 <br>
-                <div class="form-group">
-
-                    <div class="col-lg-12">
-
-                    </div>
-                </div>
-                <br>
-
 
                 <br>
                 <div class="submit-row">
@@ -89,9 +80,5 @@
                 });
             });
         </script>
-
         </body>
-
-        </html>
-
-
+</html>

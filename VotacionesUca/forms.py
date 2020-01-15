@@ -102,6 +102,9 @@ class PreguntaForm(BSModalForm):
 
 
 class PreguntaFormVotacion(ModelForm):
+    enunciado = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Título del enunciado'}), required=True)
+
     class Meta:
         model = Pregunta
         fields = 'Votacion', 'tipo_votacion', 'enunciado',
@@ -123,6 +126,7 @@ class EleccionForm(ProcesoElectoralForm):
     class Meta:
         model = Eleccion
         fields = '__all__'
+
 
 class EleccionUpdateForm(ProcesoElectoralForm):
     voto_restringido = forms.BooleanField(required=False)
@@ -156,6 +160,7 @@ class realizarEleccionForm(ModelForm):
     #
     #     self.fields['seleccion'].queryset = Personas.objects.filter(Eleccion_id=self.Eleccion)
 
+
 class realizarEleccionFormGrupos(forms.ModelForm):
     seleccion = forms.ModelMultipleChoiceField(queryset=None, widget=forms.CheckboxSelectMultiple)
     def __init__(self, id, *args, **kwargs):
@@ -174,12 +179,6 @@ class realizarEleccionFormGrupos(forms.ModelForm):
     # def __init__(self, *args, **kwargs):
     #     super(realizarEleccionFormGrupos, self).__init__(*args, **kwargs)
     #     self.fields['seleccion'].queryset = Personas.objects.filter(Eleccion_id=self.seleccion)
-
-
-
-
-
-
 
 
 class PersonaForm(ModelForm):
