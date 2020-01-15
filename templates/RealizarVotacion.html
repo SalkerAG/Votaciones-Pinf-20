@@ -50,6 +50,13 @@
 
 <!-- Fin header  -->
 {% block content %}
+    {% if votacion.voto_restringido %}
+        <script type="text/javascript">
+            setTimeout(function() {
+                window.location.href = "{% url 'home' %}";
+            }, 20000);
+        </script>
+    {% endif %}
     <div class="modal fade" tabindex="-1" role="dialog" id="modal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
