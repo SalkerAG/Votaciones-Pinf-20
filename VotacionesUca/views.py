@@ -273,7 +273,7 @@ class VotacionView(LoginRequiredMixin, FormMixin, DetailView, request):
         self.object = self.get_object()
 
         form = self.get_form()
-        usuario_eleccion = UsuarioVotacion()
+        usuario_eleccion = Usuario()
         listado_usuarios_votacion = Censo.objects.get(votacion_id=self.object.id)
         usuario_eleccion.user = self.request.user
         usuario_eleccion.Votacion = self.object
@@ -343,11 +343,11 @@ class EleccionView(LoginRequiredMixin, FormMixin, DetailView, request):
     def render_to_response(self, context, **response_kwargs):
         eleccion = Eleccion.objects.get(pk=context['eleccion'].id)
         if Censo.objects.filter(eleccion_id=context['eleccion'].id).exists():
-            censoeleccion = Censo.objects.get(eleccion_id=context['eleccion'].id)
+            censo = Censo.objects.get(eleccion_id=context['eleccion'].id)
         else:
             url = reverse('home')
             return HttpResponseRedirect(url)
-        if self.request.user not in censoeleccion.usuario.all():
+        if self.request.user not in censo.usuario.all():
             url = reverse('home')
             return HttpResponseRedirect(url)
         else:
@@ -384,50 +384,18 @@ class EleccionView(LoginRequiredMixin, FormMixin, DetailView, request):
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
-
         form = self.get_form()
         usuario_eleccion = UsuarioEleccion()
-
-        listado_usuarios_votacion = Censo.objects.get(eleccion_id=self.object.id)
-
+        listado_usuarios_eleccion = Censo.objects.get(eleccion_id=self.object.id)
         usuario_eleccion.user = self.request.user
         usuario_eleccion.Eleccion = self.object
-
-        usuario_eleccion.seleccion = request.POST.getlist('seleccion')
-
-        if usuario_eleccion.user not in listado_usuarios_votacion.usuario.all():
-            return HttpResponseRedirect('/errorVotacion')
-        else:
-
-            pass
-
-        # listado_usuarios = UsuarioEleccion.objects.filter(Eleccion_id=self.object.id).all()
-        # listado_usuarios_votados = []
-        # for user in listado_usuarios:
-        #     listado_usuarios_votados.append(user.user)
-        #     if usuario_eleccion.user in listado_usuarios_votados:
-        #         if self.object.es_consulta == True:
-        #
-        #             url = reverse('estadisticaseleccion', kwargs={"pk": self.object.pk})
-        #             return HttpResponseRedirect(url)
-        #
-        #         elif self.object.es_consulta == False:
-        #             return HttpResponseRedirect('/errorVotacionRectificable')
-        #         else:
-        #             usuario_eleccion.save()
-        #             if usuario_eleccion.Eleccion.es_consulta:
-        #                     url = reverse('estadisticasvotacioncompleja', kwargs={'pk': usuario_eleccion.Votacion.id})
-        #                     return HttpResponseRedirect(url)
-        #     else:
-        #         return HttpResponseRedirect('/')
-
-        usuario_eleccion.save()
+        usuario_eleccion.seleccion = self.request.seleccion)
 
         qss = Censo.objects.all().values_list('usuario', flat=True)
 
         if qss.filter(usuario=self.request.user).exists():
-
             usuario_eleccion.save()
+
         else:
             return HttpResponseRedirect('/')
         return HttpResponseRedirect('/')
@@ -554,7 +522,6 @@ class CrearPersona(LoginRequiredMixin, FormMixin, DetailView, request):
         elif not Personas.objects.filter(Eleccion_id=per.Eleccion).count() > maxcandidatos - 1:
 
             per.save()
-
 
         else:
 
