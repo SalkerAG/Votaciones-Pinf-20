@@ -659,6 +659,22 @@ class EstadisticasVotacionSimpleView(LoginRequiredMixin, DetailView):
         context['abstencion'] = 100 - context['participacion']
         return context
 
+    def render_to_response(self, context, **response_kwargs):
+        votacion = Votacion.objects.get(pk=context['votacion'].id)
+        if Censo.objects.filter(votacion_id=context['votacion'].id).exists():
+            censo = Censo.objects.get(votacion_id=context['votacion'].id)
+        else:
+            url = reverse('home')
+            return HttpResponseRedirect(url)
+        if self.request.user not in censo.usuario.all():
+            url = reverse('home')
+            return HttpResponseRedirect(url)
+        else:
+            if UsuarioVotacion.objects.filter(user_id=self.request.user.id, Votacion_id=votacion.id).exists():
+                url = reverse('estadisticasvotacionsimple', kwargs={'pk': votacion.id})
+                return HttpResponseRedirect(url)
+            return super(VotacionView, self).render_to_response(context, **response_kwargs)
+
 
 class EstadisticasVotacionComplejaView(LoginRequiredMixin, DetailView):
     template_name = "votacionComplejaResultados.html"
