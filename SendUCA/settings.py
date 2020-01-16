@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import dj_database_url
+from decouple import config
 
 # import django_heroku
 
@@ -24,10 +26,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 's9np$rz@23gp$cy8hw@oe@=hkt0ue^tm2!5kidouf4et34nnrw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 LOGIN_REDIRECT_URL = ''
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'pinfvot.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'pinfvot.herokuapp.com', '*']
 
 # Application definition
 
@@ -55,7 +57,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 ROOT_URLCONF = 'SendUCA.urls'
 
@@ -80,15 +85,11 @@ WSGI_APPLICATION = 'SendUCA.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+
 DATABASES = {
-    'default': {
-        'ENGINE':   'django.db.backends.postgresql_psycopg2',
-        'NAME':     'd1huca2tradkso',
-        'USER':     'gythreavpmpwmn',
-        'PASSWORD': '710119e0d6b55180fed34d0a7f3f5cf135b8e1e52cf0534ebfe52a0f6407abd7',
-        'HOST':     'ec2-54-75-249-16.eu-west-1.compute.amazonaws.com',
-        'PORT':     '5432',
-    }
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL')
+    )
 }
 
 
@@ -132,8 +133,9 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static/'),
+    os.path.join(BASE_DIR, 'static'),
 )
+
 STATIC_URL = '/static/'
 
 # django_heroku.settings(locals())
