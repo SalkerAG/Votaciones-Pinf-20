@@ -37,6 +37,11 @@
             </div>
             <!--Formulario-->
             <form method="post">{% csrf_token %}
+                {% if form.non_field_errors  %}
+                <div class="alert alert-danger">
+                    <strong>{{form.non_field_errors}</strong>
+                </div>
+              {% endif %}
                 <div class="form-group">
                     <label for="form-tittle" class="col-lg-3 col-form-label">Título</label>
                     <div class="col-lg-12">

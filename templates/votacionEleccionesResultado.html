@@ -146,8 +146,14 @@
                 labels: [{% for key,value in fields.items %}  "{{key}}",   {% endfor %}],
                 datasets: [{
                     data: [{% for key,value in fields.items %}  "{{value}}",   {% endfor %}],
-                    backgroundColor: ["#46BFBD", "#F7464A", "#FDB45C", "#949FB1", "#4D5360"],
-                    hoverBackgroundColor: ["#5AD3D1", "#FF5A5E", "#FFC870", "#A8B3C5", "#616774"]
+                    backgroundColor: ["#0000FF","#8A2BE2","#A52A2A","#DEB887","#7FFF00","#D2691E","#FF7F50","#00008B","#006400","#8B008B",
+                                      "#FF8C00","#8B0000","#228B22","#4B0082","#F08080","#ADD8E6","#7CFC00","#20B2AA","#00FF00","#FF00FF",
+                                      "#C71585","#191970","#AFEEEE","#800080","#FF0000","#4169E1","#2E8B57","#FF6347","#FFFF00","#9ACD32",
+                                      "#000000"],
+                    hoverBackgroundColor: ["#0000FF","#8A2BE2","#A52A2A","#DEB887","#7FFF00","#D2691E","#FF7F50","#00008B","#006400","#8B008B",
+                                           "#FF8C00","#8B0000","#228B22","#4B0082","#F08080","#ADD8E6","#7CFC00","#20B2AA","#00FF00","#FF00FF",
+                                           "#C71585","#191970","#AFEEEE","#800080","#FF0000","#4169E1","#2E8B57","#FF6347","#FFFF00","#9ACD32",
+                                           "#000000"],
                 }]
             },
             options: {
