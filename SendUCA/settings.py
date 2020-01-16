@@ -24,7 +24,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 's9np$rz@23gp$cy8hw@oe@=hkt0ue^tm2!5kidouf4et34nnrw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+LOGIN_REDIRECT_URL = ''
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'pinfvot.herokuapp.com']
 
@@ -90,7 +91,7 @@ DATABASES = {
     }
 }
 
-LOGIN_REDIRECT_URL = '/'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
