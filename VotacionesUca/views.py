@@ -273,7 +273,7 @@ class VotacionView(LoginRequiredMixin, FormMixin, DetailView, request):
         self.object = self.get_object()
 
         form = self.get_form()
-        usuario_eleccion = Usuario()
+        usuario_eleccion = UsuarioVotacion()
         listado_usuarios_votacion = Censo.objects.get(votacion_id=self.object.id)
         usuario_eleccion.user = self.request.user
         usuario_eleccion.Votacion = self.object
@@ -364,10 +364,7 @@ class EleccionView(LoginRequiredMixin, FormMixin, DetailView, request):
                     return HttpResponseRedirect(url)
             return super(EleccionView, self).render_to_response(context, **response_kwargs)
 
-
-
     def get_context_data(self, **kwargs):
-
 
         context = super(EleccionView, self).get_context_data(**kwargs)
         cosas = self
@@ -384,13 +381,6 @@ class EleccionView(LoginRequiredMixin, FormMixin, DetailView, request):
             context['form'] = realizarEleccionFormGrupos(id=self.object.id)
 
             return context
-
-
-
-
-
-
-
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -419,9 +409,11 @@ class EleccionView(LoginRequiredMixin, FormMixin, DetailView, request):
                     url = reverse('estadisticaseleccion', kwargs={'pk': usuario_eleccion.Eleccion.id})
                     return HttpResponseRedirect(url)
             else:
-                max_votos = int(usuario_eleccion.Eleccion.max_candidatos*usuario_eleccion.Eleccion.max_vacantes)
+                max_votos = int(usuario_eleccion.Eleccion.max_candidatos * usuario_eleccion.Eleccion.max_vacantes)
                 if len(usuario_eleccion.seleccion) > max_votos:
-                    messages.warning(request, 'Ha excedido el numero de votates a los que puede elegir. El máximo es '+str(max_votos))
+                    messages.warning(request,
+                                     'Ha excedido el numero de votates a los que puede elegir. El máximo es ' + str(
+                                         max_votos))
                     return HttpResponseRedirect(self.request.path_info)
                 else:
                     usuario_eleccion.save()
@@ -725,6 +717,7 @@ class EstadisticasEleccionView(LoginRequiredMixin, DetailView):
         context['abstencionporcentaje'] = (context['usuariosCenso'] - context['total']) / context['usuariosCenso'] * 100
         return context
 
+
 class EstadisticasEleccionGrupoView(LoginRequiredMixin, DetailView):
     template_name = "votacionEleccionesGrupoResultado.html"
     model = Eleccion
@@ -750,7 +743,6 @@ class EstadisticasEleccionGrupoView(LoginRequiredMixin, DetailView):
                     fields[result] = 1
                 else:
                     fields[result] = fields[result] + 1
-
 
         context['fields'] = fields
         context['participacion'] = (context['total'] / context['usuariosCenso']) * 100
