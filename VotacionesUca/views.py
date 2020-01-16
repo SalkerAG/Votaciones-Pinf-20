@@ -1,5 +1,5 @@
 from time import timezone
-
+import re
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import ModelForm, forms, formset_factory
@@ -519,6 +519,7 @@ class CrearPersona(LoginRequiredMixin, FormMixin, DetailView, request):
     def get_context_data(self, **kwargs):
         context = super(CrearPersona, self).get_context_data(**kwargs)
         context['personas'] = Personas.objects.filter(Eleccion_id=kwargs['object'].id)
+        context['eleccion'] = Eleccion.objects.get(id=kwargs['object'].id)
         context['form'] = PersonaForm(
             initial={'Eleccion': self.object})
         return context
@@ -543,11 +544,6 @@ class CrearPersona(LoginRequiredMixin, FormMixin, DetailView, request):
             per.save()
         else:
             messages.error(request, "Límite de candidatos posibles superado")
-
-        # if per.Eleccion.tipo_eleccion == '0':
-        #     contador = (Personas.objects.filter(Eleccion_id=per.Eleccion_id).count())
-        #     if contador > res:
-        #         messages.error(request, "Límite de candidatos del grupo superado")
 
         return HttpResponseRedirect(self.request.path_info)
 
@@ -737,14 +733,15 @@ class EstadisticasEleccionGrupoView(LoginRequiredMixin, DetailView):
             context['total'] += 1
             for resultado_user in resultado_usuario:
                 context['totalVotos'] += 1
-                getVals = list([val for val in resultado_user if val.isalnum()])
-                result = "".join(getVals)
-                if result not in fields:
-                    fields[result] = 1
+                cleanString = re.sub('\W+', ' ', resultado_user)
+                # getVals = list([val for val in resultado_user if val.isalnum()])
+                # result = "".join(getVals)
+                if cleanString not in fields:
+                    fields[cleanString] = 1
                 else:
-                    fields[result] = fields[result] + 1
+                    fields[cleanString] = fields[cleanString] + 1
 
         context['fields'] = fields
-        context['participacion'] = (context['total'] / context['usuariosCenso']) * 100
+        context['participacion'] = ((context['totalVotos'] / context['total']) * 100)/(context['totalVotos'])*context['total']
         context['abstencionporcentaje'] = (context['usuariosCenso'] - context['total']) / context['usuariosCenso'] * 100
         return context
