@@ -72,8 +72,8 @@ class OpcionesCompleja(models.Model):
 
 class UsuarioVotacion(models.Model):
     user = models.ForeignKey(UsuarioUca, on_delete=models.PROTECT, null=True)
-    Votacion = models.ForeignKey(Votacion, on_delete=models.PROTECT)
-    Pregunta = models.ForeignKey(Pregunta, on_delete=models.PROTECT)
+    Votacion = models.ForeignKey(Votacion, on_delete=models.CASCADE)
+    Pregunta = models.ForeignKey(Pregunta, on_delete=models.CASCADE)
     seleccion = models.CharField(max_length=20, null=True)
 
     def get_absolute_url(self):
@@ -116,8 +116,8 @@ class Eleccion(ProcesoElectoral):
 
 
 class UsuarioEleccion(models.Model):
-    user = models.ForeignKey(UsuarioUca, on_delete=models.PROTECT, null=True)
-    Eleccion = models.ForeignKey(Eleccion, on_delete=models.PROTECT)
+    user = models.ForeignKey(UsuarioUca, on_delete=models.DO_NOTHING, null=True)
+    Eleccion = models.ForeignKey(Eleccion, on_delete=models.CASCADE)
     seleccion = models.CharField(max_length=20, null=True)
 
     def get_absolute_url(self):

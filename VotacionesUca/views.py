@@ -353,10 +353,12 @@ class EleccionView(LoginRequiredMixin, FormMixin, DetailView, request):
         else:
             if UsuarioEleccion.objects.filter(user_id=self.request.user.id, Eleccion_id=eleccion.id).exists():
                 if eleccion.es_consulta:
-
-                    url = reverse('estadisticaseleccion', kwargs={'pk': eleccion.id})
-                    return HttpResponseRedirect(url)
-
+                    if eleccion.tipo_eleccion == '1':
+                        url = reverse('estadisticaseleccion', kwargs={'pk': eleccion.id})
+                        return HttpResponseRedirect(url)
+                    else:
+                        url = reverse('estadisticaselecciongrupo', kwargs={'pk': eleccion.id})
+                        return HttpResponseRedirect(url)
                 else:
                     url = reverse('home')
                     return HttpResponseRedirect(url)
@@ -401,44 +403,33 @@ class EleccionView(LoginRequiredMixin, FormMixin, DetailView, request):
         usuario_eleccion.user = self.request.user
         usuario_eleccion.Eleccion = self.object
 
-        usuario_eleccion.seleccion = request.POST.getlist('seleccion')
+        if usuario_eleccion.Eleccion.tipo_eleccion == '0':
+            usuario_eleccion.seleccion = request.POST.getlist('seleccion')
+        else:
+            usuario_eleccion.seleccion = form.data['seleccion']
 
         if usuario_eleccion.user not in listado_usuarios_votacion.usuario.all():
             return HttpResponseRedirect('/errorVotacion')
         else:
-
-            pass
-
-        # listado_usuarios = UsuarioEleccion.objects.filter(Eleccion_id=self.object.id).all()
-        # listado_usuarios_votados = []
-        # for user in listado_usuarios:
-        #     listado_usuarios_votados.append(user.user)
-        #     if usuario_eleccion.user in listado_usuarios_votados:
-        #         if self.object.es_consulta == True:
-        #
-        #             url = reverse('estadisticaseleccion', kwargs={"pk": self.object.pk})
-        #             return HttpResponseRedirect(url)
-        #
-        #         elif self.object.es_consulta == False:
-        #             return HttpResponseRedirect('/errorVotacionRectificable')
-        #         else:
-        #             usuario_eleccion.save()
-        #             if usuario_eleccion.Eleccion.es_consulta:
-        #                     url = reverse('estadisticasvotacioncompleja', kwargs={'pk': usuario_eleccion.Votacion.id})
-        #                     return HttpResponseRedirect(url)
-        #     else:
-        #         return HttpResponseRedirect('/')
-
-        usuario_eleccion.save()
-
-        qss = Censo.objects.all().values_list('usuario', flat=True)
-
-        if qss.filter(usuario=self.request.user).exists():
-
-            usuario_eleccion.save()
-        else:
-            return HttpResponseRedirect('/')
-        return HttpResponseRedirect('/')
+            if usuario_eleccion.Eleccion.tipo_eleccion == "1":
+                usuario_eleccion.save()
+                if not usuario_eleccion.Eleccion.es_consulta:
+                    return HttpResponseRedirect('/')
+                else:
+                    url = reverse('estadisticaseleccion', kwargs={'pk': usuario_eleccion.Eleccion.id})
+                    return HttpResponseRedirect(url)
+            else:
+                max_votos = int(usuario_eleccion.Eleccion.max_candidatos*usuario_eleccion.Eleccion.max_vacantes)
+                if len(usuario_eleccion.seleccion) > max_votos:
+                    messages.warning(request, 'Ha excedido el numero de votates a los que puede elegir. El máximo es '+str(max_votos))
+                    return HttpResponseRedirect(self.request.path_info)
+                else:
+                    usuario_eleccion.save()
+                    if not usuario_eleccion.Eleccion.es_consulta:
+                        return HttpResponseRedirect('/')
+                    else:
+                        url = reverse('estadisticaselecciongrupo', kwargs={'pk': usuario_eleccion.Eleccion.id})
+                        return HttpResponseRedirect(url)
 
     def form_valid(self, form):
         form.save()
@@ -554,27 +545,17 @@ class CrearPersona(LoginRequiredMixin, FormMixin, DetailView, request):
         maxvacantes = per.Eleccion.max_vacantes
         res = int(maxvacantes * maxcandidatos)
 
-        print(res)
-
         if Personas.objects.filter(Eleccion_id=per.Eleccion, nombre=per.nombre).count() > 0:
             messages.error(request, "Nombre ya introducido en la elección")
-
         elif not Personas.objects.filter(Eleccion_id=per.Eleccion).count() > maxcandidatos - 1:
-
             per.save()
-
         else:
-
             messages.error(request, "Límite de candidatos posibles superado")
 
-        if per.Eleccion.tipo_eleccion == '0':
-
-            contador = (Personas.objects.filter(Eleccion_id=per.Eleccion_id).count())
-            if contador > res:
-                messages.error(request, "Límite de candidatos del grupo superado")
-
-            else:
-                per.save()
+        # if per.Eleccion.tipo_eleccion == '0':
+        #     contador = (Personas.objects.filter(Eleccion_id=per.Eleccion_id).count())
+        #     if contador > res:
+        #         messages.error(request, "Límite de candidatos del grupo superado")
 
         return HttpResponseRedirect(self.request.path_info)
 
@@ -754,16 +735,22 @@ class EstadisticasEleccionGrupoView(LoginRequiredMixin, DetailView):
         context['censo'] = Censo.objects.get(eleccion_id=context['eleccion'].id)
         context['usuariosCenso'] = context['censo'].usuario.all().count()
         context['total'] = 0
+        context['totalVotos'] = 0
         fields = {}
         context['resultado'] = UsuarioEleccion.objects.filter(Eleccion_id=context['eleccion'].id)
 
         for resultado in context['resultado']:
-            if resultado.seleccion not in fields:
-                fields[resultado.seleccion] = 0
-
-        for resultado in context['resultado']:
+            resultado_usuario = resultado.seleccion.split(',')
             context['total'] += 1
-            fields[resultado.seleccion] += 1
+            for resultado_user in resultado_usuario:
+                context['totalVotos'] += 1
+                getVals = list([val for val in resultado_user if val.isalnum()])
+                result = "".join(getVals)
+                if result not in fields:
+                    fields[result] = 1
+                else:
+                    fields[result] = fields[result] + 1
+
 
         context['fields'] = fields
         context['participacion'] = (context['total'] / context['usuariosCenso']) * 100

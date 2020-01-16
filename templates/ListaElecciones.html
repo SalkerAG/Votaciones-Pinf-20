@@ -17,7 +17,7 @@
             <thead>
             <tr>
                 <th class="col-sm-3">Elecciones</th>
-                <th class="col-sm-2">Estado</th>
+                <th class="col-sm-2" style="text-align: center">Estado</th>
                 <th class="col-sm-2">Resultados</th>
                 {% if user.is_superuser %}
                     <th class="col-sm-2">Modificar</th> 
@@ -43,8 +43,8 @@
                             <td><a class="nav-link" style="text-align: center" style="color:red;">Cerrada</a></td>
                         {% endif %} 
 
-                        {% if  eleccion.eleccion_cerrada %}
-                            <td style="text-align: center"><a class="nav-link">
+                        {% if  eleccion.eleccion_cerrada and not eleccion.es_consulta %}
+                            <td><a class="nav-link" style="text-align: center">
                                 <i class="fas fa-chart-pie" style="color:#9E9E9E ";></i></a>
                             </td>  
                         {% else %}

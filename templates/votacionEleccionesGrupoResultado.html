@@ -86,12 +86,12 @@
                         <tr>
                             <th scope="row">{{ key }}</th>
                             <td>{{ value }}</td>
-                            <td>{{ value|porcentaje_voto_eleccion:usuariosCenso }}</td>
+                            <td>{{ value|porcentaje_voto_eleccion:totalVotos }}</td>
                         </tr>
                     {% endfor %}
                     <tr class="table-active">
                         <th scope="row">Total</th>
-                        <td>{{ total|floatformat }}</td>
+                        <td>{{ totalVotos|floatformat }}</td>
                         <td>{{ participacion|floatformat }}%</td>
                     </tr>
 
