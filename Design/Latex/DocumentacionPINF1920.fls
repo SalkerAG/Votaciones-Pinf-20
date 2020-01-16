@@ -90,8 +90,8 @@ INPUT /usr/share/texlive/texmf-dist/tex/generic/babel/babel.def
 INPUT /usr/share/texlive/texmf-dist/tex/generic/babel/txtbabel.def
 INPUT /usr/share/texlive/texmf-dist/tex/latex/psnfss/mathptm.sty
 INPUT /usr/share/texlive/texmf-dist/tex/latex/psnfss/mathptm.sty
-INPUT /home/guillermo/texmf/tex/latex/local/slashbox.sty
-INPUT /home/guillermo/texmf/tex/latex/local/slashbox.sty
+INPUT /home/guillermo/texmf/tex/latex/slashbox/slashbox.sty
+INPUT /home/guillermo/texmf/tex/latex/slashbox/slashbox.sty
 INPUT /usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
 INPUT /usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
 INPUT /usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
@@ -235,6 +235,9 @@ INPUT /home/guillermo/web/pinfvot/Votaciones-Pinf-19/Design/Latex/img/MEJerarqui
 INPUT /usr/share/texlive/texmf-dist/tex/latex/psnfss/omsptm.fd
 INPUT /usr/share/texlive/texmf-dist/tex/latex/psnfss/omsptm.fd
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/adobe/times/ptmr8t.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/vf/adobe/times/ptmr8t.vf
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/adobe/times/ptmr8r.tfm
 INPUT /home/guillermo/web/pinfvot/Votaciones-Pinf-19/Design/Latex/DocumentacionPINF1920.aux
 INPUT /home/guillermo/web/pinfvot/Votaciones-Pinf-19/Design/Latex/DocumentacionPINF1920.out
 INPUT /home/guillermo/web/pinfvot/Votaciones-Pinf-19/Design/Latex/DocumentacionPINF1920.out

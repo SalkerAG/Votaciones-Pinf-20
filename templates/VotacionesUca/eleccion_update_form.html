@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <!doctype html>
+
+    <html lang="es">
+    <title>Modificar Votacion UCA</title>
+
+
+    <body>
+
+    {% if not user.is_superuser %}
+        <div class="container">
+            <!-- Cabecera -->
+            <br/>
+            <div class="row justify-content-center">
+                <div class="page-header">
+                    <h1>No dispones de los permisos requeridos para ver este contenido.</h1>
+                </div>
+            </div>
+        </div>
+    {% else %}
+
+        <div class="container">
+            <!-- Cabecera -->
+            <br/>
+            <div class="row justify-content-center">
+                <div class="page-header">
+                    <h1>Modificar Elección</h1>
+                </div>
+            </div>
+            <div id="page-wrapper">
+                <form method="post">{% csrf_token %}
+                    {{ form.as_p }}
+                    <div style="text-align: center">
+                        <input class="btn btn-primary" type="submit" value="Actualizar"><br><br>
+                        <a href="{% url 'listaelecciones' %}" class="btn btn-primary" input type="submit">Volver a
+                            Listas</a>
+
+                    </div>
+                    <br>
+                </form>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+</body>
+</html>

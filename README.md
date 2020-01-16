@@ -25,7 +25,7 @@ source env/bin/activate
 
 Instalar requirements.txt
 ```bash
-cd SenUCA/
+cd Votaciones-Pinf-19/
 pip install -r requirements.txt
 ```
 

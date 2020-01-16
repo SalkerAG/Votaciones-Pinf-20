@@ -1,3 +1,4 @@
+{% extends 'base.html' %}
 {% load static %}
 <!doctype html>
 <html>
@@ -49,6 +50,13 @@
 
 <!-- Fin header  -->
 {% block content %}
+    {% if votacion.voto_restringido %}
+        <script type="text/javascript">
+            setTimeout(function() {
+                window.location.href = "{% url 'home' %}";
+            }, 20000);
+        </script>
+    {% endif %}
     <div class="modal fade" tabindex="-1" role="dialog" id="modal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -56,28 +64,69 @@
             </div>
         </div>
     </div>
+    {% if user in Censo.Usuario %}
+        <div class="container">
+            <!-- Cabecera -->
+            <br/>
+            <div class="row justify-content-center">
+                <div class="page-header">
+                    <h1>Dispones de los permisos requeridos para ver este contenido.</h1>
+                </div>
+            </div>
+        </div>
+
+    {% endif %}
 
     <div id="censo" align='center'>
-        <h1 id="censo" style="margin-top: 20px"><strong> Realizar Votación (Simple)</h1>
+        <h1 id="censo" style="margin-top: 20px"><strong> Realizar Votación</h1>
     </div>
+    <h1 style="text-align: center">Votación: {{ form.initial.Votacion.nombre_votacion }}</h1>
+    <h1 style="text-align: center">{{ form.initial.Pregunta.enunciado }}</h1>
     <br>
     <br>
-    <div style="width: 80%; padding-left: 10%">
-        <h1 style="text-align: center">Votación: {{ form.initial.Votacion.nombre_votacion }}</h1>
-        <h1 style="text-align: center">{{ form.initial.Pregunta.enunciado }}</h1>
-        <form method="post" id="realizarVotacionForm" data-preguntas-url={% url 'ajax_load_preguntas' %}>{% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" class="btn btn-primary" value="Guardar">
-        </form>
-       <button id="pregunta-modal" class="create-book btn btn-primary" type="button" name="button">Crear Pregunta</button>
-{#    <button id="votacion-modal" class="create-book btn btn-primary" type="button" name="button">Crear Pregunta</button>#}
+    <div style="width: 100%; text-align: center">
+        {#                <h1 style="text-align: center">{{ form.initial.user.id }}</h1>#}
+        {#                  <h1 style="text-align: center">{{ form.initial.Eleccion.nombre }}</h1>#}
+        <h1 style="text-align: center">{{ form.initial.Censo.id }}</h1>
+        {% if form.initial.Pregunta.tipo_votacion == '0' %}
+            <form method="POST" id="realizarVotacionForm" action="" style="display: inline-block;
+    width: 40%;">
+                {% csrf_token %}
+                {% for respuesta in form.CHOICES %}
+                    <div class="list-group">
+                        <input style="margin-bottom: 5px" type="submit" class="list-group-item list-group-item-action"
+                               name="respuesta"
+                               data-toggle="modal" data-target="#multiModalCenter" value="{{ respuesta.0 }}">
+                    </div>
+                {% endfor %}
+                <a class="btn btn-primary" style="margin-top: 10px" href={% url 'home' %}>Volver Inicio</a>
+                {% if form.initial.Votacion.es_consulta %}
+                    <a class="btn btn-primary" style="margin-top: 10px"
+                       href={% url 'estadisticasvotacionsimple' pk=form.initial.Votacion.id %}>Estadisticas</a>
+                {% endif %}
+            </form>
+        {% else %}
+            <form method="POST" id="realizarVotacionForm" action="" style="display: inline-block;
+    width: 40%;">
+                {% csrf_token %}
+                {% for respuesta in form.initial.respuestas %}
+                    <div class="list-group">
+                        <input style="margin-bottom: 5px" type="submit" class="list-group-item list-group-item-action"
+                               name="respuesta"
+                               data-toggle="modal" data-target="#multiModalCenter" value="{{ respuesta.respuesta }}">
+                    </div>
+                {% endfor %}
+                <a class="btn btn-primary" style="margin-top: 10px" href={% url 'home' %}>Volver Inicio</a>
+                {% if form.initial.Votacion.es_consulta %}
+                    <a class="btn btn-primary" style="margin-top: 10px"
+                       href={% url 'estadisticasvotacioncompleja' pk=form.initial.Votacion.id %}>Estadisticas</a>
+                {% endif %}
+            </form>
+        {% endif %}
     </div>
-
+    <br>
 {% endblock %}
-<br>
-<br>
-<br>
-<br>
+
 <!-- Requisitos para bootstrap 4 y js  -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 </body>
@@ -206,7 +255,7 @@
 
 <!-- (Optional) Latest compiled and minified JavaScript translation files -->
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="{% static 'js/bootstrap.js' %}"></script>>
+<script src="{% static 'js/bootstrap.js' %}"></script>
 <script src="{% static 'js/jquery.bootstrap.modal.forms.min.js' %}"></script>
 </body>
 <script type="text/javascript">
@@ -220,23 +269,23 @@
 </script>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <script>
+<script>
     $("#id_Votacion").change(function () {
-      var url = $("#realizarVotacionForm").attr("data-preguntas-url");  // get the url of the `load_cities` view
-      var VotacionId = $(this).val();  // get the selected country ID from the HTML input
+        var url = $("#realizarVotacionForm").attr("data-preguntas-url");  // get the url of the `load_cities` view
+        var VotacionId = $(this).val();  // get the selected country ID from the HTML input
 
-      $.ajax({                       // initialize an AJAX request
-        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
-        data: {
-          'Votacion': VotacionId       // add the country id to the GET parameters
-        },
-        success: function (data) {   // `data` is the return of the `load_cities` view function
-          $("#id_Pregunta").html(data);  // replace the contents of the city input with the data that came from the server
-        }
-      });
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+            data: {
+                'Votacion': VotacionId       // add the country id to the GET parameters
+            },
+            success: function (data) {   // `data` is the return of the `load_cities` view function
+                $("#id_Pregunta").html(data);  // replace the contents of the city input with the data that came from the server
+            }
+        });
 
     });
-  </script>
+</script>
 <script type="text/javascript">
     $(document).ready(function () {
 
@@ -246,13 +295,4 @@
 
     });
 </script>
-{#<script type="text/javascript">#}
-{#    $(document).ready(function () {#}
-{##}
-{#        $("#votacion-modal").modalForm({#}
-{#            formURL: "{% url 'create_pregunta' %}"#}
-{#        });#}
-{##}
-{#    });#}
-{#</script>#}
 </html>

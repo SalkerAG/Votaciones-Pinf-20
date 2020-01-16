@@ -83,47 +83,116 @@
     .usernif {
         color: white;
         text-align: end;
+        width: 100%;
+    }
 
+    @media screen and (max-width: 700px) {
+        .navbar-nav {
+            width: 100%;
+            flex-direction: column !important;
+        }
+
+        .nav-item-right {
+            width: fit-content;
+        }
+
+        .usernif {
+            width: fit-content !important;
+        }
     }
 </style>
 <!-- header  -->
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-    <!-- Brand -->
-    <a class="navbar-brand" href="{% url 'home' %}">Logo</a>
+    <!-- Brand-->
+    <a class="navbar-brand" href="{% url 'home' %}">
+        <img src="{% static 'images/SenUca.png' %}" alt="" class="img-fluid" width="50" height="60">
+    </a>
 
     <!-- Links -->
-    <ul class="navbar-nav">
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'home' %}">Inicio</a>
-        </li>
+    <ul class="navbar-nav" style="width: 100%">
 
-        <!-- Dropdown -->
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Votaciones</a>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="{% url 'listavotaciones' %}">Lista de votaciones</a>
-                <a class="dropdown-item" href="#">Votaciones finalizadas</a>
-                <a class="dropdown-item" href="{% url 'crearvotacion' %}">Crear Votación</a>
-            </div>
-        </li>
+        {% if not user.is_superuser %}
+            <!-- Dropdown -->
+            <ul class="navbar-nav" style="width: 100%">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'listavotaciones' %}">Votaciones</a>
+                </li>
 
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'faq' %}">Ayuda</a>
-        </li>
-
-        <li class="nav-item nav-item-right">
-            {% if user.is_authenticated %}
-                <a class="nav-link float-right" href="{% url 'logout' %}">Salir</a>
-
-            {% else %}
-                <a class="nav-link float-right" href="{% url 'login' %}">Entrar</a>
-            {% endif %}
-        </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'listaelecciones' %}">Elecciones</a>
+                </li>
 
 
-    </ul>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'faq' %}">Ayuda</a>
+                </li>
+
+                <li class="nav-item nav-item-right">
+                    {% if user.is_authenticated %}
+                        <a class="nav-link float-right" href="{% url 'logout' %}">Salir</a>
+                    {% else %}
+                        <a class="nav-link float-right" href="{% url 'login' %}">Entrar</a>
+                    {% endif %}
+                </li>
+            </ul>
+
+        {% else %}
+            <!-- Dropdown -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Votaciones</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{% url 'crearvotacion' %}">Crear votación</a>
+                    <a class="dropdown-item" href="{% url 'listavotaciones' %}">Lista de votaciones</a>
+
+
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Elecciones</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{% url 'create_eleccion' %}">Crear elección</a>
+                    <a class="dropdown-item" href="{% url 'listaelecciones' %}">Lista de elecciones</a>
+
+
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Usuarios</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{% url 'usuariouca_create' %}">Crear usuario</a>
+                    <a class="dropdown-item" href="{% url 'usuariouca_list' %}">Lista de usuarios</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Censo</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{% url 'censoV_create' %}">Crear censo votación</a>
+                    <a class="dropdown-item" href="{% url 'censoE_create' %}">Crear censo elección</a>
+                    <a class="dropdown-item" href="{% url 'listacensos' %}">Lista de censos</a>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'faq' %}">Ayuda</a>
+            </li>
+
+            <li class="nav-item nav-item-right">
+                {% if user.is_authenticated %}
+                    <a class="nav-link float-right" href="{% url 'logout' %}">Salir</a>
+
+                {% else %}
+                    <a class="nav-link float-right" href="{% url 'login' %}">Entrar</a>
+                {% endif %}
+            </li>
+
+
+            </ul>
+        {% endif %}
     {% if user.is_authenticated %}
-        <div class="usernif">
+        <div class="usernif" style="width: 35%;">
             <a style="...">Usuario: {{ user.nif }}</a>
         </div>
     {% endif %}
@@ -167,7 +236,7 @@
                 <div class="col-md-3 col-sm-4">
                     <div class="footer-widget">
                         <div class="footer-menu footer-menu--1">
-                            <h4 class="footer-widget-title">Páginas de Interes</h4>
+                            <h4 class="footer-widget-title">Páginas de Interés</h4>
                             <ul>
                                 <li>
                                     <a href="https://www.uca.es/">UCA</a>
@@ -189,13 +258,13 @@
                 <div class="col-md-3 col-sm-4">
                     <div class="footer-widget">
                         <div class="footer-menu">
-                            <h4 class="footer-widget-title">La compañia</h4>
+                            <h4 class="footer-widget-title">La compañía</h4>
                             <ul>
                                 <li>
                                     <a href="#">Sobre nosotros</a>
                                 </li>
                                 <li>
-                                    <a href="#">Contactanos</a>
+                                    <a href="#">Contáctanos</a>
                                 </li>
                             </ul>
                         </div>
@@ -211,7 +280,7 @@
                             <h4 class="footer-widget-title">Soporte</h4>
                             <ul>
                                 <li>
-                                    <a href="#">Guia Rápida</a>
+                                    <a href="#">Guía Rápida</a>
                                 </li>
                                 <li>
                                     <a href="#">Foro de Ayuda</a>

@@ -1,5 +1,6 @@
 from datetime import datetime
-# from importlib import resources
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Avg
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect
@@ -11,7 +12,7 @@ from django.utils import timezone
 from django.views.generic.list import ListView
 from django.views.generic.edit import UpdateView, CreateView
 from import_export.formats import base_formats
-# from sqlalchemy.sql.functions import userdd/
+
 
 from UsuarioUca.admin import UsuarioUcaResource
 from UsuarioUca.forms import createUserForm, editUserForm
@@ -20,7 +21,7 @@ from UsuarioUca.models import UsuarioUca, Estudiante, Profesor, PASS
 from import_export import resources, fields
 from django.contrib import messages
 
-from VotacionesUca.models import Votacion
+from VotacionesUca.models import Votacion, Eleccion, Censo
 
 
 def my_view(request):
@@ -36,7 +37,7 @@ def my_view(request):
         ...
 
 
-class UsuarioUcaListView(ListView):
+class UsuarioUcaListView(LoginRequiredMixin, ListView):
     model = UsuarioUca
     paginate_by = 100  # if pagination is desired
 
@@ -46,19 +47,18 @@ class UsuarioUcaListView(ListView):
         return context
 
 
-class UsuarioUcaUpdate(UpdateView):
+class UsuarioUcaUpdate(LoginRequiredMixin, UpdateView):
     model = UsuarioUca
-    # fields = '__all__'
+
     form_class = editUserForm
     template_name_suffix = '_update_form'
 
     def get_success_url(self):
-        return reverse('usuariouca_edit', kwargs={'pk': self.object.pk})
+        return reverse('usuariouca_list', )
 
 
-class UsuarioUcaCreate(CreateView):
+class UsuarioUcaCreate(LoginRequiredMixin, CreateView):
     model = UsuarioUca
-    # fields = '__all__'
     form_class = createUserForm
 
     def get_success_url(self):
@@ -70,7 +70,7 @@ class UsuarioUcaCreate(CreateView):
             return reverse('pass_create')
 
 
-class EstudianteCreate(CreateView):
+class EstudianteCreate(LoginRequiredMixin, CreateView):
     model = Estudiante
     fields = '__all__'
 
@@ -78,7 +78,7 @@ class EstudianteCreate(CreateView):
         return reverse('usuariouca_edit', kwargs={'pk': self.object.pk})
 
 
-class ProfesorCreate(CreateView):
+class ProfesorCreate(LoginRequiredMixin,CreateView):
     model = Profesor
     fields = '__all__'
 
@@ -86,7 +86,7 @@ class ProfesorCreate(CreateView):
         return reverse('usuariouca_edit', kwargs={'pk': self.object.pk})
 
 
-class PASSCreate(CreateView):
+class PASSCreate(LoginRequiredMixin, CreateView):
     model = PASS
     fields = '__all__'
 
@@ -94,7 +94,7 @@ class PASSCreate(CreateView):
         return reverse('usuariouca_edit', kwargs={'pk': self.object.pk})
 
 
-class UsuarioUcaExportView(ImportView, resources.ModelResource):
+class UsuarioUcaExportView(LoginRequiredMixin, ImportView, resources.ModelResource):
     class Meta:
         model = UsuarioUca
 
@@ -106,7 +106,7 @@ class UsuarioUcaExportView(ImportView, resources.ModelResource):
         return response
 
 
-class MyModelImportView(ImportView):
+class MyModelImportView(LoginRequiredMixin, ImportView):
     model = UsuarioUca
     template_name = 'usuariouca_upload.html'
     formats = (base_formats.CSV,)
@@ -124,7 +124,7 @@ class MyModelImportView(ImportView):
                            header="source_user")
         return dataset
 
-class VotacionView(DetailView):
+class VotacionView(LoginRequiredMixin, DetailView):
     model = Votacion
 
     def get_context_data(self, **kwargs):
@@ -134,33 +134,43 @@ class VotacionView(DetailView):
         context['opciones'] = Opciones.objects.filter(pregunta=pregunta.pk)
         return context
 
-class HomeView(TemplateView):
+class HomeView(LoginRequiredMixin, ListView):
     template_name = "home.html"
+    context_object_name = 'votacion_list'
+    model = Votacion
 
+    def get_context_data(self, **kwargs):
+        censos_id = Censo.objects.filter(usuario=self.request.user).values_list('eleccion_id', flat=True)
+        context = super(HomeView, self).get_context_data(**kwargs)
+        context.update({
+            'eleccion_list': Eleccion.objects.filter(id__in=censos_id),
+            'more_context': Eleccion.objects.filter(id__in=censos_id),
+        })
+        return context
 
-class ListaVotacionesView(TemplateView):
-    template_name = "ListaVotaciones.html"
+    def get_queryset(self):
+        censos_id = Censo.objects.filter(usuario=self.request.user).values_list('votacion_id', flat=True)
+        return Votacion.objects.filter(id__in=censos_id)
+    
 
-
-class CrearVotacionView(TemplateView):
+class CrearVotacionView(LoginRequiredMixin, TemplateView):
     template_name = "CrearVotacion.html"
 
 
-class FAQView(TemplateView):
+class FAQView(LoginRequiredMixin, TemplateView):
     template_name = "faq2.0.html"
 
 
-class EstadisticasVotacionSimpleView(TemplateView):
+class EstadisticasVotacionSimpleView(LoginRequiredMixin, TemplateView):
     template_name = "votacionSimpleResultados.html"
 
 
-class EstadisticasEleccionView(TemplateView):
+class EstadisticasEleccionView(LoginRequiredMixin, TemplateView):
     template_name = "votacionEleccionesResultado.html"
 
 
 def logout_request(request):
     logout(request)
-    messages.info(request, "Se ha cerrado la sesión correctamente")
     return redirect('home')
 
 

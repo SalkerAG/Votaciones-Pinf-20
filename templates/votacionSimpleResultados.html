@@ -26,7 +26,7 @@
 
       <!-- TITLE -->
       <div class="container text-center py-5">
-        <h1 class="display-12">Resultado Votación: 000 </h1>
+        <h1 class="display-12">Resultado Votación: {{ votacion.nombre_votacion }} </h1>
       </div>
 
       <!-- PIE CHART -->
@@ -41,38 +41,45 @@
                 <tbody>
               <tr>
                 <th scope="row">Total Electores</th>
-                <td>000</td>
+                <td>{{usuariosCenso}}</td>
               </tr>
 
               <tr>
-                <th scope="row">Votos a candidaturas</th>
-                <td>000</td>
+                <th scope="row">Votos a favor</th>
+                <td>{{si}}</td>
               </tr>
 
               <tr>
-                <th scope="row">Votos en blanco</th>
-                <td>000</td>
+                <th scope="row">Votos en contra</th>
+                <td>{{no}}</td>
               </tr>
 
               <tr>
-                <th scope="row">Votos Nulos</th>
-                <td>000</td>
-              </tr>
-
-              <tr>
-                <th scope="row">Votos totales válidos</th>
-                <td>000</td>
-              </tr>
-
-              <tr>
-                <th scope="row">Participación</th>
-                <td>0%</td>
+                <th scope="row">Perticipación</th>
+                <td>{{participacion}}%</td>
               </tr>
 
               <tr>
                 <th scope="row">Abstención</th>
-                <td>0%</td>
+                <td>{{abstencion}}%</td>
               </tr>
+
+              <tr>
+                <th scope="row">Votos</th>
+                <td>{{total}}</td>
+              </tr>
+
+
+
+ <!--             <tr>
+                <th scope="row">Participación</th>
+                <td>{{ participacion|floatformat }}%</td>
+              </tr>
+
+              <tr>
+                <th scope="row">Abstención</th>
+                <td>{{ abstencionporcentaje|floatformat }}%</td>
+              </tr-->
             </tbody>
               </table>
             </div>
@@ -111,9 +118,9 @@
       var myPieChart = new Chart(ctxP, {
         type: 'pie',
         data: {
-          labels: ["A favor", "En Contra", "Abstención", "Nulo"],
+          labels: ["A favor", "En Contra", "Abstención"],
           datasets: [{
-            data: [300, 50, 100, 40],
+            data: [{{si}}, {{no}}, {{abstencion}}],
             backgroundColor: ["#46BFBD", "#F7464A", "#FDB45C", "#949FB1", "#4D5360"],
             hoverBackgroundColor: ["#5AD3D1", "#FF5A5E",  "#FFC870", "#A8B3C5", "#616774"]
           }]
@@ -131,7 +138,7 @@
         labels: ["A favor", "En contra"],
         datasets: [{
           label: 'Votos',
-          data: [47, 41],
+          data: [{{si}}, {{no}}],
           backgroundColor: [
             'rgb(70, 191, 189, 0.7)',
             'rgb(247, 70, 74, 0.7)'
@@ -146,7 +153,7 @@
       options: {
         title: {
           display: true,
-          text: 'Resultado Elecciones'
+          text: 'Resultado Votación',
         },
         scales: {
           xAxes: [{

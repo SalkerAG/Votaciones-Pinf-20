@@ -5,7 +5,7 @@
         <div class="col-md-5 p-lg-5 mx-auto my-5">
             <h1 class="display-4 font-weight-normal">Votaciones UCA</h1>
             <p class="lead font-weight-normal">Página para realizar votaciones en el ambito de la UCA.</p>
-            <a class="btn btn-outline-secondary" href="#">Empieza</a>
+            <a class="btn btn-outline-secondary" href="listavotaciones">Empieza</a>
         </div>
         <div class="product-device box-shadow d-none d-md-block"></div>
         <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
@@ -14,27 +14,55 @@
     <div class="d-flex justify-content-between  w-100 my-md-4 pl-md-4"><!-- start - end - center - between - around -->
         <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
             <div class="my-3 p-3">
+                <h2 class="display-5">Resultados Recientes</h2>
+                {% if votacion_list %}
+                    {% for votacion in votacion_list %}
+                        {% if not votacion.votacion_cerrada or votacion.es_consulta %}
+                            {% if votacion.pregunta.tipo_votacion == "0" %}
+                                <a class="nav-link" href="{% url 'estadisticasvotacionsimple' pk=votacion.pk %}" style="color:#898b96">{{votacion.nombre_votacion}}</a>
+                            {% else %}
+                                <a class="nav-link" href="{% url 'estadisticasvotacioncompleja' pk=votacion.pk %}" style="color:#898b96">{{votacion.nombre_votacion}}</a>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+
+                {% if eleccion_list %}
+                    {% for eleccion in eleccion_list %}
+                        {% if not eleccion.eleccion_cerrada or eleccion.es_consulta %}
+                            <a class="nav-link" href="{% url 'estadisticaseleccion' pk=eleccion.pk %}" style="color:#898b96">{{eleccion.nombre}}</a>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        
+            <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+                <div class="my-3 p-3">
+                {% if votacion_list %}
                 <h2 class="display-5">Votaciones Recientes</h2>
-                <p>Valoracion de las votaciones Recientes.</p>
-            </div>
-        </div>
-        <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
-            <div class="my-3 py-3">
-                <h2 class="display-5">Últimas noticias </h2>
-                <p>Votacion a Rectorado de la Universidad</p>
+                    {% for votacion in votacion_list %}
+                        {% if votacion.votacion_cerrada %}
+                            <a class="nav-link" href="{% url 'votacion' pk=votacion.pk %}" style="color:#898b96">{{votacion.nombre_votacion}}</a>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <h2 class="display-5"><Var>No hay votaciones disponibles</Var> </h2>
+                {% endif %}
                 <br>
-                <p>Votacion para delegado GII 19/20</p>
-                <br>
+                {% if eleccion_list %}
+                    <h2 class="display-5">Elecciones Recientes</h2>
+                    {% for eleccion in eleccion_list %}
+                        {% if eleccion.eleccion_cerrada %}
+                            <a class="nav-link" href="{% url 'eleccion' pk=eleccion.pk %}" style="color:#898b96">{{eleccion.nombre}}</a>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <h2 class="display-5"><Var>No hay elecciones disponibles</Var> </h2>
+                {% endif %}
+                </div>
             </div>
-        </div>
-        <!--
-        <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
-          <div class="my-3 p-3">
-            <h2 class="display-5">Nombre</h2>
-            <p>Parrafo.</p>
-          </div>
-        </div>
-         -->
+
     </div>
 
 

@@ -24,7 +24,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 's9np$rz@23gp$cy8hw@oe@=hkt0ue^tm2!5kidouf4et34nnrw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+LOGIN_REDIRECT_URL = ''
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'pinfvot.herokuapp.com']
 
@@ -81,12 +82,16 @@ WSGI_APPLICATION = 'SendUCA.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE':   'django.db.backends.postgresql_psycopg2',
+        'NAME':     'd1huca2tradkso',
+        'USER':     'gythreavpmpwmn',
+        'PASSWORD': '710119e0d6b55180fed34d0a7f3f5cf135b8e1e52cf0534ebfe52a0f6407abd7',
+        'HOST':     'ec2-54-75-249-16.eu-west-1.compute.amazonaws.com',
+        'PORT':     '5432',
     }
 }
 
-LOGIN_REDIRECT_URL = '/'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators

@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+ <head>
+
+    <!-- Your custom styles (optional) -->
+     <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <!-- Bootstrap tooltips -->
+
+    <!-- Bootstrap core JavaScript -->
+
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
+  </head>
+
+  <body>
+
+      <!-- TITLE -->
+      <div class="container text-center py-5">
+        <h1 class="display-12">Resultado Votación: {{ votacion.nombre_votacion }} </h1>
+      </div>
+
+      <!-- PIE CHART -->
+      <div class="container-fluid">
+      <div class="row center px-5">
+            <div class="col-xl-6 ">
+              <canvas id="pieChart"></canvas>
+            </div>
+
+            <div class="col-xl-6">
+              <table class="table table-bordered">
+                <tbody>
+
+              <tr>
+                <th scope="row">Total Electores</th>
+                <td>{{usuariosCenso}}</td>
+              </tr>
+
+              {% for key, value in fields.items %}
+                <tr>
+                  <th scope="row">{{key}}</td>
+                    <td>{{value}}</td>
+                </tr>
+              {% endfor %}
+              <tr>
+                <th scope="row">Participación</th>
+                <td>{{participacion}}%</td>
+              </tr>
+
+              <tr>
+                <th scope="row">Absteción</th>
+                <td>{{abstencion}}%</td>
+              </tr>
+              
+              <tr>
+                <th scope="row">Votos</th>
+                <td>{{total}}</td>
+              </tr>
+
+            </tbody>
+              </table>
+            </div>
+
+            <div class="col-xl-6 ">
+              <canvas id="barChart"></canvas>
+            </div>
+      </div>
+      </div>
+<!--
+  <div class="row center ">
+  </div> -->
+
+  </strong>
+    </div>
+
+    <!-- Start your project here-->
+
+    <!-- /Start your project here-->
+
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+
+
+
+    <script type="text/javascript">
+      //pie
+      var ctxP = document.getElementById("pieChart").getContext('2d');
+      var myPieChart = new Chart(ctxP, {
+        type: 'pie',
+        data: {
+          labels: [{% for key,value in fields.items %}  "{{key}}",   {% endfor %}],
+          datasets: [{
+            data: [{% for key,value in fields.items %}  "{{value}}",   {% endfor %}],
+            backgroundColor: ["#46BFBD", "#F7464A", "#FDB45C", "#949FB1", "#4D5360"],
+            hoverBackgroundColor: ["#5AD3D1", "#FF5A5E",  "#FFC870", "#A8B3C5", "#616774"]
+          }]
+        },
+        options: {
+          responsive: true
+        }
+      });
+    </script>
+    <script type="text/javascript">
+      var ctxB = document.getElementById("barChart").getContext('2d');
+      var myBarChart = new Chart(ctxB, {
+      type: 'horizontalBar',
+      data: {
+        labels: [{% for key,value in fields.items %}  "{{key}}",   {% endfor %}],
+        datasets: [{
+          label: 'Votos',
+          data: [{% for key,value in fields.items %}  "{{value}}",   {% endfor %}],
+          backgroundColor: [
+            'rgb(70, 191, 189, 0.7)',
+            'rgb(247, 70, 74, 0.7)'
+          ],
+          borderColor: [
+            'rgb(70, 191, 189, 1)',
+            'rgb(247, 70, 74, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: 'Resultado Votación',
+        },
+        scales: {
+          xAxes: [{
+          ticks: {
+            min: 0,
+            beginAtZero: true,
+          }
+          }]
+        }
+      }
+      });
+    </script>
+     {% endblock %}
+  </body>
+
+</html>
