@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    {% load porcentaje_voto_eleccion %}
+
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+
+        <!-- Your custom styles (optional) -->
+        <!-- SCRIPTS -->
+        <!-- JQuery -->
+        <script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+        <!-- Bootstrap tooltips -->
+
+        <!-- Bootstrap core JavaScript -->
+
+        <!-- MDB core JavaScript -->
+        <script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
+    </head>
+
+    <body>
+
+    <!-- TITLE -->
+    <div class="container text-center py-5">
+        <h1 class="display-12">Resultado Eleccion: {{ eleccion.nombre }} </h1>
+    </div>
+
+    <!-- PIE CHART -->
+    <div class="container-fluid">
+        <div class="row center px-5">
+            <div class="col-xl-6 ">
+                <canvas id="pieChart"></canvas>
+            </div>
+
+            <div class="col-xl-6">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <th scope="row">Total Electores</th>
+                        <td>{{ usuariosCenso }}</td>
+                    </tr>
+
+                    {% for key, value in fields.items %}
+                        <tr>
+                            <th scope="row">{{ key }}</th>
+                            <td>{{ value }}</td>
+                        </tr>
+                    {% endfor %}
+
+                    <tr>
+                        <th scope="row">Participación</th>
+                        <td>{{ participacion|floatformat }}%</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Abstención</th>
+                        <td>{{ abstencionporcentaje|floatformat }}%</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Votos</th>
+                        <td>{{ total }}</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="row center px-5">
+            <!-- TABLE RESULTADO -->
+            <div class="col-xl-12">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th scope="col">Candidato</th>
+                        <th scope="col">Total de votos</th>
+                        <th scope="col">Total %</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for key, value in fields.items %}
+                        <tr>
+                            <th scope="row">{{ key }}</th>
+                            <td>{{ value }}</td>
+                            <td>{{ value|porcentaje_voto_eleccion:usuariosCenso }}</td>
+                        </tr>
+                    {% endfor %}
+                    <tr class="table-active">
+                        <th scope="row">Total</th>
+                        <td>{{ total|floatformat }}</td>
+                        <td>{{ participacion|floatformat }}%</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+
+            <div class="col-xl-6 ">
+                <canvas id="barChart"></canvas>
+            </div>
+
+
+            <!-- CHART RESULTADO % -->
+            <div class="col-xl-6 ">
+                <canvas id="canvas"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!--
+      <div class="row center ">
+      </div> -->
+
+    </strong>
+    </div>
+
+    <!-- Start your project here-->
+
+    <!-- /Start your project here-->
+
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+
+
+
+    <script type="text/javascript">
+        //pie
+        var ctxP = document.getElementById("pieChart").getContext('2d');
+        var myPieChart = new Chart(ctxP, {
+            type: 'pie',
+            data: {
+                labels: [{% for key,value in fields.items %}  "{{key}}",   {% endfor %}],
+                datasets: [{
+                    data: [{% for key,value in fields.items %}  "{{value}}",   {% endfor %}],
+                    backgroundColor: ["#46BFBD", "#F7464A", "#FDB45C", "#949FB1", "#4D5360"],
+                    hoverBackgroundColor: ["#5AD3D1", "#FF5A5E", "#FFC870", "#A8B3C5", "#616774"]
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    </script>
+    <script type="text/javascript">
+        var ctxB = document.getElementById("barChart").getContext('2d');
+        var myBarChart = new Chart(ctxB, {
+            type: 'horizontalBar',
+            data: {
+                labels: [{% for key,value in fields.items %}  "{{key}}",   {% endfor %}],
+                datasets: [{
+                    label: 'Votos',
+                    data: [{% for key,value in fields.items %}  "{{value}}",   {% endfor %}],
+                    backgroundColor: [
+                        'rgb(70, 191, 189, 0.7)',
+                        'rgb(247, 70, 74, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgb(70, 191, 189, 1)',
+                        'rgb(247, 70, 74, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Resultado Votación',
+                },
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            min: 0,
+                            beginAtZero: true,
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+{% endblock %}
+</body>
+
+</html>

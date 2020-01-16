@@ -122,9 +122,7 @@ class UsuarioEleccion(models.Model):
 
     def get_absolute_url(self):
         return reverse('home')
-
-
-
+        
 
 class Personas(models.Model):
     Eleccion = models.ForeignKey(Eleccion, on_delete=models.CASCADE)
@@ -132,11 +130,6 @@ class Personas(models.Model):
 
     def __str__(self):
         return self.nombre
-
-
-
-
-
 
 
 class Censo(models.Model):

@@ -366,7 +366,6 @@ class EleccionView(LoginRequiredMixin, FormMixin, DetailView, request):
 
     def get_context_data(self, **kwargs):
 
-
         context = super(EleccionView, self).get_context_data(**kwargs)
         cosas = self
 
@@ -382,13 +381,6 @@ class EleccionView(LoginRequiredMixin, FormMixin, DetailView, request):
             context['form'] = realizarEleccionFormGrupos(id=self.object.id)
 
             return context
-
-
-
-
-
-
-
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -721,6 +713,32 @@ class EstadisticasVotacionComplejaView(LoginRequiredMixin, DetailView):
 
 class EstadisticasEleccionView(LoginRequiredMixin, DetailView):
     template_name = "votacionEleccionesResultado.html"
+    model = Eleccion
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['now'] = datetime.datetime.now()
+        context['censo'] = Censo.objects.get(eleccion_id=context['eleccion'].id)
+        context['usuariosCenso'] = context['censo'].usuario.all().count()
+        context['total'] = 0
+        fields = {}
+        context['resultado'] = UsuarioEleccion.objects.filter(Eleccion_id=context['eleccion'].id)
+
+        for resultado in context['resultado']:
+            if resultado.seleccion not in fields:
+                fields[resultado.seleccion] = 0
+
+        for resultado in context['resultado']:
+            context['total'] += 1
+            fields[resultado.seleccion] += 1
+
+        context['fields'] = fields
+        context['participacion'] = (context['total'] / context['usuariosCenso']) * 100
+        context['abstencionporcentaje'] = (context['usuariosCenso'] - context['total']) / context['usuariosCenso'] * 100
+        return context
+
+class EstadisticasEleccionGrupoView(LoginRequiredMixin, DetailView):
+    template_name = "votacionEleccionesGrupoResultado.html"
     model = Eleccion
 
     def get_context_data(self, **kwargs):
