@@ -87,9 +87,14 @@ WSGI_APPLICATION = 'SendUCA.wsgi.application'
 
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default=config('DATABASE_URL')
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd365pmdk9i1lpd',
+        'USER': 'jhzgciwbubcsub',
+        'PASSWORD': '1055a70418456f471a77bc279122bee5f135c4625b63511b453f2b3bd86d7353',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
 }
 
 
