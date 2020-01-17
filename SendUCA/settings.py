@@ -24,10 +24,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 's9np$rz@23gp$cy8hw@oe@=hkt0ue^tm2!5kidouf4et34nnrw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 LOGIN_REDIRECT_URL = ''
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'pinfvot.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'pinfvot.herokuapp.com', '*']
 
 # Application definition
 
@@ -82,16 +82,13 @@ WSGI_APPLICATION = 'SendUCA.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE':   'django.db.backends.postgresql_psycopg2',
-        'NAME':     'd1huca2tradkso',
-        'USER':     'gythreavpmpwmn',
-        'PASSWORD': '710119e0d6b55180fed34d0a7f3f5cf135b8e1e52cf0534ebfe52a0f6407abd7',
-        'HOST':     'ec2-54-75-249-16.eu-west-1.compute.amazonaws.com',
-        'PORT':     '5432',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'HOST': 'ec2-34-197-171-33.compute-1.amazonaws.com',
+        'USER': 'jhzgciwbubcsub',
+        'NAME': 'd365pmdk9i1lpd',
+        'PASSWORD': '1055a70418456f471a77bc279122bee5f135c4625b63511b453f2b3bd86d7353'
     }
 }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -118,13 +115,13 @@ AUTH_USER_MODEL = 'UsuarioUca.UsuarioUca'
 
 LANGUAGE_CODE = 'es'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'CET'
 
 USE_I18N = True
 
 USE_L10N = False
 
-USE_TZ = True
+USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/

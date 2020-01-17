@@ -54,7 +54,7 @@
                         <th scope="col">Acciones</th>
                     </tr>
                     </thead>
-                <tbody>
+                    <tbody>
                     {% for persona in personas %}
                         <tr>
                             <td style="font-weight: normal">{{ persona }}</td>
@@ -63,7 +63,7 @@
                             </td>
                         </tr>
                     {% endfor %}
-                </tbody>
+                    </tbody>
                 </table>
 
             </div>
@@ -71,11 +71,14 @@
 
             <form method="post">{% csrf_token %}
                 {{ form.as_p }}
-                  <br>
-                 <div align="center">
-                 <input type="submit" value="Añadir persona" class="btn btn-primary" name="_save"><br><br>
-                      <a href="/" class="btn btn-primary" input type="submit">Guardar y volver al menú principal</a>
-                 </div>
+                <br>
+                <div align="center">
+
+                    <input type="submit" value="Añadir persona" class="btn btn-primary" name="_save"><br><br>
+                    {% if not personas|length < eleccion.max_candidatos %}
+                        <a href="/" class="btn btn-primary" input type="submit">Guardar y volver al menú principal</a>
+                    {% endif %}
+                </div>
             </form>
             <!--        <button id="pregunta-modal" class="create-book btn btn-primary" type="button" name="button">Crear Pregunta</button-->
         </div>

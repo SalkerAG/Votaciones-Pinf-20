@@ -3,6 +3,8 @@ from django import forms
 from .models import ProcesoElectoral, Pregunta, Votacion, Eleccion, Censo, UsuarioVotacion, OpcionesCompleja, \
     UsuarioEleccion, Personas
 from bootstrap_modal_forms.forms import BSModalForm
+from datetime import datetime
+from django.core.exceptions import ValidationError
 
 
 class ProcesoElectoralForm(forms.ModelForm):
@@ -42,6 +44,26 @@ class VotacionForm(ProcesoElectoralForm):
     class Meta:
         model = Votacion
         fields = ('__all__')
+
+    def clean(self):
+        inicio = self.cleaned_data['fecha_inicio']
+        fin = self.cleaned_data['fecha_fin']
+        horainic = self.cleaned_data['hora_inicio']
+        horafin = self.cleaned_data['hora_fin']
+
+        if inicio.strftime('%Y-%m-%d') < datetime.now().strftime('%Y-%m-%d'):
+            raise ValidationError('Eror: La fecha inicial debe ser mayor que la actual.')
+
+        if (inicio.strftime('%Y-%m-%d') == datetime.now().strftime('%Y-%m-%d')) and (horainic.strftime('%H:%M') < datetime.now().strftime('%H:%M')):
+            raise ValidationError('Error: Hora inválida.')
+
+        if inicio.strftime('%Y-%m-%d') > fin.strftime('%Y-%m-%d'):
+            raise ValidationError('Error: La fecha fin debe ser mayor que la inicio.')
+
+        if (inicio.strftime('%Y-%m-%d') == fin.strftime('%Y-%m-%d')) and (horainic.strftime('%H:%M') > horafin.strftime('%H:%M')):
+            raise ValidationError('Error: Hora inválida.')
+
+        return self.cleaned_data
 
 
 class createCensoForm(ModelForm):
@@ -126,6 +148,26 @@ class EleccionForm(ProcesoElectoralForm):
     class Meta:
         model = Eleccion
         fields = '__all__'
+
+    def clean(self):
+        inicio = self.cleaned_data['fecha_inicio']
+        fin = self.cleaned_data['fecha_fin']
+        horainic = self.cleaned_data['hora_inicio']
+        horafin = self.cleaned_data['hora_fin']
+
+        if inicio.strftime('%Y-%m-%d') < datetime.now().strftime('%Y-%m-%d'):
+            raise ValidationError('Eror: La fecha inicial debe ser mayor que la actual.')
+
+        if (inicio.strftime('%Y-%m-%d') == datetime.now().strftime('%Y-%m-%d')) and (horainic.strftime('%H:%M') < datetime.now().strftime('%H:%M')):
+            raise ValidationError('Error: Hora inválida.')
+
+        if inicio.strftime('%Y-%m-%d') > fin.strftime('%Y-%m-%d'):
+            raise ValidationError('Error: La fecha fin debe ser mayor que la inicio.')
+
+        if (inicio.strftime('%Y-%m-%d') == fin.strftime('%Y-%m-%d')) and (horainic.strftime('%H:%M') > horafin.strftime('%H:%M')):
+            raise ValidationError('Error: Hora inválida.')
+
+        return self.cleaned_data
 
 
 class EleccionUpdateForm(ProcesoElectoralForm):

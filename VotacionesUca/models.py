@@ -7,6 +7,7 @@ from django.urls import reverse
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils import timezone
 from datetime import datetime
+from django.utils import dateparse
 
 from UsuarioUca.models import UsuarioUca
 
@@ -29,20 +30,22 @@ class Votacion(ProcesoElectoral):
 
     @property
     def espera(self):
-        return self.fecha_inicio.strftime('%Y-%m-%d')>datetime.now().strftime('%Y-%m-%d') or (self.fecha_inicio.strftime('%Y-%m-%d')==datetime.now().strftime('%Y-%m-%d') and self.hora_fin.strftime('%H:%M')<datetime.now().strftime('%H:%M'))
+        return self.fecha_inicio.strftime('%Y-%m-%d')>timezone.now().strftime('%Y-%m-%d') or (
+	       self.fecha_inicio.strftime('%Y-%m-%d')==timezone.now().strftime('%Y-%m-%d') and
+               (self.hora_inicio.strftime('%H:%M')>timezone.now().strftime('%H:%M')))
 
     @property
     def votacion_cerrada(self):
-        return (self.fecha_fin.strftime('%Y-%m-%d') > datetime.now().strftime('%Y-%m-%d')) or (
-                self.fecha_fin.strftime('%Y-%m-%d') == (datetime.now().strftime('%Y-%m-%d')) and (
-                self.hora_fin.strftime('%H:%M') < datetime.now().strftime('%H:%M')))
+        return (self.fecha_fin.strftime('%Y-%m-%d') > timezone.now().strftime('%Y-%m-%d')) or (
+                self.fecha_fin.strftime('%Y-%m-%d') == (timezone.now().strftime('%Y-%m-%d')) and (
+                self.hora_fin.strftime('%H:%M') < timezone.now().strftime('%H:%M')))
 
     def __str__(self):
         return self.nombre_votacion
 
 
 class Opcion(models.Model):
-    respuesta = models.CharField(max_length=50)
+    respuesta = models.CharField(max_length=100)
 
     def __str__(self):
         return self.respuesta
@@ -56,7 +59,7 @@ class Pregunta(models.Model):
 
     Votacion = models.OneToOneField(Votacion, on_delete=models.CASCADE)
     tipo_votacion = models.CharField(max_length=10, choices=TIPO_CHOICES, default="Simple")
-    enunciado = models.CharField(max_length=50)
+    enunciado = models.CharField(max_length=100)
 
     def __str__(self):
         return self.enunciado
@@ -64,7 +67,7 @@ class Pregunta(models.Model):
 
 class OpcionesCompleja(models.Model):
     Pregunta = models.ForeignKey(Pregunta, on_delete=models.CASCADE)
-    respuesta = models.CharField(max_length=50)
+    respuesta = models.CharField(max_length=100)
 
     def __unicode__(self):
         return self.respuesta
@@ -74,7 +77,7 @@ class UsuarioVotacion(models.Model):
     user = models.ForeignKey(UsuarioUca, on_delete=models.PROTECT, null=True)
     Votacion = models.ForeignKey(Votacion, on_delete=models.CASCADE)
     Pregunta = models.ForeignKey(Pregunta, on_delete=models.CASCADE)
-    seleccion = models.CharField(max_length=20, null=True)
+    seleccion = models.CharField(max_length=100, null=True)
 
     def get_absolute_url(self):
         return reverse('home')
@@ -90,7 +93,7 @@ class UsuarioVotacion(models.Model):
 
 
 class Eleccion(ProcesoElectoral):
-    nombre = models.CharField(max_length=50)
+    nombre = models.CharField(max_length=100)
     TIPO_ELECCION = (
         ("0", "Grupos"),
         ("1", "Unipersonales"),
@@ -103,13 +106,31 @@ class Eleccion(ProcesoElectoral):
 
     @property
     def espera(self):
-        return self.fecha_inicio.strftime('%Y-%m-%d')>datetime.now().strftime('%Y-%m-%d') or (self.fecha_inicio.strftime('%Y-%m-%d')==datetime.now().strftime('%Y-%m-%d') and self.hora_fin.strftime('%H:%M')<datetime.now().strftime('%H:%M'))
+        inicio = datetime.strptime(
+            self.fecha_inicio.strftime('%Y-%m-%d') + " " + self.hora_inicio.strftime('%H:%M'),
+            "%Y-%m-%d %H:%M"
+        ).timestamp()
+
+        fin = datetime.strptime(
+            timezone.now().strftime('%Y-%m-%d') + " " + timezone.now().strftime('%H:%M'),
+            "%Y-%m-%d %H:%M"
+        ).timestamp()
+        
+        return inicio >= fin
 
     @property
     def eleccion_cerrada(self):
-        return (self.fecha_fin.strftime('%Y-%m-%d') > datetime.now().strftime('%Y-%m-%d')) or (
-                self.fecha_fin.strftime('%Y-%m-%d') == (datetime.now().strftime('%Y-%m-%d')) and (
-                self.hora_fin.strftime('%H:%M') < datetime.now().strftime('%H:%M')))
+        inicio = datetime.strptime(
+            timezone.now().strftime('%Y-%m-%d') + " " + timezone.now().strftime('%H:%M'),
+            "%Y-%m-%d %H:%M"
+        ).timestamp()
+
+        fin = datetime.strptime(
+            self.fecha_fin.strftime('%Y-%m-%d') + " " + self.hora_fin.strftime('%H:%M'),
+            "%Y-%m-%d %H:%M"
+        ).timestamp()
+        
+        return fin >= inicio
 
     def __str__(self):
         return self.nombre
@@ -118,7 +139,7 @@ class Eleccion(ProcesoElectoral):
 class UsuarioEleccion(models.Model):
     user = models.ForeignKey(UsuarioUca, on_delete=models.DO_NOTHING, null=True)
     Eleccion = models.ForeignKey(Eleccion, on_delete=models.CASCADE)
-    seleccion = models.CharField(max_length=20, null=True)
+    seleccion = models.CharField(max_length=100, null=True)
 
     def get_absolute_url(self):
         return reverse('home')
@@ -126,7 +147,7 @@ class UsuarioEleccion(models.Model):
 
 class Personas(models.Model):
     Eleccion = models.ForeignKey(Eleccion, on_delete=models.CASCADE)
-    nombre = models.CharField(max_length=20)
+    nombre = models.CharField(max_length=100)
 
     def __str__(self):
         return self.nombre

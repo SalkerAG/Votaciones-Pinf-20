@@ -19,9 +19,11 @@
                     {% for votacion in votacion_list %}
                         {% if not votacion.votacion_cerrada or votacion.es_consulta %}
                             {% if votacion.pregunta.tipo_votacion == "0" %}
-                                <a class="nav-link" href="{% url 'estadisticasvotacionsimple' pk=votacion.pk %}" style="color:#898b96">{{votacion.nombre_votacion}}</a>
+                                <a class="nav-link" href="{% url 'estadisticasvotacionsimple' pk=votacion.pk %}"
+                                   style="color:#898b96">{{ votacion.nombre_votacion }}</a>
                             {% else %}
-                                <a class="nav-link" href="{% url 'estadisticasvotacioncompleja' pk=votacion.pk %}" style="color:#898b96">{{votacion.nombre_votacion}}</a>
+                                <a class="nav-link" href="{% url 'estadisticasvotacioncompleja' pk=votacion.pk %}"
+                                   style="color:#898b96">{{ votacion.nombre_votacion }}</a>
                             {% endif %}
                         {% endif %}
                     {% endfor %}
@@ -30,38 +32,46 @@
                 {% if eleccion_list %}
                     {% for eleccion in eleccion_list %}
                         {% if not eleccion.eleccion_cerrada or eleccion.es_consulta %}
-                            <a class="nav-link" href="{% url 'estadisticaseleccion' pk=eleccion.pk %}" style="color:#898b96">{{eleccion.nombre}}</a>
+                            {% if eleccion.tipo_eleccion == "1" %}
+                                <a class="nav-link" href="{% url 'estadisticaseleccion' pk=eleccion.pk %}"
+                                   style="color:#898b96">{{ eleccion.nombre }}</a>
+                            {% else %}
+                                <a class="nav-link" href="{% url 'estadisticaselecciongrupo' pk=eleccion.pk %}"
+                                   style="color:#898b96">{{ eleccion.nombre }}</a>
+                            {% endif %}
                         {% endif %}
                     {% endfor %}
                 {% endif %}
             </div>
         </div>
-        
-            <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
-                <div class="my-3 p-3">
+
+        <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+            <div class="my-3 p-3">
                 {% if votacion_list %}
-                <h2 class="display-5">Votaciones Recientes</h2>
+                    <h2 class="display-5">Votaciones Recientes</h2>
                     {% for votacion in votacion_list %}
                         {% if votacion.votacion_cerrada %}
-                            <a class="nav-link" href="{% url 'votacion' pk=votacion.pk %}" style="color:#898b96">{{votacion.nombre_votacion}}</a>
+                            <a class="nav-link" href="{% url 'votacion' pk=votacion.pk %}"
+                               style="color:#898b96">{{ votacion.nombre_votacion }}</a>
                         {% endif %}
                     {% endfor %}
                 {% else %}
-                    <h2 class="display-5"><Var>No hay votaciones disponibles</Var> </h2>
+                    <h2 class="display-5"><Var>No hay votaciones disponibles</Var></h2>
                 {% endif %}
                 <br>
                 {% if eleccion_list %}
                     <h2 class="display-5">Elecciones Recientes</h2>
                     {% for eleccion in eleccion_list %}
                         {% if eleccion.eleccion_cerrada %}
-                            <a class="nav-link" href="{% url 'eleccion' pk=eleccion.pk %}" style="color:#898b96">{{eleccion.nombre}}</a>
+                            <a class="nav-link" href="{% url 'eleccion' pk=eleccion.pk %}"
+                               style="color:#898b96">{{ eleccion.nombre }}</a>
                         {% endif %}
                     {% endfor %}
                 {% else %}
-                    <h2 class="display-5"><Var>No hay elecciones disponibles</Var> </h2>
+                    <h2 class="display-5"><Var>No hay elecciones disponibles</Var></h2>
                 {% endif %}
-                </div>
             </div>
+        </div>
 
     </div>
 

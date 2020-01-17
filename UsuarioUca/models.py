@@ -117,8 +117,8 @@ class UsuarioUca(AbstractUser):
 
     username = None
 
-    first_name = models.CharField(max_length=20, blank=False)
-    last_name = models.CharField(max_length=30, blank=False)
+    first_name = models.CharField(max_length=100, blank=False)
+    last_name = models.CharField(max_length=100, blank=False)
     nif = models.CharField(max_length=10, blank=False, null=False, unique=True)
     egresado = models.BooleanField(default=True)
     email = models.EmailField(max_length=64, unique=True)
@@ -163,11 +163,11 @@ class PASS(models.Model):
     class Meta:
         verbose_name_plural = "Pass"
 
-    user = models.OneToOneField(UsuarioUca, on_delete=models.PROTECT, primary_key=True)
+    user = models.OneToOneField(UsuarioUca, on_delete=models.CASCADE, primary_key=True)
 
 
 class Estudiante(models.Model):
-    user = models.OneToOneField(UsuarioUca, on_delete=models.PROTECT, primary_key=True)
+    user = models.OneToOneField(UsuarioUca, on_delete=models.CASCADE, primary_key=True)
     curso_max = models.IntegerField(blank=False, null=False, default=1, choices=list(zip(range(1, 5), range(1, 5))))
 
 
@@ -175,6 +175,6 @@ class Profesor(models.Model):
     class Meta:
         verbose_name_plural = "Profesores"
 
-    user = models.OneToOneField(UsuarioUca, on_delete=models.PROTECT, primary_key=True)
+    user = models.OneToOneField(UsuarioUca, on_delete=models.CASCADE, primary_key=True)
     permanente = models.BooleanField(default=False)
     doctor = models.BooleanField(default=False)
