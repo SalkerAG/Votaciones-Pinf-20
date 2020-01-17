@@ -29,15 +29,15 @@ class Votacion(ProcesoElectoral):
 
     @property
     def espera(self):
-        return self.fecha_inicio.strftime('%Y-%m-%d')>datetime.now().strftime('%Y-%m-%d') or (
-	       self.fecha_inicio.strftime('%Y-%m-%d')==datetime.now().strftime('%Y-%m-%d') and 
-               (self.hora_inicio.strftime('%H:%M')>datetime.now().strftime('%H:%M')))
+        return self.fecha_inicio.strftime('%Y-%m-%d')>timezone.now().strftime('%Y-%m-%d') or (
+	       self.fecha_inicio.strftime('%Y-%m-%d')==timezone.now().strftime('%Y-%m-%d') and
+               (self.hora_inicio.strftime('%H:%M')>timezone.now().strftime('%H:%M')))
 
     @property
     def votacion_cerrada(self):
-        return (self.fecha_fin.strftime('%Y-%m-%d') > datetime.now().strftime('%Y-%m-%d')) or (
-                self.fecha_fin.strftime('%Y-%m-%d') == (datetime.now().strftime('%Y-%m-%d')) and (
-                self.hora_fin.strftime('%H:%M') < datetime.now().strftime('%H:%M')))
+        return (self.fecha_fin.strftime('%Y-%m-%d') > timezone.now().strftime('%Y-%m-%d')) or (
+                self.fecha_fin.strftime('%Y-%m-%d') == (timezone.now().strftime('%Y-%m-%d')) and (
+                self.hora_fin.strftime('%H:%M') < timezone.now().strftime('%H:%M')))
 
     def __str__(self):
         return self.nombre_votacion
@@ -105,16 +105,16 @@ class Eleccion(ProcesoElectoral):
 
     @property
     def espera(self):
-        return self.fecha_inicio.strftime('%Y-%m-%d')>datetime.now().strftime('%Y-%m-%d') or (
-	       self.fecha_inicio.strftime('%Y-%m-%d')==datetime.now().strftime('%Y-%m-%d') and 
-               (self.hora_inicio.strftime('%H:%M')>datetime.now().strftime('%H:%M')))
+        return self.fecha_inicio.strftime('%Y-%m-%d')>timezone.now().strftime('%Y-%m-%d') or (
+	       self.fecha_inicio.strftime('%Y-%m-%d')==timezone.now().strftime('%Y-%m-%d') and
+               (self.hora_inicio.strftime('%H:%M')>timezone.now().strftime('%H:%M')))
 
 
     @property
     def eleccion_cerrada(self):
-        return (self.fecha_fin.strftime('%Y-%m-%d') > datetime.now().strftime('%Y-%m-%d')) or (
-                self.fecha_fin.strftime('%Y-%m-%d') == (datetime.now().strftime('%Y-%m-%d')) and (
-                self.hora_fin.strftime('%H:%M') < datetime.now().strftime('%H:%M')))
+        return (self.fecha_fin.strftime('%Y-%m-%d') > timezone.now().strftime('%Y-%m-%d')) or (
+                self.fecha_fin.strftime('%Y-%m-%d') == (timezone.now().strftime('%Y-%m-%d')) and (
+                self.hora_fin.strftime('%H:%M') < timezone.now().strftime('%H:%M')))
 
     def __str__(self):
         return self.nombre
