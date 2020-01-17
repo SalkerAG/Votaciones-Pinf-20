@@ -7,6 +7,7 @@ from django.urls import reverse
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils import timezone
 from datetime import datetime
+from django.utils import dateparse
 
 from UsuarioUca.models import UsuarioUca
 
@@ -105,16 +106,31 @@ class Eleccion(ProcesoElectoral):
 
     @property
     def espera(self):
-        return self.fecha_inicio.strftime('%Y-%m-%d')>timezone.now().strftime('%Y-%m-%d') or (
-	       self.fecha_inicio.strftime('%Y-%m-%d')==timezone.now().strftime('%Y-%m-%d') and
-               (self.hora_inicio.strftime('%H:%M')>timezone.now().strftime('%H:%M')))
+        inicio = datetime.strptime(
+            self.fecha_inicio.strftime('%Y-%m-%d') + " " + self.hora_inicio.strftime('%H:%M'),
+            "%Y-%m-%d %H:%M"
+        ).timestamp()
 
+        fin = datetime.strptime(
+            timezone.now().strftime('%Y-%m-%d') + " " + timezone.now().strftime('%H:%M'),
+            "%Y-%m-%d %H:%M"
+        ).timestamp()
+        
+        return inicio >= fin
 
     @property
     def eleccion_cerrada(self):
-        return (self.fecha_fin.strftime('%Y-%m-%d') > timezone.now().strftime('%Y-%m-%d')) or (
-                self.fecha_fin.strftime('%Y-%m-%d') == (timezone.now().strftime('%Y-%m-%d')) and (
-                self.hora_fin.strftime('%H:%M') < timezone.now().strftime('%H:%M')))
+        inicio = datetime.strptime(
+            timezone.now().strftime('%Y-%m-%d') + " " + timezone.now().strftime('%H:%M'),
+            "%Y-%m-%d %H:%M"
+        ).timestamp()
+
+        fin = datetime.strptime(
+            self.fecha_fin.strftime('%Y-%m-%d') + " " + self.hora_fin.strftime('%H:%M'),
+            "%Y-%m-%d %H:%M"
+        ).timestamp()
+        
+        return fin >= inicio
 
     def __str__(self):
         return self.nombre
