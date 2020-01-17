@@ -115,7 +115,7 @@ AUTH_USER_MODEL = 'UsuarioUca.UsuarioUca'
 
 LANGUAGE_CODE = 'es'
 
-TIME_ZONE = 'Europe/Madrid'
+TIME_ZONE = 'CET'
 
 USE_I18N = True
 
