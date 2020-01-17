@@ -25,7 +25,6 @@ lazy-object-proxy==1.4.1
 libarchive-c==2.8
 MarkupPy==1.14
 mccabe==0.6.1
-menuinst==1.4.16
 odfpy==1.4.0
 openpyxl==3.0.2
 Pillow==6.2.0
