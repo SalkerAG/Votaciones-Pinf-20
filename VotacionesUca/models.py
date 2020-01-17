@@ -44,7 +44,7 @@ class Votacion(ProcesoElectoral):
 
 
 class Opcion(models.Model):
-    respuesta = models.CharField(max_length=50)
+    respuesta = models.CharField(max_length=100)
 
     def __str__(self):
         return self.respuesta
@@ -58,7 +58,7 @@ class Pregunta(models.Model):
 
     Votacion = models.OneToOneField(Votacion, on_delete=models.CASCADE)
     tipo_votacion = models.CharField(max_length=10, choices=TIPO_CHOICES, default="Simple")
-    enunciado = models.CharField(max_length=50)
+    enunciado = models.CharField(max_length=100)
 
     def __str__(self):
         return self.enunciado
@@ -66,7 +66,7 @@ class Pregunta(models.Model):
 
 class OpcionesCompleja(models.Model):
     Pregunta = models.ForeignKey(Pregunta, on_delete=models.CASCADE)
-    respuesta = models.CharField(max_length=50)
+    respuesta = models.CharField(max_length=100)
 
     def __unicode__(self):
         return self.respuesta
@@ -76,7 +76,7 @@ class UsuarioVotacion(models.Model):
     user = models.ForeignKey(UsuarioUca, on_delete=models.PROTECT, null=True)
     Votacion = models.ForeignKey(Votacion, on_delete=models.CASCADE)
     Pregunta = models.ForeignKey(Pregunta, on_delete=models.CASCADE)
-    seleccion = models.CharField(max_length=20, null=True)
+    seleccion = models.CharField(max_length=100, null=True)
 
     def get_absolute_url(self):
         return reverse('home')
@@ -92,7 +92,7 @@ class UsuarioVotacion(models.Model):
 
 
 class Eleccion(ProcesoElectoral):
-    nombre = models.CharField(max_length=50)
+    nombre = models.CharField(max_length=100)
     TIPO_ELECCION = (
         ("0", "Grupos"),
         ("1", "Unipersonales"),
@@ -123,7 +123,7 @@ class Eleccion(ProcesoElectoral):
 class UsuarioEleccion(models.Model):
     user = models.ForeignKey(UsuarioUca, on_delete=models.DO_NOTHING, null=True)
     Eleccion = models.ForeignKey(Eleccion, on_delete=models.CASCADE)
-    seleccion = models.CharField(max_length=20, null=True)
+    seleccion = models.CharField(max_length=100, null=True)
 
     def get_absolute_url(self):
         return reverse('home')
@@ -131,7 +131,7 @@ class UsuarioEleccion(models.Model):
 
 class Personas(models.Model):
     Eleccion = models.ForeignKey(Eleccion, on_delete=models.CASCADE)
-    nombre = models.CharField(max_length=20)
+    nombre = models.CharField(max_length=100)
 
     def __str__(self):
         return self.nombre

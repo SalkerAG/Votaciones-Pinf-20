@@ -29,7 +29,6 @@
                 {% if object_list %}
                     {% for eleccion in object_list %}
                     <tr>
-                                   
                         {% if eleccion.eleccion_cerrada %}
                             {% if eleccion.espera %}
                                 <td><a class="nav-link" href="{% url 'listaelecciones' %}">{{eleccion.nombre}}</a></td>
