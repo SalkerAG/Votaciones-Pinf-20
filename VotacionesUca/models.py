@@ -29,7 +29,9 @@ class Votacion(ProcesoElectoral):
 
     @property
     def espera(self):
-        return self.fecha_inicio.strftime('%Y-%m-%d')>datetime.now().strftime('%Y-%m-%d') or (self.fecha_inicio.strftime('%Y-%m-%d')==datetime.now().strftime('%Y-%m-%d') and self.hora_fin.strftime('%H:%M')<datetime.now().strftime('%H:%M'))
+        return self.fecha_inicio.strftime('%Y-%m-%d')>datetime.now().strftime('%Y-%m-%d') or (
+	       self.fecha_inicio.strftime('%Y-%m-%d')==datetime.now().strftime('%Y-%m-%d') and 
+               (self.hora_inicio.strftime('%H:%M')>datetime.now().strftime('%H:%M')))
 
     @property
     def votacion_cerrada(self):
@@ -103,7 +105,10 @@ class Eleccion(ProcesoElectoral):
 
     @property
     def espera(self):
-        return self.fecha_inicio.strftime('%Y-%m-%d')>datetime.now().strftime('%Y-%m-%d') or (self.fecha_inicio.strftime('%Y-%m-%d')==datetime.now().strftime('%Y-%m-%d') and self.hora_fin.strftime('%H:%M')<datetime.now().strftime('%H:%M'))
+        return self.fecha_inicio.strftime('%Y-%m-%d')>datetime.now().strftime('%Y-%m-%d') or (
+	       self.fecha_inicio.strftime('%Y-%m-%d')==datetime.now().strftime('%Y-%m-%d') and 
+               (self.hora_inicio.strftime('%H:%M')>datetime.now().strftime('%H:%M')))
+
 
     @property
     def eleccion_cerrada(self):
