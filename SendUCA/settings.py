@@ -81,10 +81,14 @@ WSGI_APPLICATION = 'SendUCA.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-        'USER':     'jhzgciwbubcsub',
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'HOST': 'ec2-34-197-171-33.compute-1.amazonaws.com',
+        'USER': 'jhzgciwbubcsub',
+        'NAME': 'd365pmdk9i1lpd',
+        'PASSWORD': '1055a70418456f471a77bc279122bee5f135c4625b63511b453f2b3bd86d7353'
+    }
 }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
