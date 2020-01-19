@@ -90,8 +90,8 @@ INPUT /usr/share/texlive/texmf-dist/tex/generic/babel/babel.def
 INPUT /usr/share/texlive/texmf-dist/tex/generic/babel/txtbabel.def
 INPUT /usr/share/texlive/texmf-dist/tex/latex/psnfss/mathptm.sty
 INPUT /usr/share/texlive/texmf-dist/tex/latex/psnfss/mathptm.sty
-INPUT /home/guillermo/texmf/tex/latex/slashbox/slashbox.sty
-INPUT /home/guillermo/texmf/tex/latex/slashbox/slashbox.sty
+INPUT /home/guillermo/texmf/tex/latex/local/slashbox.sty
+INPUT /home/guillermo/texmf/tex/latex/local/slashbox.sty
 INPUT /usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
 INPUT /usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
 INPUT /usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
