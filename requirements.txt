@@ -37,7 +37,7 @@ PySocks==1.7.0
 pytz==2019.3
 PyYAML==5.2
 requests==2.22.0
-ruamel-yaml==0.15.46
+ruamel-yaml
 six==1.12.0
 sqlparse==0.3.0
 tablib==0.14.0
